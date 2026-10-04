@@ -1,24 +1,30 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(SpriteRenderer))] // Скрипт сам добавит компонент, если его нет
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 4f;
 
+    [Header("Visual Settings")]
+    [SerializeField] private bool defaultFacingRight = true; // Спрайт по умолчанию смотрит вправо?
+
     private Rigidbody2D rb;
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
     private Vector2 moveInput;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
-        // Считываем WASD
+        // 1. Считываем ввод WASD / Стрелки
         float moveX = 0f;
         float moveY = 0f;
 
@@ -32,16 +38,52 @@ public class PlayerController : MonoBehaviour
 
         moveInput = new Vector2(moveX, moveY).normalized;
 
-        // Передаем состояние движения в Animator
+        // 2. Управление анимацией
         bool isMoving = moveInput.magnitude > 0.1f;
         if (animator != null)
         {
             animator.SetBool("isMoving", isMoving);
         }
+
+        // 3. Зеркалирование по A/D (влево/вправо)
+        HandleSpriteFlipping();
     }
 
     private void FixedUpdate()
     {
+        // Физическое перемещение
         rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    private void HandleSpriteFlipping()
+    {
+        if (spriteRenderer == null) return;
+
+        // Меняем направление только при горизонтальном вводе (A/D или стрелки)
+        if (moveInput.x < -0.01f)
+        {
+            SetFacingDirection(false);
+        }
+        else if (moveInput.x > 0.01f)
+        {
+            SetFacingDirection(true);
+        }
+    }
+
+    private void SetFacingDirection(bool lookRight)
+    {
+        // Логика зависит от того, куда спрайт смотрит изначально
+        if (defaultFacingRight)
+        {
+            // Спрайт изначально смотрит ВПРАВО.
+            // Если нужно смотреть ВПРАВО, flipX = false. Если ВЛЕВО, flipX = true.
+            spriteRenderer.flipX = !lookRight;
+        }
+        else
+        {
+            // Спрайт изначально смотрит ВЛЕВО.
+            // Если нужно смотреть ВПРАВО, flipX = true. Если ВЛЕВО, flipX = false.
+            spriteRenderer.flipX = lookRight;
+        }
     }
 }
