@@ -22,7 +22,7 @@ public sealed class BattleUI : MonoBehaviour
     public Sprite previewEnemySprite;
     public Image feedbackGlow;
     public TextMeshProUGUI feedbackText;
-    [Min(0.1f)] public float feedbackDuration = 0.45f;
+    [Min(0.1f)] public float feedbackDuration = 0.8f;
     public Image resultPanel;
     public TextMeshProUGUI resultText;
     public BattleHUD hud;
@@ -141,17 +141,22 @@ public sealed class BattleUI : MonoBehaviour
         feedbackText.rectTransform.anchoredPosition = target.anchoredPosition + new Vector2(target.rect.width * (0.5f-target.pivot.x), target.rect.height * (1f-target.pivot.y) + 4f);
         feedbackText.rectTransform.sizeDelta = new Vector2(220, 38);
         feedbackText.text = text; feedbackText.color = color;
+        feedbackText.fontSize = text.Contains("CRITICAL") ? 22 : 18;
         feedbackRoutine = StartCoroutine(Feedback(color));
     }
 
     private IEnumerator Feedback(Color color)
     {
-        feedbackGlow.gameObject.SetActive(true); feedbackText.gameObject.SetActive(true);
+        bool impact = feedbackText.text != "MISS";
+        feedbackGlow.gameObject.SetActive(impact); feedbackText.gameObject.SetActive(true);
         float duration = Mathf.Max(0.1f, feedbackDuration);
+        Vector2 origin = feedbackText.rectTransform.anchoredPosition;
         for (float elapsed = 0f; elapsed < duration; elapsed += Time.unscaledDeltaTime)
         {
             color.a = Mathf.Sin(elapsed / duration * Mathf.PI) * 0.35f;
             feedbackGlow.color = color;
+            feedbackText.rectTransform.anchoredPosition = origin + Vector2.up * (22f * elapsed / duration);
+            Color textColor = feedbackText.color; textColor.a = Mathf.Clamp01((1f-elapsed/duration)*4f); feedbackText.color = textColor;
             yield return null;
         }
         feedbackGlow.gameObject.SetActive(false); feedbackText.gameObject.SetActive(false);

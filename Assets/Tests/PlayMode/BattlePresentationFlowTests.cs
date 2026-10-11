@@ -5,6 +5,30 @@ using UnityEngine.TestTools;
 
 public sealed partial class BattleFlowTests
 {
+    [UnityTest] public IEnumerator TargetDeathDuringWindupCancelsDamageAndManaSpend()
+    {
+        var player=Player();var enemy=Enemy();yield return BeginBattle(player,enemy);
+        var manager=Manager();manager.presentation.attackDuration=1f;
+        Assert.That(manager.TryPlayerSpell(Fire(player)),Is.True);
+        yield return WaitUntil(()=>manager.presentation.IsAnimating);
+        Assert.That(manager.TryPlayerSpell(Fire(player)),Is.False);
+        enemy.Health.TakeDamage(60);
+        yield return WaitUntil(()=>manager.State==BattleState.Victory);
+        Assert.That(player.CurrentMP,Is.EqualTo(30));Assert.That(player.CurrentExperience,Is.EqualTo(20));
+        Assert.That(manager.presentation.IsAnimating,Is.False);
+    }
+
+    [UnityTest] public IEnumerator MissingPresentationDoesNotBlockOrDuplicatePhysicalAction()
+    {
+        var player=Player();var enemy=Enemy();yield return BeginBattle(player,enemy);
+        var manager=Manager();manager.presentation=null;
+        Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.True);
+        Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.False);
+        yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
+        Assert.That(enemy.Health.currentHealth,Is.EqualTo(50));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
+        Assert.That(manager.Round,Is.EqualTo(2));
+    }
+
     [UnityTest] public IEnumerator HUDAnimatesReadOnlyBarsWithoutChangingResources()
     {
         var player = Player(); var enemy = Enemy();

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public sealed class BattleManager : MonoBehaviour
 {
     public BattleUI ui;
+    public BattlePresentation presentation;
     public BattleState State { get; private set; } = BattleState.Starting;
     public BattleUnit Player { get; private set; }
     public BattleUnit Enemy { get; private set; }
@@ -35,6 +36,7 @@ public sealed class BattleManager : MonoBehaviour
         }
         Player = transition.Player; Enemy = transition.Enemy; rules = transition.rules;
         ui.ShowUnits(Player, Enemy);
+        if (presentation != null) presentation.Bind(Player, Enemy);
         ui.ShowMessage("Скелет преграждает путь.");
         ui.SetCommandsEnabled(false);
         while (transition.IsTransitioning) yield return null;
@@ -74,6 +76,11 @@ public sealed class BattleManager : MonoBehaviour
                 gate.Close();
                 ui.SetCommandsEnabled(false);
                 var target = actor == Player ? Enemy : Player;
+                bool hit = false, criticalHit = false;
+                if (presentation != null && pendingAction != BattleAction.Flee)
+                    yield return presentation.Windup(actor == Player, pendingAction.Value, rules.actionDelay);
+                // A target may die while the visual windup runs. Never spend resources then.
+                if (!Player.IsAlive || !Enemy.IsAlive) { if (presentation != null) presentation.ResetPoses(); break; }
                 if (pendingAction == BattleAction.Flee)
                 {
                     bool escaped = BattleCalculator.ChanceSucceeds(BattleCalculator.FleeChance(Player.Speed, Enemy.Speed, rules), random.Next01());
@@ -101,6 +108,7 @@ public sealed class BattleManager : MonoBehaviour
                     if (BattleAbilities.TryCast(actor, spellTarget, pendingSpell, rules, out int amount))
                     {
                         bool healing = pendingSpell.effect == BattleEffect.RestoreHealth;
+                        hit = !healing;
                         ui.ShowMessage(actor.displayName + " использует " + pendingSpell.displayName + ": " +
                             (healing ? "+" + amount + " HP." : amount + " магического урона."));
                         ui.ShowFeedback(spellTarget == Player, (healing ? "+" : "−") + amount + (healing ? " HP" : " " + pendingSpell.displayName), pendingSpell.effectColor);
@@ -118,12 +126,14 @@ public sealed class BattleManager : MonoBehaviour
                     else
                     {
                         target.Health.TakeDamage(result.Damage);
+                        hit = true; criticalHit = result.Critical;
                         ui.ShowMessage((result.Critical ? "CRITICAL! " : "") + actor.displayName + " атакует " + target.displayName + ": " + result.Damage + " урона.");
                         ui.ShowFeedback(target == Player, (result.Critical ? "CRITICAL!\n" : "") + "−" + result.Damage,
                             result.Critical ? new Color(1f, 0.82f, 0.2f) : new Color(1f, 0.4f, 0.4f));
                     }
                 }
                 ui.RefreshStats(Player, Enemy, Round);
+                if (presentation != null) yield return presentation.Recover(actor == Player, hit, criticalHit, rules.actionDelay);
                 yield return new WaitForSecondsRealtime(rules.actionDelay);
                 if (State == BattleState.Escaped)
                 {
