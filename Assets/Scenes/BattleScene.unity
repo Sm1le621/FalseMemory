@@ -3737,6 +3737,10 @@ MonoBehaviour:
   lungeDistance: 42
   reactionDistance: 8
   outcomeDuration: 0.35
+  messageDuration: 0.75
+  enemyThinkDuration: 0.5
+  allowFastForward: 1
+  fastForwardMultiplier: 3
 --- !u!114 &1312204537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4877,7 +4881,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "WASD / \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u2022 Enter \u2014 \u0432\u044B\u0431\u043E\u0440 \u2022 Esc \u2014 \u043D\u0430\u0437\u0430\u0434"
+  m_text: "WASD / \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u2022 Enter \u2014 \u0432\u044B\u0431\u043E\u0440 \u2022 Esc \u2014 \u043D\u0430\u0437\u0430\u0434 \u2022 Space \u2014 \u0431\u044B\u0441\u0442\u0440\u0435\u0435"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

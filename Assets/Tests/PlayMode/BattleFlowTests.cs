@@ -64,7 +64,7 @@ public sealed partial class BattleFlowTests
 
     private static BattleUnit Player() => GameObject.Find("Player").GetComponent<BattleUnit>();
     private static BattleUnit Enemy() => GameObject.Find("Enemy").GetComponent<BattleUnit>();
-    private static BattleManager Manager() => Object.FindFirstObjectByType<BattleManager>();
+    private static BattleManager Manager() => Object.FindAnyObjectByType<BattleManager>();
 
     [UnityTest] public IEnumerator ContactStartsOneBattleThenVictoryPreservesWorldAndHealth()
     {
@@ -174,7 +174,7 @@ public sealed partial class BattleFlowTests
         BattleTransition.Instance.ReturnToMainMenu();
         yield return WaitUntil(() => SceneManager.GetActiveScene().name == "MainMenu");
         yield return null; yield return null;
-        var menu = Object.FindFirstObjectByType<MainMenuController>();
+        var menu = Object.FindAnyObjectByType<MainMenuController>();
         Assert.That(menu, Is.Not.Null, "Existing menu bootstrap must still work after assembly extraction");
         menu.OnStart();
         yield return WaitUntil(() => SceneManager.GetActiveScene().name == "SampleScene");

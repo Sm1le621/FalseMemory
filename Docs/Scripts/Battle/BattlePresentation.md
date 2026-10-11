@@ -12,6 +12,7 @@ Bind запоминает исходные позиции и отражение.
 
 - `Finish(outcome,pace)` → IEnumerator: при Victory исчезает Enemy, Defeat — Player, Escaped — Player смещается наружу и исчезает. Длительность outcomeDuration (0.35, 0..1) и Pace; не удаляет мировой объект и не выдаёт награды.
 
+- `VisualDelta` → float: unscaledDeltaTime, при разрешённом удержании Space умноженный на fastForwardMultiplier (1..6). Не меняет Time.timeScale. `ReadPause(enemyThinking,pace)` → IEnumerator: конечная пауза 0.5/0.75 секунды по VisualDelta и Pace; вызывается Manager между действиями.
 - `Bind(hero,foe)` — ссылки участников и исходные позиции/масштабы Image; void.
 - `LateUpdate()` — показывает/скрывает playerGuard/enemyGuard по IsAlive/IsDefending.
 - `Windup(onPlayer,action,pace)` → IEnumerator: при Attack перемещает Image на lungeDistance к противнику, при Defend слегка меняет силуэт. Отсутствующий/выключенный компонент безопасно пропускается.
@@ -22,6 +23,7 @@ Bind запоминает исходные позиции и отражение.
 
 ## 4. Переменные и Inspector
 
+messageDuration=0.75, enemyThinkDuration=0.5 (0..2 секунды) и allowFastForward=true/fastForwardMultiplier=3 (1..6) в коде и сцене. При rules.actionDelay=0.8 паузы штатные; ускоренные тесты масштабируют их через Pace. Space ускоряет только Windup/Recover/Finish/ReadPause, не самостоятельные VFX, полосы, всплывающий текст и затемнение сцен.
 ui, playerGuard/enemyGuard — ссылки. attackDuration=0.4, hitDuration=0.18 секунды (0..1); lungeDistance=42, reactionDistance=8 условных UI-пикселей. HitEffectsPlayed/IsAnimating — диагностическое чтение. Внутренние home/scale/player/enemy/bound не являются игровым состоянием.
 
 ## 5. Связи
@@ -41,6 +43,8 @@ Attack → выпад → Manager наносит 10 HP один раз → вс�
 Расчёты не зависят от Animator/events. Все циклы ограничены временем; отсутствие визуала не останавливает ход. При смерти во время Windup Manager повторно проверяет обоих участников и не списывает ресурсы. Для будущих Aseprite-кадров расширять визуальный контроллер, сохранив единственное применение в Manager.
 
 ## 9. История изменений
+
+- 2026-10-11 — 3.7: конечные паузы чтения/выбора врага, безопасное ускорение Space без изменения времени игры и применения эффектов.
 
 - 2026-10-11 — 3.6: Guard рассчитывается с учётом центрального pivot портрета; flip не смещает персонажа относительно чисел/эффектов.
 

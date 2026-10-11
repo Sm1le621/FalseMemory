@@ -25,6 +25,7 @@ BattleUI передаёт участников через Bind. Каждый к�
 
 ## 4. Переменные и Inspector
 
+commandIcons — пять Sprite по порядку Attack/Magic/Items/Defend/Flee, необязательные, назначены в сцене.
 screenGroup/resultGroup — CanvasGroup содержимого/окна, назначены MCP; revealDuration=0.22 (0..1). Не влияют на HP/MP/порядок, отсутствующий CanvasGroup пропускается.
 
 hpBar/mpBar/enemyHPBar — полосы 0..1; resourceText — Potion/EXP/Defend; lowHealthText — предупреждение; menuTitle/menuGroup — меню; content — центральный RectTransform. barDuration=0.22, menuDuration=0.12 секунды, ноль отключает плавность; lowHealthThreshold=0.25 (0..1). player/enemy/initialized/menuRoutine — внутреннее состояние, не запас ресурсов.
@@ -46,6 +47,8 @@ BattleManager в BattleScene содержит BattleUI и BattleHUD. UI вызы
 Отсутствующий необязательный элемент пропускается; основные ссылки UI всё ещё обязательны. Анимация полосы не должна использоваться как источник HP. Оценку стиля/баланса выполняет владелец. Полоса с нулевым максимумом пуста. Нет партийного HUD.
 
 ## 9. История изменений
+
+- 2026-10-11 — 3.7: подсказка Space добавлена в Controls; взаимодействие с ресурсами не менялось.
 
 - 2026-10-11 — 3.6: пиксельные значки, центральные pivot портретов против смещения при flip, компактное окно результата, пиксельный шрифт команд.
 

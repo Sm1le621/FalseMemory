@@ -2,9 +2,70 @@ using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 public sealed partial class BattleFlowTests
 {
+    [UnityTest] public IEnumerator SpaceSpeedsPresentationWithoutChoosingOrDuplicatingActions()
+    {
+        var player=Player();var enemy=Enemy();yield return BeginBattle(player,enemy);
+        var manager=Manager();var portrait=manager.ui.playerPortrait.rectTransform;
+        Vector2 home=portrait.anchoredPosition;float timeScale=Time.timeScale;
+        var keyboard=InputSystem.AddDevice<Keyboard>();
+        try
+        {
+            InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.Space));yield return null;
+            Assert.That(manager.State,Is.EqualTo(BattleState.AwaitingPlayer));
+            Assert.That(manager.presentation.VisualDelta,Is.EqualTo(Time.unscaledDeltaTime*3f).Within(0.00001f));
+            manager.presentation.allowFastForward=false;
+            Assert.That(manager.presentation.VisualDelta,Is.EqualTo(Time.unscaledDeltaTime));
+            manager.presentation.allowFastForward=true;
+            Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.True);
+            Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.False);
+            yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
+            yield return new WaitForSecondsRealtime(0.2f);
+            Assert.That(enemy.Health.currentHealth,Is.EqualTo(50));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
+            Assert.That(player.CurrentMP,Is.EqualTo(30));Assert.That(player.CurrentExperience,Is.Zero);
+            Assert.That(player.Inventory.Summary,Does.Contain("3"));Assert.That(manager.Round,Is.EqualTo(2));
+            Assert.That(portrait.anchoredPosition,Is.EqualTo(home));Assert.That(Time.timeScale,Is.EqualTo(timeScale));
+        }
+        finally { InputSystem.RemoveDevice(keyboard); }
+    }
+
+    [UnityTest] public IEnumerator MissShowsTextWithoutHitReactionOrDamage()
+    {
+        var player=Player();var enemy=Enemy();yield return BeginBattle(player,enemy);var manager=Manager();
+        player.missChance=1f;manager.presentation.attackDuration=0.8f;
+        Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.True);
+        yield return WaitUntil(()=>manager.ui.feedbackText.gameObject.activeSelf && manager.ui.feedbackText.text=="MISS");
+        Assert.That(enemy.Health.currentHealth,Is.EqualTo(60));
+        Assert.That(manager.ui.feedbackGlow.gameObject.activeSelf,Is.False);
+        Assert.That(manager.presentation.HitEffectsPlayed,Is.Zero);
+        yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
+        Assert.That(manager.presentation.HitEffectsPlayed,Is.EqualTo(1),"Only the enemy's successful answer has a hit effect");
+        Assert.That(player.Health.currentHealth,Is.EqualTo(96));Assert.That(enemy.Health.currentHealth,Is.EqualTo(60));
+    }
+
+    [UnityTest] public IEnumerator AssignedClipUsesMixerAndRespectsExistingVolume()
+    {
+        yield return BeginBattle(Player(),Enemy());var audio=Manager().audioController;
+        var original=audio.profile;var profile=Object.Instantiate(original);
+        var clip=AudioClip.Create("Test-only silent clip",256,1,44100,false);
+        float volume=AudioListener.volume;
+        try
+        {
+            profile.hit=clip;audio.profile=profile;
+            Assert.That(audio.Play(BattleSound.Hit),Is.True);
+            Assert.That(audio.LastEvent,Is.EqualTo(BattleSound.Hit));
+            Assert.That(audio.GetComponent<AudioSource>().outputAudioMixerGroup,Is.SameAs(profile.output));
+            Assert.That(AudioListener.volume,Is.EqualTo(volume));
+            Assert.That(audio.GetComponent<AudioSource>().ignoreListenerVolume,Is.False);
+            yield return null;
+        }
+        finally { audio.profile=original;Object.Destroy(profile);Object.Destroy(clip); }
+    }
+
     [UnityTest] public IEnumerator PresentationEntranceAndOutcomesKeepTransitionLockedAndShowResults()
     {
         var player=Player();var enemy=Enemy();var transition=BattleTransition.Instance;

@@ -185,7 +185,7 @@ public sealed class BattleHUD : MonoBehaviour
             StyleCommand(button,label,i==0,true);
         }
         var controls = content.Find("Controls").GetComponent<TextMeshProUGUI>();
-        Place(controls.rectTransform,30,4,900,16); Format(controls,10); controls.alignment=TextAlignmentOptions.Center; controls.text="WASD / стрелки • Enter — выбор • Esc — назад";
+        Place(controls.rectTransform,30,4,900,16); Format(controls,10); controls.alignment=TextAlignmentOptions.Center; controls.text="WASD / стрелки • Enter — выбор • Esc — назад • Space — быстрее";
         Place(ui.resultPanel.rectTransform,310,238,340,178); Frame(ui.resultPanel,new Color32(29,25,40,248));
         Format(ui.resultText,22); ui.resultText.lineSpacing = 8;
         ui.resultPanel.transform.SetAsLastSibling(); ui.resultPanel.gameObject.SetActive(false);

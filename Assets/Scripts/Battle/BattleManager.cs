@@ -44,7 +44,7 @@ public sealed class BattleManager : MonoBehaviour
         ui.SetCommandsEnabled(false);
         while (transition.IsTransitioning) yield return null;
         if (ui.hud != null) yield return ui.hud.RevealScreen(rules.actionDelay);
-        yield return new WaitForSecondsRealtime(rules.actionDelay);
+        yield return Pause(false);
 
         while (Player.IsAlive && Enemy.IsAlive)
         {
@@ -70,7 +70,7 @@ public sealed class BattleManager : MonoBehaviour
                 {
                     State = BattleState.Resolving;
                     ui.ShowMessage(Enemy.displayName + " выбирает действие...");
-                    yield return new WaitForSecondsRealtime(rules.actionDelay);
+                    yield return Pause(true);
                     if (!Player.IsAlive || !Enemy.IsAlive) break;
                     pendingAction = EnemyBattleAI.Choose(rules, random);
                 }
@@ -147,7 +147,7 @@ public sealed class BattleManager : MonoBehaviour
                 }
                 ui.RefreshStats(Player, Enemy, Round);
                 if (presentation != null) yield return presentation.Recover(actor == Player, hit, criticalHit, rules.actionDelay);
-                yield return new WaitForSecondsRealtime(rules.actionDelay);
+                yield return Pause(false);
                 if (State == BattleState.Escaped)
                 {
                     if(presentation!=null)yield return presentation.Finish(BattleState.Escaped,rules.actionDelay);
@@ -184,6 +184,13 @@ public sealed class BattleManager : MonoBehaviour
                 () => { ui.SetCommandsEnabled(false); transition.RestartGame(); },
                 () => { ui.SetCommandsEnabled(false); transition.ReturnToMainMenu(); } });
         }
+    }
+
+    private IEnumerator Pause(bool enemyThinking)
+    {
+        if (presentation != null && presentation.isActiveAndEnabled)
+            yield return presentation.ReadPause(enemyThinking, rules.actionDelay);
+        else yield return new WaitForSecondsRealtime(rules.actionDelay);
     }
 
     public bool TryPlayerAction(BattleAction action)

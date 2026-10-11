@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 // Visual poses of the existing UI portraits; no combat resources are written here.
@@ -13,12 +14,25 @@ public sealed class BattlePresentation : MonoBehaviour
     [Min(0f)] public float lungeDistance = 42f;
     [Min(0f)] public float reactionDistance = 8f;
     [Range(0f,1f)] public float outcomeDuration = 0.35f;
+    [Range(0f,2f)] public float messageDuration = 0.75f;
+    [Range(0f,2f)] public float enemyThinkDuration = 0.5f;
+    public bool allowFastForward = true;
+    [Range(1f,6f)] public float fastForwardMultiplier = 3f;
     private Vector2 playerHome, enemyHome;
     private Vector3 playerScale, enemyScale;
     private BattleUnit player, enemy;
     private bool bound;
     public int HitEffectsPlayed { get; private set; }
     public bool IsAnimating { get; private set; }
+    public float VisualDelta => Time.unscaledDeltaTime *
+        (allowFastForward && Keyboard.current != null && Keyboard.current.spaceKey.isPressed
+            ? Mathf.Clamp(fastForwardMultiplier,1f,6f) : 1f);
+
+    public IEnumerator ReadPause(bool enemyThinking, float pace)
+    {
+        float duration = Mathf.Clamp(enemyThinking ? enemyThinkDuration : messageDuration,0f,2f) * Pace(pace);
+        for(float t=0;t<duration;t+=VisualDelta) yield return null;
+    }
 
     public void Bind(BattleUnit hero, BattleUnit foe)
     {
@@ -47,7 +61,7 @@ public sealed class BattlePresentation : MonoBehaviour
         Vector2 home = onPlayer ? playerHome : enemyHome;
         float direction = onPlayer ? -1f : 1f;
         Vector2 destination = home + Vector2.right * direction * (action == BattleAction.Attack ? Mathf.Clamp(lungeDistance,0,100) : 0f);
-        for (float t=0;t<duration;t+=Time.unscaledDeltaTime)
+        for (float t=0;t<duration;t+=VisualDelta)
         {
             if (portrait == null) yield break;
             portrait.rectTransform.anchoredPosition = Vector2.Lerp(home,destination,Mathf.SmoothStep(0,1,t/duration));
@@ -70,7 +84,7 @@ public sealed class BattlePresentation : MonoBehaviour
         Color targetColor = attackerIsPlayer ? enemy.spriteColor : player.spriteColor;
         if(successfulHit) HitEffectsPlayed++;
         float duration = Mathf.Max(Mathf.Clamp(attackDuration,0,1)*0.5f,Mathf.Clamp(hitDuration,0,1)) * Pace(pace);
-        for(float t=0;t<duration;t+=Time.unscaledDeltaTime)
+        for(float t=0;t<duration;t+=VisualDelta)
         {
             if(attacker == null || target == null) yield break;
             float progress=t/duration;
@@ -95,7 +109,7 @@ public sealed class BattlePresentation : MonoBehaviour
         if(portrait==null)yield break;
         Color color=portrait.color;float initialAlpha=color.a;Vector3 scale=portrait.rectTransform.localScale;Vector2 home=portrait.rectTransform.anchoredPosition;
         float duration=Mathf.Clamp(outcomeDuration,0,1)*Pace(pace);
-        for(float t=0;t<duration;t+=Time.unscaledDeltaTime)
+        for(float t=0;t<duration;t+=VisualDelta)
         {
             float progress=t/duration;color.a=initialAlpha*(1f-progress);portrait.color=color;
             if(outcome==BattleState.Escaped)portrait.rectTransform.anchoredPosition=home+Vector2.right*progress*40f;
