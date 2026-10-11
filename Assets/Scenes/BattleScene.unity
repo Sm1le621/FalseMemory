@@ -3284,6 +3284,7 @@ GameObject:
   - component: {fileID: 1312204532}
   - component: {fileID: 1312204535}
   - component: {fileID: 1312204536}
+  - component: {fileID: 1312204537}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -3343,6 +3344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: FalseMemory.Runtime::BattleManager
   ui: {fileID: 1312204532}
   presentation: {fileID: 1312204536}
+  vfx: {fileID: 1312204537}
 --- !u!4 &1312204534
 Transform:
   m_ObjectHideFlags: 0
@@ -3401,6 +3403,21 @@ MonoBehaviour:
   hitDuration: 0.18
   lungeDistance: 42
   reactionDistance: 8
+--- !u!114 &1312204537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312204531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d1d0ba836ab6d41b3c9620767d65a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::BattleVFXController
+  ui: {fileID: 1312204532}
+  fireProfile: {fileID: 11400000, guid: 50bbdb9fdb40ef34cb2b130b1d0e7a76, type: 2}
+  healProfile: {fileID: 11400000, guid: 90bc4cd280d693041a136634db341cc0, type: 2}
 --- !u!1 &1339572779
 GameObject:
   m_ObjectHideFlags: 0

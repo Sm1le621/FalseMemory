@@ -5,6 +5,19 @@ using UnityEngine.TestTools;
 
 public sealed partial class BattleFlowTests
 {
+    [UnityTest] public IEnumerator MagicVFXFinishesAndMissingVFXNeverBlocksResourceRules()
+    {
+        var player=Player();var enemy=Enemy();yield return BeginBattle(player,enemy);var manager=Manager();
+        manager.TryPlayerSpell(Fire(player));yield return WaitUntil(()=>player.CurrentMP==22);
+        Assert.That(manager.vfx.EffectsPlayed,Is.EqualTo(1));Assert.That(manager.vfx.ActiveParticles,Is.GreaterThan(0));
+        yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
+        yield return new WaitForSecondsRealtime(0.5f);
+        Assert.That(manager.vfx.ActiveParticles,Is.Zero);Assert.That(enemy.Health.currentHealth,Is.EqualTo(41));
+        manager.vfx=null;manager.TryPlayerSpell(Heal(player));
+        yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
+        Assert.That(player.CurrentMP,Is.EqualTo(16));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
+    }
+
     [UnityTest] public IEnumerator TargetDeathDuringWindupCancelsDamageAndManaSpend()
     {
         var player=Player();var enemy=Enemy();yield return BeginBattle(player,enemy);

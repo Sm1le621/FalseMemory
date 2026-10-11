@@ -51,6 +51,7 @@ public sealed class BattlePresentation : MonoBehaviour
             if (portrait == null) yield break;
             portrait.rectTransform.anchoredPosition = Vector2.Lerp(home,destination,Mathf.SmoothStep(0,1,t/duration));
             if (action == BattleAction.Defend) portrait.rectTransform.localScale = Vector3.Scale(onPlayer ? playerScale : enemyScale, new Vector3(1f,1f-0.08f*Mathf.Sin(t/duration*Mathf.PI),1f));
+            if (action == BattleAction.Magic) portrait.color=Color.Lerp(onPlayer?player.spriteColor:enemy.spriteColor,new Color(0.78f,0.7f,1f),Mathf.Sin(t/duration*Mathf.PI)*0.7f);
             yield return null;
         }
         if (portrait != null) portrait.rectTransform.anchoredPosition = destination;

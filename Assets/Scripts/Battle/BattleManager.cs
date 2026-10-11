@@ -7,6 +7,7 @@ public sealed class BattleManager : MonoBehaviour
 {
     public BattleUI ui;
     public BattlePresentation presentation;
+    public BattleVFXController vfx;
     public BattleState State { get; private set; } = BattleState.Starting;
     public BattleUnit Player { get; private set; }
     public BattleUnit Enemy { get; private set; }
@@ -100,6 +101,7 @@ public sealed class BattleManager : MonoBehaviour
                     {
                         ui.ShowMessage(actor.displayName + " использует " + pendingItem.displayName + ": +" + amount + " HP.");
                         ui.ShowFeedback(itemTarget == Player, "+" + amount + " HP", pendingItem.effectColor);
+                        if (vfx != null) vfx.Play(itemTarget == Player, null, pendingItem.effectColor, true);
                     }
                 }
                 else if (pendingAction == BattleAction.Magic)
@@ -112,6 +114,7 @@ public sealed class BattleManager : MonoBehaviour
                         ui.ShowMessage(actor.displayName + " использует " + pendingSpell.displayName + ": " +
                             (healing ? "+" + amount + " HP." : amount + " магического урона."));
                         ui.ShowFeedback(spellTarget == Player, (healing ? "+" : "−") + amount + (healing ? " HP" : " " + pendingSpell.displayName), pendingSpell.effectColor);
+                        if (vfx != null) vfx.Play(spellTarget == Player, pendingSpell.visualEffect, pendingSpell.effectColor, healing);
                     }
                 }
                 else

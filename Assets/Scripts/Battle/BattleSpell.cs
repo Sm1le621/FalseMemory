@@ -12,4 +12,5 @@ public sealed class BattleSpell : ScriptableObject
     public BattleTarget target = BattleTarget.Opponent;
     [Min(0)] public int power = 10;
     public Color effectColor = new Color(1f, 0.3f, 0.05f);
+    public BattleVFXProfile visualEffect;
 }

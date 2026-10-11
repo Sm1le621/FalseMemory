@@ -18,3 +18,4 @@ MonoBehaviour:
   target: 1
   power: 25
   effectColor: {r: 0.3, g: 1, b: 0.45, a: 1}
+  visualEffect: {fileID: 11400000, guid: 90bc4cd280d693041a136634db341cc0, type: 2}

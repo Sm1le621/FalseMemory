@@ -16,6 +16,8 @@ ScriptableObject определения заклинания и перечисл
 
 ## 4. Переменные и параметры Inspector
 
+Этап 3.3: visualEffect — необязательный BattleVFXProfile; только оформление. Fire/Heal имеют назначенные FireVisual/HealVisual. Отсутствие ссылки не меняет CanCast/TryCast.
+
 displayName — строка, код Fire. mpCost≥0, код 8. effect — код MagicDamage; target — код Opponent. power≥0, код 10. effectColor — Color, код оранжевый. Fire.asset: эти значения; Heal.asset: цена 6, RestoreHealth, Self, power25, зелёный.
 
 ## 5. Связи с другими системами
@@ -35,6 +37,8 @@ Assets/Settings/Battle/Spells/Fire.asset и Heal.asset назначены Player
 Новый тип эффекта требует расширения BattleAbilities; несколько союзников пока не поддержаны. Неверное сочетание цели/эффекта не является отдельной проверкой дизайна. Fire/Heal проверены тестами; произвольные новые заклинания не реализованы.
 
 ## 9. История изменений
+
+- 2026-10-11 — 3.3: независимая ссылка visualEffect.
 
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 
