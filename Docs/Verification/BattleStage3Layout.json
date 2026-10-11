@@ -1,0 +1,238 @@
+[
+  {
+    "resolution": "1280x720",
+    "state": "victory",
+    "result": {
+      "width": 1280,
+      "height": 720,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "1920x1080",
+    "state": "victory",
+    "result": {
+      "width": 1920,
+      "height": 1080,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "2560x1440",
+    "state": "victory",
+    "result": {
+      "width": 2560,
+      "height": 1440,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "3440x1440",
+    "state": "victory",
+    "result": {
+      "width": 3440,
+      "height": 1440,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "1280x720",
+    "state": "main",
+    "result": {
+      "width": 1280,
+      "height": 720,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "1280x720",
+    "state": "magic",
+    "result": {
+      "width": 1280,
+      "height": 720,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "1280x720",
+    "state": "items",
+    "result": {
+      "width": 1280,
+      "height": 720,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "1920x1080",
+    "state": "main",
+    "result": {
+      "width": 1920,
+      "height": 1080,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "1920x1080",
+    "state": "magic",
+    "result": {
+      "width": 1920,
+      "height": 1080,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "1920x1080",
+    "state": "items",
+    "result": {
+      "width": 1920,
+      "height": 1080,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "2560x1440",
+    "state": "main",
+    "result": {
+      "width": 2560,
+      "height": 1440,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "2560x1440",
+    "state": "magic",
+    "result": {
+      "width": 2560,
+      "height": 1440,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "2560x1440",
+    "state": "items",
+    "result": {
+      "width": 2560,
+      "height": 1440,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "3440x1440",
+    "state": "main",
+    "result": {
+      "width": 3440,
+      "height": 1440,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "3440x1440",
+    "state": "magic",
+    "result": {
+      "width": 3440,
+      "height": 1440,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "3440x1440",
+    "state": "items",
+    "result": {
+      "width": 3440,
+      "height": 1440,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960
+    }
+  },
+  {
+    "resolution": "1280x720",
+    "state": "defeat",
+    "result": {
+      "width": 1280,
+      "height": 720,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960,
+      "state": "Defeat",
+      "graphics": 31,
+      "screenAlpha": 1,
+      "resultAlpha": 1
+    }
+  },
+  {
+    "resolution": "1920x1080",
+    "state": "defeat",
+    "result": {
+      "width": 1920,
+      "height": 1080,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960,
+      "state": "Defeat",
+      "graphics": 31,
+      "screenAlpha": 1,
+      "resultAlpha": 1
+    }
+  },
+  {
+    "resolution": "2560x1440",
+    "state": "defeat",
+    "result": {
+      "width": 2560,
+      "height": 1440,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960,
+      "state": "Defeat",
+      "graphics": 31,
+      "screenAlpha": 1,
+      "resultAlpha": 1
+    }
+  },
+  {
+    "resolution": "3440x1440",
+    "state": "defeat",
+    "result": {
+      "width": 3440,
+      "height": 1440,
+      "outside": [],
+      "overflow": [],
+      "contentWidth": 960,
+      "state": "Defeat",
+      "graphics": 31,
+      "screenAlpha": 1,
+      "resultAlpha": 1
+    }
+  }
+]

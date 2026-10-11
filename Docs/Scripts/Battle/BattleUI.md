@@ -38,7 +38,7 @@ Awake подключает мышь и отключает дублирующий
 
 ## 4. Переменные и параметры Inspector
 
-Обязательны messageText/playerStats/enemyStats/roundText, playerPortrait/enemyPortrait, равные массивы commandButtons/commandLabels (в сцене 5). feedbackGlow/feedbackText — ссылки эффектов; feedbackDuration≥0.1, код 0.45 сек. resultPanel/resultText — победа. previewPlayerSprite/previewEnemySprite — начальное оформление Editor. hud — необязательный BattleHUD, назначенный в текущей сцене. CommandsEnabled/MenuCount/SelectedIndex — чтение. Canvas ScaleWithScreenSize960×540, match1 (по высоте); содержимое ограничено шириной 960, меню и текст имеют якоря/авторазмер.
+Обязательны messageText/playerStats/enemyStats/roundText, playerPortrait/enemyPortrait, равные массивы commandButtons/commandLabels (в сцене 5). feedbackGlow/feedbackText — ссылки эффектов; feedbackDuration≥0.1, в коде и сцене 0.8 сек. resultPanel/resultText — победа. previewPlayerSprite/previewEnemySprite — начальное оформление Editor. hud — необязательный BattleHUD, назначенный в текущей сцене. CommandsEnabled/MenuCount/SelectedIndex — чтение. Canvas ScaleWithScreenSize960×540, match1 (по высоте); содержимое ограничено шириной 960, меню и текст имеют якоря/авторазмер.
 
 ## 5. Связи с другими системами
 
@@ -54,9 +54,11 @@ Magic → Fire 8 MP и Heal6 MP → Escape возвращает Attack/Magic/Ite
 
 ## 8. Возможные проблемы и проверки
 
-Отсутствующие основные ссылки/несогласованные массивы дают ошибки. UI listeners button.onClick в тестах проверяют обработку команд, не весь физический путь курсора. Only Enter, не Space. Gamepad нет. Длинные списки прокручиваются, выбор цели партии отсутствует. Меню, сообщения и эффекты проверены Play Mode; визуальное размещение 1920×1080/3440×1440 проверялось в задаче этапа 2, здесь заново скриншоты не делались.
+Отсутствующие основные ссылки/несогласованные массивы дают ошибки. UI listeners button.onClick в тестах проверяют обработку команд, не весь физический путь курсора. Only Enter, не Space. Gamepad нет. Длинные списки прокручиваются, выбор цели партии отсутствует. Меню, сообщения и эффекты проверены Play Mode; на этапе 3.6 через MCP проверены главное меню, Magic, Items, Victory и Game Over в 1280×720, 1920×1080, 2560×1440 и 3440×1440; границы/переполнение проверены автоматически, снимки просмотрены.
 
 ## 9. История изменений
+
+- 2026-10-11 — 3.6: feedback привязан к внутренней области портрета, чёрная обводка; проверены пять состояний на четырёх разрешениях.
 
 - 2026-10-11 — 3.5: Game Over и проявление окон исходов.
 

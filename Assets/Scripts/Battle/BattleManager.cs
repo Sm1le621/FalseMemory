@@ -168,7 +168,7 @@ public sealed class BattleManager : MonoBehaviour
             transition.TryGrantVictoryExperience(out int gained);
             ui.RefreshStats(Player, Enemy, Round);
             ui.ShowVictoryResults(gained, Player);
-            ui.ShowMessage("Victory — скелет побеждён!\nHP, MP, предметы и EXP сохранятся при возвращении.");
+            ui.ShowMessage("Victory — скелет побеждён! Ресурсы сохранены.");
             ui.ShowMenu(new[] { "Вернуться на карту" }, new System.Action[] {
                 () => { if (transition.ReturnAfterVictory()) ui.SetCommandsEnabled(false); } });
         }

@@ -53,7 +53,7 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [BattleHUD](Scripts/Battle/BattleHUD.md) — оформление, полосы и предупреждение HP.
 - [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md) — проверки представления боя.
 
-После подэтапа 3.1 — **34 C#-файла в Assets**: 24 игровых, 9 тестовых и 1 служебный. Частичные тестовые классы объединяют несколько файлов, но каждый исходный файл имеет отдельное описание. Скрипты внешних пакетов и Library сюда не входят.
+После подэтапа 3.6 — **40 C#-файлов в Assets**: 30 игровых, 9 тестовых и 1 служебный. Частичные тестовые классы объединяют несколько файлов, но каждый исходный файл имеет отдельное описание. Скрипты внешних пакетов и Library сюда не входят.
 
 - [BattleAbilities](Scripts/Battle/BattleAbilities.md) — `Assets/Scripts/Battle/BattleAbilities.cs`.
 - [BattleCalculator](Scripts/Battle/BattleCalculator.md) — `Assets/Scripts/Battle/BattleCalculator.cs`.

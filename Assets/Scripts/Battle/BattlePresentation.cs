@@ -124,7 +124,7 @@ public sealed class BattlePresentation : MonoBehaviour
         var root=portrait.transform.parent;var old=root.Find(name);
         var obj=old!=null?old.gameObject:new GameObject(name,typeof(RectTransform),typeof(Image));obj.transform.SetParent(root,false);
         var image=obj.GetComponent<Image>();image.color=new Color32(128,171,215,160);image.raycastTarget=false;
-        var rect=image.rectTransform;rect.anchorMin=rect.anchorMax=Vector2.zero;rect.pivot=new Vector2(0.5f,0.5f);rect.anchoredPosition=portrait.rectTransform.anchoredPosition+new Vector2(72,12);rect.sizeDelta=new Vector2(24,24);rect.localRotation=Quaternion.Euler(0,0,45);
+        var rect=image.rectTransform;rect.anchorMin=rect.anchorMax=Vector2.zero;rect.pivot=new Vector2(0.5f,0.5f);rect.anchoredPosition=portrait.rectTransform.anchoredPosition+new Vector2(portrait.rectTransform.rect.width*(0.5f-portrait.rectTransform.pivot.x),12f-portrait.rectTransform.rect.height*portrait.rectTransform.pivot.y);rect.sizeDelta=new Vector2(24,24);rect.localRotation=Quaternion.Euler(0,0,45);
         var outline=obj.GetComponent<Outline>();if(outline==null)outline=obj.AddComponent<Outline>();outline.effectColor=new Color32(188,215,237,255);outline.effectDistance=new Vector2(2,-2);
         obj.SetActive(false);return image;
     }

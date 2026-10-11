@@ -12,6 +12,7 @@ public sealed class BattleHUD : MonoBehaviour
     public RectTransform content;
     public CanvasGroup menuGroup;
     public CanvasGroup screenGroup, resultGroup;
+    public Sprite[] commandIcons;
     [Range(0f,1f)] public float revealDuration = 0.22f;
     [Min(0f)] public float barDuration = 0.22f;
     [Min(0f)] public float menuDuration = 0.12f;
@@ -110,9 +111,26 @@ public sealed class BattleHUD : MonoBehaviour
         colors.disabledColor = new Color32(24, 22, 30, 255); colors.fadeDuration = 0.08f;
         button.colors = colors;
         label.color = enabled ? (selected ? new Color32(255, 226, 158, 255) : new Color32(224, 216, 204, 255)) : new Color32(119, 111, 123, 255);
+        var iconTransform=button.transform.Find("CommandIcon");
+        if(iconTransform!=null)
+        {
+            string caption=label.text.TrimStart(' ','>');
+            int icon=caption.StartsWith("Attack")?0:caption.StartsWith("Magic")||caption.StartsWith("Fire")||caption.StartsWith("Heal")?1:caption.StartsWith("Items")||caption.StartsWith("Potion")?2:caption.StartsWith("Defend")?3:caption.StartsWith("Flee")?4:-1;
+            var image=iconTransform.GetComponent<Image>();image.sprite=icon>=0 && commandIcons!=null && icon<commandIcons.Length?commandIcons[icon]:null;
+            image.gameObject.SetActive(image.sprite!=null);image.color=label.color;
+        }
     }
 
 #if UNITY_EDITOR
+    public void BuildCommandIcons(BattleUI ui)
+    {
+        foreach(var button in ui.commandButtons)
+        {
+            var icon=GetPanel(button.transform,"CommandIcon");Place(icon.rectTransform,12,5,16,16);icon.preserveAspect=true;
+            var label=button.GetComponentInChildren<TextMeshProUGUI>();label.rectTransform.offsetMin=new Vector2(36,0);
+        }
+        UnityEditor.EditorUtility.SetDirty(this);
+    }
     // Editor-only upgrade of existing objects, invoked through Unity MCP.
     public void BuildLayout(BattleUI ui)
     {
@@ -145,6 +163,8 @@ public sealed class BattleHUD : MonoBehaviour
         Place(ui.messageText.rectTransform,44,443,832,27); Format(ui.messageText,17);
         Place(ui.roundText.rectTransform,780,480,132,22); Format(ui.roundText,12); ui.roundText.alignment = TextAlignmentOptions.MidlineRight;
         Place(ui.playerPortrait.rectTransform,662,242,144,166); Place(ui.enemyPortrait.rectTransform,154,242,144,166);
+        ui.playerPortrait.rectTransform.pivot=ui.enemyPortrait.rectTransform.pivot=new Vector2(0.5f,0.5f);
+        ui.playerPortrait.rectTransform.anchoredPosition=new Vector2(734,325);ui.enemyPortrait.rectTransform.anchoredPosition=new Vector2(226,325);
         ui.playerPortrait.preserveAspect = ui.enemyPortrait.preserveAspect = true;
         Place(ui.playerStats.rectTransform,44,80,420,114); Format(ui.playerStats,19); ui.playerStats.lineSpacing = 13;
         resourceText = GetLabel(content, "SessionResources"); Place(resourceText.rectTransform,44,40,520,25); Format(resourceText,13);
@@ -166,7 +186,7 @@ public sealed class BattleHUD : MonoBehaviour
         }
         var controls = content.Find("Controls").GetComponent<TextMeshProUGUI>();
         Place(controls.rectTransform,30,4,900,16); Format(controls,10); controls.alignment=TextAlignmentOptions.Center; controls.text="WASD / стрелки • Enter — выбор • Esc — назад";
-        Place(ui.resultPanel.rectTransform,270,245,420,163); Frame(ui.resultPanel,new Color32(29,25,40,248));
+        Place(ui.resultPanel.rectTransform,310,238,340,178); Frame(ui.resultPanel,new Color32(29,25,40,248));
         Format(ui.resultText,22); ui.resultText.lineSpacing = 8;
         ui.resultPanel.transform.SetAsLastSibling(); ui.resultPanel.gameObject.SetActive(false);
         ui.feedbackGlow.transform.SetAsLastSibling(); ui.feedbackText.transform.SetAsLastSibling();

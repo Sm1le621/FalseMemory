@@ -143,7 +143,7 @@ public sealed class BattleUI : MonoBehaviour
         feedbackGlow.rectTransform.sizeDelta = target.rect.size;
         feedbackText.rectTransform.anchorMin = feedbackText.rectTransform.anchorMax = target.anchorMin;
         feedbackText.rectTransform.pivot = new Vector2(0.5f, 0f);
-        feedbackText.rectTransform.anchoredPosition = target.anchoredPosition + new Vector2(target.rect.width * (0.5f-target.pivot.x), target.rect.height * (1f-target.pivot.y) + 4f);
+        feedbackText.rectTransform.anchoredPosition = target.anchoredPosition + new Vector2(target.rect.width * (0.5f-target.pivot.x), target.rect.height * (0.75f-target.pivot.y));
         feedbackText.rectTransform.sizeDelta = new Vector2(220, 38);
         feedbackText.text = text; feedbackText.color = color;
         feedbackText.fontSize = text.Contains("CRITICAL") ? 22 : 18;
