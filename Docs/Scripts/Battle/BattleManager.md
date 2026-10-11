@@ -1,0 +1,43 @@
+# BattleManager
+
+## 1. Название и назначение
+
+**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleManager.cs.
+
+Оркестратор текущего боя один на один: очередь, команды, применение эффектов и исход боя.
+
+## 2. Как работает
+
+Coroutine Start получает участников от Transition. Для каждого раунда формирует очередь по Speed. В ходе игрока ждёт принятую команду, в ходе врага вызывает AI. Перед применением проверяет смерть, закрывает gate/UI, исполняет действие, обновляет UI и ждёт actionDelay. Победа начисляет опыт, поражение открывает варианты новой игры, побег возвращает автоматически.
+
+## 3. Методы и функции
+
+- `Start()` — Unity запускает IEnumerator; получает Transition/rules/Player/Enemy. Без активной встречи показывает меню исследования вместо боя. В цикле вызывает очередь, UI, калькулятор, AI/Abilities, затем исход; yield-паузы, не обычный возвращаемый результат.
+- `SetRandomSource(IBattleRandom source)` — подставляет источник конкретного боя; null запрещён, void.
+- `CanChoose` — внутреннее bool-свойство: AwaitingPlayer, CurrentActor=Player, оба живы, gate открыт.
+- `TryPlayerAction(BattleAction action)` → bool; разрешает Attack/Defend/Flee только при CanChoose и успешном gate.TryConsume; ставит pendingAction, Resolving и блокирует UI.
+- `ShowMainMenu()` → bool; при CanChoose показывает пять действий и текст «Ваш ход», ресурсы не меняет.
+- `OpenMagicMenu()` → bool; строит названия/цены и доступность из Spells, добавляет Назад/Escape через ShowMainMenu.
+- `TryPlayerSpell(BattleSpell spell)` → bool; проверяет наличие в Spells, CanCast и gate, записывает pendingSpell/Magic, блокирует UI. Эффект выполняется позднее в Start.
+- `OpenItemsMenu()` → bool; перечисляет Definitions/Count, проверяет CanUseItem, показывает сообщение при отсутствии, добавляет Назад.
+- `TryPlayerItem(BattleConsumable item)` → bool; CanUseItem+gate, записывает pendingItem/Items, блокирует UI. Расход выполняется в Start.
+
+## 4. Переменные и параметры Inspector
+
+ui — обязательная ссылка BattleUI на менеджере BattleScene. State/Player/Enemy/CurrentActor/Round — публичные свойства только чтения для наблюдения. rules/transition/turns/gate/pendingAction/pendingSpell/pendingItem/random — внутренние, Inspector их не настраивает.
+
+## 5. Связи с другими системами
+
+BattleTransition сохраняет исходных участников мира; Unit/Health/Inventory держат данные. UI принимает ввод и показывает результат. Queue/Calculator/Abilities/EnemyBattleAI обслуживают ход. Правила назначены Transition.
+
+## 6. Пример работы
+
+Magic → Fire → TryPlayerSpell принимает команду и закрывает меню → Start списывает 8 MP, наносит 19 → действие врага → следующий ход. При смерти врага награда 20 и окно результатов.
+
+## 7. Возможные проблемы и проверки
+
+Нужны корректные UI-ссылки. Очередь generic, но Start пока формирует только двух участников. Прямой запуск BattleScene без встречи не создаёт бой. Нет выбора союзников. Внешняя смена ресурсов между принятием и выполнением может отклонить эффект при уже принятой команде; штатный UI не делает таких изменений. Все пять действий, отмена, двойные команды, смерть, исходы и сессия покрыты Play Mode.
+
+## 8. История изменений
+
+- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.

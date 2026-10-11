@@ -1,0 +1,40 @@
+# BattleUnit
+
+## 1. Название и назначение
+
+**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleUnit.cs.
+
+Характеристики участника боя и состояние MP/EXP. HP принадлежит отдельному Health; IBattleParticipant позволяет очереди читать Speed/IsAlive.
+
+## 2. Как работает
+
+Awake заполняет MP единожды. Менеджер начинает ход и сбрасывает Defend, действия расходуют MP или дают опыт. Исходный объект мира используется в бою.
+
+## 3. Методы и функции
+
+- `Awake()` — Unity: currentMP=MaxMP; void, не повторяется при скрытии мира.
+- `TrySpendMP(int cost)` — при живом участнике и доступной стоимости ≥0 списывает MP, возвращает bool успеха.
+- `RestoreMP(int amount)` — живому восстанавливает до MaxMP, возвращает фактически добавленное; отрицательное/0 даёт 0.
+- `AddExperience(int amount)` — живому добавляет неотрицательный опыт до int.MaxValue; возвращает добавленное, не повышает level.
+- `BeginTurn()` — очередь начинает ход: снимает Defend. `Defend()` — включает защиту. `ResetBattleState()` — снимает защиту при переходах; void.
+- Свойства `Health`/`Inventory` получают компоненты, `Speed`/`MaxMP`/`CurrentMP`/`CurrentExperience` ограничивают читаемые значения, `IsAlive` проверяет HP>0, `IsDefending` хранит защиту.
+
+## 4. Переменные и параметры Inspector
+
+displayName — подпись; level≥1; attack/defense/speed≥0 (код 15/8/10). maxMP/currentMP/magicAttack/magicDefense≥0; currentMP сериализован, Awake перезаписывает. spells — список BattleSpell. criticalChance/missChance 0…1 (0.1/0.05). currentExperience/experienceReward≥0; battleSprite/spriteColor/flipInBattle — внешний вид. Сцена Player: MP30, MATK12, MDEF8; Enemy: ATK12 DEF5 SPD7 MDEF3 Reward20.
+
+## 5. Связи с другими системами
+
+RequireComponent Health. Inventory необязателен, но нужен для предметов. Player/Enemy в SampleScene; BattleManager, Transition, UI, Abilities и очередь читают его.
+
+## 6. Пример работы
+
+Fire → TrySpendMP(8): 30→22. Возврат в мир не запускает Awake вновь, остаётся 22 MP.
+
+## 7. Возможные проблемы и проверки
+
+Новый экземпляр/перезагрузка карты сбрасывает MP. Прямая запись сериализованных полей может обойти ограничения; Inspector-атрибуты не полная защита. Нет level-up. MP/EXP/защита и сохранение сессии проверены тестами.
+
+## 8. История изменений
+
+- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.

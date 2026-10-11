@@ -1,0 +1,35 @@
+# EnemyAttack
+
+## 1. Название и назначение
+
+**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/EnemyAttack.cs.
+
+Старый контактный урон для врагов без BattleEncounter.
+
+## 2. Как работает
+
+Во время физического контакта проверяет отсутствие BattleEncounter, тег Player и время задержки; затем повреждает Health.
+
+## 3. Методы и функции
+
+`OnCollisionStay2D(Collision2D collision)` — Unity при продолжающемся контакте: вызывает Health.TakeDamage(damage), записывает nextAttackTime=Time.time+attackCooldown и сообщение Console; void.
+
+## 4. Переменные и параметры Inspector
+
+damage — код 10, ≥0. attackCooldown — код 1 секунда, >0. nextAttackTime — внутренний таймер.
+
+## 5. Связи с другими системами
+
+Нужен нетриггерный Collider2D; цель — Player с Health. BattleEncounter имеет приоритет независимо от enabled. У скелета SampleScene EnemyAttack выключен.
+
+## 6. Пример работы
+
+Контактный враг без BattleEncounter наносит 10 HP раз в секунду; скелет вместо этого запускает бой.
+
+## 7. Возможные проблемы и проверки
+
+Unity может послать collision выключенному Behaviour; проверка BattleEncounter обязательна. Нет собственной обработки смерти. Отсутствие лишнего урона скелета проверено Play Mode; старая ветка отдельно не тестировалась.
+
+## 8. История изменений
+
+- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
