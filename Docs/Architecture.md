@@ -29,6 +29,9 @@
 В текущем списке сборки доступны MainMenu, SampleScene и BattleScene. Физическая встреча запускает бой; прямой запуск BattleScene без активной встречи показывает вспомогательное меню исследования.
 
 ## Владельцы данных
+- ItemData — только статические определения; прежний BattleConsumable наследует их без замены Potion/GUID.
+- BattleInventory.State — один InventoryState30 слотов и Gold на исходном Player. Старый items/новый startingItems только seed; модель создаётся один раз. UI/бой не копируют количество. Код: Assets/Scripts/Inventory, данные Assets/Settings/Inventory. Сохранение/внешняя десериализация ещё не подключены.
+
 
 - **BattleScreenFade:** временный Canvas, единственная часть перехода, переживающая Single-загрузку до проявления; не хранит RPG-состояние. HUD/Presentation отображают вход/исход, Transition управляет сценами.
 

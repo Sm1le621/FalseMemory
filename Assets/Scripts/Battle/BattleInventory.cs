@@ -14,29 +14,45 @@ public sealed class BattleItemStack
 [DisallowMultipleComponent]
 public sealed class BattleInventory : MonoBehaviour
 {
+    // Existing scene entries remain startup seeds, preserving asset/scene GUIDs.
     public List<BattleItemStack> items = new List<BattleItemStack>();
-    public IEnumerable<BattleConsumable> Definitions => items.Where(s => s != null && s.definition != null).Select(s => s.definition).Distinct();
-
-    public int Count(BattleConsumable definition)
+    public List<StartingItem> startingItems = new List<StartingItem>();
+    [NonSerialized] private InventoryState state;
+    public InventoryState State
     {
-        if (definition == null) return 0;
-        long total = 0;
-        foreach (var stack in items)
-            if (stack != null && stack.definition == definition) total += Math.Max(0, stack.count);
-        return (int)Math.Min(int.MaxValue, total);
+        get
+        {
+            if(state!=null)return state;
+            var candidate=new InventoryState();
+            foreach(var seed in items ?? new List<BattleItemStack>())
+                if(seed!=null && seed.definition!=null && seed.count>0 && !candidate.TryAdd(seed.definition,seed.count))
+                    throw new InvalidOperationException("Начальные предметы не помещаются в инвентарь30 слотов.");
+            foreach(var seed in startingItems ?? new List<StartingItem>())
+                if(seed!=null && seed.definition!=null && seed.count>0 && !candidate.TryAdd(seed.definition,seed.count))
+                    throw new InvalidOperationException("Начальные предметы не помещаются в инвентарь30 слотов.");
+            state=candidate;return state;
+        }
+    }
+    // Keep exhausted starting consumables visible/disabled in the existing battle menu.
+    public IEnumerable<BattleConsumable> Definitions => State.Definitions.OfType<BattleConsumable>()
+        .Concat((items ?? new List<BattleItemStack>()).Where(s=>s!=null && s.definition!=null).Select(s=>s.definition)).Distinct();
+
+    public int Count(ItemData definition)
+    {
+        return State.Count(definition);
     }
 
     public bool TryConsume(BattleConsumable definition)
     {
-        if (definition == null) return false;
-        foreach (var stack in items)
-        {
-            if (stack == null || stack.definition != definition || stack.count <= 0) continue;
-            stack.count--;
-            return true;
-        }
-        return false;
+        return State.TryRemove(definition,1);
     }
 
+    public bool TryAdd(ItemData definition,int amount) => State.TryAdd(definition,amount);
     public string Summary => string.Join("  ", Definitions.Select(d => d.displayName + " ×" + Count(d)));
+}
+
+[Serializable] public sealed class StartingItem
+{
+    public ItemData definition;
+    [Min(0)] public int count=1;
 }

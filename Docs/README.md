@@ -1,10 +1,14 @@
 # Документация FalseMemory
 
-FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Документы написаны для владельца без опыта C# и описывают текущую рабочую копию на **2026-10-11**.
+FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Документы написаны для владельца без опыта C# и описывают текущую рабочую копию на **2026-10-12**.
 
 Начните с [архитектуры](Architecture.md), затем откройте нужную систему или скрипт. Постоянные правила находятся в [AGENTS.md](../AGENTS.md); их нужно читать перед каждой новой задачей.
 
 ## Общие документы
+- [Roadmap](Roadmap.md) — статусы этапов4–10 и ручные границы.
+- [MasterDevelopmentPlan](MasterDevelopmentPlan.md) — полный план владельца.
+- [Этап4](InventoryStage4.md) — интеграция/результаты.
+
 
 - [Этап 3 — полировка](BattleStage3.md) — изменения представления боя и результаты проверок.
 
@@ -39,6 +43,10 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 Полноценного SaveSystem, партийного боя, классов, экипировки и level-up пока нет; они не документируются как готовые системы. PlayerPrefs уже сохраняет настройки меню, но не RPG-прогресс.
 
 ## Описания скриптов
+- [ItemData](Scripts/Inventory/ItemData.md) — статические определения.
+- [InventoryState](Scripts/Inventory/InventoryState.md) — общий запас30 слотов/Gold.
+- [InventoryTests](Scripts/Tests/EditMode/InventoryTests.md) — граничные операции.
+
 
 - [BattleScreenFade](Scripts/Battle/BattleScreenFade.md) — временный экран перехода, включая Restart/Main Menu.
 
@@ -53,7 +61,7 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [BattleHUD](Scripts/Battle/BattleHUD.md) — оформление, полосы и предупреждение HP.
 - [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md) — проверки представления боя.
 
-После подэтапа 3.7 — **40 C#-файлов в Assets**: 30 игровых, 9 тестовых и 1 служебный. Частичные тестовые классы объединяют несколько файлов, но каждый исходный файл имеет отдельное описание. Скрипты внешних пакетов и Library сюда не входят.
+После подэтапа4.1 — **43 C#-файла в Assets**:32 игровых,10 тестовых и1 служебный. Частичные тестовые классы объединяют несколько файлов, но каждый исходный файл имеет отдельное описание. Скрипты внешних пакетов и Library сюда не входят.
 
 - [BattleAbilities](Scripts/Battle/BattleAbilities.md) — `Assets/Scripts/Battle/BattleAbilities.cs`.
 - [BattleCalculator](Scripts/Battle/BattleCalculator.md) — `Assets/Scripts/Battle/BattleCalculator.cs`.

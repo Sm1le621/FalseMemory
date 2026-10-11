@@ -2,42 +2,41 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleInventory.cs.
+Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleInventory.cs.
 
-Компактное хранение расходуемых предметов участника в текущей сессии.
+Прежний компонент Player теперь владеет общим State30 слотов. Второй боевой запас не создаётся.
 
 ## 2. Как работает
 
-Список items сохраняется на исходном Player. Уникальные определения используются в меню, Count объединяет одноимённые ссылки-ассеты, TryConsume уменьшает одну положительную стопку.
+Ленивая инициализация из items/startingItems один раз. Positive seed переносятся целиком, неверный полный набор отвергается исключением без частичного State. Hide/show не сбрасывает модель.
 
 ## 3. Методы и функции
 
-- `Definitions` — свойство: уникальные ненулевые определения из items.
-- `Count(BattleConsumable definition)` → int суммы положительных количеств, максимум int.MaxValue; null даёт 0.
-- `TryConsume(BattleConsumable definition)` → bool; уменьшает первую подходящую положительную стопку на 1, иначе false.
-- `Summary` — строка имён и количеств для UI. Unity callbacks и сброса при OnEnable нет.
+`State` → InventoryState: кандидат из положительных ненулевых seed. `Definitions` → текущие BattleConsumable плюс прежние начальные определения: исчерпанные Potion видимы/недоступны в Items. `Count(ItemData)` → число State; `TryConsume(BattleConsumable)` удаляет1; `TryAdd(ItemData,amount)` → bool; `Summary` → имена/количества расходуемых. Unity callbacks нет.
 
-## 4. Переменные и параметры Inspector
+## 4. Переменные и Inspector
 
-items — публичный List<BattleItemStack>. Каждая стопка: definition ссылка BattleConsumable, count целое≥0 (Min); SampleScene Potion×3. Несколько компонентов запрещены DisallowMultipleComponent.
+items List<BattleItemStack> — старый начальный набор definition/count≥0, SampleScene Potion3. startingItems List<StartingItem> — начальные любые ItemData/count1. state NonSerialized, после инициализации количества seed не источник текущего запаса.
 
-## 5. Связи с другими системами
+## 5. Связи
 
-На Player рядом с BattleUnit/Health. BattleUnit.Inventory получает компонент; Manager строит Items; Abilities проверяет/расходует.
+Unit.Inventory, Manager/Abilities/HUD читают прежний API; State.Changed обслуживает новый UI.
 
-## 6. Пример работы
+## 6. Пример
 
-Стопки Potion2 и Potion1 → Count=3; TryConsume → Count=2. Скрытие мира количества не сбрасывает.
+Переход скрывает Player, Potion3→2; возврат читает тот же State.
 
 ## 7. Настройка в Unity
 
-На Player вместе с BattleUnit. В Items создай стопку Definition=Potion.asset, Count=3. Count задавать целым≥0. Копировать этот компонент на портрет BattleScene не нужно. Определение эффекта настраивается в SO, количество — здесь.
+Компонент уже на Player. Не задавать Potion дважды в двух seed. Менять Play-запас через State/TryAdd, не стартовый список.
 
-## 8. Возможные проблемы и проверки
+## 8. Ограничения и расширение
 
-items не должен быть null; отрицательные count игнорируются, но не исправляются в списке. Только ссылка на тот же ассет объединяет стопки, не совпадающее имя. Нет инвентаря мира/дискового сохранения. Дубликаты, ноль и сохранение проверены тестами.
+Начальный набор обязан помещаться; legacy negative игнорируется. Сохранений на диск нет. UI/подбор/экипировка следующие подэтапы.
 
 ## 9. История изменений
+
+2026-10-12 — 4.1: общий запас30, прежние seed/API и GUID сохранены.
 
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 

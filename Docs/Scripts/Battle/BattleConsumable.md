@@ -2,39 +2,41 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleConsumable.cs.
+Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleConsumable.cs.
 
-ScriptableObject определения лечебного расходуемого предмета.
+Прежний SO расходуемого наследует ItemData. Один предмет в мире и бою.
 
 ## 2. Как работает
 
-Хранит общий эффект, а количество лежит в BattleInventory. BattleAbilities применяет healing к разрешённой цели.
+Статическое имя/ID/цены/иконка/лимит наследуются; target/healing/manaRestoration/effectColor определяют эффект. Runtime количество отдельно.
 
 ## 3. Методы и функции
 
-Методов/Unity callbacks нет; CreateAssetMenu FalseMemory/Battle Consumable создаёт данные.
+Собственных методов/callbacks нет; наследуемые IsEquipment/StackLimit/CanSell/Fits в ItemData. Эффект вызывает BattleAbilities.
 
-## 4. Переменные и параметры Inspector
+## 4. Переменные и Inspector
 
-displayName — код Potion; target — код Self; healing≥0, код 30; effectColor — зелёный Color. Эти значения назначены Potion.asset.
+target Self/Enemy; healing≥0 (код30), manaRestoration≥0 (код0), effectColor зелёный. Potion прежние имя/30HP/GUID, item.potion/лимит99/цены30/15. Ether healing0/manaRestoration20, item.ether/цены50/25. MP-эффект пока данные, подключается4.5.
 
-## 5. Связи с другими системами
+## 5. Связи
 
-Assets/Settings/Battle/Items/Potion.asset; ссылки в BattleInventory.items[].definition; BattleAbilities/Manager/UI.
+ItemData, InventoryState, BattleAbilities/Manager/UI. Прежняя ссылка/ассет Potion не заменены.
 
-## 6. Пример работы
+## 6. Пример
 
-Potion.asset с healing30 → использование одного Potion восстанавливает до 30 HP.
+Определение Potion не хранит владение3/2; это делает общий State.
 
 ## 7. Настройка в Unity
 
-Это ScriptableObject, не компонент GameObject. Create → FalseMemory → Battle Consumable создаёт лечебное определение; настрой имя, Target, Healing, цвет и назначь Definition стопки BattleInventory. Готовый Potion в Assets/Settings/Battle/Items; Count в ассете не хранится.
+Create → FalseMemory → Battle Consumable, задать имя/ID/категорию Consumable/цель/эффект. Не компонент. Ether healing0/manaRestoration20.
 
-## 8. Возможные проблемы и проверки
+## 8. Ограничения и расширение
 
-Поддерживается только лечение HP: Ether, Phoenix Down и антидоты отсутствуют. Количество нельзя хранить в общем ассете. Лечение Potion проверено тестами.
+Не воскрешает. До подключения4.5 Ether не объявляется работающим MP-эффектом. SO не должен хранить количество.
 
 ## 9. История изменений
+
+2026-10-12 — 4.1: наследование ItemData и данные Ether, Potion сохранён.
 
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 
