@@ -33,7 +33,13 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
 
     public Health Health => GetComponent<Health>();
     public BattleInventory Inventory => GetComponent<BattleInventory>();
-    public int Speed => Mathf.Max(0, speed);
+    public EquipmentController Equipment => GetComponent<EquipmentController>();
+    private ItemStatBonus EquipmentBonuses => Equipment!=null?Equipment.State.Bonuses:new ItemStatBonus();
+    public int EffectiveAttack => ItemStatBonus.Sum(attack,EquipmentBonuses.attack);
+    public int EffectiveDefense => ItemStatBonus.Sum(defense,EquipmentBonuses.defense);
+    public int EffectiveMagicAttack => ItemStatBonus.Sum(magicAttack,EquipmentBonuses.magicAttack);
+    public int EffectiveMagicDefense => ItemStatBonus.Sum(magicDefense,EquipmentBonuses.magicDefense);
+    public int Speed => ItemStatBonus.Sum(speed,EquipmentBonuses.speed);
     public bool IsAlive => Health != null && Health.currentHealth > 0;
     public bool IsDefending { get; private set; }
     public int MaxMP => Mathf.Max(0, maxMP);

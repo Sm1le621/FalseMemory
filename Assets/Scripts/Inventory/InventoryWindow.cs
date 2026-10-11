@@ -12,13 +12,19 @@ public sealed class InventoryWindow : MonoBehaviour
     public TextMeshProUGUI details, goldLabel, message;
     public Button splitButton, useButton, closeButton;
     public Image dragIcon;
+    public Button equipButton;
+    public Button[] equipmentButtons;
+    public TextMeshProUGUI equipmentStats;
     public event Action<int> UseRequested;
+    public event Action<int,EquipmentSlot?> EquipRequested;
+    public event Action<EquipmentSlot> UnequipRequested;
     public bool IsOpen => panel!=null && panel.gameObject.activeSelf;
     public int SelectedIndex {get;private set;}
     public BattleInventory Inventory {get;private set;}
     private WorldInputGate gate;
     private BattleUnit unit;
     private int dragging=-1;
+    private UnityEngine.Events.UnityAction[] equipmentClicks;
 
     private void Awake()
     {
@@ -27,6 +33,13 @@ public sealed class InventoryWindow : MonoBehaviour
         if(splitButton!=null)splitButton.onClick.AddListener(SplitSelected);
         if(useButton!=null)useButton.onClick.AddListener(RequestUse);
         if(closeButton!=null)closeButton.onClick.AddListener(Close);
+        if(equipButton!=null)equipButton.onClick.AddListener(RequestEquip);
+        equipmentClicks=new UnityEngine.Events.UnityAction[equipmentButtons?.Length ?? 0];
+        for(int i=0;i<equipmentClicks.Length;i++)
+        {
+            var equipmentSlot=(EquipmentSlot)i;equipmentClicks[i]=()=>ClickEquipmentSlot(equipmentSlot);
+            equipmentButtons[i].onClick.AddListener(equipmentClicks[i]);
+        }
         Close();
     }
     private void OnEnable(){if(Application.isPlaying && Inventory!=null)Inventory.State.Changed+=Refresh;}
@@ -36,6 +49,8 @@ public sealed class InventoryWindow : MonoBehaviour
         if(splitButton!=null)splitButton.onClick.RemoveListener(SplitSelected);
         if(useButton!=null)useButton.onClick.RemoveListener(RequestUse);
         if(closeButton!=null)closeButton.onClick.RemoveListener(Close);
+        if(equipButton!=null)equipButton.onClick.RemoveListener(RequestEquip);
+        for(int i=0;i<(equipmentClicks?.Length ?? 0);i++)if(equipmentButtons[i]!=null)equipmentButtons[i].onClick.RemoveListener(equipmentClicks[i]);
     }
     private void Update()
     {
@@ -68,6 +83,15 @@ public sealed class InventoryWindow : MonoBehaviour
             "\n\n"+item.description+"\n\nСтопка: "+item.StackLimit+"   Купить: "+item.buyPrice+"   Продать: "+(item.CanSell?item.sellPrice.ToString():"—");
         splitButton.interactable=!selected.IsEmpty && selected.Count>1 && item.stackable && Inventory.State.FirstEmptySlot()>=0;
         useButton.interactable=!selected.IsEmpty && item is BattleConsumable && UseRequested!=null;
+        var equipment=GetComponent<EquipmentController>();
+        if(equipButton!=null)equipButton.interactable=!selected.IsEmpty && item.IsEquipment && item.requiredLevel<=unit.level && EquipRequested!=null;
+        for(int i=0;i<(equipmentButtons?.Length ?? 0);i++)
+        {
+            var slot=(EquipmentSlot)i;var worn=equipment!=null?equipment.State.GetSlot(slot):null;
+            equipmentButtons[i].GetComponentInChildren<TextMeshProUGUI>().text=slot+": "+(worn!=null?worn.displayName:"—");
+            equipmentButtons[i].interactable=equipment!=null && (worn!=null || (item!=null && item.Fits(slot) && item.requiredLevel<=unit.level));
+        }
+        if(equipmentStats!=null)equipmentStats.text="ATK "+unit.EffectiveAttack+"  DEF "+unit.EffectiveDefense+"  MATK "+unit.EffectiveMagicAttack+"  MDEF "+unit.EffectiveMagicDefense+"  SPD "+unit.Speed;
     }
     public void SplitSelected()
     {
@@ -77,6 +101,13 @@ public sealed class InventoryWindow : MonoBehaviour
         ShowMessage(ok?"Стопка разделена пополам.":"Для деления нужны хотя бы2 предмета и пустой слот.");
     }
     private void RequestUse(){if(IsOpen)UseRequested?.Invoke(SelectedIndex);}
+    private void RequestEquip(){if(IsOpen)EquipRequested?.Invoke(SelectedIndex,null);}
+    private void ClickEquipmentSlot(EquipmentSlot slot)
+    {
+        if(!IsOpen)return;var selected=Inventory.State.GetSlot(SelectedIndex);
+        if(!selected.IsEmpty && selected.Item.Fits(slot))EquipRequested?.Invoke(SelectedIndex,slot);
+        else UnequipRequested?.Invoke(slot);
+    }
     public void ShowMessage(string text){if(message!=null)message.text=text;}
     public void BeginDrag(int index,Vector2 position)
     {
@@ -99,6 +130,22 @@ public sealed class InventoryWindow : MonoBehaviour
     public void EndDrag(){dragging=-1;if(dragIcon!=null)dragIcon.gameObject.SetActive(false);}
 
 #if UNITY_EDITOR
+    public void BuildEquipmentLayout()
+    {
+        if(panel==null || equipButton!=null)throw new InvalidOperationException("Нужен готовый инвентарь без панели экипировки.");
+        var buttons=new[]{useButton,splitButton,closeButton};var xs=new[]{36f,142f,356f};var widths=new[]{98f,98f,104f};
+        for(int i=0;i<3;i++)
+        {
+            Place(buttons[i].GetComponent<RectTransform>(),xs[i],76,widths[i],30);
+            Place(buttons[i].GetComponentInChildren<TextMeshProUGUI>().rectTransform,4,2,widths[i]-8,26);
+        }
+        equipButton=Button(panel,"Equip","Экипировать",248,76,100,30);
+        Label(panel,"EquipmentTitle","EQUIPMENT — нажмите слот",12,500,244,424,20);
+        equipmentButtons=new Button[7];
+        for(int i=0;i<7;i++)equipmentButtons[i]=Button(panel,"Equipment"+(EquipmentSlot)i,(EquipmentSlot)i+": —",500,216-i*23,424,20);
+        equipmentStats=Label(panel,"EquipmentStats","",12,500,45,424,28);
+        Place(message.rectTransform,36,40,424,28);UnityEditor.EditorUtility.SetDirty(this);
+    }
     public void BuildLayout()
     {
         if(panel!=null)throw new InvalidOperationException("Инвентарь уже построен; сохранённые объекты не заменяются.");

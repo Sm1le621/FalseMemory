@@ -8,6 +8,28 @@ using UnityEngine.TestTools;
 
 public sealed partial class BattleFlowTests
 {
+    [UnityTest] public IEnumerator EquipmentButtonsApplyAndRemoveBonusesWithoutChangingBaseStatsOrResources()
+    {
+        var player=Player();var window=player.GetComponent<InventoryWindow>();var equipment=player.GetComponent<EquipmentController>();
+        var sword=GameObject.Find("Pickup_IronSword").GetComponent<WorldItemPickup>().item;
+        var armor=GameObject.Find("Pickup_LeatherArmor").GetComponent<WorldItemPickup>().item;
+        var helmet=GameObject.Find("Pickup_IronHelmet").GetComponent<WorldItemPickup>().item;
+        player.Inventory.TryAdd(sword,1);player.Inventory.TryAdd(armor,1);player.Inventory.TryAdd(helmet,1);
+        Assert.That(window.Open(),Is.True);
+        for(int i=0;i<5;i++)
+        {
+            window.Select(1);window.equipButton.onClick.Invoke();Assert.That(player.EffectiveAttack,Is.EqualTo(20));
+            Assert.That(player.Inventory.Count(sword),Is.Zero);
+            window.equipmentButtons[0].onClick.Invoke();Assert.That(player.EffectiveAttack,Is.EqualTo(15));
+            Assert.That(player.Inventory.Count(sword),Is.EqualTo(1));
+        }
+        window.Select(1);window.equipButton.onClick.Invoke();window.Select(2);window.equipButton.onClick.Invoke();window.Select(3);window.equipButton.onClick.Invoke();
+        Assert.That(player.EffectiveAttack,Is.EqualTo(20));Assert.That(player.EffectiveDefense,Is.EqualTo(14));
+        Assert.That(player.attack,Is.EqualTo(15));Assert.That(player.defense,Is.EqualTo(8));
+        Assert.That(player.Health.currentHealth,Is.EqualTo(100));Assert.That(player.CurrentMP,Is.EqualTo(30));
+        Assert.That(window.equipmentStats.text,Does.Contain("DEF 14"));
+        Assert.That(equipment.State.GetSlot(EquipmentSlot.Head),Is.SameAs(helmet));window.Close();yield return null;
+    }
     [UnityTest] public IEnumerator InventoryKeysBlockMovementAndEscapeRestoresIt()
     {
         var player=Player();var window=player.GetComponent<InventoryWindow>();var body=player.GetComponent<Rigidbody2D>();
