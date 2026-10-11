@@ -50,4 +50,32 @@ public sealed partial class BattleFlowTests
         ExecuteEvents.Execute(window.slots[target].gameObject,data,ExecuteEvents.dropHandler);
         ExecuteEvents.Execute(window.slots[source].gameObject,data,ExecuteEvents.endDragHandler);
     }
+
+    [UnityTest] public IEnumerator PickupERejectsFullInventoryThenCollectsExactlyOnceAndRespectsModalInput()
+    {
+        var player=Player();var inventory=player.Inventory.State;var window=player.GetComponent<InventoryWindow>();
+        var filler=ScriptableObject.CreateInstance<ItemData>();filler.id="test.filler";filler.stackable=false;
+        var loot=ScriptableObject.CreateInstance<ItemData>();loot.id="test.loot";
+        var obj=new GameObject("Test pickup",typeof(CircleCollider2D),typeof(WorldItemPickup));
+        var pickup=obj.GetComponent<WorldItemPickup>();obj.GetComponent<CircleCollider2D>().isTrigger=true;
+        pickup.item=loot;pickup.quantity=2;obj.transform.position=player.transform.position+Vector3.right*0.2f;Physics2D.SyncTransforms();
+        var keyboard=InputSystem.AddDevice<Keyboard>();
+        try
+        {
+            Assert.That(inventory.TryAdd(filler,29),Is.True);window.Open();
+            InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.E));yield return null;
+            Assert.That(pickup.Collected,Is.False);window.Close();
+            InputSystem.QueueStateEvent(keyboard,new KeyboardState());yield return new WaitForSecondsRealtime(0.2f);
+            InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.E));yield return null;yield return null;
+            Assert.That(pickup.Collected,Is.False);Assert.That(obj.activeSelf,Is.True);Assert.That(inventory.Count(loot),Is.Zero);
+            Assert.That(player.GetComponent<PlayerInteractor>().notification.text,Does.Contain("Нет места"));
+            inventory.TryRemove(filler,1);
+            InputSystem.QueueStateEvent(keyboard,new KeyboardState());yield return new WaitForSecondsRealtime(0.2f);
+            InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.E));yield return null;yield return null;
+            Assert.That(pickup.Collected,Is.True);Assert.That(obj.activeSelf,Is.False);Assert.That(inventory.Count(loot),Is.EqualTo(2));
+            for(int i=0;i<10;i++)Assert.That(pickup.TryInteract(player,out _),Is.False);
+            Assert.That(inventory.Count(loot),Is.EqualTo(2));
+        }
+        finally {InputSystem.RemoveDevice(keyboard);window.Close();Object.Destroy(obj);Object.Destroy(filler);Object.Destroy(loot);}
+    }
 }

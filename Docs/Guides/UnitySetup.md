@@ -27,6 +27,8 @@ BattleManager.ui ссылается на BattleUI. В UI назначены со
 
 Для Fire/Heal назначены FireVisual/HealVisual в поле visualEffect заклинаний; длительность0.45, частицы12. В AudioController назначен DefaultBattleAudio и существующий AudioSource: Spatial Blend0, Ignore Listener Volume=false. BattleMixer/Master подключён, все AudioClip пока пусты — назначайте подходящие звуки в профиль. Общая громкость меню сохраняет прежнее управление AudioListener.volume.
 Presentation: Attack0.4, Hit0.18, Outcome0.35, Message0.75, Enemy Think0.5, Allow Fast Forward=true, множитель3. Space ускоряет движения/паузы, не игровой урон; отключить можно в Inspector. DefaultBattleRules.actionDelay остаётся0.8, fadeDuration назначено0.5; стоимость заклинаний и параметры участников сохраняются.
+## Инвентарь мира и подбор
+На Player общий BattleInventory, InventoryWindow, WorldInputGate и PlayerInteractor. InventoryCanvas содержит30 ячеек/описания и две мировые подсказки; I/Escape закрывают окно. Количество менять через State, стартовые seed только до инициализации. TestLoot слева/ниже старта содержит семь предметов из WorldItemPickup prefab; триггеры/иконки/количества/уникальные worldId назначены MCP. Подойти и нажать E; при нехватке места вещь остаётся. Для новых размещений задайте уникальный ID, не перемещайте существующие кусты.
 ## Добавление данных
 
 Create → FalseMemory → Battle Spell создаёт заклинание с поддерживаемым эффектом; назначь его в Spells игрока. Battle Consumable создаёт лечебный предмет; добавь его определение в стопку Inventory. Battle Rules — общие коэффициенты. Новые типы эффектов требуют программирования; изменение чисел существующего эффекта — настройки данных.

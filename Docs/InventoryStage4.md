@@ -19,3 +19,7 @@
 ## 4.2 — окно и управление
 
 Созданы/сохранены MCP InventoryCanvas,30 views, контроллер на Player и WorldInputGate. I/Escape, выбор/описание/количество/Gold, перенос/обмен/слияние/деление; использование пока disabled до4.5. Сохранение SampleScene сохранило все103 прежних YAML-ID, изменены только список компонентов Player, новый root и пустой startingItems. 28 PlayMode passed,0 failed/skipped, jobc0fa536ae3004cc0a8ca2ce3c1af7ad6. Синтетическая клавиатура и EventSystem handlers проверены; настоящий raycast/drag курсором владельца ещё не проверен. MCP открыл окно в реальном Play при1484×835, снимок Temp/InventoryStage4Verification/inventory42.png просмотрен; выходов/переполнений0. Play остановлен, Console0 ошибок/предупреждений. Компиляция успешна.
+
+## 4.3 — подбор E
+
+После прерывания проверены AGENTS/Docs/Git/Unity:4.1 и4.2 сохранены, незавершённый код4.3 продолжен без повторного создания. Текущая ветка stas_megamosk_build, посторонних исходников в diff нет. PlayerInteractor/IWorldInteractable/WorldItemPickup, prefab и семь instance TestLoot созданы/сохранены MCP; точки выбраны Physics2D без блокеров. Подсказка/сообщение, close/gate, проверки расстояния, резерв выдачи, полный отказ и однократность.29 PlayMode passed,0 failed/skipped, job667b8aea745b4fbf8e76430172f800de. Компиляция успешна, Console0 игровых ошибок/одно служебное предупреждение Account API timeout. Оружие/использование Ether ещё не подключены; этап5 не начат.

@@ -29,6 +29,8 @@
 В текущем списке сборки доступны MainMenu, SampleScene и BattleScene. Физическая встреча запускает бой; прямой запуск BattleScene без активной встречи показывает вспомогательное меню исследования.
 
 ## Владельцы данных
+- PlayerInteractor/IWorldInteractable — один вход E/поиск ближайшей физической цели. WorldItemPickup резервирует выдачу в общий State и выключает только себя; prefab/семь тестовых instance TestLoot сохраняются в SampleScene. Это не SaveSystem/NPC.
+
 - InventoryWindow/InventorySlotView —30 readonly views, событийное обновление, pointer drag. InventoryCanvas сохранён в SampleScene, не отдельная система данных.
 - WorldInputGate — владельцы модального ввода; PlayerController проверяет gate, время и enabled не меняются.
 
