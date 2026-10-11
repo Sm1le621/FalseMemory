@@ -3385,6 +3385,9 @@ MonoBehaviour:
   menuTitle: {fileID: 557635604}
   content: {fileID: 1339572780}
   menuGroup: {fileID: 375954918}
+  screenGroup: {fileID: 1339572781}
+  resultGroup: {fileID: 1700492754}
+  revealDuration: 0.22
   barDuration: 0.22
   menuDuration: 0.12
   lowHealthThreshold: 0.25
@@ -3407,6 +3410,7 @@ MonoBehaviour:
   hitDuration: 0.18
   lungeDistance: 42
   reactionDistance: 8
+  outcomeDuration: 0.35
 --- !u!114 &1312204537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3541,6 +3545,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1339572780}
+  - component: {fileID: 1339572781}
   m_Layer: 0
   m_Name: BattleContent
   m_TagString: Untagged
@@ -3590,6 +3595,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 960, y: 540}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1339572781
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339572779}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &1370198269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4763,6 +4780,7 @@ GameObject:
   - component: {fileID: 1700492751}
   - component: {fileID: 1700492752}
   - component: {fileID: 1700492753}
+  - component: {fileID: 1700492754}
   m_Layer: 0
   m_Name: BattleResults
   m_TagString: Untagged
@@ -4843,6 +4861,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0.5176471, g: 0.44705883, b: 0.34509805, a: 1}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 0
+--- !u!225 &1700492754
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700492749}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1762683138
 GameObject:
   m_ObjectHideFlags: 0

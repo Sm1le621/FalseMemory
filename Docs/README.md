@@ -40,6 +40,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 
 ## Описания скриптов
 
+- [BattleScreenFade](Scripts/Battle/BattleScreenFade.md) — временный экран перехода, включая Restart/Main Menu.
+
 - [BattleAudioProfile](Scripts/Battle/BattleAudioProfile.md) — ссылки собственных звуков.
 - [BattleAudioController](Scripts/Battle/BattleAudioController.md) — безопасное воспроизведение событий.
 

@@ -39,9 +39,11 @@ public sealed class BattleManager : MonoBehaviour
         Player = transition.Player; Enemy = transition.Enemy; rules = transition.rules;
         ui.ShowUnits(Player, Enemy);
         if (presentation != null) presentation.Bind(Player, Enemy);
+        if (ui.hud != null) ui.hud.HideForEntrance();
         ui.ShowMessage("Скелет преграждает путь.");
         ui.SetCommandsEnabled(false);
         while (transition.IsTransitioning) yield return null;
+        if (ui.hud != null) yield return ui.hud.RevealScreen(rules.actionDelay);
         yield return new WaitForSecondsRealtime(rules.actionDelay);
 
         while (Player.IsAlive && Enemy.IsAlive)
@@ -148,6 +150,7 @@ public sealed class BattleManager : MonoBehaviour
                 yield return new WaitForSecondsRealtime(rules.actionDelay);
                 if (State == BattleState.Escaped)
                 {
+                    if(presentation!=null)yield return presentation.Finish(BattleState.Escaped,rules.actionDelay);
                     transition.ReturnAfterEscape();
                     yield break; // No enemy action, victory reward or further round.
                 }
@@ -156,8 +159,10 @@ public sealed class BattleManager : MonoBehaviour
         }
         CurrentActor = null;
         gate.Close();
+        ui.SetCommandsEnabled(false);
         if (Player.IsAlive)
         {
+            if(presentation!=null)yield return presentation.Finish(BattleState.Victory,rules.actionDelay);
             State = BattleState.Victory;
             if (audioController != null) audioController.Play(BattleSound.Victory);
             transition.TryGrantVictoryExperience(out int gained);
@@ -169,10 +174,12 @@ public sealed class BattleManager : MonoBehaviour
         }
         else
         {
+            if(presentation!=null)yield return presentation.Finish(BattleState.Defeat,rules.actionDelay);
             State = BattleState.Defeat;
             if (audioController != null) audioController.Play(BattleSound.Defeat);
             ui.RefreshStats(Player, Enemy, Round);
             ui.ShowMessage("Game Over — герой пал.");
+            ui.ShowDefeatResults();
             ui.ShowMenu(new[] { "Начать заново", "Главное меню" }, new System.Action[] {
                 () => { ui.SetCommandsEnabled(false); transition.RestartGame(); },
                 () => { ui.SetCommandsEnabled(false); transition.ReturnToMainMenu(); } });

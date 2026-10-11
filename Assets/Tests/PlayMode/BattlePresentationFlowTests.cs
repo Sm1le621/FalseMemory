@@ -5,6 +5,20 @@ using UnityEngine.TestTools;
 
 public sealed partial class BattleFlowTests
 {
+    [UnityTest] public IEnumerator PresentationEntranceAndOutcomesKeepTransitionLockedAndShowResults()
+    {
+        var player=Player();var enemy=Enemy();var transition=BattleTransition.Instance;
+        Assert.That(transition.TryBegin(player,enemy),Is.True);
+        for(int i=0;i<5;i++)Assert.That(transition.TryBegin(player,enemy),Is.False);
+        yield return WaitUntil(()=>Manager()!=null && Manager().State==BattleState.AwaitingPlayer);
+        var manager=Manager();Assert.That(manager.ui.hud.screenGroup.alpha,Is.EqualTo(1f));
+        player.Health.TakeDamage(100);yield return WaitUntil(()=>manager.State==BattleState.Defeat);
+        Assert.That(manager.ui.resultPanel.gameObject.activeSelf,Is.True);
+        Assert.That(manager.ui.resultText.text,Does.Contain("Game Over"));
+        Assert.That(manager.ui.playerPortrait.color.a,Is.Zero);
+        Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.False);
+    }
+
     [UnityTest] public IEnumerator MissingAudioClipsAreSafeAndListenerVolumeIsRespected()
     {
         var player=Player();yield return BeginBattle(player,Enemy());var manager=Manager();var audio=manager.audioController;

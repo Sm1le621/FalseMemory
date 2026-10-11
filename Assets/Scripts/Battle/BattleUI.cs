@@ -174,6 +174,15 @@ public sealed class BattleUI : MonoBehaviour
     {
         resultPanel.gameObject.SetActive(true);
         resultText.text = "Victory!\nEXP Gained: +" + gained + "\nTotal EXP: " + player.CurrentExperience + "\nCurrent Level: " + player.level;
+        if(hud!=null)hud.RevealResult();
+    }
+
+    public void ShowDefeatResults()
+    {
+        if(resultPanel==null || resultText==null)return;
+        resultPanel.color=new Color32(43,24,35,248);resultPanel.gameObject.SetActive(true);
+        resultText.text="Game Over\nВаш путь оборвался.\nНачать заново / Главное меню";
+        if(hud!=null)hud.RevealResult();
     }
 
     public void ShowUnits(BattleUnit player, BattleUnit enemy)
@@ -228,7 +237,8 @@ public sealed class BattleUI : MonoBehaviour
         playerStats.text = hud == null ? Stats(player) : player.displayName + "   LV " + player.level + "\nHP  " + player.Health.currentHealth + " / " + player.Health.maxHealth + "\nMP  " + player.CurrentMP + " / " + player.MaxMP;
         enemyStats.text = hud == null ? Stats(enemy) : enemy.displayName + "   LV " + enemy.level + "   |   HP " + enemy.Health.currentHealth + " / " + enemy.Health.maxHealth + (enemy.IsDefending ? "   DEFEND" : "");
         roundText.text = "РАУНД " + round;
-        enemyPortrait.color = enemy.IsAlive ? enemy.spriteColor : new Color(0.35f, 0.35f, 0.35f, 0.35f);
+        if(enemy.IsAlive)enemyPortrait.color=enemy.spriteColor;
+        else if(GetComponent<BattlePresentation>()==null)enemyPortrait.color=new Color(0.35f,0.35f,0.35f,0.35f);
     }
 
     private static string Stats(BattleUnit unit) =>

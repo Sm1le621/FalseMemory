@@ -30,6 +30,8 @@
 
 ## Владельцы данных
 
+- **BattleScreenFade:** временный Canvas, единственная часть перехода, переживающая Single-загрузку до проявления; не хранит RPG-состояние. HUD/Presentation отображают вход/исход, Transition управляет сценами.
+
 - **BattleAudioProfile/Controller:** ссылки клипов и единственный AudioSource боя, output BattleMixer/Master. Общая громкость остаётся в SettingsMenu/AudioListener.
 
 - **BattleVFXProfile/Controller:** данные и воспроизведение эффектов в UI; ссылки Spell.visualEffect не участвуют в игровой формуле. Пул освобождается при выгрузке.

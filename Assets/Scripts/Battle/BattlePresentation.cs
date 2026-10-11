@@ -12,6 +12,7 @@ public sealed class BattlePresentation : MonoBehaviour
     [Range(0f, 1f)] public float hitDuration = 0.18f;
     [Min(0f)] public float lungeDistance = 42f;
     [Min(0f)] public float reactionDistance = 8f;
+    [Range(0f,1f)] public float outcomeDuration = 0.35f;
     private Vector2 playerHome, enemyHome;
     private Vector3 playerScale, enemyScale;
     private BattleUnit player, enemy;
@@ -87,6 +88,22 @@ public sealed class BattlePresentation : MonoBehaviour
 
     // Finite presentation timings also scale with the existing test/action pace.
     private static float Pace(float delay) => Mathf.Clamp(delay/0.8f,0.05f,3f);
+    public IEnumerator Finish(BattleState outcome,float pace)
+    {
+        if(!isActiveAndEnabled || !bound || ui==null)yield break;
+        var portrait=outcome==BattleState.Victory?ui.enemyPortrait:ui.playerPortrait;
+        if(portrait==null)yield break;
+        Color color=portrait.color;float initialAlpha=color.a;Vector3 scale=portrait.rectTransform.localScale;Vector2 home=portrait.rectTransform.anchoredPosition;
+        float duration=Mathf.Clamp(outcomeDuration,0,1)*Pace(pace);
+        for(float t=0;t<duration;t+=Time.unscaledDeltaTime)
+        {
+            float progress=t/duration;color.a=initialAlpha*(1f-progress);portrait.color=color;
+            if(outcome==BattleState.Escaped)portrait.rectTransform.anchoredPosition=home+Vector2.right*progress*40f;
+            else portrait.rectTransform.localScale=Vector3.Scale(scale,new Vector3(1f,1f-progress*0.15f,1f));
+            yield return null;
+        }
+        color.a=0f;portrait.color=color;
+    }
     public void ResetPoses()
     {
         IsAnimating = false;

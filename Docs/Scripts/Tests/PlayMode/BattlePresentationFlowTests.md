@@ -10,6 +10,8 @@
 
 ## 3. Методы и функции
 
+- `PresentationEntranceAndOutcomesKeepTransitionLockedAndShowResults()` — пять повторных TryBegin отклоняются, после появления alpha=1; смерть показывает Game Over/нулевую alpha героя и блокирует Attack. UnityTest IEnumerator.
+
 - `MissingAudioClipsAreSafeAndListenerVolumeIsRespected()` — все 15 событий с пустыми клипами возвращают false; AudioListener.volume сохраняется, source 2D и ignoreListenerVolume=false; Attack/ответ дают прежние HP. UnityTest IEnumerator, не подтверждает слышимость будущего контента.
 
 - `MagicVFXFinishesAndMissingVFXNeverBlocksResourceRules()` — Fire запускает ровно один эффект/частицы, затем они исчезают; после обнуления vfx Heal по-прежнему расходует 6 MP и сохраняет прежний цикл/HP. UnityTest IEnumerator.
@@ -40,6 +42,8 @@ Run All → ресурсы 100/30 становятся 20/22 → полосы 0.
 Численные/сценарные проверки не заменяют оценку красоты интерфейса и реальное прослушивание звуков. Изменения HP делаются в тестовой сессии, сцена не сохраняется.
 
 ## 9. История изменений
+
+- 2026-10-11 — 3.5: проверка входа, исхода и блокировки перехода.
 
 - 2026-10-11 — 3.4: проверка пустых аудио-ссылок/совместимости громкости.
 

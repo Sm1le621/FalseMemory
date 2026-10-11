@@ -232,7 +232,10 @@ public sealed class BattleTransition : MonoBehaviour
     {
         yield return FadeTo(1f);
         // Single mode intentionally discards this session only for restart/menu.
-        SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
+        var overlay = fade.transform.parent.gameObject;
+        var reveal = overlay.AddComponent<BattleScreenFade>();
+        reveal.panel = fade;
+        reveal.LoadAndReveal(scene, rules.fadeDuration);
     }
 
     private IEnumerator FadeTo(float alpha)
@@ -252,13 +255,6 @@ public sealed class BattleTransition : MonoBehaviour
             rect.offsetMin = rect.offsetMax = Vector2.zero;
             fade.color = new Color(0f, 0f, 0f, 0f);
         }
-        float start = fade.color.a;
-        float duration = Mathf.Max(0f, rules.fadeDuration);
-        for (float elapsed = 0f; elapsed < duration; elapsed += Time.unscaledDeltaTime)
-        {
-            fade.color = new Color(0f, 0f, 0f, Mathf.Lerp(start, alpha, elapsed / duration));
-            yield return null;
-        }
-        fade.color = new Color(0f, 0f, 0f, alpha);
+        yield return BattleScreenFade.Fade(fade, alpha, rules.fadeDuration);
     }
 }

@@ -10,6 +10,8 @@ BattleUI передаёт участников через Bind. Каждый к�
 
 ## 3. Методы и функции
 
+- Этап 3.5: `HideForEntrance()` скрывает только screenGroup активного HUD; `RevealScreen(pace)` → IEnumerator проявляет его за revealDuration с масштабом темпа; `RevealResult()` запускает `ResultFade()` для окна исхода. `OnDisable()` возвращает alpha=1, чтобы выключенный визуальный компонент не оставлял экран невидимым.
+
 - `Bind(hero, foe)` — назначает BattleUnit и сразу заполняет полосы; void.
 - `Update()` — Unity вызывает каждый кадр: Refresh и ограничение масштаба content для узкого Canvas.
 - `Refresh()` — читает HP/MP, инвентарь/EXP/защиту; вызывает SetBar, меняет предупреждение и цвет HP. Без участников ничего не делает.
@@ -21,6 +23,8 @@ BattleUI передаёт участников через Bind. Каждый к�
 - Editor: `Place(rect,x,y,width,height)` — положение от нижнего левого угла; `Frame(image,color)` — фон и тонкая рамка; `GetPanel(parent,name)`/`GetLabel(parent,name)` — существующий либо новый Image/TMP; `Format(label,size)` — авторазмер и отсутствие перехвата мыши; `GetBar(parent,name,color)` — Slider без управления/ручки и с заполнением.
 
 ## 4. Переменные и Inspector
+
+screenGroup/resultGroup — CanvasGroup содержимого/окна, назначены MCP; revealDuration=0.22 (0..1). Не влияют на HP/MP/порядок, отсутствующий CanvasGroup пропускается.
 
 hpBar/mpBar/enemyHPBar — полосы 0..1; resourceText — Potion/EXP/Defend; lowHealthText — предупреждение; menuTitle/menuGroup — меню; content — центральный RectTransform. barDuration=0.22, menuDuration=0.12 секунды, ноль отключает плавность; lowHealthThreshold=0.25 (0..1). player/enemy/initialized/menuRoutine — внутреннее состояние, не запас ресурсов.
 
@@ -41,5 +45,7 @@ BattleManager в BattleScene содержит BattleUI и BattleHUD. UI вызы
 Отсутствующий необязательный элемент пропускается; основные ссылки UI всё ещё обязательны. Анимация полосы не должна использоваться как источник HP. Оценку стиля/баланса выполняет владелец. Полоса с нулевым максимумом пуста. Нет партийного HUD.
 
 ## 9. История изменений
+
+- 2026-10-11 — 3.5: проявление экрана и результатов.
 
 - 2026-10-11 — подэтап 3.1: макет, выделение команд, плавные полосы и LOW HP.

@@ -18,7 +18,7 @@ MonoBehaviour:
   defendMultiplier: 0.5
   enemyDefendChance: 0.2
   actionDelay: 0.8
-  fadeDuration: 0.3
+  fadeDuration: 0.5
   magicAttackMultiplier: 1
   magicDefenseMultiplier: 1
   minimumMagicDamage: 1

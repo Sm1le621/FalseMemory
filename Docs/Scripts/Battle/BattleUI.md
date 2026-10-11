@@ -16,6 +16,8 @@ Awake подключает мышь и отключает дублирующий
 
 ## 3. Методы и функции
 
+- Этап 3.5: `ShowDefeatResults()` включает прежний resultPanel с Game Over и вариантами Restart/Main Menu. ShowVictoryResults и ShowDefeatResults запускают hud.RevealResult. RefreshStats не перезаписывает цвет смерти, если есть BattlePresentation.
+
 - `Awake()` — Unity: на текущем EventSystem делает move/submit/cancel=null, подключает listeners кнопок к Invoke.
 - `Update()` — кадр: при активном меню и после acceptAfterFrame клавиатура вызывает Select/Invoke/CancelMenu; удержание Enter не повторяет ход.
 - `Invoke(int index)` — внутренний void: проверяет доступность/диапазон/кадр и вызывает callback.
@@ -55,6 +57,8 @@ Magic → Fire 8 MP и Heal6 MP → Escape возвращает Attack/Magic/Ite
 Отсутствующие основные ссылки/несогласованные массивы дают ошибки. UI listeners button.onClick в тестах проверяют обработку команд, не весь физический путь курсора. Only Enter, не Space. Gamepad нет. Длинные списки прокручиваются, выбор цели партии отсутствует. Меню, сообщения и эффекты проверены Play Mode; визуальное размещение 1920×1080/3440×1440 проверялось в задаче этапа 2, здесь заново скриншоты не делались.
 
 ## 9. История изменений
+
+- 2026-10-11 — 3.5: Game Over и проявление окон исходов.
 
 - 2026-10-11 — 3.4: звуковые события меню.
 

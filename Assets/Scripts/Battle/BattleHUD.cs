@@ -11,6 +11,8 @@ public sealed class BattleHUD : MonoBehaviour
     public TextMeshProUGUI resourceText, lowHealthText, menuTitle;
     public RectTransform content;
     public CanvasGroup menuGroup;
+    public CanvasGroup screenGroup, resultGroup;
+    [Range(0f,1f)] public float revealDuration = 0.22f;
     [Min(0f)] public float barDuration = 0.22f;
     [Min(0f)] public float menuDuration = 0.12f;
     [Range(0f, 1f)] public float lowHealthThreshold = 0.25f;
@@ -69,6 +71,23 @@ public sealed class BattleHUD : MonoBehaviour
         if (menuRoutine != null) StopCoroutine(menuRoutine);
         menuRoutine = StartCoroutine(RevealMenu());
     }
+
+    public void HideForEntrance() { if(isActiveAndEnabled && screenGroup!=null) screenGroup.alpha=0f; }
+    public IEnumerator RevealScreen(float pace)
+    {
+        if(screenGroup==null || !isActiveAndEnabled) yield break;
+        float duration=Mathf.Clamp(revealDuration,0,1)*Mathf.Clamp(pace/0.8f,0.05f,3f);
+        for(float t=0;t<duration;t+=Time.unscaledDeltaTime){screenGroup.alpha=Mathf.SmoothStep(0,1,t/duration);yield return null;}
+        screenGroup.alpha=1f;
+    }
+    public void RevealResult(){if(resultGroup!=null && isActiveAndEnabled)StartCoroutine(ResultFade());}
+    private IEnumerator ResultFade()
+    {
+        float duration=Mathf.Clamp(revealDuration,0,1);
+        for(float t=0;t<duration;t+=Time.unscaledDeltaTime){resultGroup.alpha=Mathf.SmoothStep(0,1,t/duration);yield return null;}
+        resultGroup.alpha=1f;
+    }
+    private void OnDisable(){if(screenGroup!=null)screenGroup.alpha=1f;if(resultGroup!=null)resultGroup.alpha=1f;}
 
     private IEnumerator RevealMenu()
     {
