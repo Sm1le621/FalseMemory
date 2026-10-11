@@ -26,6 +26,7 @@ public sealed class BattleUI : MonoBehaviour
     public Image resultPanel;
     public TextMeshProUGUI resultText;
     public BattleHUD hud;
+    public BattleAudioController audioController;
 
     private Action[] callbacks = Array.Empty<Action>();
     private string[] labels = Array.Empty<string>();
@@ -75,6 +76,7 @@ public sealed class BattleUI : MonoBehaviour
     private void Invoke(int index)
     {
         if (!commandsEnabled || index < 0 || index >= callbacks.Length || !available[index] || Time.frameCount <= acceptAfterFrame) return;
+        if (audioController != null) audioController.Play(BattleSound.Confirm);
         callbacks[index]?.Invoke();
     }
 
@@ -89,17 +91,20 @@ public sealed class BattleUI : MonoBehaviour
         SetCommandsEnabled(true);
         Select(0);
         if (hud != null) hud.MenuChanged(onBack != null);
+        if (audioController != null) audioController.Play(BattleSound.MenuOpen);
     }
 
     public bool CancelMenu()
     {
         if (!commandsEnabled || backAction == null || Time.frameCount <= acceptAfterFrame) return false;
+        if (audioController != null) audioController.Play(BattleSound.Cancel);
         backAction();
         return true;
     }
 
     private void Select(int index)
     {
+        if (index != selected && audioController != null) audioController.Play(BattleSound.Move);
         selected = index;
         if (selected < firstVisible) firstVisible = selected;
         if (selected >= firstVisible + commandButtons.Length) firstVisible = selected - commandButtons.Length + 1;

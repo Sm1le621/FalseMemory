@@ -8,6 +8,7 @@ public sealed class BattleManager : MonoBehaviour
     public BattleUI ui;
     public BattlePresentation presentation;
     public BattleVFXController vfx;
+    public BattleAudioController audioController;
     public BattleState State { get; private set; } = BattleState.Starting;
     public BattleUnit Player { get; private set; }
     public BattleUnit Enemy { get; private set; }
@@ -78,12 +79,14 @@ public sealed class BattleManager : MonoBehaviour
                 ui.SetCommandsEnabled(false);
                 var target = actor == Player ? Enemy : Player;
                 bool hit = false, criticalHit = false;
+                if (pendingAction == BattleAction.Attack && audioController != null) audioController.Play(BattleSound.Attack);
                 if (presentation != null && pendingAction != BattleAction.Flee)
                     yield return presentation.Windup(actor == Player, pendingAction.Value, rules.actionDelay);
                 // A target may die while the visual windup runs. Never spend resources then.
                 if (!Player.IsAlive || !Enemy.IsAlive) { if (presentation != null) presentation.ResetPoses(); break; }
                 if (pendingAction == BattleAction.Flee)
                 {
+                    if (audioController != null) audioController.Play(BattleSound.Flee);
                     bool escaped = BattleCalculator.ChanceSucceeds(BattleCalculator.FleeChance(Player.Speed, Enemy.Speed, rules), random.Next01());
                     if (escaped) { State = BattleState.Escaped; CurrentActor = null; }
                     ui.ShowMessage(escaped ? "Escaped! Возвращение на карту." : "Couldn't escape! Побег не удался.");
@@ -91,6 +94,7 @@ public sealed class BattleManager : MonoBehaviour
                 else if (pendingAction == BattleAction.Defend)
                 {
                     actor.Defend();
+                    if (audioController != null) audioController.Play(BattleSound.Defend);
                     int reduction = Mathf.RoundToInt((1f - Mathf.Clamp01(rules.defendMultiplier)) * 100f);
                     ui.ShowMessage(actor.displayName + " защищается. Физический урон снижен на " + reduction + "%.");
                 }
@@ -99,6 +103,7 @@ public sealed class BattleManager : MonoBehaviour
                     var itemTarget = pendingItem.target == BattleTarget.Self ? actor : target;
                     if (BattleAbilities.TryUseItem(actor, itemTarget, pendingItem, out int amount))
                     {
+                        if (audioController != null) audioController.Play(BattleSound.Potion);
                         ui.ShowMessage(actor.displayName + " использует " + pendingItem.displayName + ": +" + amount + " HP.");
                         ui.ShowFeedback(itemTarget == Player, "+" + amount + " HP", pendingItem.effectColor);
                         if (vfx != null) vfx.Play(itemTarget == Player, null, pendingItem.effectColor, true);
@@ -110,6 +115,7 @@ public sealed class BattleManager : MonoBehaviour
                     if (BattleAbilities.TryCast(actor, spellTarget, pendingSpell, rules, out int amount))
                     {
                         bool healing = pendingSpell.effect == BattleEffect.RestoreHealth;
+                        if (audioController != null) audioController.Play(healing ? BattleSound.Heal : BattleSound.Fire);
                         hit = !healing;
                         ui.ShowMessage(actor.displayName + " использует " + pendingSpell.displayName + ": " +
                             (healing ? "+" + amount + " HP." : amount + " магического урона."));
@@ -123,6 +129,7 @@ public sealed class BattleManager : MonoBehaviour
                         actor.criticalChance, actor.missChance, random);
                     if (result.Missed)
                     {
+                        if (audioController != null) audioController.Play(BattleSound.Miss);
                         ui.ShowMessage(actor.displayName + " атакует: MISS.");
                         ui.ShowFeedback(target == Player, "MISS", Color.white);
                     }
@@ -130,6 +137,7 @@ public sealed class BattleManager : MonoBehaviour
                     {
                         target.Health.TakeDamage(result.Damage);
                         hit = true; criticalHit = result.Critical;
+                        if (audioController != null) audioController.Play(result.Critical ? BattleSound.Critical : BattleSound.Hit);
                         ui.ShowMessage((result.Critical ? "CRITICAL! " : "") + actor.displayName + " атакует " + target.displayName + ": " + result.Damage + " урона.");
                         ui.ShowFeedback(target == Player, (result.Critical ? "CRITICAL!\n" : "") + "−" + result.Damage,
                             result.Critical ? new Color(1f, 0.82f, 0.2f) : new Color(1f, 0.4f, 0.4f));
@@ -151,6 +159,7 @@ public sealed class BattleManager : MonoBehaviour
         if (Player.IsAlive)
         {
             State = BattleState.Victory;
+            if (audioController != null) audioController.Play(BattleSound.Victory);
             transition.TryGrantVictoryExperience(out int gained);
             ui.RefreshStats(Player, Enemy, Round);
             ui.ShowVictoryResults(gained, Player);
@@ -161,6 +170,7 @@ public sealed class BattleManager : MonoBehaviour
         else
         {
             State = BattleState.Defeat;
+            if (audioController != null) audioController.Play(BattleSound.Defeat);
             ui.RefreshStats(Player, Enemy, Round);
             ui.ShowMessage("Game Over — герой пал.");
             ui.ShowMenu(new[] { "Начать заново", "Главное меню" }, new System.Action[] {

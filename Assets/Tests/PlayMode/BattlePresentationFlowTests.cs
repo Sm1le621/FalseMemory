@@ -5,6 +5,18 @@ using UnityEngine.TestTools;
 
 public sealed partial class BattleFlowTests
 {
+    [UnityTest] public IEnumerator MissingAudioClipsAreSafeAndListenerVolumeIsRespected()
+    {
+        var player=Player();yield return BeginBattle(player,Enemy());var manager=Manager();var audio=manager.audioController;
+        Assert.That(audio,Is.Not.Null);float before=AudioListener.volume;
+        foreach(BattleSound sound in System.Enum.GetValues(typeof(BattleSound)))Assert.That(audio.Play(sound),Is.False);
+        Assert.That(AudioListener.volume,Is.EqualTo(before));
+        Assert.That(audio.GetComponent<AudioSource>().ignoreListenerVolume,Is.False);
+        Assert.That(audio.GetComponent<AudioSource>().spatialBlend,Is.Zero);
+        manager.TryPlayerAction(BattleAction.Attack);yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
+        Assert.That(manager.Enemy.Health.currentHealth,Is.EqualTo(50));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
+    }
+
     [UnityTest] public IEnumerator MagicVFXFinishesAndMissingVFXNeverBlocksResourceRules()
     {
         var player=Player();var enemy=Enemy();yield return BeginBattle(player,enemy);var manager=Manager();

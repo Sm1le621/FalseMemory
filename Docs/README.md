@@ -19,6 +19,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 
 ## Игровые системы
 
+- [Звук боя](Systems/AudioSystem.md).
+
 - [Эффекты магии](Systems/BattleVFXSystem.md).
 
 - [Анимации боя](Systems/BattleAnimationSystem.md).
@@ -37,6 +39,9 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 Полноценного SaveSystem, партийного боя, классов, экипировки и level-up пока нет; они не документируются как готовые системы. PlayerPrefs уже сохраняет настройки меню, но не RPG-прогресс.
 
 ## Описания скриптов
+
+- [BattleAudioProfile](Scripts/Battle/BattleAudioProfile.md) — ссылки собственных звуков.
+- [BattleAudioController](Scripts/Battle/BattleAudioController.md) — безопасное воспроизведение событий.
 
 - [BattleVFXProfile](Scripts/Battle/BattleVFXProfile.md) — данные художественного эффекта.
 - [BattleVFXController](Scripts/Battle/BattleVFXController.md) — лёгкие эффекты без изменений ресурсов.

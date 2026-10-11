@@ -1,0 +1,7 @@
+# Звук боя
+
+BattleAudioProfile → BattleAudioController → AudioSource (2D, PlayOneShot) → BattleMixer/Master → существующий AudioListener.volume. SettingsMenu уже читает FalseMemory.Volume; новая система не создаёт второго регулятора/Prefs. UI отправляет открытие/навигацию/подтверждение/отмену, Manager — действия/попадание/крит/промах/Fire/Heal/исходы и Defend/Potion/Flee.
+
+В проекте нет подходящих клипов: DefaultBattleAudio намеренно содержит пустые поля, бой сейчас беззвучен. Никакие звуки не скачивались. Чтобы подключить свои, открыть Assets/Settings/Battle/Audio/DefaultBattleAudio.asset и перетащить AudioClip в соответствующее поле; volume 0..1 задаёт относительную громкость. Общая настройка меню остаётся основной. Mixer можно открыть Window → Audio → Audio Mixer; Master сохранён с обычным уровнем без второго контроля.
+
+Отсутствующий клип/профиль безопасно пропускается и не блокирует ход. Один AudioSource и текущая камера/AudioListener, без дубликатов. Play Mode проверяет тишину без ошибок, конфигурацию и сохранение ресурсов. Реальное прослушивание собственных клипов/баланс после их назначения — ручная задача. Расширение: добавить событие/поле в [профиль](../Scripts/Battle/BattleAudioProfile.md), отправить его через [контроллер](../Scripts/Battle/BattleAudioController.md), не вызывать расчёт повторно из звука.

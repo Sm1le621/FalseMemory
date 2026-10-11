@@ -30,6 +30,8 @@
 
 ## Владельцы данных
 
+- **BattleAudioProfile/Controller:** ссылки клипов и единственный AudioSource боя, output BattleMixer/Master. Общая громкость остаётся в SettingsMenu/AudioListener.
+
 - **BattleVFXProfile/Controller:** данные и воспроизведение эффектов в UI; ссылки Spell.visualEffect не участвуют в игровой формуле. Пул освобождается при выгрузке.
 
 - **BattlePresentation:** только позы/цвета существующих Image и символы защиты; Windup/Recover не записывают ресурсы. Manager остаётся владельцем единственного применения действия.
