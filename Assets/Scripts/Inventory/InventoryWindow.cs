@@ -15,6 +15,8 @@ public sealed class InventoryWindow : MonoBehaviour
     public Button equipButton;
     public Button[] equipmentButtons;
     public TextMeshProUGUI equipmentStats;
+    public TextMeshProUGUI resourcesLabel;
+    public Image modalBackdrop;
     public event Action<int> UseRequested;
     public Func<int,bool> CanUseSelection;
     public event Action<int,EquipmentSlot?> EquipRequested;
@@ -67,11 +69,13 @@ public sealed class InventoryWindow : MonoBehaviour
     {
         if(panel==null || !isActiveAndEnabled || unit==null || !unit.IsAlive ||
             (BattleTransition.Instance!=null && BattleTransition.Instance.EncounterActive))return false;
+        if(modalBackdrop!=null)modalBackdrop.gameObject.SetActive(true);
         panel.gameObject.SetActive(true);gate.Acquire(this);message.text="";Refresh();return true;
     }
     public void Close()
     {
-        EndDrag();if(panel!=null)panel.gameObject.SetActive(false);if(gate!=null)gate.Release(this);
+        EndDrag();if(panel!=null)panel.gameObject.SetActive(false);
+        if(modalBackdrop!=null)modalBackdrop.gameObject.SetActive(false);if(gate!=null)gate.Release(this);
     }
     public void Select(int index){if(!IsOpen || index<0 || index>=30)return;SelectedIndex=index;Refresh();}
     public void Refresh()
@@ -80,6 +84,7 @@ public sealed class InventoryWindow : MonoBehaviour
         for(int i=0;i<(slots?.Length ?? 0);i++)slots[i].Render(Inventory.State.GetSlot(i),i==SelectedIndex);
         var selected=Inventory.State.GetSlot(SelectedIndex);var item=selected.Item;
         goldLabel.text="GOLD "+Inventory.State.Gold;
+        if(resourcesLabel!=null)resourcesLabel.text="HP "+unit.Health.currentHealth+" / "+unit.Health.maxHealth+"    MP "+unit.CurrentMP+" / "+unit.MaxMP;
         details.text=selected.IsEmpty?"Пустой слот\nВыберите предмет.":item.displayName+"  ×"+selected.Count+"\n"+item.category+
             "\n\n"+item.description+"\n\nСтопка: "+item.StackLimit+"   Купить: "+item.buyPrice+"   Продать: "+(item.CanSell?item.sellPrice.ToString():"—");
         splitButton.interactable=!selected.IsEmpty && selected.Count>1 && item.stackable && Inventory.State.FirstEmptySlot()>=0;
@@ -131,6 +136,23 @@ public sealed class InventoryWindow : MonoBehaviour
     public void EndDrag(){dragging=-1;if(dragIcon!=null)dragIcon.gameObject.SetActive(false);}
 
 #if UNITY_EDITOR
+    public void BuildModalBackdrop()
+    {
+        if(panel==null)throw new InvalidOperationException("Сначала нужен готовый инвентарь.");
+        var existing=panel.parent.Find("InventoryBackdrop");
+        modalBackdrop=existing!=null?existing.GetComponent<Image>():Panel(panel.parent,"InventoryBackdrop",new Color32(12,10,18,255)).GetComponent<Image>();
+        modalBackdrop.transform.SetAsFirstSibling();var rect=modalBackdrop.rectTransform;
+        rect.anchorMin=Vector2.zero;rect.anchorMax=Vector2.one;rect.offsetMin=rect.offsetMax=Vector2.zero;
+        modalBackdrop.gameObject.SetActive(false);UnityEditor.EditorUtility.SetDirty(this);
+    }
+    public void BuildResourceHeader()
+    {
+        if(panel==null)throw new InvalidOperationException("Сначала нужен готовый инвентарь.");
+        var existing=panel.Find("Resources");
+        resourcesLabel=existing!=null?existing.GetComponent<TextMeshProUGUI>():Label(panel,"Resources","HP / MP",16,330,490,390,30);
+        Place(panel.Find("Title").GetComponent<RectTransform>(),36,490,270,30);
+        UnityEditor.EditorUtility.SetDirty(this);
+    }
     public void BuildEquipmentLayout()
     {
         if(panel==null || equipButton!=null)throw new InvalidOperationException("Нужен готовый инвентарь без панели экипировки.");

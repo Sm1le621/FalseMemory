@@ -16,11 +16,11 @@ IWorldInteractable: `Prompt` string подсказка; `Available` bool; `TryIn
 
 ## 4. Переменные и Inspector
 
-worldId — стабильный уникальный ID размещения; item — статический ItemData; quantity≥1 (код1), в сцене Potion2/Ether2/оружие/броня1/Bone5. Collected readonly runtime bool, начальноfalse. WorldId не хранит прогресс на диск.
+worldId — стабильный уникальный ID размещения; item — статический ItemData; quantity≥1 (код1), в сцене Potion2/Ether2/оружие/броня1/Bone5. Дополнительный BoneStressTest2871 выключен по умолчанию, только ручной Play-тест полного запаса. Collected readonly runtime bool, начальноfalse. WorldId не хранит прогресс на диск.
 
 ## 5. Связи
 
-PlayerInteractor/IWorldInteractable, общий BattleInventory.State, Collider2D trigger. SpriteRenderer временных значков — только оформление. Префаб WorldItemPickup сохранён MCP, семь instance имеют разные IDs.
+PlayerInteractor/IWorldInteractable, общий BattleInventory.State, Collider2D trigger. SpriteRenderer временных значков — только оформление. Префаб WorldItemPickup сохранён MCP, семь обычных instance и выключенный BoneStressTest имеют разные IDs.
 
 ## 6. Пример
 

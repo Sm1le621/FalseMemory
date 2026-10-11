@@ -12,7 +12,7 @@
 
 ## 3. Методы и функции
 
-Unity `Awake` получает Unit/Gate. `Update` истекает уведомление, проверяет блокировки, по scanInterval вызывает Scan, обновляет prompt, принимает eKey.wasPressedThisFrame и очищает текущий target после вызова. `Scan` void: Physics2D.OverlapCircle с trigger/filter/list, ближайший доступный target с центром внутри radius. `ShowNotification(text)` void: текст и срок2.5сек. Unity `OnDisable` очищает target/list/оба текста без сброса инвентаря.
+Unity `Awake` получает Unit/Gate. `Update` истекает уведомление, проверяет блокировки (очищает оба текста при модальном окне/бое/смерти), по scanInterval вызывает Scan, обновляет prompt, принимает eKey.wasPressedThisFrame и очищает текущий target после вызова. `Scan` void: Physics2D.OverlapCircle с trigger/filter/list, ближайший доступный target с центром внутри radius. `ShowNotification(text)` void: текст и срок2.5сек. Unity `OnDisable` очищает target/list/оба текста без сброса инвентаря.
 
 ## 4. Переменные и Inspector
 
@@ -35,5 +35,6 @@ WorldInputGate, BattleUnit/Transition и любой IWorldInteractable. Откр
 На карте с большими количествами targets настраивать layer/filter/interval по профилю. Сейчас один player и маленький query, list переиспользуется. Видимость через стены/лос ещё не реализована; подбор ограничен близостью. Смерть/выгрузка очищают подсказки.
 
 ## 9. История изменений
+2026-10-12 — 4.6: уведомление скрывается при модальном вводе, не накладывается на сообщения инвентаря.
 
 2026-10-12 — 4.3: общий E/физический поиск/подсказка.

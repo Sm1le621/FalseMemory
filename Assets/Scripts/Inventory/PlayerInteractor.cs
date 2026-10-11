@@ -19,7 +19,7 @@ public sealed class PlayerInteractor : MonoBehaviour
     {
         if(notification!=null && Time.unscaledTime>=notificationUntil)notification.text="";
         if(unit==null || !unit.IsAlive || gate.IsBlocked || (BattleTransition.Instance!=null && BattleTransition.Instance.EncounterActive))
-        {Current=null;if(prompt!=null)prompt.text="";return;}
+        {Current=null;if(prompt!=null)prompt.text="";if(notification!=null)notification.text="";return;}
         if(Time.unscaledTime>=nextScan){Scan();nextScan=Time.unscaledTime+Mathf.Clamp(scanInterval,0.05f,0.5f);}
         if(prompt!=null)prompt.text=Current!=null && Current.Available?Current.Prompt:"";
         if(Keyboard.current!=null && Keyboard.current.eKey.wasPressedThisFrame && Current!=null)

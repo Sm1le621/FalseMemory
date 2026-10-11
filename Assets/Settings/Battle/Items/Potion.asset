@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: FalseMemory.Runtime::BattleConsumable
   id: item.potion
   displayName: Potion
-  description: "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u0435\u0442 \u0434\u043E30 HP. \u041D\u0435 \u0432\u043E\u0441\u043A\u0440\u0435\u0448\u0430\u0435\u0442."
+  description: "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u0435\u0442 \u0434\u043E 30 HP. \u041D\u0435 \u0432\u043E\u0441\u043A\u0440\u0435\u0448\u0430\u0435\u0442."
   icon: {fileID: 21300000, guid: 3bf3feb6347ab7d4ba922bd774eeb508, type: 3}
   category: 0
   stackable: 1
@@ -33,4 +33,5 @@ MonoBehaviour:
   target: 1
   healing: 30
   manaRestoration: 0
+  visualEffect: {fileID: 0}
   effectColor: {r: 0.3, g: 1, b: 0.45, a: 1}

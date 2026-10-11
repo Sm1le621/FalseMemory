@@ -11,6 +11,7 @@
 Открытие I, закрытие I/Escape; стрелки выбирают. Событие State.Changed обновляет30 views только после изменения/выбора. UI не хранит количества; использование делегируется UseRequested/WorldItemUseController.
 
 ## 3. Методы и функции
+4.6: Refresh также читает реальные HP/MP в resourcesLabel. Open/Close показывают/скрывают собственный modalBackdrop; настройки мирового HUD не меняются. Editor `BuildResourceHeader()` создаёт/находит Resources и сужает Title; `BuildModalBackdrop()` создаёт/находит Image под панелью, растягивает по всему Canvas, помещает первым sibling и сохраняет ссылку. Повторное применение не создаёт дублей.
 4.4: `RequestEquip()` вызывает EquipRequested(index,null); `ClickEquipmentSlot(slot)` вызывает EquipRequested при выбранной совместимой вещи, иначе UnequipRequested для снятия. `Refresh` также читает семь надетых вещей/итоговые характеристики/доступность. `BuildEquipmentLayout()` Editor добавляет только недостающую панель7 кнопок/Stats/Equip, перенастраивает три существующие кнопки/message; повторный вызов запрещён. Awake связывает7 сохранённых UnityAction, OnDestroy снимает те же listeners.
 
 Unity `Awake` получает Inventory/gate/unit, Bind30 ячеек и button listeners, закрывает окно. `OnEnable` подписывает Refresh, `OnDisable` отписывает и закрывает/освобождает ввод, `OnDestroy` удаляет listeners. `Update` читает I/Escape/стрелки без изменения Input Actions.
@@ -22,10 +23,11 @@ Unity `Awake` получает Inventory/gate/unit, Bind30 ячеек и button 
 Editor `BuildLayout()` создаёт Canvas/панель/30 views/подписи/кнопки/ghost и ссылки, существующая panel запрещает повторную перестройку. Helpers `Panel(parent,name,color)` RectTransform с Image/Outline; `Place(rect,x,y,w,h)` устанавливает позицию/размер; `Label(...)` TMP с fallback/авторазмером; `Button(...)` Button без keyboard navigation. Сохранение сцены выполняет MCP.
 
 ## 4. Переменные и Inspector
+resourcesLabel — readonly отображение Health/BattleUnit, modalBackdrop — необязательный полноэкранный Image. Оба назначены MCP, закрытый фон inactive. Не владеют ресурсами.
 CanUseSelection Func<int,bool> — необязательный runtime predicate; Refresh учитывает его для кнопки использования. Статический запас/Inspector-количество не создаются.
 equipButton/equipmentButtons[7]/equipmentStats — UI-ссылки. EquipRequested Action<int,EquipmentSlot?> и UnequipRequested Action<EquipmentSlot> — команды без владения. equipmentClicks — private runtime массив callback для правильной отписки.
 
-panel, slots[30], details/goldLabel/message, split/use/close Button, dragIcon обязательны; SelectedIndex/Inventory/IsOpen readonly; dragging приватный transient. UseRequested Action<int> — будущий обработчик применения; без подписчика кнопка disabled; с4.5 подключён WorldItemUseController.
+panel, slots[30], details/goldLabel/message, split/use/close Button, dragIcon обязательны; SelectedIndex/Inventory/IsOpen readonly; dragging приватный transient. UseRequested Action<int> — обработчик применения; без подписчика кнопка disabled; с4.5 подключён WorldItemUseController.
 
 ## 5. Связи
 
@@ -44,6 +46,7 @@ Potion3 → Разделить½ →2/1; drag в пустой/на другой/
 Не работает в BattleScene: мир скрыт, Open отвергает активную встречу. Не паузит время/врагов. Callback-подписчик обязан проверять реальные условия использования. Курсор/ощущения окончательно проверить владельцу.
 
 ## 9. История изменений
+2026-10-12 — 4.6: HPMP шапка/фон открытого окна, сохранённые ссылки/доступность.
 2026-10-12 — 4.5: predicate использования для разрешённого контекста/уровня.
 2026-10-12 — 4.4: семь слотов/Stats/Equip/Unequip и корректные listeners.
 

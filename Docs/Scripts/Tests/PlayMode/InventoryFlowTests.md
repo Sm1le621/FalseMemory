@@ -11,6 +11,7 @@
 Использует прежние Setup/Cleanup реальной SampleScene. Создаёт/удаляет синтетическую клавиатуру и только тестовые данные.
 
 ## 3. Методы и функции
+`RealMouseRaycastDragsAndCancelsThroughInputSystem` UnityTest IEnumerator: добавляет Mouse, вычисляет screen-центры через helper `SlotScreenCenter(slot)` → Vector2, отправляет настоящие MouseState position/buttons/delta в Input System, не вызывает handlers сам. Проверяет перенос0→9 и отмену вне экрана без потери3 Potion/ghost; finally удаляет устройство/закрывает. Тест I/Escape теперь также проверяет backdrop.
 `SharedInventoryEquipmentAndEtherSurviveBattleVictoryAndWorldReturn` UnityTest IEnumerator: окно/Potion/Ether/повтор кадра, Sword/Armor/Helmet, настоящая BattleScene, Attack15/ответ1, HPMP-предметы/Fire/победа/возврат. Итог97HP/30MP/Potion1/Ether0/EXP20 и те же InventoryState/экипировка/позиция/мировой HUD. `WorldUseRestrictionsDisableButtonsWithoutConsumingItems` UnityTest: разрешённость только Battle/нехватка уровня, disabled кнопка и отказ без qty/HP.
 `EquipmentButtonsApplyAndRemoveBonusesWithoutChangingBaseStatsOrResources` UnityTest IEnumerator: реальные сценовые определения/кнопки, пять циклов меча, Armor/Helmet; ATK20/DEF14, база15/8, HP100/MP30, одиночное владение и Stats.
 `PickupERejectsFullInventoryThenCollectsExactlyOnceAndRespectsModalInput` — UnityTest IEnumerator: временный trigger ближе остальных,29 нестакаемых вещей+Potion заполняют30 слотов; E при окне не действует, E при полном запасе оставляет предмет; освобождение слота даёт2 вещи, десять повторных вызовов отказ. Реальный Input System/Physics2D-поиск, временные устройства/объекты очищаются finally.
@@ -35,9 +36,10 @@ FalseMemory.Battle.PlayModeTests/Runtime/InputSystem/EventSystem и общие f
 
 ## 8. Ограничения и расширение
 
-Проверки handlers не доказывают физический путь курсора; реальный drag проверить вручную. Подбор/экипировка/использование ещё не входят.
+Отдельный DragSlot вызывает handlers напрямую; новый Mouse-сценарий проходит настоящий Input System/UI-raycast. В набор также входят подбор/экипировка/общие предметы/бой/возврат. Человеческое удобство/мышь на рабочем месте/звук/standalone оцениваются отдельно.
 
 ## 9. История изменений
+2026-10-12 — 4.6: настоящий mouse/raycast/drop/cancel и backdrop.
 2026-10-12 — 4.5: два сценария общей сессии/ресурсов и ограничений.
 2026-10-12 — 4.4: сценарий кнопок экипировки/повторных бонусов.
 2026-10-12 — 4.3: реальный E/полный запас/резерв/повторные вызовы.

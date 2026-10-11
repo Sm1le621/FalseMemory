@@ -33,6 +33,8 @@ Presentation: Attack0.4, Hit0.18, Outcome0.35, Message0.75, Enemy Think0.5, Allo
 На Player EquipmentController, семь слотов окна и итоговые Stats. Базовые ATK/DEF остаются15/8; вещи добавляют бонусы через Effective*. Выбрать → Экипировать, либо подходящий правый слот. Клик надетого слота при пустом/несовместимом выборе снимает вещь; полная сумка безопасно отклоняет снятие. ItemData задаёт Fits/requiredLevel/bonuses.
 ## Использование предметов
 WorldItemUseController уже на Player. Выбрать Potion/Ether → Использовать; общий эффект с боем, ограничения ItemData.useLocations/requiredLevel. Potion до30HP, Ether до20MP, расход1; даже полный ресурс допускает расход с amount0 как прежний Potion. В бою Items/Ether — один ход, голубой профиль EtherVisual. Изменяемое количество в State, не SO.
+## Оформление и отладка полного запаса
+InventoryWindow resourcesLabel/modalBackdrop назначены. Шапка читает HPMP; фон закрывает старый HUD только при открытии и скрывается при закрытии. PlayerInteractor очищает уведомления при gate. Pickup_BoneStressTest по умолчанию inactive, только отдельный ручной Play-тест;2871 Bone заполняют29 стопок99 плюс стартовый Potion3. Уникальный worldId задан, не включать его в сохранённой сцене для обычной игры.
 ## Добавление данных
 
 Create → FalseMemory → Battle Spell создаёт заклинание с поддерживаемым эффектом; назначь его в Spells игрока. Battle Consumable создаёт лечебный предмет; добавь его определение в стопку Inventory. Battle Rules — общие коэффициенты. Новые типы эффектов требуют программирования; изменение чисел существующего эффекта — настройки данных.

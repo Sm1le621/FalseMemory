@@ -8,6 +8,32 @@ using UnityEngine.TestTools;
 
 public sealed partial class BattleFlowTests
 {
+    [UnityTest] public IEnumerator RealMouseRaycastDragsAndCancelsThroughInputSystem()
+    {
+        var player=Player();var window=player.GetComponent<InventoryWindow>();var potion=Potion(player);
+        var mouse=InputSystem.AddDevice<Mouse>();
+        try
+        {
+            Assert.That(window.Open(),Is.True);yield return null;Canvas.ForceUpdateCanvases();
+            Vector2 source=SlotScreenCenter(window.slots[0]);Vector2 target=SlotScreenCenter(window.slots[9]);
+            InputSystem.QueueStateEvent(mouse,new MouseState{position=source});yield return null;yield return null;
+            InputSystem.QueueStateEvent(mouse,new MouseState{position=source,buttons=1});yield return null;yield return null;
+            InputSystem.QueueStateEvent(mouse,new MouseState{position=target,delta=target-source,buttons=1});yield return null;yield return null;
+            InputSystem.QueueStateEvent(mouse,new MouseState{position=target});yield return null;yield return null;
+            Assert.That(player.Inventory.State.GetSlot(0).IsEmpty,Is.True);
+            Assert.That(player.Inventory.State.GetSlot(9).Count,Is.EqualTo(3));Assert.That(player.Inventory.Count(potion),Is.EqualTo(3));
+            InputSystem.QueueStateEvent(mouse,new MouseState{position=target,buttons=1});yield return null;yield return null;
+            Vector2 outside=new Vector2(Screen.width+50,Screen.height+50);
+            InputSystem.QueueStateEvent(mouse,new MouseState{position=outside,delta=outside-target,buttons=1});yield return null;yield return null;
+            InputSystem.QueueStateEvent(mouse,new MouseState{position=outside});yield return null;yield return null;
+            Assert.That(player.Inventory.State.GetSlot(9).Count,Is.EqualTo(3));Assert.That(window.dragIcon.gameObject.activeSelf,Is.False);
+        }
+        finally {InputSystem.RemoveDevice(mouse);window.Close();}
+    }
+    private static Vector2 SlotScreenCenter(InventorySlotView slot)
+    {
+        var rect=slot.GetComponent<RectTransform>();return RectTransformUtility.WorldToScreenPoint(null,rect.TransformPoint(rect.rect.center));
+    }
     [UnityTest] public IEnumerator SharedInventoryEquipmentAndEtherSurviveBattleVictoryAndWorldReturn()
     {
         var player=Player();var enemy=Enemy();var window=player.GetComponent<InventoryWindow>();
@@ -87,10 +113,12 @@ public sealed partial class BattleFlowTests
             InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.I,Key.D));yield return null;
             yield return new WaitForFixedUpdate();yield return new WaitForFixedUpdate();
             Assert.That(window.IsOpen,Is.True);Assert.That(player.GetComponent<WorldInputGate>().IsBlocked,Is.True);
+            Assert.That(window.modalBackdrop.gameObject.activeSelf,Is.True);
             Assert.That(body.position,Is.EqualTo(position));Assert.That(window.slots.Length,Is.EqualTo(30));
             InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.Escape,Key.D));yield return null;
             yield return new WaitForFixedUpdate();yield return new WaitForFixedUpdate();
             Assert.That(window.IsOpen,Is.False);Assert.That(player.GetComponent<WorldInputGate>().IsBlocked,Is.False);
+            Assert.That(window.modalBackdrop.gameObject.activeSelf,Is.False);
             Assert.That(body.position.x,Is.GreaterThan(position.x));
         }
         finally { InputSystem.RemoveDevice(keyboard);window.Close(); }
