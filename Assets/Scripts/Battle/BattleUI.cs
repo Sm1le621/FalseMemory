@@ -25,6 +25,7 @@ public sealed class BattleUI : MonoBehaviour
     [Min(0.1f)] public float feedbackDuration = 0.45f;
     public Image resultPanel;
     public TextMeshProUGUI resultText;
+    public BattleHUD hud;
 
     private Action[] callbacks = Array.Empty<Action>();
     private string[] labels = Array.Empty<string>();
@@ -87,6 +88,7 @@ public sealed class BattleUI : MonoBehaviour
         acceptAfterFrame = Time.frameCount + 1;
         SetCommandsEnabled(true);
         Select(0);
+        if (hud != null) hud.MenuChanged(onBack != null);
     }
 
     public bool CancelMenu()
@@ -114,6 +116,7 @@ public sealed class BattleUI : MonoBehaviour
             commandLabels[i].text = (index == selected ? "> " : "  ") + labels[index];
             commandLabels[i].color = available[index] ? new Color32(232, 222, 201, 255) : new Color32(122, 113, 108, 255);
             commandButtons[i].interactable = commandsEnabled && available[index];
+            if (hud != null) hud.StyleCommand(commandButtons[i], commandLabels[i], index == selected, commandsEnabled && available[index]);
         }
     }
 
@@ -128,11 +131,15 @@ public sealed class BattleUI : MonoBehaviour
         if (feedbackGlow == null || feedbackText == null) return;
         if (feedbackRoutine != null) StopCoroutine(feedbackRoutine);
         var target = onPlayer ? playerPortrait.rectTransform : enemyPortrait.rectTransform;
-        feedbackGlow.rectTransform.anchorMin = target.anchorMin;
-        feedbackGlow.rectTransform.anchorMax = target.anchorMax;
-        feedbackGlow.rectTransform.offsetMin = feedbackGlow.rectTransform.offsetMax = Vector2.zero;
-        feedbackText.rectTransform.anchorMin = new Vector2(target.anchorMin.x - 0.025f, target.anchorMax.y + 0.005f);
-        feedbackText.rectTransform.anchorMax = new Vector2(target.anchorMax.x + 0.025f, target.anchorMax.y + 0.075f);
+        feedbackGlow.rectTransform.position = target.position;
+        feedbackGlow.rectTransform.anchorMin = feedbackGlow.rectTransform.anchorMax = target.anchorMin;
+        feedbackGlow.rectTransform.pivot = target.pivot;
+        feedbackGlow.rectTransform.anchoredPosition = target.anchoredPosition;
+        feedbackGlow.rectTransform.sizeDelta = target.rect.size;
+        feedbackText.rectTransform.anchorMin = feedbackText.rectTransform.anchorMax = target.anchorMin;
+        feedbackText.rectTransform.pivot = new Vector2(0.5f, 0f);
+        feedbackText.rectTransform.anchoredPosition = target.anchoredPosition + new Vector2(target.rect.width * (0.5f-target.pivot.x), target.rect.height * (1f-target.pivot.y) + 4f);
+        feedbackText.rectTransform.sizeDelta = new Vector2(220, 38);
         feedbackText.text = text; feedbackText.color = color;
         feedbackRoutine = StartCoroutine(Feedback(color));
     }
@@ -164,6 +171,7 @@ public sealed class BattleUI : MonoBehaviour
         ApplyPortrait(playerPortrait, player);
         ApplyPortrait(enemyPortrait, enemy);
         RefreshStats(player, enemy, 0);
+        if (hud != null) hud.Bind(player, enemy);
     }
 
     private void ApplyPortrait(Image image, BattleUnit unit)
@@ -207,8 +215,8 @@ public sealed class BattleUI : MonoBehaviour
 
     public void RefreshStats(BattleUnit player, BattleUnit enemy, int round)
     {
-        playerStats.text = Stats(player);
-        enemyStats.text = Stats(enemy);
+        playerStats.text = hud == null ? Stats(player) : player.displayName + "   LV " + player.level + "\nHP  " + player.Health.currentHealth + " / " + player.Health.maxHealth + "\nMP  " + player.CurrentMP + " / " + player.MaxMP;
+        enemyStats.text = hud == null ? Stats(enemy) : enemy.displayName + "   LV " + enemy.level + "   |   HP " + enemy.Health.currentHealth + " / " + enemy.Health.maxHealth + (enemy.IsDefending ? "   DEFEND" : "");
         roundText.text = "РАУНД " + round;
         enemyPortrait.color = enemy.IsAlive ? enemy.spriteColor : new Color(0.35f, 0.35f, 0.35f, 0.35f);
     }

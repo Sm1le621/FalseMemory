@@ -24,7 +24,7 @@
 
 **SampleScene:** Player имеет PlayerController, Health, BattleUnit, BattleInventory и физические/визуальные компоненты. Enemy имеет EnemyAI, Health, BattleUnit, BattleEncounter; старый EnemyAttack выключен и дополнительно защищён от контактного урона наличием Encounter. Main Camera использует CameraFollow. Grid/Borders/Bushs — окружение. Мировой HUD находится под root `Health` в текущем прочитанном Hierarchy; его ссылки HP Slider/HPText назначены Player.Health. BattleTransition — отдельный координатор.
 
-**BattleScene:** собственные камера/освещение/EventSystem, BattleManager и BattleUI с сохранённым Canvas. Это отображение и управление существующими участниками мира, без создания копии здоровья игрока. Canvas боя использует Scale With Screen Size, 960×540, match 0.5.
+**BattleScene:** собственные камера/освещение/EventSystem, BattleManager и BattleUI с сохранённым Canvas. Это отображение и управление существующими участниками мира, без создания копии здоровья игрока. BattleHUD отдельно оформляет компактные характеристики, полосы и меню; не меняет ресурсы. Canvas боя использует Scale With Screen Size, 960×540, match 1; BattleContent шириной 960 центрирован на широком экране.
 
 В текущем списке сборки доступны MainMenu, SampleScene и BattleScene. Физическая встреча запускает бой; прямой запуск BattleScene без активной встречи показывает вспомогательное меню исследования.
 

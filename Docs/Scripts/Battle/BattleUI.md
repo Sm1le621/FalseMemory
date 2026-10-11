@@ -4,7 +4,7 @@
 
 **Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleUI.cs.
 
-Существующий интерфейс боя: сообщения, характеристики, меню, портреты, цветные эффекты и результаты.
+Существующий интерфейс боя: сообщения, характеристики, меню, портреты, цветные эффекты и результаты. В этапе 3.1 оформление делегируется назначенному BattleHUD: RenderMenu вызывает StyleCommand, ShowMenu — MenuChanged, ShowUnits — Bind. Без HUD сохранён прежний формат Stats. RefreshStats с HUD показывает компактные HP/MP и имя/HP врага. ShowFeedback размещает число и вспышку относительно позиции/размера портрета, включая фиксированные якоря нового макета.
 
 ## 2. Как работает
 
@@ -32,7 +32,7 @@ Awake подключает мышь и отключает дублирующий
 
 ## 4. Переменные и параметры Inspector
 
-Обязательны messageText/playerStats/enemyStats/roundText, playerPortrait/enemyPortrait, равные массивы commandButtons/commandLabels (в сцене 5). feedbackGlow/feedbackText — ссылки эффектов; feedbackDuration≥0.1, код 0.45 сек. resultPanel/resultText — победа. previewPlayerSprite/previewEnemySprite — начальное оформление Editor. CommandsEnabled/MenuCount/SelectedIndex — чтение. Canvas ScaleWithScreenSize960×540, match0.5; меню и текст имеют якоря/авторазмер.
+Обязательны messageText/playerStats/enemyStats/roundText, playerPortrait/enemyPortrait, равные массивы commandButtons/commandLabels (в сцене 5). feedbackGlow/feedbackText — ссылки эффектов; feedbackDuration≥0.1, код 0.45 сек. resultPanel/resultText — победа. previewPlayerSprite/previewEnemySprite — начальное оформление Editor. hud — необязательный BattleHUD, назначенный в текущей сцене. CommandsEnabled/MenuCount/SelectedIndex — чтение. Canvas ScaleWithScreenSize960×540, match1 (по высоте); содержимое ограничено шириной 960, меню и текст имеют якоря/авторазмер.
 
 ## 5. Связи с другими системами
 
@@ -51,6 +51,8 @@ Magic → Fire 8 MP и Heal6 MP → Escape возвращает Attack/Magic/Ite
 Отсутствующие основные ссылки/несогласованные массивы дают ошибки. UI listeners button.onClick в тестах проверяют обработку команд, не весь физический путь курсора. Only Enter, не Space. Gamepad нет. Длинные списки прокручиваются, выбор цели партии отсутствует. Меню, сообщения и эффекты проверены Play Mode; визуальное размещение 1920×1080/3440×1440 проверялось в задаче этапа 2, здесь заново скриншоты не делались.
 
 ## 9. История изменений
+
+- 2026-10-11 — этап 3.1: связь с BattleHUD, компактные характеристики, цвета выбора и привязка feedback к фиксированному макету. Игровые формулы сохранены.
 
 - 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
 

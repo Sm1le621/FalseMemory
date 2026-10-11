@@ -6,6 +6,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 
 ## Общие документы
 
+- [Этап 3 — полировка](BattleStage3.md) — изменения представления боя и результаты проверок.
+
 - [Architecture — структура и связи](Architecture.md).
 - [Changelog — значимые изменения](Changelog.md).
 - [Testing — результаты, покрытие и ручная проверка](Testing.md).
@@ -16,6 +18,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [Отчёт этапа 2](BattleStage2.md) — реализация, список файлов, ограничения и подробная инструкция Play Mode.
 
 ## Игровые системы
+
+- [Интерфейс боя](Systems/BattleUISystem.md).
 
 - [Пошаговые сражения](Systems/CombatSystem.md).
 - [Здоровье и HUD](Systems/HealthSystem.md).
@@ -30,7 +34,10 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 
 ## Описания скриптов
 
-Всего **32 C#-файла в Assets**: 23 игровых файла в Assets/Scripts, 8 тестовых и 1 служебный файл шаблона. Частичные тестовые классы объединяют несколько файлов, но каждый исходный файл имеет отдельное описание. Скрипты внешних пакетов и Library сюда не входят.
+- [BattleHUD](Scripts/Battle/BattleHUD.md) — оформление, полосы и предупреждение HP.
+- [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md) — проверки представления боя.
+
+После подэтапа 3.1 — **34 C#-файла в Assets**: 24 игровых, 9 тестовых и 1 служебный. Частичные тестовые классы объединяют несколько файлов, но каждый исходный файл имеет отдельное описание. Скрипты внешних пакетов и Library сюда не входят.
 
 - [BattleAbilities](Scripts/Battle/BattleAbilities.md) — `Assets/Scripts/Battle/BattleAbilities.cs`.
 - [BattleCalculator](Scripts/Battle/BattleCalculator.md) — `Assets/Scripts/Battle/BattleCalculator.cs`.
