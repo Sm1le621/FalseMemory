@@ -181,6 +181,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1334606159307240050, guid: c2c187f7427c59548996b259f8fe001e, type: 3}
   m_PrefabInstance: {fileID: 147713361}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &179981507
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 179981509}
+  - component: {fileID: 179981508}
+  m_Layer: 0
+  m_Name: BattleTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &179981508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179981507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7faa42b06a7d074691855d86767992d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::BattleTransition
+  rules: {fileID: 11400000, guid: 37aeb895472663f4e83a432d342df3b7, type: 2}
+  battleSceneName: BattleScene
+  mainMenuSceneName: MainMenu
+--- !u!4 &179981509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179981507}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &283929466
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +442,9 @@ GameObject:
   - component: {fileID: 497416141}
   - component: {fileID: 497416142}
   - component: {fileID: 497416143}
+  - component: {fileID: 497416146}
+  - component: {fileID: 497416145}
+  - component: {fileID: 497416144}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -596,13 +646,61 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497416136}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: accb902dd878a3f41bc035e69e40a0d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
   damage: 20
   attackCooldown: 1
+--- !u!114 &497416144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497416136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ac9eff0382adde42b54c563cb1414b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::BattleEncounter
+--- !u!114 &497416145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497416136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 355d2a4e5e85c1241a0c706fe40d6269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::BattleUnit
+  displayName: Skeleton
+  level: 1
+  attack: 12
+  defense: 5
+  speed: 7
+  battleSprite: {fileID: 7621585376946980347, guid: e9106ea2e64069241b3b894e662653fc, type: 3}
+  spriteColor: {r: 1, g: 1, b: 1, a: 1}
+  flipInBattle: 0
+--- !u!114 &497416146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497416136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dbd87022c7eabf4389340196aeecaca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::Health
+  maxHealth: 60
+  currentHealth: 0
+  hpSlider: {fileID: 0}
+  hpText: {fileID: 0}
 --- !u!1 &504028413
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,6 +716,7 @@ GameObject:
   - component: {fileID: 504028418}
   - component: {fileID: 504028419}
   - component: {fileID: 504028420}
+  - component: {fileID: 504028421}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -816,6 +915,26 @@ MonoBehaviour:
   currentHealth: 0
   hpSlider: {fileID: 1814977413}
   hpText: {fileID: 1386216790}
+--- !u!114 &504028421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504028413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 355d2a4e5e85c1241a0c706fe40d6269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::BattleUnit
+  displayName: Player
+  level: 1
+  attack: 15
+  defense: 8
+  speed: 10
+  battleSprite: {fileID: 2941999975309645056, guid: c36f7b58fc766374da5802aea4164127, type: 3}
+  spriteColor: {r: 0.6862745, g: 0.6862745, b: 0.6862745, a: 1}
+  flipInBattle: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -23170,3 +23289,4 @@ SceneRoots:
   - {fileID: 497416140}
   - {fileID: 551799569}
   - {fileID: 1829961676}
+  - {fileID: 179981509}

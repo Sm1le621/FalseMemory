@@ -1,0 +1,6 @@
+{
+  "name": "FalseMemory.Battle.PlayModeTests",
+  "references": ["FalseMemory.Runtime", "UnityEngine.UI", "Unity.TextMeshPro", "Unity.InputSystem"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "autoReferenced": false
+}

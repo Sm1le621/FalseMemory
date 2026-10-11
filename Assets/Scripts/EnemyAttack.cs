@@ -10,6 +10,10 @@ public class EnemyAttack : MonoBehaviour
     // Срабатывает ТОЛЬКО при физическом касании тел (CircleCollider2D с Is Trigger = false)
     private void OnCollisionStay2D(Collision2D collision)
     {
+        // Encounters replace legacy contact damage for turn-based opponents.
+        // Collision messages can reach disabled behaviours, so use an explicit guard.
+        if (GetComponent<BattleEncounter>() != null) return;
+
         if (collision.gameObject.CompareTag("Player"))
         {
             if (Time.time >= nextAttackTime)
