@@ -29,6 +29,9 @@
 В текущем списке сборки доступны MainMenu, SampleScene и BattleScene. Физическая встреча запускает бой; прямой запуск BattleScene без активной встречи показывает вспомогательное меню исследования.
 
 ## Владельцы данных
+- InventoryWindow/InventorySlotView —30 readonly views, событийное обновление, pointer drag. InventoryCanvas сохранён в SampleScene, не отдельная система данных.
+- WorldInputGate — владельцы модального ввода; PlayerController проверяет gate, время и enabled не меняются.
+
 - ItemData — только статические определения; прежний BattleConsumable наследует их без замены Potion/GUID.
 - BattleInventory.State — один InventoryState30 слотов и Gold на исходном Player. Старый items/новый startingItems только seed; модель создаётся один раз. UI/бой не копируют количество. Код: Assets/Scripts/Inventory, данные Assets/Settings/Inventory. Сохранение/внешняя десериализация ещё не подключены.
 

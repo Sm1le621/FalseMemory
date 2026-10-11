@@ -43,6 +43,10 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 Полноценного SaveSystem, партийного боя, классов, экипировки и level-up пока нет; они не документируются как готовые системы. PlayerPrefs уже сохраняет настройки меню, но не RPG-прогресс.
 
 ## Описания скриптов
+- [InventoryWindow](Scripts/Inventory/InventoryWindow.md) — окно6×5.
+- [InventorySlotView](Scripts/Inventory/InventorySlotView.md) — pointer/drag.
+- [WorldInputGate](Scripts/Inventory/WorldInputGate.md) — блокировка ввода окнами.
+- [InventoryFlowTests](Scripts/Tests/PlayMode/InventoryFlowTests.md) — окно/ввод/drag.
 - [ItemData](Scripts/Inventory/ItemData.md) — статические определения.
 - [InventoryState](Scripts/Inventory/InventoryState.md) — общий запас30 слотов/Gold.
 - [InventoryTests](Scripts/Tests/EditMode/InventoryTests.md) — граничные операции.
@@ -61,7 +65,7 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [BattleHUD](Scripts/Battle/BattleHUD.md) — оформление, полосы и предупреждение HP.
 - [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md) — проверки представления боя.
 
-После подэтапа4.1 — **43 C#-файла в Assets**:32 игровых,10 тестовых и1 служебный. Частичные тестовые классы объединяют несколько файлов, но каждый исходный файл имеет отдельное описание. Скрипты внешних пакетов и Library сюда не входят.
+После подэтапа4.2 — **47 C#-файлов в Assets**:35 игровых,11 тестовых и1 служебный. Частичные тестовые классы объединяют несколько файлов, но каждый исходный файл имеет отдельное описание. Скрипты внешних пакетов и Library сюда не входят.
 
 - [BattleAbilities](Scripts/Battle/BattleAbilities.md) — `Assets/Scripts/Battle/BattleAbilities.cs`.
 - [BattleCalculator](Scripts/Battle/BattleCalculator.md) — `Assets/Scripts/Battle/BattleCalculator.cs`.

@@ -14,16 +14,24 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Vector2 moveInput;
+    private WorldInputGate inputGate;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        inputGate = GetComponent<WorldInputGate>();
     }
 
     private void Update()
     {
+        if (inputGate != null && inputGate.IsBlocked)
+        {
+            moveInput = Vector2.zero;
+            if (animator != null) animator.SetBool("isMoving", false);
+            return;
+        }
         // 1. Считываем ввод WASD / Стрелки
         float moveX = 0f;
         float moveY = 0f;
@@ -51,6 +59,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (inputGate != null && inputGate.IsBlocked) { rb.linearVelocity = Vector2.zero; return; }
         // Физическое перемещение
         rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
     }
