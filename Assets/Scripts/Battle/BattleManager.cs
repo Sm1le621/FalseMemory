@@ -106,9 +106,10 @@ public sealed class BattleManager : MonoBehaviour
                     if (BattleAbilities.TryUseItem(actor, itemTarget, pendingItem, out int amount))
                     {
                         if (audioController != null) audioController.Play(BattleSound.Potion);
-                        ui.ShowMessage(actor.displayName + " использует " + pendingItem.displayName + ": +" + amount + " HP.");
-                        ui.ShowFeedback(itemTarget == Player, "+" + amount + " HP", pendingItem.effectColor);
-                        if (vfx != null) vfx.Play(itemTarget == Player, null, pendingItem.effectColor, true);
+                        string resource=pendingItem.manaRestoration>0?"MP":"HP";
+                        ui.ShowMessage(actor.displayName + " использует " + pendingItem.displayName + ": +" + amount + " "+resource+".");
+                        ui.ShowFeedback(itemTarget == Player, "+" + amount + " "+resource, pendingItem.effectColor);
+                        if (vfx != null) vfx.Play(itemTarget == Player, pendingItem.visualEffect, pendingItem.effectColor, true);
                     }
                 }
                 else if (pendingAction == BattleAction.Magic)
@@ -127,7 +128,7 @@ public sealed class BattleManager : MonoBehaviour
                 }
                 else
                 {
-                    var result = BattleCalculator.ResolvePhysical(actor.attack, target.defense, target.IsDefending, rules,
+                    var result = BattleCalculator.ResolvePhysical(actor.EffectiveAttack, target.EffectiveDefense, target.IsDefending, rules,
                         actor.criticalChance, actor.missChance, random);
                     if (result.Missed)
                     {

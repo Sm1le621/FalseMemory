@@ -244,7 +244,7 @@ public sealed class BattleUI : MonoBehaviour
     private static string Stats(BattleUnit unit) =>
         unit.displayName + "   LV " + unit.level + "\nHP  " + unit.Health.currentHealth + " / " + unit.Health.maxHealth +
         "\nMP  " + unit.CurrentMP + " / " + unit.MaxMP +
-        "\nATK " + unit.attack + "   DEF " + unit.defense + "   SPD " + unit.Speed +
+               "\nATK " + unit.EffectiveAttack + "   DEF " + unit.EffectiveDefense + "   SPD " + unit.Speed +
         "\nMATK " + unit.magicAttack + "   MDEF " + unit.magicDefense +
         (unit.Inventory != null ? "\n" + unit.Inventory.Summary : "") + "\nEXP " + unit.CurrentExperience + (unit.IsDefending ? "\nDEFEND" : "");
 

@@ -2,42 +2,41 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleAbilities.cs.
+Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleAbilities.cs.
 
-Проверка и применение магии/лечебных предметов через единый Health.
+Общие статические эффекты предметов и магии. Один расход из InventoryState/MP, один владелец ресурса.
 
 ## 2. Как работает
 
-Can... проверяет участника, цель, данные и ресурсы. Try... повторяет проверку, списывает ресурс ровно один раз и применяет эффект. Списание хода контролирует Manager, не этот класс.
+CanUse/CanCast проверяют условия до расхода. TryUseItem удаляет1 и применяет HP либо MP. TryCast списывает стоимость и лечит/наносит магический урон, читая итоговые характеристики. Возвращается фактический эффект.
 
 ## 3. Методы и функции
 
-- `CanUseItem(BattleUnit user,BattleUnit target,BattleConsumable item)` → bool: живые, подходящая Self/Opponent цель, healing≥0, Inventory и Count>0.
-- `TryUseItem(...,out int amount)` → bool успеха; TryConsume, Health.Heal; amount — фактическое лечение.
-- `CanCast(BattleUnit caster,BattleUnit target,BattleSpell spell)` → bool: живые, mpCost≥0, доступные MP, цель и поддерживаемый эффект.
-- `TryCast(BattleUnit caster,BattleUnit target,BattleSpell spell,BattleRules rules,out int amount)` → bool: CanCast+TrySpendMP, затем Heal или MagicalDamage/TakeDamage; amount — фактическое лечение либо расчётный урон. Unity callbacks нет.
+`CanUseItem(user,target,item,location=Battle)` bool: живые объекты, Consumable, требуемый уровень, разрешённый Exploration/Battle, один положительный неотрицательный HP/MP-эффект, правильная цель и количество. `TryUseItem(...,out amount,location=Battle)` bool: повторно проверяет/удаляет1; вызывает RestoreMP либо Health.Heal, amount фактический. `CanCast(caster,target,spell)` bool: прежние MP/цель/эффект MagicDamage/RestoreHealth. `TryCast(...,rules,out amount)` bool: прежний расход MP; Heal через Health, урон через Calculator с EffectiveMagicAttack/Defense. Unity callbacks нет, класс static.
 
-## 4. Переменные и параметры Inspector
+## 4. Переменные и Inspector
 
-Inspector отсутствует; аргументы — ссылки действующих участников/данных, amount начинается с 0. rules обязателен для TryCast.
+Статических запасов нет. Аргументы ссылаются на настоящие участники/данные. location optional Battle сохраняет прежние вызовы. amount0 при отказе и при полном ресурсе. Смена сцены не копирует значения.
 
-## 5. Связи с другими системами
+## 5. Связи
 
-Manager дополнительно проверяет очередь и принадлежность заклинания Spells. Health хранит HP, Inventory хранит количество, Calculator считает магию.
+BattleInventory.State, Health.Heal/TakeDamage, BattleUnit.RestoreMP/TrySpendMP/Effective*, Calculator. UI/аудио/VFX не вызывают расчёт второй раз.
 
-## 6. Пример работы
+## 6. Пример
 
-Fire при MP7 → false, HP/MP не меняются. Heal при HP95 → amount5, цена 6.
+Ether20MP при текущем25/30 даёт5, удаляет1. Staff MATK+4 повышает Fire19→23 без изменения8 MP цены.
 
 ## 7. Настройка в Unity
 
-Класс не прикрепляется к GameObject и не имеет Inspector. Его вызывает BattleManager/BattleAbilities с данными BattleUnit/Rules. Назначь существующие Rules на BattleTransition; параметры передаются методам, а не через отдельный компонент.
+К GameObject не прикрепляется. Вызывается Manager для Battle и WorldItemUseController с Exploration. ItemData.useLocations/requiredLevel настраивают ограничения, смешанные HPMP сейчас запрещены.
 
-## 8. Возможные проблемы и проверки
+## 8. Ограничения и расширение
 
-Самостоятельный прямой вызов не проверяет фазу боя/изученность заклинания: обращаться через Manager. Полное HP не запрещает расход. Нет воскрешения/других эффектов. Проверки ресурсов и целей покрыты Edit/Play Mode.
+Не воскрешает. Полный HP/MP не запрещает расход положительного эффекта — сохранено правило Potion. Нулевой/отрицательный/гибридный эффект отвергается. Нет новых типов способности/классов/MP-стоимости предметов. Игровые события подписчиков не должны менять ресурс во время транзакции.
 
 ## 9. История изменений
+
+2026-10-12 — 4.5: общий контекст использования, Ether, ограничения и итоговые характеристики.
 
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 

@@ -31,6 +31,8 @@ Presentation: Attack0.4, Hit0.18, Outcome0.35, Message0.75, Enemy Think0.5, Allo
 На Player общий BattleInventory, InventoryWindow, WorldInputGate и PlayerInteractor. InventoryCanvas содержит30 ячеек/описания и две мировые подсказки; I/Escape закрывают окно. Количество менять через State, стартовые seed только до инициализации. TestLoot слева/ниже старта содержит семь предметов из WorldItemPickup prefab; триггеры/иконки/количества/уникальные worldId назначены MCP. Подойти и нажать E; при нехватке места вещь остаётся. Для новых размещений задайте уникальный ID, не перемещайте существующие кусты.
 ## Экипировка
 На Player EquipmentController, семь слотов окна и итоговые Stats. Базовые ATK/DEF остаются15/8; вещи добавляют бонусы через Effective*. Выбрать → Экипировать, либо подходящий правый слот. Клик надетого слота при пустом/несовместимом выборе снимает вещь; полная сумка безопасно отклоняет снятие. ItemData задаёт Fits/requiredLevel/bonuses.
+## Использование предметов
+WorldItemUseController уже на Player. Выбрать Potion/Ether → Использовать; общий эффект с боем, ограничения ItemData.useLocations/requiredLevel. Potion до30HP, Ether до20MP, расход1; даже полный ресурс допускает расход с amount0 как прежний Potion. В бою Items/Ether — один ход, голубой профиль EtherVisual. Изменяемое количество в State, не SO.
 ## Добавление данных
 
 Create → FalseMemory → Battle Spell создаёт заклинание с поддерживаемым эффектом; назначь его в Spells игрока. Battle Consumable создаёт лечебный предмет; добавь его определение в стопку Inventory. Battle Rules — общие коэффициенты. Новые типы эффектов требуют программирования; изменение чисел существующего эффекта — настройки данных.

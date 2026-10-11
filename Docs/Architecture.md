@@ -29,6 +29,8 @@
 В текущем списке сборки доступны MainMenu, SampleScene и BattleScene. Физическая встреча запускает бой; прямой запуск BattleScene без активной встречи показывает вспомогательное меню исследования.
 
 ## Владельцы данных
+- WorldItemUseController делегирует Abilities с Exploration, Manager с Battle; общие ограничения/однократный расход и Health/MP. Менеджер читает Effective*, формулы не меняются. EtherVisual — отдельный голубой профиль, не новый тип магии.
+
 - EquipmentController.State — семь надетых ItemData, атомарный обмен с InventoryState. BattleUnit.Effective* читает базу+сумму заново, базовые поля не изменяются/ресурсы не восстанавливаются. InventoryWindow даёт команды; это не LevelUp/классы/HPMP-бонусы.
 
 - PlayerInteractor/IWorldInteractable — один вход E/поиск ближайшей физической цели. WorldItemPickup резервирует выдачу в общий State и выключает только себя; prefab/семь тестовых instance TestLoot сохраняются в SampleScene. Это не SaveSystem/NPC.

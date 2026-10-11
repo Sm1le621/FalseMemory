@@ -3944,6 +3944,7 @@ GameObject:
   - component: {fileID: 504028423}
   - component: {fileID: 504028425}
   - component: {fileID: 504028426}
+  - component: {fileID: 504028427}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -4290,6 +4291,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fa859eb2740db478dfe6ea0267ef17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FalseMemory.Runtime::EquipmentController
+--- !u!114 &504028427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504028413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5138d2c28e0f14a8ad682e952a992f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::WorldItemUseController
 --- !u!1 &508568440
 GameObject:
   m_ObjectHideFlags: 0

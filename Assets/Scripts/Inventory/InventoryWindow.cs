@@ -16,6 +16,7 @@ public sealed class InventoryWindow : MonoBehaviour
     public Button[] equipmentButtons;
     public TextMeshProUGUI equipmentStats;
     public event Action<int> UseRequested;
+    public Func<int,bool> CanUseSelection;
     public event Action<int,EquipmentSlot?> EquipRequested;
     public event Action<EquipmentSlot> UnequipRequested;
     public bool IsOpen => panel!=null && panel.gameObject.activeSelf;
@@ -82,7 +83,7 @@ public sealed class InventoryWindow : MonoBehaviour
         details.text=selected.IsEmpty?"Пустой слот\nВыберите предмет.":item.displayName+"  ×"+selected.Count+"\n"+item.category+
             "\n\n"+item.description+"\n\nСтопка: "+item.StackLimit+"   Купить: "+item.buyPrice+"   Продать: "+(item.CanSell?item.sellPrice.ToString():"—");
         splitButton.interactable=!selected.IsEmpty && selected.Count>1 && item.stackable && Inventory.State.FirstEmptySlot()>=0;
-        useButton.interactable=!selected.IsEmpty && item is BattleConsumable && UseRequested!=null;
+        useButton.interactable=!selected.IsEmpty && item is BattleConsumable && UseRequested!=null && (CanUseSelection==null || CanUseSelection(SelectedIndex));
         var equipment=GetComponent<EquipmentController>();
         if(equipButton!=null)equipButton.interactable=!selected.IsEmpty && item.IsEquipment && item.requiredLevel<=unit.level && EquipRequested!=null;
         for(int i=0;i<(equipmentButtons?.Length ?? 0);i++)

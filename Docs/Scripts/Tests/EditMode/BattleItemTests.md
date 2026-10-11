@@ -11,6 +11,7 @@
 Использует Setup/Cleanup из BattleAbilityTests.cs; меняет только временные стопки и HP.
 
 ## 3. Методы и функции
+4.5: `EtherRestoresActualManaWithoutHealingAndConsumesOne` —20MP/добор5/HP неизменен/qty-1. `ItemLocationsAndRequiredLevelRejectWithoutResourceChanges` — Battle запрет/Exploration успех/низкий уровень отказ. `InvalidHybridAndNegativeEffectsNeverConsume` — смешанный/отрицательный/нулевой эффект без расхода. `MagicReadsEquipmentBonusesAndKeepsSpellCost` — временный Staff MATK4, Fire23, цена8, база12. NUnit void, temporary SO уничтожается finally.
 
 - `PotionHealsAndConsumesExactlyOneItem(int initial,int expected,int restored)` — три набора HP40/95/100: лечение, фактическое количество, Potion3→2 и отсутствие расхода MP.
 - `EmptyPotionStackCannotHealOrBecomeNegative()` — Count0 не лечит и не отрицательный.
@@ -38,6 +39,7 @@ HP95 +Potion30 →100, amount5, количество 2.
 Имя файла отличается от имени partial-класса; Test Runner показывает BattleAbilityTests. Это проверка данных, меню отдельно в PlayMode. Все случаи входят в прошедшие 40 Edit Mode.
 
 ## 9. История изменений
+- 2026-10-12 — 4.5: четыре новых случая Ether/ограничений/магической экипировки.
 
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 

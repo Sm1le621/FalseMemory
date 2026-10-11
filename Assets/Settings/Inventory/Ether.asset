@@ -33,4 +33,5 @@ MonoBehaviour:
   target: 1
   healing: 0
   manaRestoration: 20
+  visualEffect: {fileID: 11400000, guid: aee7d634ac6fa7a498a610335a7c6a28, type: 2}
   effectColor: {r: 0.4, g: 0.6, b: 1, a: 1}

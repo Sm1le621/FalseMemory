@@ -16,7 +16,7 @@
 
 ## 4. Переменные и Inspector
 
-target Self/Enemy; healing≥0 (код30), manaRestoration≥0 (код0), effectColor зелёный. Potion прежние имя/30HP/GUID, item.potion/лимит99/цены30/15. Ether healing0/manaRestoration20, item.ether/цены50/25. MP-эффект пока данные, подключается4.5.
+target Self/Enemy; healing≥0 (код30), manaRestoration≥0 (код0), effectColor зелёный. Potion прежние имя/30HP/GUID, item.potion/лимит99/цены30/15. Ether healing0/manaRestoration20, item.ether/цены50/25. С4.5 MP-эффект подключён общей логикой; visualEffect — необязательный BattleVFXProfile, EtherVisual голубой Orbit.
 
 ## 5. Связи
 
@@ -32,9 +32,10 @@ Create → FalseMemory → Battle Consumable, задать имя/ID/катег�
 
 ## 8. Ограничения и расширение
 
-Не воскрешает. До подключения4.5 Ether не объявляется работающим MP-эффектом. SO не должен хранить количество.
+Не воскрешает. Ether20MP подключён миру/бою; поддерживается один положительный HP либо MP эффект, смешанные/нулевые отвергаются. SO не должен хранить количество.
 
 ## 9. История изменений
+2026-10-12 — 4.5: Ether/ограничения подключены и поле visualEffect для профиля расходуемого.
 
 2026-10-12 — 4.1: наследование ItemData и данные Ether, Potion сохранён.
 
