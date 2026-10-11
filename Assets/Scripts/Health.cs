@@ -24,6 +24,16 @@ public class Health : MonoBehaviour
         UpdateUI();
     }
 
+    // Shared by healing spells and consumables. Returns actual restored HP.
+    public int Heal(int amount)
+    {
+        if (amount <= 0 || currentHealth <= 0) return 0;
+        int before = currentHealth;
+        currentHealth = (int)System.Math.Min(System.Math.Max(0, maxHealth), (long)currentHealth + amount);
+        UpdateUI();
+        return System.Math.Max(0, currentHealth - before);
+    }
+
     void UpdateUI()
     {
         if (hpSlider != null)

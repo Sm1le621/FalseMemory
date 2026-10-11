@@ -682,6 +682,15 @@ MonoBehaviour:
   attack: 12
   defense: 5
   speed: 7
+  maxMP: 0
+  currentMP: 0
+  magicAttack: 0
+  magicDefense: 3
+  spells: []
+  criticalChance: 0.1
+  missChance: 0.05
+  currentExperience: 0
+  experienceReward: 20
   battleSprite: {fileID: 7621585376946980347, guid: e9106ea2e64069241b3b894e662653fc, type: 3}
   spriteColor: {r: 1, g: 1, b: 1, a: 1}
   flipInBattle: 0
@@ -717,6 +726,7 @@ GameObject:
   - component: {fileID: 504028419}
   - component: {fileID: 504028420}
   - component: {fileID: 504028421}
+  - component: {fileID: 504028422}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -932,9 +942,35 @@ MonoBehaviour:
   attack: 15
   defense: 8
   speed: 10
+  maxMP: 30
+  currentMP: 0
+  magicAttack: 12
+  magicDefense: 8
+  spells:
+  - {fileID: 11400000, guid: 55a451c4fffd6cd4a8e4ed1dd65b672f, type: 2}
+  - {fileID: 11400000, guid: eb8097ab973a2c14ab1ac8c0cc304715, type: 2}
+  criticalChance: 0.1
+  missChance: 0.05
+  currentExperience: 0
+  experienceReward: 0
   battleSprite: {fileID: 2941999975309645056, guid: c36f7b58fc766374da5802aea4164127, type: 3}
   spriteColor: {r: 0.6862745, g: 0.6862745, b: 0.6862745, a: 1}
   flipInBattle: 1
+--- !u!114 &504028422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504028413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa565e4808691f9408ad5301873722cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::BattleInventory
+  items:
+  - definition: {fileID: 11400000, guid: 8e54ae453a06a504fb7f2eb9053e1539, type: 2}
+    count: 3
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

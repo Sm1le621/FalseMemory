@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,12 +20,24 @@ public sealed class BattleUI : MonoBehaviour
     public TextMeshProUGUI[] commandLabels;
     public Sprite previewPlayerSprite;
     public Sprite previewEnemySprite;
+    public Image feedbackGlow;
+    public TextMeshProUGUI feedbackText;
+    [Min(0.1f)] public float feedbackDuration = 0.45f;
+    public Image resultPanel;
+    public TextMeshProUGUI resultText;
 
     private Action[] callbacks = Array.Empty<Action>();
     private string[] labels = Array.Empty<string>();
     private int selected;
     private int acceptAfterFrame;
     private bool commandsEnabled;
+    private bool[] available = Array.Empty<bool>();
+    private Action backAction;
+    private int firstVisible;
+    private Coroutine feedbackRoutine;
+    public bool CommandsEnabled => commandsEnabled;
+    public int MenuCount => labels.Length;
+    public int SelectedIndex => selected;
     private readonly Dictionary<Sprite, Sprite> pointSprites = new Dictionary<Sprite, Sprite>();
 
     private void Awake()
@@ -40,7 +53,7 @@ public sealed class BattleUI : MonoBehaviour
         for (int i = 0; i < commandButtons.Length; i++)
         {
             int index = i;
-            commandButtons[i].onClick.AddListener(() => Invoke(index));
+            commandButtons[i].onClick.AddListener(() => Invoke(firstVisible + index));
         }
     }
 
@@ -55,37 +68,96 @@ public sealed class BattleUI : MonoBehaviour
                  keyboard.rightArrowKey.wasPressedThisFrame || keyboard.dKey.wasPressedThisFrame)
             Select((selected + 1) % labels.Length);
         else if (keyboard.enterKey.wasPressedThisFrame || keyboard.numpadEnterKey.wasPressedThisFrame) Invoke(selected);
-        else if (keyboard.escapeKey.wasPressedThisFrame) Select(0); // Stage 1 has no submenus.
+        else if (keyboard.escapeKey.wasPressedThisFrame) { if (!CancelMenu()) Select(0); }
     }
 
     private void Invoke(int index)
     {
-        if (!commandsEnabled || index < 0 || index >= callbacks.Length || Time.frameCount <= acceptAfterFrame) return;
+        if (!commandsEnabled || index < 0 || index >= callbacks.Length || !available[index] || Time.frameCount <= acceptAfterFrame) return;
         callbacks[index]?.Invoke();
     }
 
-    public void ShowMenu(string[] names, Action[] actions)
+    public void ShowMenu(string[] names, Action[] actions, bool[] enabledOptions = null, Action onBack = null)
     {
+        if (names.Length != actions.Length || (enabledOptions != null && enabledOptions.Length != names.Length))
+            throw new ArgumentException("Menu labels/actions must have matching lengths.");
         labels = names; callbacks = actions; selected = 0;
+        available = enabledOptions ?? Array.ConvertAll(names, _ => true);
+        backAction = onBack; firstVisible = 0;
         acceptAfterFrame = Time.frameCount + 1;
-        for (int i = 0; i < commandButtons.Length; i++) commandButtons[i].gameObject.SetActive(i < names.Length);
         SetCommandsEnabled(true);
         Select(0);
+    }
+
+    public bool CancelMenu()
+    {
+        if (!commandsEnabled || backAction == null || Time.frameCount <= acceptAfterFrame) return false;
+        backAction();
+        return true;
     }
 
     private void Select(int index)
     {
         selected = index;
-        for (int i = 0; i < labels.Length; i++) commandLabels[i].text = (i == index ? "> " : "  ") + labels[i];
+        if (selected < firstVisible) firstVisible = selected;
+        if (selected >= firstVisible + commandButtons.Length) firstVisible = selected - commandButtons.Length + 1;
+        RenderMenu();
+    }
+
+    private void RenderMenu()
+    {
+        for (int i = 0; i < commandButtons.Length; i++)
+        {
+            int index = firstVisible + i;
+            commandButtons[i].gameObject.SetActive(index < labels.Length);
+            if (index >= labels.Length) continue;
+            commandLabels[i].text = (index == selected ? "> " : "  ") + labels[index];
+            commandLabels[i].color = available[index] ? new Color32(232, 222, 201, 255) : new Color32(122, 113, 108, 255);
+            commandButtons[i].interactable = commandsEnabled && available[index];
+        }
     }
 
     public void SetCommandsEnabled(bool enabled)
     {
         commandsEnabled = enabled;
-        foreach (var button in commandButtons) button.interactable = enabled;
+        RenderMenu();
+    }
+
+    public void ShowFeedback(bool onPlayer, string text, Color color)
+    {
+        if (feedbackGlow == null || feedbackText == null) return;
+        if (feedbackRoutine != null) StopCoroutine(feedbackRoutine);
+        var target = onPlayer ? playerPortrait.rectTransform : enemyPortrait.rectTransform;
+        feedbackGlow.rectTransform.anchorMin = target.anchorMin;
+        feedbackGlow.rectTransform.anchorMax = target.anchorMax;
+        feedbackGlow.rectTransform.offsetMin = feedbackGlow.rectTransform.offsetMax = Vector2.zero;
+        feedbackText.rectTransform.anchorMin = new Vector2(target.anchorMin.x - 0.025f, target.anchorMax.y + 0.005f);
+        feedbackText.rectTransform.anchorMax = new Vector2(target.anchorMax.x + 0.025f, target.anchorMax.y + 0.075f);
+        feedbackText.text = text; feedbackText.color = color;
+        feedbackRoutine = StartCoroutine(Feedback(color));
+    }
+
+    private IEnumerator Feedback(Color color)
+    {
+        feedbackGlow.gameObject.SetActive(true); feedbackText.gameObject.SetActive(true);
+        float duration = Mathf.Max(0.1f, feedbackDuration);
+        for (float elapsed = 0f; elapsed < duration; elapsed += Time.unscaledDeltaTime)
+        {
+            color.a = Mathf.Sin(elapsed / duration * Mathf.PI) * 0.35f;
+            feedbackGlow.color = color;
+            yield return null;
+        }
+        feedbackGlow.gameObject.SetActive(false); feedbackText.gameObject.SetActive(false);
+        feedbackRoutine = null;
     }
 
     public void ShowMessage(string message) => messageText.text = message;
+
+    public void ShowVictoryResults(int gained, BattleUnit player)
+    {
+        resultPanel.gameObject.SetActive(true);
+        resultText.text = "Victory!\nEXP Gained: +" + gained + "\nTotal EXP: " + player.CurrentExperience + "\nCurrent Level: " + player.level;
+    }
 
     public void ShowUnits(BattleUnit player, BattleUnit enemy)
     {
@@ -143,9 +215,62 @@ public sealed class BattleUI : MonoBehaviour
 
     private static string Stats(BattleUnit unit) =>
         unit.displayName + "   LV " + unit.level + "\nHP  " + unit.Health.currentHealth + " / " + unit.Health.maxHealth +
-        "\nATK " + unit.attack + "   DEF " + unit.defense + "   SPD " + unit.Speed + (unit.IsDefending ? "\nDEFEND" : "");
+        "\nMP  " + unit.CurrentMP + " / " + unit.MaxMP +
+        "\nATK " + unit.attack + "   DEF " + unit.defense + "   SPD " + unit.Speed +
+        "\nMATK " + unit.magicAttack + "   MDEF " + unit.magicDefense +
+        (unit.Inventory != null ? "\n" + unit.Inventory.Summary : "") + "\nEXP " + unit.CurrentExperience + (unit.IsDefending ? "\nDEFEND" : "");
 
 #if UNITY_EDITOR
+    // Upgrade the saved stage-1 objects in place, invoked only through Unity MCP.
+    public void UpgradeLayout()
+    {
+        var root = messageText.transform.parent;
+        Fit(root.Find("Battlefield").GetComponent<RectTransform>(), new Vector2(0.02f, 0.44f), new Vector2(0.98f, 0.82f));
+        Fit(playerPortrait.rectTransform, new Vector2(0.70f, 0.49f), new Vector2(0.84f, 0.76f));
+        Fit(enemyPortrait.rectTransform, new Vector2(0.19f, 0.49f), new Vector2(0.33f, 0.76f));
+        Fit(root.Find("StatusPanel").GetComponent<RectTransform>(), new Vector2(0.02f, 0.02f), new Vector2(0.65f, 0.40f));
+        Fit(root.Find("CommandPanel").GetComponent<RectTransform>(), new Vector2(0.67f, 0.02f), new Vector2(0.98f, 0.40f));
+        Fit(playerStats.rectTransform, new Vector2(0.04f, 0.09f), new Vector2(0.34f, 0.37f));
+        Fit(enemyStats.rectTransform, new Vector2(0.35f, 0.09f), new Vector2(0.63f, 0.37f));
+        foreach (var text in new[] {playerStats, enemyStats})
+        { text.fontSize = 17; text.enableAutoSizing = true; text.fontSizeMin = 12; text.fontSizeMax = 17; }
+        Array.Resize(ref commandButtons, 5); Array.Resize(ref commandLabels, 5);
+        for (int i = 0; i < 5; i++)
+        {
+            float y = 0.315f - i * 0.055f;
+            if (commandButtons[i] == null)
+            {
+                var image = Panel(root, "Command" + (i + 1), new Color32(48, 40, 58, 255), Vector2.zero, Vector2.one);
+                image.raycastTarget = true;
+                var button = image.gameObject.AddComponent<Button>(); button.targetGraphic = image;
+                button.navigation = new Navigation {mode = Navigation.Mode.None}; button.colors = commandButtons[0].colors;
+                commandButtons[i] = button;
+                commandLabels[i] = Label(image.transform, "Label", "", 17, new Vector2(0.05f, 0f), new Vector2(0.95f, 1f));
+            }
+            Fit(commandButtons[i].GetComponent<RectTransform>(), new Vector2(0.69f, y), new Vector2(0.96f, y + 0.047f));
+            commandLabels[i].fontSize = 17;
+            commandLabels[i].enableAutoSizing = true; commandLabels[i].fontSizeMin = 11; commandLabels[i].fontSizeMax = 17;
+            commandLabels[i].text = new[] {"> Attack", "Magic", "Items", "Defend", "Flee"}[i];
+        }
+        var controls = root.Find("Controls").GetComponent<TextMeshProUGUI>();
+        controls.text = "WASD / стрелки • Enter • Esc — назад"; controls.fontSize = 11;
+        controls.enableAutoSizing = true; controls.fontSizeMin = 9; controls.fontSizeMax = 11;
+        if (feedbackGlow == null) feedbackGlow = Panel(root, "AbilityGlow", Color.clear, Vector2.zero, Vector2.zero);
+        if (feedbackText == null) feedbackText = Label(root, "AbilityAmount", "", 17, Vector2.zero, Vector2.zero);
+        feedbackText.alignment = TextAlignmentOptions.Center;
+        feedbackText.enableAutoSizing = true; feedbackText.fontSizeMin = 11; feedbackText.fontSizeMax = 17;
+        feedbackGlow.gameObject.SetActive(false); feedbackText.gameObject.SetActive(false);
+        if (resultPanel == null)
+            resultPanel = Panel(root, "BattleResults", new Color32(36, 30, 44, 255), new Vector2(0.30f, 0.46f), new Vector2(0.67f, 0.81f));
+        if (resultText == null)
+            resultText = Label(resultPanel.transform, "VictoryResultText", "Victory!\nEXP Gained: +20\nTotal EXP: 20\nCurrent Level: 1", 21,
+                new Vector2(0.05f, 0.05f), new Vector2(0.95f, 0.95f));
+        resultText.alignment = TextAlignmentOptions.Center;
+        resultText.enableAutoSizing = true; resultText.fontSizeMin = 14; resultText.fontSizeMax = 21;
+        resultPanel.gameObject.SetActive(false);
+        UnityEditor.EditorUtility.SetDirty(this);
+    }
+
     // Called via Unity MCP once; all resulting UI objects/references are saved in BattleScene.
     public void BuildLayout()
     {

@@ -32,8 +32,8 @@ public sealed class BattleTurnOrder<T> where T : class, IBattleParticipant
     }
 }
 
-public enum BattleAction { Attack, Defend }
-public enum BattleState { Starting, Resolving, AwaitingPlayer, Victory, Defeat }
+public enum BattleAction { Attack, Defend, Magic, Items, Flee }
+public enum BattleState { Starting, Resolving, AwaitingPlayer, Victory, Defeat, Escaped }
 
 // A command can be consumed once, even when click and keyboard arrive together.
 public sealed class BattleCommandGate

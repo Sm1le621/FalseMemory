@@ -19,3 +19,13 @@ MonoBehaviour:
   enemyDefendChance: 0.2
   actionDelay: 0.8
   fadeDuration: 0.3
+  magicAttackMultiplier: 1
+  magicDefenseMultiplier: 1
+  minimumMagicDamage: 1
+  criticalMultiplier: 1.5
+  fleeBaseChance: 0.65
+  fleeSpeedCoefficient: 0.03
+  minimumFleeChance: 0.05
+  maximumFleeChance: 0.95
+  fleeProtectionSeconds: 3
+  fleeSafeDistance: 2

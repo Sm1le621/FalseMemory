@@ -6,14 +6,26 @@ using UnityEngine.TestTools;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
-public sealed class BattleFlowTests
+public sealed partial class BattleFlowTests
 {
     private Scene previousScene;
     private BattleRules rules;
     private float previousDelay, previousFade, previousDefendChance;
+    private InputSettings.BackgroundBehavior savedBackgroundBehavior;
+#if UNITY_EDITOR
+    private InputSettings.EditorInputBehaviorInPlayMode savedEditorInputBehavior;
+#endif
 
     [UnitySetUp] public IEnumerator Setup()
     {
+        // Synthetic keyboard input must work without Game View focus.
+        // Restore these transient values after each test; never save the asset.
+        savedBackgroundBehavior = InputSystem.settings.backgroundBehavior;
+        InputSystem.settings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+#if UNITY_EDITOR
+        savedEditorInputBehavior = InputSystem.settings.editorInputBehaviorInPlayMode;
+        InputSystem.settings.editorInputBehaviorInPlayMode = InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+#endif
         previousScene = SceneManager.GetActiveScene();
         yield return SceneManager.LoadSceneAsync("SampleScene", LoadSceneMode.Additive);
         var world = SceneManager.GetSceneByName("SampleScene"); SceneManager.SetActiveScene(world);
@@ -21,6 +33,9 @@ public sealed class BattleFlowTests
         rules = BattleTransition.Instance.rules;
         previousDelay = rules.actionDelay; previousFade = rules.fadeDuration; previousDefendChance = rules.enemyDefendChance;
         rules.actionDelay = 0.1f; rules.fadeDuration = 0f; rules.enemyDefendChance = 0f;
+        // Existing deterministic scenarios should not depend on random criticals/misses.
+        Player().criticalChance = Player().missChance = 0f;
+        Enemy().criticalChance = Enemy().missChance = 0f;
     }
 
     [UnityTearDown] public IEnumerator Cleanup()
@@ -35,6 +50,10 @@ public sealed class BattleFlowTests
         if (battle.IsValid() && battle.isLoaded) yield return SceneManager.UnloadSceneAsync(battle);
         var world = SceneManager.GetSceneByName("SampleScene");
         if (world.IsValid() && world.isLoaded) yield return SceneManager.UnloadSceneAsync(world);
+        InputSystem.settings.backgroundBehavior = savedBackgroundBehavior;
+#if UNITY_EDITOR
+        InputSystem.settings.editorInputBehaviorInPlayMode = savedEditorInputBehavior;
+#endif
     }
 
     private static IEnumerator WaitUntil(System.Func<bool> predicate)

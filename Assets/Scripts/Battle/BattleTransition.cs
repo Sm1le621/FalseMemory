@@ -21,6 +21,20 @@ public sealed class BattleTransition : MonoBehaviour
     private readonly List<GameObject> hiddenRoots = new List<GameObject>();
     private readonly Dictionary<Behaviour, bool> pausedBehaviours = new Dictionary<Behaviour, bool>();
     private Image fade;
+    private float protectedUntil;
+    private EnemyAI protectedEnemyAI;
+    private bool protectedEnemyAIWasEnabled;
+    private bool victoryRewardClaimed;
+    public bool IsEncounterProtected => Time.realtimeSinceStartup < protectedUntil;
+
+    private void LateUpdate() => ReleaseProtectionIfExpired();
+
+    private void ReleaseProtectionIfExpired()
+    {
+        if (IsEncounterProtected || protectedEnemyAI == null) return;
+        protectedEnemyAI.enabled = protectedEnemyAIWasEnabled;
+        protectedEnemyAI = null;
+    }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStatics() => Instance = null;
@@ -35,7 +49,8 @@ public sealed class BattleTransition : MonoBehaviour
 
     public bool TryBegin(BattleUnit player, BattleUnit enemy)
     {
-        if (!Application.isPlaying || EncounterActive || IsTransitioning || rules == null ||
+        ReleaseProtectionIfExpired();
+        if (!Application.isPlaying || EncounterActive || IsTransitioning || IsEncounterProtected || rules == null ||
             player == null || enemy == null || player == enemy || !player.IsAlive || !enemy.IsAlive) return false;
         if (!Application.CanStreamedLevelBeLoaded(battleSceneName))
         {
@@ -47,6 +62,7 @@ public sealed class BattleTransition : MonoBehaviour
         IsTransitioning = true;
         Player = player;
         Enemy = enemy;
+        victoryRewardClaimed = false;
         worldScene = player.gameObject.scene;
         player.ResetBattleState(); enemy.ResetBattleState();
         Pause(player.GetComponent<PlayerController>());
@@ -99,22 +115,93 @@ public sealed class BattleTransition : MonoBehaviour
 
     public bool ReturnAfterVictory()
     {
-        if (!EncounterActive || IsTransitioning || Enemy == null || Enemy.IsAlive) return false;
+        if (!EncounterActive || IsTransitioning || Player == null || !Player.IsAlive || Enemy == null || Enemy.IsAlive) return false;
         IsTransitioning = true;
-        StartCoroutine(ReturnToWorld());
+        StartCoroutine(ReturnToWorld(true));
         return true;
     }
 
-    private IEnumerator ReturnToWorld()
+    public bool TryGrantVictoryExperience(out int gained)
+    {
+        gained = 0;
+        if (!EncounterActive || IsTransitioning || victoryRewardClaimed || Player == null || !Player.IsAlive || Enemy == null || Enemy.IsAlive) return false;
+        victoryRewardClaimed = true; // Claim before awarding, including zero rewards.
+        gained = Player.AddExperience(Enemy.experienceReward);
+        return true;
+    }
+
+    public bool ReturnAfterEscape()
+    {
+        if (!EncounterActive || IsTransitioning || Player == null || !Player.IsAlive || Enemy == null || !Enemy.IsAlive) return false;
+        IsTransitioning = true;
+        StartCoroutine(ReturnToWorld(false));
+        return true;
+    }
+
+    private IEnumerator ReturnToWorld(bool victory)
     {
         yield return FadeTo(1f);
         SceneManager.SetActiveScene(worldScene);
         var battleScene = SceneManager.GetSceneByName(battleSceneName);
         if (battleScene.IsValid() && battleScene.isLoaded) yield return SceneManager.UnloadSceneAsync(battleScene);
-        RestoreWorld(true);
+        RestoreWorld(victory);
+        if (!victory)
+        {
+            protectedUntil = Time.realtimeSinceStartup + Mathf.Max(0.1f, rules.fleeProtectionSeconds);
+            protectedEnemyAI = Enemy.GetComponent<EnemyAI>();
+            if (protectedEnemyAI != null)
+            {
+                protectedEnemyAIWasEnabled = protectedEnemyAI.enabled;
+                protectedEnemyAI.enabled = false;
+            }
+            StopBody(Enemy);
+            PlacePlayerSafely();
+        }
         yield return FadeTo(0f);
         EncounterActive = IsTransitioning = false;
         Player = Enemy = null;
+    }
+
+    // Search nearby free space using the player's collision bounds. If no safe
+    // point exists, retain the original position; protection still allows retreat.
+    private void PlacePlayerSafely()
+    {
+        Physics2D.SyncTransforms();
+        var collider = Player.GetComponent<Collider2D>();
+        if (collider == null) return;
+        Vector2 origin = Player.transform.position;
+        Vector2 enemyPosition = Enemy.transform.position;
+        Vector2 away = origin - enemyPosition;
+        float distance = Mathf.Max(0.1f, rules.fleeSafeDistance);
+        Vector2 offset = (Vector2)collider.bounds.center - origin;
+        Vector2 size = collider.bounds.size;
+        int mask = Physics2D.GetLayerCollisionMask(Player.gameObject.layer);
+        if (away.magnitude >= distance && IsFree(origin + offset, size, mask)) return;
+        if (away.sqrMagnitude < 0.001f) away = Vector2.left;
+        away.Normalize();
+        for (int radius = 1; radius <= 2; radius++)
+        {
+            for (int direction = 0; direction < 8; direction++)
+            {
+                float angle = direction * Mathf.PI / 4f;
+                var rotated = new Vector2(away.x * Mathf.Cos(angle) - away.y * Mathf.Sin(angle),
+                    away.x * Mathf.Sin(angle) + away.y * Mathf.Cos(angle));
+                Vector2 candidate = enemyPosition + rotated * distance * radius;
+                if (!IsFree(candidate + offset, size, mask)) continue;
+                var body = Player.GetComponent<Rigidbody2D>();
+                if (body != null) body.position = candidate;
+                Player.transform.position = new Vector3(candidate.x, candidate.y, Player.transform.position.z);
+                StopBody(Player); Physics2D.SyncTransforms();
+                return;
+            }
+        }
+    }
+
+    private bool IsFree(Vector2 center, Vector2 size, int mask)
+    {
+        foreach (var other in Physics2D.OverlapBoxAll(center, size, 0f, mask))
+            if (!other.isTrigger && other.gameObject != Player.gameObject && !other.transform.IsChildOf(Player.transform)) return false;
+        return true;
     }
 
     private void RestoreWorld(bool victory)
