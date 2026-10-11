@@ -1,0 +1,36 @@
+# Настройка существующего проекта в Unity
+
+Открывай корень FalseMemory, содержащий Assets, Packages и ProjectSettings. Текущая проверенная версия Editor —6000.6.2f1. Новую сцену для проверки боя создавать не нужно.
+
+## Сцены
+
+В Build Profiles → Scene List должны быть включены MainMenu, SampleScene и BattleScene. MainMenu запускает новую игру; SampleScene содержит мир и участников; BattleScene загружается дополнительно координатором BattleTransition. Прямой Play в BattleScene без встречи показывает вспомогательное меню, а не полноценный бой.
+
+## Player в SampleScene
+
+- PlayerController: Rigidbody2D, физический Collider2D, SpriteRenderer; Animator необязателен, bool isMoving нужен для ходьбы.
+- Тег Player; Health с Max Health100 и ссылками мирового Slider/HPText. Slider не интерактивен.
+- BattleUnit: Level1, EXP0, Max MP30, MATK12/MDEF8, Fire и Heal в Spells; crit0.1/miss0.05.
+- BattleInventory: одна стопка Definition=Potion, Count3. Количество хранится здесь, не в общем SO.
+
+Current Health и Current MP до первого запуска не задают сохранённый прогресс: Start/Awake заполняют их максимумами. Для временных тестов меняй текущие значения только в Play Mode.
+
+## Enemy и переход
+
+Enemy содержит Rigidbody2D, триггер обнаружения для EnemyAI и физический Collider2D тела для BattleEncounter, Health60, BattleUnit ATK12/DEF5/SPD7/MDEF3/Reward20. Старый EnemyAttack выключен; наличие Encounter также исключает его контактный урон.
+
+Единственный BattleTransition имеет Rules=DefaultBattleRules и имена BattleScene/MainMenu. Он сохраняет исходные объекты мира; копировать Player/Enemy в BattleScene не нужно. CameraFollow мировой камеры ссылается на Player.
+
+## Боевой UI
+
+BattleManager.ui ссылается на BattleUI. В UI назначены сообщения, характеристики, раунд, портреты, пять кнопок/пять подписей, AbilityGlow/AbilityAmount и BattleResults/VictoryResultText. Canvas Scale With Screen Size960×540. Сохранённое оформление уже построено: не вызывай BuildLayout повторно.
+
+## Добавление данных
+
+Create → FalseMemory → Battle Spell создаёт заклинание с поддерживаемым эффектом; назначь его в Spells игрока. Battle Consumable создаёт лечебный предмет; добавь его определение в стопку Inventory. Battle Rules — общие коэффициенты. Новые типы эффектов требуют программирования; изменение чисел существующего эффекта — настройки данных.
+
+## Unity MCP
+
+Выбирай открытый FalseMemory по списку instances, читай editor/state и Console. Если Editor компилирует, дождись завершения перед назначением новых компонентов. Ошибка соединения означает недоступность инструмента, а не успешное выполнение команды. При нескольких Editor явно выбирай экземпляр. Сцены после необходимых изменений сохраняются через MCP; чтение сцены не равно сохранению.
+
+Подробнее: [архитектура](../Architecture.md), [документация компонентов](../README.md#описания-скриптов), [тесты](TestingGuide.md).
