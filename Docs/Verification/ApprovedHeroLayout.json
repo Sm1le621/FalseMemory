@@ -1,0 +1,694 @@
+[
+  {
+    "state": "approved-hero-inventory-1920",
+    "width": 1920,
+    "height": 1080,
+    "graphics": 139,
+    "outside": [],
+    "overflow": [],
+    "russian": [],
+    "missingGlyphs": [],
+    "texts": [
+      {
+        "object": "Title",
+        "text": "INVENTORY"
+      },
+      {
+        "object": "Gold",
+        "text": "GOLD 0"
+      },
+      {
+        "object": "Quantity",
+        "text": "3"
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Details",
+        "text": "Potion  ×3\nConsumable  •  Common\nRestores up to 30 HP"
+      },
+      {
+        "object": "Label",
+        "text": "Use"
+      },
+      {
+        "object": "Label",
+        "text": "Split ½"
+      },
+      {
+        "object": "Label",
+        "text": "Close"
+      },
+      {
+        "object": "Message",
+        "text": ""
+      },
+      {
+        "object": "Controls",
+        "text": "I / Esc: Close • Hover: Details • Mouse: Drag • Arrows: Select"
+      },
+      {
+        "object": "Label",
+        "text": "Equip"
+      },
+      {
+        "object": "EquipmentTitle",
+        "text": "ATTRIBUTES"
+      },
+      {
+        "object": "Label",
+        "text": "Weapon"
+      },
+      {
+        "object": "Label",
+        "text": "Head"
+      },
+      {
+        "object": "Label",
+        "text": "Chest"
+      },
+      {
+        "object": "Label",
+        "text": "Legs"
+      },
+      {
+        "object": "Label",
+        "text": "Boots"
+      },
+      {
+        "object": "Label",
+        "text": "Accessory 1"
+      },
+      {
+        "object": "Label",
+        "text": "Accessory 2"
+      },
+      {
+        "object": "EquipmentStats",
+        "text": "ATK 15    DEF 8    SPD 10\nMATK 12    MDEF 8"
+      },
+      {
+        "object": "Resources",
+        "text": "HP 100 / 100    MP 30 / 30"
+      },
+      {
+        "object": "CharacterTitle",
+        "text": "CHARACTER & EQUIPMENT"
+      },
+      {
+        "object": "BagTitle",
+        "text": "BAG   1 / 30"
+      },
+      {
+        "object": "CharacterName",
+        "text": "Player\nLevel 1 • EXP 0\nNext: 100 EXP"
+      },
+      {
+        "object": "PortraitCaption",
+        "text": "FALSE MEMORY"
+      },
+      {
+        "object": "Label",
+        "text": "Gloves"
+      },
+      {
+        "object": "Label",
+        "text": "STR Strength: 10"
+      },
+      {
+        "object": "Label",
+        "text": "AGI Agility: 10"
+      },
+      {
+        "object": "Label",
+        "text": "DEX Dexterity: 10"
+      },
+      {
+        "object": "Label",
+        "text": "END Endurance: 10"
+      },
+      {
+        "object": "Label",
+        "text": "VIT Vitality: 10"
+      },
+      {
+        "object": "Label",
+        "text": "INT Intelligence: 10"
+      },
+      {
+        "object": "Label",
+        "text": "WIS Wisdom: 10"
+      },
+      {
+        "object": "Label",
+        "text": "CHA Charisma: 10"
+      },
+      {
+        "object": "Label",
+        "text": "MAG Magic Power: 10"
+      },
+      {
+        "object": "Label",
+        "text": "MCR Magic Control: 10"
+      },
+      {
+        "object": "Label",
+        "text": "Off-Hand"
+      },
+      {
+        "object": "InteractionPrompt",
+        "text": ""
+      },
+      {
+        "object": "PickupNotification",
+        "text": ""
+      },
+      {
+        "object": "HPText",
+        "text": "100 / 100"
+      }
+    ],
+    "frame": 15631
+  },
+  {
+    "state": "approved-hero-inventory-3440",
+    "width": 3440,
+    "height": 1440,
+    "graphics": 139,
+    "outside": [],
+    "overflow": [],
+    "russian": [],
+    "missingGlyphs": [],
+    "texts": [
+      {
+        "object": "Title",
+        "text": "INVENTORY"
+      },
+      {
+        "object": "Gold",
+        "text": "GOLD 0"
+      },
+      {
+        "object": "Quantity",
+        "text": "3"
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Quantity",
+        "text": ""
+      },
+      {
+        "object": "Details",
+        "text": "Potion  ×3\nConsumable  •  Common\nRestores up to 30 HP"
+      },
+      {
+        "object": "Label",
+        "text": "Use"
+      },
+      {
+        "object": "Label",
+        "text": "Split ½"
+      },
+      {
+        "object": "Label",
+        "text": "Close"
+      },
+      {
+        "object": "Message",
+        "text": ""
+      },
+      {
+        "object": "Controls",
+        "text": "I / Esc: Close • Hover: Details • Mouse: Drag • Arrows: Select"
+      },
+      {
+        "object": "Label",
+        "text": "Equip"
+      },
+      {
+        "object": "EquipmentTitle",
+        "text": "ATTRIBUTES"
+      },
+      {
+        "object": "Label",
+        "text": "Weapon"
+      },
+      {
+        "object": "Label",
+        "text": "Head"
+      },
+      {
+        "object": "Label",
+        "text": "Chest"
+      },
+      {
+        "object": "Label",
+        "text": "Legs"
+      },
+      {
+        "object": "Label",
+        "text": "Boots"
+      },
+      {
+        "object": "Label",
+        "text": "Accessory 1"
+      },
+      {
+        "object": "Label",
+        "text": "Accessory 2"
+      },
+      {
+        "object": "EquipmentStats",
+        "text": "ATK 15    DEF 8    SPD 10\nMATK 12    MDEF 8"
+      },
+      {
+        "object": "Resources",
+        "text": "HP 100 / 100    MP 30 / 30"
+      },
+      {
+        "object": "CharacterTitle",
+        "text": "CHARACTER & EQUIPMENT"
+      },
+      {
+        "object": "BagTitle",
+        "text": "BAG   1 / 30"
+      },
+      {
+        "object": "CharacterName",
+        "text": "Player\nLevel 1 • EXP 0\nNext: 100 EXP"
+      },
+      {
+        "object": "PortraitCaption",
+        "text": "FALSE MEMORY"
+      },
+      {
+        "object": "Label",
+        "text": "Gloves"
+      },
+      {
+        "object": "Label",
+        "text": "STR Strength: 10"
+      },
+      {
+        "object": "Label",
+        "text": "AGI Agility: 10"
+      },
+      {
+        "object": "Label",
+        "text": "DEX Dexterity: 10"
+      },
+      {
+        "object": "Label",
+        "text": "END Endurance: 10"
+      },
+      {
+        "object": "Label",
+        "text": "VIT Vitality: 10"
+      },
+      {
+        "object": "Label",
+        "text": "INT Intelligence: 10"
+      },
+      {
+        "object": "Label",
+        "text": "WIS Wisdom: 10"
+      },
+      {
+        "object": "Label",
+        "text": "CHA Charisma: 10"
+      },
+      {
+        "object": "Label",
+        "text": "MAG Magic Power: 10"
+      },
+      {
+        "object": "Label",
+        "text": "MCR Magic Control: 10"
+      },
+      {
+        "object": "Label",
+        "text": "Off-Hand"
+      },
+      {
+        "object": "InteractionPrompt",
+        "text": ""
+      },
+      {
+        "object": "PickupNotification",
+        "text": ""
+      },
+      {
+        "object": "HPText",
+        "text": "100 / 100"
+      }
+    ],
+    "frame": 18320
+  },
+  {
+    "state": "approved-hero-battle-3440",
+    "width": 3440,
+    "height": 1440,
+    "graphics": 36,
+    "outside": [],
+    "overflow": [],
+    "russian": [],
+    "missingGlyphs": [],
+    "texts": [
+      {
+        "object": "BattleMessage",
+        "text": "Your turn. Choose an action."
+      },
+      {
+        "object": "PlayerStatus",
+        "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+      },
+      {
+        "object": "EnemyStatus",
+        "text": "Skeleton   LV 1   |   HP 60 / 60"
+      },
+      {
+        "object": "Round",
+        "text": "ROUND 1"
+      },
+      {
+        "object": "Controls",
+        "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+      },
+      {
+        "object": "SessionResources",
+        "text": "Potion ×3   |   EXP 0"
+      },
+      {
+        "object": "MenuTitle",
+        "text": "COMMANDS"
+      },
+      {
+        "object": "Label",
+        "text": "> Attack"
+      },
+      {
+        "object": "Label",
+        "text": "  Magic"
+      },
+      {
+        "object": "Label",
+        "text": "  Items"
+      },
+      {
+        "object": "Label",
+        "text": "  Defend"
+      },
+      {
+        "object": "Label",
+        "text": "  Flee"
+      }
+    ],
+    "frame": 20923
+  },
+  {
+    "state": "approved-hero-battle-1920",
+    "width": 1920,
+    "height": 1080,
+    "graphics": 36,
+    "outside": [],
+    "overflow": [],
+    "russian": [],
+    "missingGlyphs": [],
+    "texts": [
+      {
+        "object": "BattleMessage",
+        "text": "Your turn. Choose an action."
+      },
+      {
+        "object": "PlayerStatus",
+        "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+      },
+      {
+        "object": "EnemyStatus",
+        "text": "Skeleton   LV 1   |   HP 60 / 60"
+      },
+      {
+        "object": "Round",
+        "text": "ROUND 1"
+      },
+      {
+        "object": "Controls",
+        "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+      },
+      {
+        "object": "SessionResources",
+        "text": "Potion ×3   |   EXP 0"
+      },
+      {
+        "object": "MenuTitle",
+        "text": "COMMANDS"
+      },
+      {
+        "object": "Label",
+        "text": "> Attack"
+      },
+      {
+        "object": "Label",
+        "text": "  Magic"
+      },
+      {
+        "object": "Label",
+        "text": "  Items"
+      },
+      {
+        "object": "Label",
+        "text": "  Defend"
+      },
+      {
+        "object": "Label",
+        "text": "  Flee"
+      }
+    ],
+    "frame": 23877
+  }
+]

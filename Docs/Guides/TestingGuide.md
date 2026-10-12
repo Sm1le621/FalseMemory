@@ -1,5 +1,9 @@
 # Как проверять FalseMemory
 
+## Новые кадры героя
+
+Свежие результаты/ручные пункты —[ApprovedHeroIntegration](../ApprovedHeroIntegration.md). В Edit Mode запустить ApprovedHeroAssetTests, в Play Mode PlayerDirectionFlowTests и регрессионную боевую сборку. Они проверяют импорт/смену кадров/реальный ввод, но не художественную естественность походки.
+
 ## Актуально2026-10-13
 
 90 Edit/49 Play прошлипослефинальныхизменений. EquipmentDragFlowTests посылаетнастоящиеMouse events bag1→Weapon→bag12; другиеcases проверяютcompatibility/fullbag/reentry/двуручность/Accessories/OffHand.12 UIcases/4resolutions безoverflow/outside/Russian/missingGlyphs; label-slot overlaps0. [Ручнаяприёмка и результаты](../PlayerRework.md).

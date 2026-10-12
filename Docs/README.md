@@ -1,5 +1,7 @@
 # Документация FalseMemory
 
+Актуально2026-10-13: утверждённый герой большого разрешения подключён без уменьшения. [Отчёт/ручная проверка](ApprovedHeroIntegration.md), [правила pixel art](Guides/PixelArtStyleGuide.md), [импортёр](Scripts/Editor/ApprovedHeroImporter.md), [тесты импорта](Scripts/Tests/EditMode/ApprovedHeroAssetTests.md). Ниже сохранены прежние контрольные точки; ограничение64×64 для будущей графики отменено.
+
 Актуальная контрольнаяточка2026-10-13:82 собственныхC# (53 runtime,25 test,3 Editor,1 Welcome),90 Edit/49 Play. [Текущийотчёт/ручнаяприёмка](PlayerRework.md), [переносы](Systems/EquipmentDragSystem.md). Новыеописания: [EquipmentPlaceholderBuilder](Scripts/Editor/EquipmentPlaceholderBuilder.md), [EquipmentTransferTests](Scripts/Tests/EditMode/EquipmentTransferTests.md), [EquipmentDragFlowTests](Scripts/Tests/PlayMode/EquipmentDragFlowTests.md). Болееранниечисла ниже —история.
 
 После Player rework4 —79 собственных C# (53 runtime,23 test,2 Editor,1 Welcome);84 Edit/46 Play и8 UI cases. Primary подключены; CHA/prepared scores пока без NPC/стамины/сопротивлений. [AttributeRowView](Scripts/Inventory/AttributeRowView.md), [CharacterAttributeFlowTests](Scripts/Tests/PlayMode/CharacterAttributeFlowTests.md), [отчёт](PlayerRework.md).
@@ -39,7 +41,7 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 
 - [Primary attributes](Systems/CharacterStatsSystem.md) — данные10 характеристик/формулы; подключение к геймплею отдельным подэтапом.
 
-- [Направления игрока](Systems/AnimationSystem.md) — два directional Blend Tree; настоящие walk-кадры ещё нужны.
+- [Направления игрока](Systems/AnimationSystem.md) — два directional Blend Tree с новыми кадрами; художественная приёмка остаётся.
 
 - [Прокачка](Systems/ProgressionSystem.md) — первые уровни и growth.
 

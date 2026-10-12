@@ -1,0 +1,327 @@
+{
+  "sourceCopiesByteExact": true,
+  "frontPreservesSourcePixelsExceptInvisibleAlpha": true,
+  "noResampling": true,
+  "directions": [
+    {
+      "direction": "Up",
+      "textureSize": [
+        1536,
+        384
+      ],
+      "frameSize": [
+        384,
+        384
+      ],
+      "fourDistinctFramePixels": true,
+      "feetAligned": true,
+      "edgeClipping": false,
+      "bounds": [
+        [
+          61,
+          40,
+          278,
+          364
+        ],
+        [
+          68,
+          39,
+          289,
+          364
+        ],
+        [
+          76,
+          39,
+          283,
+          364
+        ],
+        [
+          87,
+          40,
+          291,
+          364
+        ]
+      ]
+    },
+    {
+      "direction": "Down",
+      "textureSize": [
+        2048,
+        640
+      ],
+      "frameSize": [
+        512,
+        640
+      ],
+      "fourDistinctFramePixels": true,
+      "feetAligned": true,
+      "edgeClipping": false,
+      "bounds": [
+        [
+          53,
+          31,
+          464,
+          600
+        ],
+        [
+          53,
+          31,
+          472,
+          600
+        ],
+        [
+          57,
+          32,
+          463,
+          600
+        ],
+        [
+          53,
+          31,
+          467,
+          600
+        ]
+      ]
+    },
+    {
+      "direction": "Right",
+      "textureSize": [
+        1536,
+        384
+      ],
+      "frameSize": [
+        384,
+        384
+      ],
+      "fourDistinctFramePixels": true,
+      "feetAligned": true,
+      "edgeClipping": false,
+      "bounds": [
+        [
+          24,
+          35,
+          267,
+          364
+        ],
+        [
+          16,
+          36,
+          273,
+          364
+        ],
+        [
+          21,
+          35,
+          277,
+          364
+        ],
+        [
+          22,
+          35,
+          257,
+          364
+        ]
+      ]
+    },
+    {
+      "direction": "Left",
+      "textureSize": [
+        1536,
+        384
+      ],
+      "frameSize": [
+        384,
+        384
+      ],
+      "fourDistinctFramePixels": true,
+      "feetAligned": true,
+      "edgeClipping": false,
+      "bounds": [
+        [
+          117,
+          35,
+          360,
+          364
+        ],
+        [
+          111,
+          36,
+          368,
+          364
+        ],
+        [
+          107,
+          35,
+          363,
+          364
+        ],
+        [
+          127,
+          35,
+          362,
+          364
+        ]
+      ]
+    },
+    {
+      "direction": "UpRight",
+      "textureSize": [
+        1536,
+        384
+      ],
+      "frameSize": [
+        384,
+        384
+      ],
+      "fourDistinctFramePixels": true,
+      "feetAligned": true,
+      "edgeClipping": false,
+      "bounds": [
+        [
+          34,
+          37,
+          263,
+          364
+        ],
+        [
+          34,
+          36,
+          265,
+          364
+        ],
+        [
+          38,
+          36,
+          260,
+          364
+        ],
+        [
+          44,
+          37,
+          259,
+          364
+        ]
+      ]
+    },
+    {
+      "direction": "UpLeft",
+      "textureSize": [
+        1536,
+        384
+      ],
+      "frameSize": [
+        384,
+        384
+      ],
+      "fourDistinctFramePixels": true,
+      "feetAligned": true,
+      "edgeClipping": false,
+      "bounds": [
+        [
+          121,
+          37,
+          350,
+          364
+        ],
+        [
+          119,
+          36,
+          350,
+          364
+        ],
+        [
+          124,
+          36,
+          346,
+          364
+        ],
+        [
+          125,
+          37,
+          340,
+          364
+        ]
+      ]
+    },
+    {
+      "direction": "DownRight",
+      "textureSize": [
+        1536,
+        384
+      ],
+      "frameSize": [
+        384,
+        384
+      ],
+      "fourDistinctFramePixels": true,
+      "feetAligned": true,
+      "edgeClipping": false,
+      "bounds": [
+        [
+          26,
+          27,
+          260,
+          364
+        ],
+        [
+          31,
+          35,
+          267,
+          364
+        ],
+        [
+          34,
+          28,
+          260,
+          364
+        ],
+        [
+          30,
+          27,
+          263,
+          364
+        ]
+      ]
+    },
+    {
+      "direction": "DownLeft",
+      "textureSize": [
+        1536,
+        384
+      ],
+      "frameSize": [
+        384,
+        384
+      ],
+      "fourDistinctFramePixels": true,
+      "feetAligned": true,
+      "edgeClipping": false,
+      "bounds": [
+        [
+          124,
+          27,
+          358,
+          364
+        ],
+        [
+          117,
+          35,
+          353,
+          364
+        ],
+        [
+          124,
+          28,
+          350,
+          364
+        ],
+        [
+          121,
+          27,
+          354,
+          364
+        ]
+      ]
+    }
+  ]
+}

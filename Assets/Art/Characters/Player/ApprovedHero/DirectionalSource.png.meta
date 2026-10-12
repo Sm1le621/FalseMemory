@@ -1,0 +1,821 @@
+fileFormatVersion: 2
+guid: 0d3b7e87ea9f15a43ba4a0a26d19d677
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4888750927783619838
+    second: DirectionalSource_0
+  - first:
+      213: 8924600971624406794
+    second: DirectionalSource_1
+  - first:
+      213: -1554817090785861819
+    second: DirectionalSource_2
+  - first:
+      213: -1326711482454519556
+    second: DirectionalSource_3
+  - first:
+      213: 8927472460205417186
+    second: DirectionalSource_4
+  - first:
+      213: 5979795768329992861
+    second: DirectionalSource_5
+  - first:
+      213: -2534044765193517561
+    second: DirectionalSource_6
+  - first:
+      213: -1330037193338436764
+    second: DirectionalSource_7
+  - first:
+      213: 8298967371310634631
+    second: DirectionalSource_8
+  - first:
+      213: 2240449401942006461
+    second: DirectionalSource_9
+  - first:
+      213: -8159726539808205315
+    second: DirectionalSource_10
+  - first:
+      213: 862459370378916128
+    second: DirectionalSource_11
+  - first:
+      213: -1088415511431986383
+    second: DirectionalSource_12
+  - first:
+      213: -2821662600800174350
+    second: DirectionalSource_13
+  - first:
+      213: 991922169551480929
+    second: DirectionalSource_14
+  - first:
+      213: -5811306518456853736
+    second: DirectionalSource_15
+  - first:
+      213: -2422184840147343759
+    second: DirectionalSource_16
+  - first:
+      213: 4768652772030131163
+    second: DirectionalSource_17
+  - first:
+      213: -6036911857262274331
+    second: DirectionalSource_18
+  - first:
+      213: -4863128098079805214
+    second: DirectionalSource_19
+  - first:
+      213: -7291918536552866376
+    second: DirectionalSource_20
+  - first:
+      213: -4005164874976036205
+    second: DirectionalSource_21
+  - first:
+      213: -385237461959471244
+    second: DirectionalSource_22
+  - first:
+      213: 6433740332602062374
+    second: DirectionalSource_23
+  - first:
+      213: 5594573063950574151
+    second: DirectionalSource_24
+  - first:
+      213: 7455682973673787099
+    second: DirectionalSource_25
+  - first:
+      213: -8529452430755147137
+    second: DirectionalSource_26
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DirectionalSource_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1333
+        width: 5
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efc67ed211558d340800000000000000
+      internalID: 4888750927783619838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 1054
+        width: 244
+        height: 337
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0f57c39c4d8adb70800000000000000
+      internalID: 8924600971624406794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_2
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 1056
+        width: 284
+        height: 336
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54f900df71e2c6ae0800000000000000
+      internalID: -1554817090785861819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_3
+      rect:
+        serializedVersion: 2
+        x: 555
+        y: 1345
+        width: 33
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf0ddd89fe2969de0800000000000000
+      internalID: -1326711482454519556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_4
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 1361
+        width: 13
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e260ac17e0c4eb70800000000000000
+      internalID: 8927472460205417186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_5
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 1375
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9a71b8a1908cf250800000000000000
+      internalID: 5979795768329992861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_6
+      rect:
+        serializedVersion: 2
+        x: 599
+        y: 1052
+        width: 268
+        height: 340
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 706c3b546b345dcd0800000000000000
+      internalID: -2534044765193517561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_7
+      rect:
+        serializedVersion: 2
+        x: 843
+        y: 1340
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46341013832ca8de0800000000000000
+      internalID: -1330037193338436764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_8
+      rect:
+        serializedVersion: 2
+        x: 847
+        y: 1353
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7861789badadb2370800000000000000
+      internalID: 8298967371310634631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_9
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 1052
+        width: 230
+        height: 339
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dba5df35cdca71f10800000000000000
+      internalID: 2240449401942006461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_10
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 1063
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df59762b1f3d2ce80800000000000000
+      internalID: -8159726539808205315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_11
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 1066
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02174a45a3218fb00800000000000000
+      internalID: 862459370378916128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_12
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 706
+        width: 256
+        height: 346
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1334219ebdb25e0f0800000000000000
+      internalID: -1088415511431986383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_13
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 710
+        width: 267
+        height: 340
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fefc4b70d077d8d0800000000000000
+      internalID: -2821662600800174350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_14
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 21
+        width: 258
+        height: 696
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16863f035f304cd00800000000000000
+      internalID: 991922169551480929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_15
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 709
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81b9776d2871a5fa0800000000000000
+      internalID: -5811306518456853736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_16
+      rect:
+        serializedVersion: 2
+        x: 561
+        y: 710
+        width: 281
+        height: 346
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1766eae98bba26ed0800000000000000
+      internalID: -2422184840147343759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_17
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 706
+        width: 248
+        height: 346
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdba9064e68ad2240800000000000000
+      internalID: 4768652772030131163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 15
+        width: 263
+        height: 692
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e8d98796a4983ca0800000000000000
+      internalID: -6036911857262274331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_19
+      rect:
+        serializedVersion: 2
+        x: 561
+        y: 15
+        width: 292
+        height: 694
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e07bb0c2c2b28cb0800000000000000
+      internalID: -4863128098079805214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_20
+      rect:
+        serializedVersion: 2
+        x: 855
+        y: 627
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bd1ea9a9b6edca90800000000000000
+      internalID: -7291918536552866376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_21
+      rect:
+        serializedVersion: 2
+        x: 862
+        y: 362
+        width: 227
+        height: 336
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39a7e2834cbca68c0800000000000000
+      internalID: -4005164874976036205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_22
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 410
+        width: 18
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47f8bb5c19c57aaf0800000000000000
+      internalID: -385237461959471244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_23
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 378
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62679ddbebc394950800000000000000
+      internalID: 6433740332602062374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_24
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 339
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7422eb27f8ae3ad40800000000000000
+      internalID: 5594573063950574151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_25
+      rect:
+        serializedVersion: 2
+        x: 853
+        y: 15
+        width: 255
+        height: 345
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bde01c3a928e77760800000000000000
+      internalID: 7455682973673787099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DirectionalSource_26
+      rect:
+        serializedVersion: 2
+        x: 854
+        y: 341
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f725f38843c41a980800000000000000
+      internalID: -8529452430755147137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      DirectionalSource_0: 4888750927783619838
+      DirectionalSource_1: 8924600971624406794
+      DirectionalSource_10: -8159726539808205315
+      DirectionalSource_11: 862459370378916128
+      DirectionalSource_12: -1088415511431986383
+      DirectionalSource_13: -2821662600800174350
+      DirectionalSource_14: 991922169551480929
+      DirectionalSource_15: -5811306518456853736
+      DirectionalSource_16: -2422184840147343759
+      DirectionalSource_17: 4768652772030131163
+      DirectionalSource_18: -6036911857262274331
+      DirectionalSource_19: -4863128098079805214
+      DirectionalSource_2: -1554817090785861819
+      DirectionalSource_20: -7291918536552866376
+      DirectionalSource_21: -4005164874976036205
+      DirectionalSource_22: -385237461959471244
+      DirectionalSource_23: 6433740332602062374
+      DirectionalSource_24: 5594573063950574151
+      DirectionalSource_25: 7455682973673787099
+      DirectionalSource_26: -8529452430755147137
+      DirectionalSource_3: -1326711482454519556
+      DirectionalSource_4: 8927472460205417186
+      DirectionalSource_5: 5979795768329992861
+      DirectionalSource_6: -2534044765193517561
+      DirectionalSource_7: -1330037193338436764
+      DirectionalSource_8: 8298967371310634631
+      DirectionalSource_9: 2240449401942006461
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

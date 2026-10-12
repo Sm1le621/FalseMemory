@@ -1,0 +1,509 @@
+fileFormatVersion: 2
+guid: 4bf1d2078a8705b40ba40610979b4609
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6401565937323093824
+    second: ApprovedHeroSource_0
+  - first:
+      213: 8881950250492219433
+    second: ApprovedHeroSource_1
+  - first:
+      213: 3812311232695586185
+    second: ApprovedHeroSource_2
+  - first:
+      213: -3625980537773104540
+    second: ApprovedHeroSource_3
+  - first:
+      213: -1381558180872889111
+    second: ApprovedHeroSource_4
+  - first:
+      213: -7542991012655911985
+    second: ApprovedHeroSource_5
+  - first:
+      213: -3953586165421541962
+    second: ApprovedHeroSource_6
+  - first:
+      213: -8054101494770236341
+    second: ApprovedHeroSource_7
+  - first:
+      213: 8820864342670232495
+    second: ApprovedHeroSource_8
+  - first:
+      213: -4044310257070572556
+    second: ApprovedHeroSource_9
+  - first:
+      213: -5929610212560146421
+    second: ApprovedHeroSource_10
+  - first:
+      213: -3589559524606202485
+    second: ApprovedHeroSource_11
+  - first:
+      213: -848722023563708138
+    second: ApprovedHeroSource_12
+  - first:
+      213: -7272686237108846956
+    second: ApprovedHeroSource_13
+  - first:
+      213: 1571641555496869936
+    second: ApprovedHeroSource_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ApprovedHeroSource_0
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 704
+        width: 18
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c0dd9b62b11927a0800000000000000
+      internalID: -6401565937323093824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_1
+      rect:
+        serializedVersion: 2
+        x: 1032
+        y: 49
+        width: 454
+        height: 708
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 920d749b1b6034b70800000000000000
+      internalID: 8881950250492219433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_2
+      rect:
+        serializedVersion: 2
+        x: 1249
+        y: 751
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98d4d0e1edc08e430800000000000000
+      internalID: 3812311232695586185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_3
+      rect:
+        serializedVersion: 2
+        x: 1507
+        y: 17
+        width: 445
+        height: 738
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 462ed8389ededadc0800000000000000
+      internalID: -3625980537773104540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_4
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 697
+        width: 42
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ec59808728b3dce0800000000000000
+      internalID: -1381558180872889111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_5
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 52
+        width: 417
+        height: 630
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcb2ea273a9e15790800000000000000
+      internalID: -7542991012655911985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_6
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 39
+        width: 525
+        height: 643
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b5762d545a0229c0800000000000000
+      internalID: -3953586165421541962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_7
+      rect:
+        serializedVersion: 2
+        x: 1513
+        y: 128
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b44074bec551a3090800000000000000
+      internalID: -8054101494770236341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_8
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 80
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fabc4cc72610a6a70800000000000000
+      internalID: 8820864342670232495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_9
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 82
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fbf6d5bf39bfd7c0800000000000000
+      internalID: -4044310257070572556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_10
+      rect:
+        serializedVersion: 2
+        x: 1852
+        y: 64
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b00f2d79deac5bda0800000000000000
+      internalID: -5929610212560146421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_11
+      rect:
+        serializedVersion: 2
+        x: 1110
+        y: 68
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8d2ab371a25f2ec0800000000000000
+      internalID: -3589559524606202485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_12
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 64
+        width: 30
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6193f68f0dbb834f0800000000000000
+      internalID: -848722023563708138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_13
+      rect:
+        serializedVersion: 2
+        x: 1159
+        y: 72
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49e3142566a321b90800000000000000
+      internalID: -7272686237108846956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ApprovedHeroSource_14
+      rect:
+        serializedVersion: 2
+        x: 1241
+        y: 62
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03022a5faa79fc510800000000000000
+      internalID: 1571641555496869936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ApprovedHeroSource_0: -6401565937323093824
+      ApprovedHeroSource_1: 8881950250492219433
+      ApprovedHeroSource_10: -5929610212560146421
+      ApprovedHeroSource_11: -3589559524606202485
+      ApprovedHeroSource_12: -848722023563708138
+      ApprovedHeroSource_13: -7272686237108846956
+      ApprovedHeroSource_14: 1571641555496869936
+      ApprovedHeroSource_2: 3812311232695586185
+      ApprovedHeroSource_3: -3625980537773104540
+      ApprovedHeroSource_4: -1381558180872889111
+      ApprovedHeroSource_5: -7542991012655911985
+      ApprovedHeroSource_6: -3953586165421541962
+      ApprovedHeroSource_7: -8054101494770236341
+      ApprovedHeroSource_8: 8820864342670232495
+      ApprovedHeroSource_9: -4044310257070572556
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,495 @@
+{
+  "front": {
+    "sourceSha256": "3cf2548c0406e19fd542b2ccd224ef7972345eabb732bde9b73a09887b530033",
+    "sourceSize": [
+      1983,
+      793
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "sourceRectTopLeft": [
+          0,
+          83,
+          496,
+          640
+        ],
+        "canvas": [
+          512,
+          640
+        ],
+        "feetBaselineFromBottom": 40,
+        "visibleBoundsTopLeft": [
+          53,
+          31,
+          464,
+          600
+        ]
+      },
+      {
+        "frame": 1,
+        "sourceRectTopLeft": [
+          496,
+          83,
+          496,
+          640
+        ],
+        "canvas": [
+          512,
+          640
+        ],
+        "feetBaselineFromBottom": 40,
+        "visibleBoundsTopLeft": [
+          53,
+          31,
+          472,
+          600
+        ]
+      },
+      {
+        "frame": 2,
+        "sourceRectTopLeft": [
+          992,
+          83,
+          496,
+          640
+        ],
+        "canvas": [
+          512,
+          640
+        ],
+        "feetBaselineFromBottom": 40,
+        "visibleBoundsTopLeft": [
+          57,
+          32,
+          463,
+          600
+        ]
+      },
+      {
+        "frame": 3,
+        "sourceRectTopLeft": [
+          1488,
+          83,
+          495,
+          640
+        ],
+        "canvas": [
+          512,
+          640
+        ],
+        "feetBaselineFromBottom": 40,
+        "visibleBoundsTopLeft": [
+          53,
+          31,
+          467,
+          600
+        ]
+      }
+    ],
+    "resampling": false,
+    "alphaCleanup": "Only invisible alpha <=16 discarded"
+  },
+  "additional": [
+    {
+      "direction": "Up",
+      "frame": 0,
+      "sourceRect": [
+        0,
+        0,
+        280,
+        347
+      ],
+      "offset": [
+        38,
+        26
+      ],
+      "bounds": [
+        61,
+        40,
+        278,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "Up",
+      "frame": 1,
+      "sourceRect": [
+        280,
+        0,
+        281,
+        347
+      ],
+      "offset": [
+        34,
+        26
+      ],
+      "bounds": [
+        68,
+        39,
+        289,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "Up",
+      "frame": 2,
+      "sourceRect": [
+        561,
+        0,
+        280,
+        347
+      ],
+      "offset": [
+        29,
+        26
+      ],
+      "bounds": [
+        76,
+        39,
+        283,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "Up",
+      "frame": 3,
+      "sourceRect": [
+        841,
+        0,
+        281,
+        347
+      ],
+      "offset": [
+        32,
+        26
+      ],
+      "bounds": [
+        87,
+        40,
+        291,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "Right",
+      "frame": 0,
+      "sourceRect": [
+        0,
+        347,
+        280,
+        350
+      ],
+      "offset": [
+        -1,
+        26
+      ],
+      "bounds": [
+        24,
+        35,
+        267,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "Right",
+      "frame": 1,
+      "sourceRect": [
+        280,
+        347,
+        281,
+        350
+      ],
+      "offset": [
+        7,
+        28
+      ],
+      "bounds": [
+        16,
+        36,
+        273,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "Right",
+      "frame": 2,
+      "sourceRect": [
+        561,
+        347,
+        280,
+        350
+      ],
+      "offset": [
+        0,
+        26
+      ],
+      "bounds": [
+        21,
+        35,
+        277,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "Right",
+      "frame": 3,
+      "sourceRect": [
+        841,
+        347,
+        281,
+        350
+      ],
+      "offset": [
+        -6,
+        26
+      ],
+      "bounds": [
+        22,
+        35,
+        257,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "UpRight",
+      "frame": 0,
+      "sourceRect": [
+        0,
+        697,
+        280,
+        344
+      ],
+      "offset": [
+        14,
+        27
+      ],
+      "bounds": [
+        34,
+        37,
+        263,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "UpRight",
+      "frame": 1,
+      "sourceRect": [
+        280,
+        697,
+        281,
+        344
+      ],
+      "offset": [
+        13,
+        26
+      ],
+      "bounds": [
+        34,
+        36,
+        265,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "UpRight",
+      "frame": 2,
+      "sourceRect": [
+        561,
+        697,
+        280,
+        344
+      ],
+      "offset": [
+        24,
+        26
+      ],
+      "bounds": [
+        38,
+        36,
+        260,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "UpRight",
+      "frame": 3,
+      "sourceRect": [
+        841,
+        697,
+        281,
+        344
+      ],
+      "offset": [
+        18,
+        27
+      ],
+      "bounds": [
+        44,
+        37,
+        259,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "DownRight",
+      "frame": 0,
+      "sourceRect": [
+        0,
+        1041,
+        280,
+        361
+      ],
+      "offset": [
+        1,
+        23
+      ],
+      "bounds": [
+        26,
+        27,
+        260,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "DownRight",
+      "frame": 1,
+      "sourceRect": [
+        280,
+        1041,
+        281,
+        361
+      ],
+      "offset": [
+        5,
+        31
+      ],
+      "bounds": [
+        31,
+        35,
+        267,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "DownRight",
+      "frame": 2,
+      "sourceRect": [
+        561,
+        1041,
+        280,
+        361
+      ],
+      "offset": [
+        6,
+        23
+      ],
+      "bounds": [
+        34,
+        28,
+        260,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    },
+    {
+      "direction": "DownRight",
+      "frame": 3,
+      "sourceRect": [
+        841,
+        1041,
+        281,
+        361
+      ],
+      "offset": [
+        4,
+        23
+      ],
+      "bounds": [
+        30,
+        27,
+        263,
+        364
+      ],
+      "pivot": [
+        192,
+        20
+      ],
+      "resampling": false
+    }
+  ]
+}

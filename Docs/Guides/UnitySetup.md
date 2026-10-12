@@ -1,5 +1,9 @@
 # Настройка существующего проекта в Unity
 
+## Утверждённый герой —2026-10-13
+
+Открыть существующую SampleScene: Player использует прежний Animator и новые16 клипов с ApprovedHero. Настройки импортёра и PPU —[PixelArtStyleGuide](PixelArtStyleGuide.md), адресный инструмент —[ApprovedHeroImporter](../Scripts/Editor/ApprovedHeroImporter.md). Source PNG/старыеASE сохранены; не менять Scale/moveSpeed ради разрешения. BattleScene сохранена с тем же Down-портретом.
+
 ## Актуально2026-10-13
 
 SampleScene содержит9equipmentButtons сemptySprite ипрежний30bag. ВTestLoot добавленPickup_IronShield (−3.4,−3.5), его ItemData —Assets/Settings/Inventory/IronShield.asset. Слоты54×54/шаг80 избегаютпересеченияподписей. НаProfile/Enemy/Camera/Rigidbody другихизмененийнет. [Настройкапереносов](../Systems/EquipmentDragSystem.md).

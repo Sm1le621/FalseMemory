@@ -10,7 +10,9 @@
 
 ## 3. Методы и функции
 
-`EightDirectionsNormalizeInputSelectMotionAndRetainLastFacing()` — UnityTest/IEnumerator: W,S,D,A,WD,WA,SD,SA; проверяет норму1, MoveX/Y, состояние Walk и отсутствие flipX. Отпускание проверяет нулевой ввод, сохранённый LastMoveX/Y и Idle. Проверяет сохранение оригинального временного Sprite, а не наличие восьми уникальных изображений. Открытый Inventory блокирует новый ввод без изменения предыдущего направления. Finally удаляет только синтетическую клавиатуру и закрывает окно; игровой контент не удаляется. Unity Awake/Update у самого теста отсутствуют; общие callbacks описаны в [BattleFlowTests](BattleFlowTests.md).
+`EightDirectionsNormalizeInputSelectMotionAndRetainLastFacing()` — UnityTest/IEnumerator: W,S,D,A,WD,WA,SD,SA; проверяет норму1, MoveX/Y, состояние Walk и отсутствие flipX. Отпускание проверяет нулевой ввод, сохранённый LastMoveX/Y и Idle. Проверяет кадр ApprovedHero выбранного направления. Открытый Inventory блокирует новый ввод без изменения предыдущего направления. Finally удаляет только синтетическую клавиатуру и закрывает окно; игровой контент не удаляется. Unity Awake/Update у самого теста отсутствуют; общие callbacks описаны в [BattleFlowTests](BattleFlowTests.md).
+
+`ApprovedWalkChangesFramesAndStoppingKeepsDirectionalIdle()` — второй UnityTest: синтетическая S на .65 секунды, реальные SpriteRenderer-кадры должны показать все четыре Down-позы; отпускание оставляет Idle_Down_00. Проверяется сохранение MovementSpeed=4 на стартовых характеристиках. Finally удаляет тестовую клавиатуру. Это проверка исполнения, не художественной естественности.
 
 ## 4. Переменные и Inspector
 
@@ -35,3 +37,5 @@ W+A устанавливает MoveX≈−0.707/MoveY≈0.707, выбирает�
 ## 9. История изменений
 
 - 2026-10-12 — добавлена автоматическая проверка восьми направлений и последнего взгляда; статический fallback явно отделён от полноценной анимации.
+
+- 2026-10-13 — проверяется настоящая directional-графика ApprovedHero; добавлена проверка смены четырёх кадров и неизменной скорости.

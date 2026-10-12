@@ -1,5 +1,9 @@
 # История значимых изменений FalseMemory
 
+## 2026-10-13 — утверждённый герой большого разрешения
+
+Отменено обязательное64×64, добавлен PixelArtStyleGuide. Утверждённые4 фронтальных кадра1983×793 сохранены/нарезаны без уменьшения; built-in imagegen создал дополнительные Up/Right/UpRight/DownRight, левые производные зеркальны. Существующие16 Idle/Walk-клипов используют32 Sprite, 8FPS/Loop/ground pivot; мирный размер согласован PPU. Ссылки карты/инвентаря/боя обновлены, белый tint сохраняет исходные цвета. Исходники/старыеASE/анимации/физика/камера/скорость/ресурсы сохранены. Новый Editor-only ApprovedHeroImporter,2 Edit-теста и Play-проверка смены четырёх кадров; компиляция исправлена через TextureImporterSettings.92 Edit/50 Play прошли, подробные job IDs/кадры/ограничения —[ApprovedHeroIntegration](ApprovedHeroIntegration.md). Новые ракурсы/естественность шага требуют ручной художественной проверки; Idle статический, левые виды отражают сторону оружия. Финальная Console:0 ошибок,2 служебных предупреждения Account API/MCP WebSocket; MCP отвечает. Прежние изменения приняты владельцем, следующий общий подэтап5.3 после новой ручной границы. Push не выполнялся.
+
 ## 2026-10-13 — Player rework5: экипировка/силуэты
 
 Добавлены OffHand8 без смены прежнихID, bidirectional drag, compatible gear swap, green/red background отдельно отrarity, captured-source validation/reentry guards. Созданы8 native64 временныхсерыхмасок иIronShield/pickup;189 Englishkeys, float gear tooltip/двуручныйфлаг. Исправлено пересечениеподписей уменьшениемsquare slot54/шага80 иединоеfullbag сообщение.90 Edit/49 Play,12 UIcases4resolutions/0overlap; ссылкинаjobs/измеренияв[отчёте](PlayerRework.md).Все82 собственных C# имеют отдельные документы с9 разделами. HeroAnimator подготовлен, качественная8-wayart ещёнужна; ручнаяприёмка/standalone/disksave не подтверждены. Push не выполнялся.

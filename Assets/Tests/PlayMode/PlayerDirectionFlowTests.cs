@@ -34,7 +34,8 @@ public sealed partial class BattleFlowTests
                 Assert.That(animator.GetFloat("LastMoveX"),Is.EqualTo(directions[i].x).Within(.0001f));
                 Assert.That(animator.GetFloat("LastMoveY"),Is.EqualTo(directions[i].y).Within(.0001f));
                 Assert.That(animator.GetCurrentAnimatorStateInfo(0).IsName("Player_DirectionalIdle"),Is.True);
-                Assert.That(player.GetComponent<SpriteRenderer>().sprite.name,Is.EqualTo("myproject1idle"),"Fallback stays original; this does not prove eight unique views.");
+                var names=new[]{"Up","Down","Right","Left","UpRight","UpLeft","DownRight","DownLeft"};
+                Assert.That(player.GetComponent<SpriteRenderer>().sprite.name,Is.EqualTo("ApprovedHero_"+names[i]+"_00"),"Idle must use the actual direction's approved hero frame.");
             }
             player.GetComponent<InventoryWindow>().Open();
             InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.W,Key.A));yield return null;yield return null;
@@ -42,5 +43,29 @@ public sealed partial class BattleFlowTests
             Assert.That(control.LastDirection,Is.EqualTo(directions[7]),"Modal block must retain last facing.");
         }
         finally {InputSystem.RemoveDevice(keyboard);player.GetComponent<InventoryWindow>().Close();}
+    }
+
+    [UnityTest]
+    public IEnumerator ApprovedWalkChangesFramesAndStoppingKeepsDirectionalIdle()
+    {
+        var player=Player();player.transform.position=new Vector3(-10,-10,0);
+        var keyboard=InputSystem.AddDevice<Keyboard>();
+        var shown=new System.Collections.Generic.HashSet<string>();
+        try
+        {
+            InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.S));
+            float until=Time.time+.65f;
+            while(Time.time<until)
+            {
+                yield return null;
+                shown.Add(player.GetComponent<SpriteRenderer>().sprite.name);
+            }
+            Assert.That(shown.Count,Is.GreaterThanOrEqualTo(4),"Walk must actually advance through the four source poses.");
+            Assert.That(shown,Is.All.StartsWith("ApprovedHero_Down_"));
+            InputSystem.QueueStateEvent(keyboard,new KeyboardState());yield return null;yield return null;
+            Assert.That(player.GetComponent<SpriteRenderer>().sprite.name,Is.EqualTo("ApprovedHero_Down_00"));
+            Assert.That(player.GetComponent<PlayerController>().MovementSpeed,Is.EqualTo(4f).Within(.001f),"Artwork resolution must not change gameplay speed.");
+        }
+        finally{InputSystem.RemoveDevice(keyboard);}
     }
 }
