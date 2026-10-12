@@ -1,0 +1,2875 @@
+fileFormatVersion: 2
+guid: ab067ee044b2f354ea87d047af6ee11f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6789792349703825196
+    second: SkeletonBattle_0
+  - first:
+      213: 7107235225573883275
+    second: SkeletonBattle_1
+  - first:
+      213: 7447553896083954305
+    second: SkeletonBattle_2
+  - first:
+      213: 4827500797672648406
+    second: SkeletonBattle_3
+  - first:
+      213: 7795765015199009914
+    second: SkeletonBattle_4
+  - first:
+      213: -8846635682874180320
+    second: SkeletonBattle_5
+  - first:
+      213: 914320981335034839
+    second: SkeletonBattle_6
+  - first:
+      213: -234474141550231540
+    second: SkeletonBattle_7
+  - first:
+      213: -2830064296632289590
+    second: SkeletonBattle_8
+  - first:
+      213: 5914882675014087951
+    second: SkeletonBattle_9
+  - first:
+      213: 8289122721946651249
+    second: SkeletonBattle_10
+  - first:
+      213: -4478746758628930771
+    second: SkeletonBattle_11
+  - first:
+      213: 764045973786573020
+    second: SkeletonBattle_12
+  - first:
+      213: 7268248956014026640
+    second: SkeletonBattle_13
+  - first:
+      213: 2902112391648289864
+    second: SkeletonBattle_14
+  - first:
+      213: -7052829892545230107
+    second: SkeletonBattle_15
+  - first:
+      213: -3208869360702494346
+    second: SkeletonBattle_16
+  - first:
+      213: 5687967638017581958
+    second: SkeletonBattle_17
+  - first:
+      213: -5723900994602948216
+    second: SkeletonBattle_18
+  - first:
+      213: -595143210374617972
+    second: SkeletonBattle_19
+  - first:
+      213: 7277643405061865157
+    second: SkeletonBattle_20
+  - first:
+      213: 8937019190065183707
+    second: SkeletonBattle_21
+  - first:
+      213: 6720379485932561509
+    second: SkeletonBattle_22
+  - first:
+      213: 7098034060543674248
+    second: SkeletonBattle_23
+  - first:
+      213: -3816617237850282549
+    second: SkeletonBattle_24
+  - first:
+      213: 2945002479045856050
+    second: SkeletonBattle_25
+  - first:
+      213: 6914375123385100270
+    second: SkeletonBattle_26
+  - first:
+      213: -9090421256011494373
+    second: SkeletonBattle_27
+  - first:
+      213: -6614426895577779672
+    second: SkeletonBattle_28
+  - first:
+      213: 8857334721354601654
+    second: SkeletonBattle_29
+  - first:
+      213: -1488070640494703627
+    second: SkeletonBattle_30
+  - first:
+      213: 5842742254209088991
+    second: SkeletonBattle_31
+  - first:
+      213: -2647282959495643986
+    second: SkeletonBattle_32
+  - first:
+      213: -8866546782904673778
+    second: SkeletonBattle_33
+  - first:
+      213: -6508708879825385787
+    second: SkeletonBattle_34
+  - first:
+      213: -3249366716818729339
+    second: SkeletonBattle_35
+  - first:
+      213: -1030862327317372836
+    second: SkeletonBattle_36
+  - first:
+      213: 5265865059907607230
+    second: SkeletonBattle_37
+  - first:
+      213: -5339440446977245157
+    second: SkeletonBattle_38
+  - first:
+      213: 7792066472749709340
+    second: SkeletonBattle_39
+  - first:
+      213: -1488595880987666332
+    second: SkeletonBattle_40
+  - first:
+      213: 6781269977583727776
+    second: SkeletonBattle_41
+  - first:
+      213: -682211315703290407
+    second: SkeletonBattle_42
+  - first:
+      213: 8645821467274244351
+    second: SkeletonBattle_43
+  - first:
+      213: -9043674804055246356
+    second: SkeletonBattle_44
+  - first:
+      213: -3206263601612519737
+    second: SkeletonBattle_45
+  - first:
+      213: 1296149449315415701
+    second: SkeletonBattle_46
+  - first:
+      213: -4059069009555383313
+    second: SkeletonBattle_47
+  - first:
+      213: 1574184419308924569
+    second: SkeletonBattle_48
+  - first:
+      213: -2227516591301132938
+    second: SkeletonBattle_49
+  - first:
+      213: 8205851222836798173
+    second: SkeletonBattle_50
+  - first:
+      213: -5444520792159569232
+    second: SkeletonBattle_51
+  - first:
+      213: 2243236765134025187
+    second: SkeletonBattle_52
+  - first:
+      213: 9091793855924891725
+    second: SkeletonBattle_53
+  - first:
+      213: -4685327735538403258
+    second: SkeletonBattle_54
+  - first:
+      213: 2427775460375602390
+    second: SkeletonBattle_55
+  - first:
+      213: 6301401793651208042
+    second: SkeletonBattle_56
+  - first:
+      213: -3965581650950301587
+    second: SkeletonBattle_57
+  - first:
+      213: -91534396815561804
+    second: SkeletonBattle_58
+  - first:
+      213: -3804957305675570319
+    second: SkeletonBattle_59
+  - first:
+      213: -9011361557517287582
+    second: SkeletonBattle_60
+  - first:
+      213: 1294709964406737040
+    second: SkeletonBattle_61
+  - first:
+      213: 7333422901336679331
+    second: SkeletonBattle_62
+  - first:
+      213: -5666179035756925590
+    second: SkeletonBattle_63
+  - first:
+      213: 7067994725869345567
+    second: SkeletonBattle_64
+  - first:
+      213: -7025999965020362738
+    second: SkeletonBattle_65
+  - first:
+      213: 3213335665087882914
+    second: SkeletonBattle_66
+  - first:
+      213: -1925557979901526831
+    second: SkeletonBattle_67
+  - first:
+      213: 5552477595728321990
+    second: SkeletonBattle_68
+  - first:
+      213: -8486420569602211827
+    second: SkeletonBattle_69
+  - first:
+      213: 685903687327357837
+    second: SkeletonBattle_70
+  - first:
+      213: -6409397329213515685
+    second: SkeletonBattle_71
+  - first:
+      213: 1674399193724798935
+    second: SkeletonBattle_72
+  - first:
+      213: -5946454284796070358
+    second: SkeletonBattle_73
+  - first:
+      213: -8728271170623031023
+    second: SkeletonBattle_74
+  - first:
+      213: 1729695863269714764
+    second: SkeletonBattle_75
+  - first:
+      213: 6582879916077434049
+    second: SkeletonBattle_76
+  - first:
+      213: -3182948372869592045
+    second: SkeletonBattle_77
+  - first:
+      213: 960916204604987350
+    second: SkeletonBattle_78
+  - first:
+      213: -3949946297922996174
+    second: SkeletonBattle_79
+  - first:
+      213: 6580030422408334026
+    second: SkeletonBattle_80
+  - first:
+      213: -8615535669101405407
+    second: SkeletonBattle_81
+  - first:
+      213: 7341611460414040810
+    second: SkeletonBattle_82
+  - first:
+      213: -978405392468629500
+    second: SkeletonBattle_83
+  - first:
+      213: -3534004403087196832
+    second: SkeletonBattle_84
+  - first:
+      213: 3067583571880581483
+    second: SkeletonBattle_85
+  - first:
+      213: -8162102635704691078
+    second: SkeletonBattle_86
+  - first:
+      213: 3816132205114484404
+    second: SkeletonBattle_87
+  - first:
+      213: -6196394713932552687
+    second: SkeletonBattle_88
+  - first:
+      213: 7457624293405323193
+    second: SkeletonBattle_89
+  - first:
+      213: 5261953938969365760
+    second: SkeletonBattle_90
+  - first:
+      213: -5109052194578008771
+    second: SkeletonBattle_91
+  - first:
+      213: 2899141543043363248
+    second: SkeletonBattle_92
+  - first:
+      213: -5049762053149414648
+    second: SkeletonBattle_93
+  - first:
+      213: -4498934121061261238
+    second: SkeletonBattle_94
+  - first:
+      213: 858704676526648192
+    second: SkeletonBattle_95
+  - first:
+      213: 8140256776886229767
+    second: SkeletonBattle_96
+  - first:
+      213: -5241341059139934245
+    second: SkeletonBattle_97
+  - first:
+      213: 6311239392023080217
+    second: SkeletonBattle_98
+  - first:
+      213: -3213531778163263167
+    second: SkeletonBattle_99
+  - first:
+      213: 5659410244709857023
+    second: SkeletonBattle_100
+  - first:
+      213: -6608253512611847693
+    second: SkeletonBattle_101
+  - first:
+      213: -5305618757867972223
+    second: SkeletonBattle_102
+  - first:
+      213: 5000428132163174109
+    second: SkeletonBattle_103
+  - first:
+      213: -9122437001525585086
+    second: SkeletonBattle_104
+  - first:
+      213: 7120706590748366350
+    second: SkeletonBattle_105
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SkeletonBattle_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1031
+        width: 303
+        height: 319
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c27e2ce0b203a3e50800000000000000
+      internalID: 6789792349703825196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_1
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 1308
+        width: 29
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8d797b28c8f1a260800000000000000
+      internalID: 7107235225573883275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_2
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 1072
+        width: 228
+        height: 264
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18a19a54fc60b5760800000000000000
+      internalID: 7447553896083954305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_3
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1320
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6de6136f56abef240800000000000000
+      internalID: 4827500797672648406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_4
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 1007
+        width: 325
+        height: 343
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7cca534afe103c60800000000000000
+      internalID: 7795765015199009914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_5
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 1021
+        width: 249
+        height: 305
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02d3df8c7bf6a3580800000000000000
+      internalID: -8846635682874180320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_6
+      rect:
+        serializedVersion: 2
+        x: 1083
+        y: 1310
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7db4927961250bc00800000000000000
+      internalID: 914320981335034839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_7
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 1310
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0042e3b20bfebcf0800000000000000
+      internalID: -234474141550231540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_8
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 1236
+        width: 15
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac677bb348799b8d0800000000000000
+      internalID: -2830064296632289590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_9
+      rect:
+        serializedVersion: 2
+        x: 893
+        y: 1260
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f05b35c5472e51250800000000000000
+      internalID: 5914882675014087951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_10
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 1247
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17acf3da231e80370800000000000000
+      internalID: 8289122721946651249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_11
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 1165
+        width: 26
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2b8dfc6d8b48d1c0800000000000000
+      internalID: -4478746758628930771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_12
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 1181
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd8bd9bd3cf6a9a00800000000000000
+      internalID: 764045973786573020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_13
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 1112
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09fd15aaae10ed460800000000000000
+      internalID: 7268248956014026640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_14
+      rect:
+        serializedVersion: 2
+        x: 843
+        y: 1119
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 844a47a18df564820800000000000000
+      internalID: 2902112391648289864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_15
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 1110
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5eac59984905f1e90800000000000000
+      internalID: -7052829892545230107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_16
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 1104
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67961b8515ec773d0800000000000000
+      internalID: -3208869360702494346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_17
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 767
+        width: 284
+        height: 308
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 683a4fd3e68bfee40800000000000000
+      internalID: 5687967638017581958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_18
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 1066
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 889af273f5e9090b0800000000000000
+      internalID: -5723900994602948216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_19
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 1052
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c84a2234760adb7f0800000000000000
+      internalID: -595143210374617972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_20
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 1026
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ce3da84e126ff460800000000000000
+      internalID: 7277643405061865157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_21
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 1050
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdb3fae5a9ba60c70800000000000000
+      internalID: 8937019190065183707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 779
+        width: 277
+        height: 252
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56425de4985934d50800000000000000
+      internalID: 6720379485932561509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_23
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 960
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 887445efe58418260800000000000000
+      internalID: 7098034060543674248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_24
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 781
+        width: 281
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc52d4ee7d6a80bc0800000000000000
+      internalID: -3816617237850282549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_25
+      rect:
+        serializedVersion: 2
+        x: 853
+        y: 759
+        width: 292
+        height: 262
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23b4c22c620ced820800000000000000
+      internalID: 2945002479045856050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_26
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 941
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee7aa217a8bc4ff50800000000000000
+      internalID: 6914375123385100270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_27
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 864
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1c46c0e70658d180800000000000000
+      internalID: -9090421256011494373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_28
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 823
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 822fb4088c5d434a0800000000000000
+      internalID: -6614426895577779672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_29
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 791
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b4131b30039bea70800000000000000
+      internalID: 8857334721354601654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_30
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 777
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fb00a8f2af495be0800000000000000
+      internalID: -1488070640494703627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_31
+      rect:
+        serializedVersion: 2
+        x: 988
+        y: 795
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdd3c40cf17951150800000000000000
+      internalID: 5842742254209088991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_32
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 491
+        width: 325
+        height: 284
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eac315b9c26f24bd0800000000000000
+      internalID: -2647282959495643986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_33
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 756
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0a959c8da2b3f480800000000000000
+      internalID: -8866546782904673778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_34
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 757
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c6c39722cb6ca5a0800000000000000
+      internalID: -6508708879825385787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_35
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 355
+        width: 297
+        height: 411
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 586da0bdf2ee7e2d0800000000000000
+      internalID: -3249366716818729339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_36
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 476
+        width: 275
+        height: 309
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c506aefcc24a1b1f0800000000000000
+      internalID: -1030862327317372836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_37
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 766
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eba1fea4f5c141940800000000000000
+      internalID: 5265865059907607230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_38
+      rect:
+        serializedVersion: 2
+        x: 861
+        y: 438
+        width: 269
+        height: 332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b10819af33f76e5b0800000000000000
+      internalID: -5339440446977245157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_39
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 716
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c183a7e3c2bf22c60800000000000000
+      internalID: 7792066472749709340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_40
+      rect:
+        serializedVersion: 2
+        x: 865
+        y: 666
+        width: 34
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 468de93eee1775be0800000000000000
+      internalID: -1488595880987666332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_41
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 516
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a436ebad19eb1e50800000000000000
+      internalID: 6781269977583727776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_42
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 521
+        width: 23
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d5e0c14c6c4886f0800000000000000
+      internalID: -682211315703290407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_43
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 522
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff0f35421d02cf770800000000000000
+      internalID: 8645821467274244351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_44
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 520
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce9f2206ea96e7280800000000000000
+      internalID: -9043674804055246356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_45
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 183
+        width: 301
+        height: 322
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c60f99ed301183d0800000000000000
+      internalID: -3206263601612519737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_46
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 165
+        width: 208
+        height: 341
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 596734e8e09dcf110800000000000000
+      internalID: 1296149449315415701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_47
+      rect:
+        serializedVersion: 2
+        x: 881
+        y: 499
+        width: 22
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: feb97aedd3a4ba7c0800000000000000
+      internalID: -4059069009555383313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_48
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 0
+        width: 261
+        height: 473
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99eecd39360a8d510800000000000000
+      internalID: 1574184419308924569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_49
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 466
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67df43c46754611e0800000000000000
+      internalID: -2227516591301132938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_50
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 470
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd264e0f53a01e170800000000000000
+      internalID: 8205851222836798173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_51
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 454
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bab9139f2d2174b0800000000000000
+      internalID: -5444520792159569232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_52
+      rect:
+        serializedVersion: 2
+        x: 1068
+        y: 458
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e1f8e4e3f3912f10800000000000000
+      internalID: 2243236765134025187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_53
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 0
+        width: 308
+        height: 441
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d407b71775a8c2e70800000000000000
+      internalID: 9091793855924891725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_54
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 424
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 648b2fa9f3f5afeb0800000000000000
+      internalID: -4685327735538403258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_55
+      rect:
+        serializedVersion: 2
+        x: 1103
+        y: 438
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d429161be031b120800000000000000
+      internalID: 2427775460375602390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_56
+      rect:
+        serializedVersion: 2
+        x: 821
+        y: 391
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6fe6998b83137750800000000000000
+      internalID: 6301401793651208042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_57
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 247
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d68dc4fbf7c67f8c0800000000000000
+      internalID: -3965581650950301587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_58
+      rect:
+        serializedVersion: 2
+        x: 1010
+        y: 241
+        width: 29
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bb241973fdcabef0800000000000000
+      internalID: -91534396815561804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_59
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 225
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1732ea17d73123bc0800000000000000
+      internalID: -3804957305675570319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_60
+      rect:
+        serializedVersion: 2
+        x: 919
+        y: 229
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26f329d586631f280800000000000000
+      internalID: -9011361557517287582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_61
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 195
+        width: 9
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0984f9b5adbb7f110800000000000000
+      internalID: 1294709964406737040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_62
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 215
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a323ed464d85c560800000000000000
+      internalID: 7333422901336679331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_63
+      rect:
+        serializedVersion: 2
+        x: 626
+        y: 209
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6d61fb0030bd51b0800000000000000
+      internalID: -5666179035756925590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_64
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 217
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1bd6cd51cf861260800000000000000
+      internalID: 7067994725869345567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_65
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 216
+        width: 21
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e08ed05d142ae7e90800000000000000
+      internalID: -7025999965020362738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_66
+      rect:
+        serializedVersion: 2
+        x: 545
+        y: 166
+        width: 48
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a628ad23cf089c20800000000000000
+      internalID: 3213335665087882914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_67
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 199
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dcfc85283b0745e0800000000000000
+      internalID: -1925557979901526831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_68
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 177
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cd93bc74fc5e0d40800000000000000
+      internalID: 5552477595728321990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_69
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 193
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d00ca46747d2a3a80800000000000000
+      internalID: -8486420569602211827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_70
+      rect:
+        serializedVersion: 2
+        x: 1052
+        y: 189
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8b174105c1d48900800000000000000
+      internalID: 685903687327357837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_71
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 23
+        width: 297
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5814e7661f3d07a0800000000000000
+      internalID: -6409397329213515685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_72
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 179
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d7ca220239ac3710800000000000000
+      internalID: 1674399193724798935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_73
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 152
+        width: 33
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2671a96553f97da0800000000000000
+      internalID: -5946454284796070358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_74
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 0
+        width: 284
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1193bbb5d93fed680800000000000000
+      internalID: -8728271170623031023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_75
+      rect:
+        serializedVersion: 2
+        x: 853
+        y: 161
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4b67ab293d110810800000000000000
+      internalID: 1729695863269714764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_76
+      rect:
+        serializedVersion: 2
+        x: 914
+        y: 165
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c449d4f7661b5b50800000000000000
+      internalID: 6582879916077434049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_77
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 158
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31c43b0a155e3d3d0800000000000000
+      internalID: -3182948372869592045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_78
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 147
+        width: 7
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d7956a623cd55d00800000000000000
+      internalID: 960916204604987350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_79
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 142
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2383e6e05c8fe29c0800000000000000
+      internalID: -3949946297922996174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_80
+      rect:
+        serializedVersion: 2
+        x: 1006
+        y: 163
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aca89e28ec6f05b50800000000000000
+      internalID: 6580030422408334026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_81
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 114
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12bd08db4f77f6880800000000000000
+      internalID: -8615535669101405407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_82
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 112
+        width: 28
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aea6ae8c9b4a2e560800000000000000
+      internalID: 7341611460414040810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_83
+      rect:
+        serializedVersion: 2
+        x: 746
+        y: 136
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 408a497ba710c62f0800000000000000
+      internalID: -978405392468629500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_84
+      rect:
+        serializedVersion: 2
+        x: 755
+        y: 136
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06d325728b1b4fec0800000000000000
+      internalID: -3534004403087196832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_85
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 123
+        width: 31
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6914c0810f329a20800000000000000
+      internalID: 3067583571880581483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_86
+      rect:
+        serializedVersion: 2
+        x: 968
+        y: 134
+        width: 13
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a76da82c5e26abe80800000000000000
+      internalID: -8162102635704691078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_87
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 128
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b6e6c59500a5f430800000000000000
+      internalID: 3816132205114484404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_88
+      rect:
+        serializedVersion: 2
+        x: 1020
+        y: 128
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11621fb66dbf10aa0800000000000000
+      internalID: -6196394713932552687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_89
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 136
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bf6fbc58cdce7760800000000000000
+      internalID: 7457624293405323193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_90
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 118
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00d8cbc7a37360940800000000000000
+      internalID: 5261953938969365760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_91
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 110
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d357f3319100919b0800000000000000
+      internalID: -5109052194578008771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_92
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 110
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b17da28fd1db3820800000000000000
+      internalID: 2899141543043363248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_93
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 112
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80b28cdda24abe9b0800000000000000
+      internalID: -5049762053149414648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_94
+      rect:
+        serializedVersion: 2
+        x: 1083
+        y: 124
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a406246d0439091c0800000000000000
+      internalID: -4498934121061261238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_95
+      rect:
+        serializedVersion: 2
+        x: 893
+        y: 104
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08b665b8a5bbaeb00800000000000000
+      internalID: 858704676526648192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_96
+      rect:
+        serializedVersion: 2
+        x: 1074
+        y: 91
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70b15ced86008f070800000000000000
+      internalID: 8140256776886229767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_97
+      rect:
+        serializedVersion: 2
+        x: 932
+        y: 82
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd76b4793140347b0800000000000000
+      internalID: -5241341059139934245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_98
+      rect:
+        serializedVersion: 2
+        x: 994
+        y: 78
+        width: 23
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91decf5e9c6069750800000000000000
+      internalID: 6311239392023080217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_99
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 46
+        width: 13
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1493620bfdd3763d0800000000000000
+      internalID: -3213531778163263167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_100
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 47
+        width: 14
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff6332af1a34a8e40800000000000000
+      internalID: 5659410244709857023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_101
+      rect:
+        serializedVersion: 2
+        x: 917
+        y: 39
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f12b0b3174ca44a0800000000000000
+      internalID: -6608253512611847693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_102
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 31
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18951af99d7ae56b0800000000000000
+      internalID: -5305618757867972223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_103
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 21
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddeb47e84e6156540800000000000000
+      internalID: 5000428132163174109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_104
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 23
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24b103e31e7966180800000000000000
+      internalID: -9122437001525585086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonBattle_105
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 23
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e06d65bcae4d1d260800000000000000
+      internalID: 7120706590748366350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SkeletonBattle_0: 6789792349703825196
+      SkeletonBattle_1: 7107235225573883275
+      SkeletonBattle_10: 8289122721946651249
+      SkeletonBattle_100: 5659410244709857023
+      SkeletonBattle_101: -6608253512611847693
+      SkeletonBattle_102: -5305618757867972223
+      SkeletonBattle_103: 5000428132163174109
+      SkeletonBattle_104: -9122437001525585086
+      SkeletonBattle_105: 7120706590748366350
+      SkeletonBattle_11: -4478746758628930771
+      SkeletonBattle_12: 764045973786573020
+      SkeletonBattle_13: 7268248956014026640
+      SkeletonBattle_14: 2902112391648289864
+      SkeletonBattle_15: -7052829892545230107
+      SkeletonBattle_16: -3208869360702494346
+      SkeletonBattle_17: 5687967638017581958
+      SkeletonBattle_18: -5723900994602948216
+      SkeletonBattle_19: -595143210374617972
+      SkeletonBattle_2: 7447553896083954305
+      SkeletonBattle_20: 7277643405061865157
+      SkeletonBattle_21: 8937019190065183707
+      SkeletonBattle_22: 6720379485932561509
+      SkeletonBattle_23: 7098034060543674248
+      SkeletonBattle_24: -3816617237850282549
+      SkeletonBattle_25: 2945002479045856050
+      SkeletonBattle_26: 6914375123385100270
+      SkeletonBattle_27: -9090421256011494373
+      SkeletonBattle_28: -6614426895577779672
+      SkeletonBattle_29: 8857334721354601654
+      SkeletonBattle_3: 4827500797672648406
+      SkeletonBattle_30: -1488070640494703627
+      SkeletonBattle_31: 5842742254209088991
+      SkeletonBattle_32: -2647282959495643986
+      SkeletonBattle_33: -8866546782904673778
+      SkeletonBattle_34: -6508708879825385787
+      SkeletonBattle_35: -3249366716818729339
+      SkeletonBattle_36: -1030862327317372836
+      SkeletonBattle_37: 5265865059907607230
+      SkeletonBattle_38: -5339440446977245157
+      SkeletonBattle_39: 7792066472749709340
+      SkeletonBattle_4: 7795765015199009914
+      SkeletonBattle_40: -1488595880987666332
+      SkeletonBattle_41: 6781269977583727776
+      SkeletonBattle_42: -682211315703290407
+      SkeletonBattle_43: 8645821467274244351
+      SkeletonBattle_44: -9043674804055246356
+      SkeletonBattle_45: -3206263601612519737
+      SkeletonBattle_46: 1296149449315415701
+      SkeletonBattle_47: -4059069009555383313
+      SkeletonBattle_48: 1574184419308924569
+      SkeletonBattle_49: -2227516591301132938
+      SkeletonBattle_5: -8846635682874180320
+      SkeletonBattle_50: 8205851222836798173
+      SkeletonBattle_51: -5444520792159569232
+      SkeletonBattle_52: 2243236765134025187
+      SkeletonBattle_53: 9091793855924891725
+      SkeletonBattle_54: -4685327735538403258
+      SkeletonBattle_55: 2427775460375602390
+      SkeletonBattle_56: 6301401793651208042
+      SkeletonBattle_57: -3965581650950301587
+      SkeletonBattle_58: -91534396815561804
+      SkeletonBattle_59: -3804957305675570319
+      SkeletonBattle_6: 914320981335034839
+      SkeletonBattle_60: -9011361557517287582
+      SkeletonBattle_61: 1294709964406737040
+      SkeletonBattle_62: 7333422901336679331
+      SkeletonBattle_63: -5666179035756925590
+      SkeletonBattle_64: 7067994725869345567
+      SkeletonBattle_65: -7025999965020362738
+      SkeletonBattle_66: 3213335665087882914
+      SkeletonBattle_67: -1925557979901526831
+      SkeletonBattle_68: 5552477595728321990
+      SkeletonBattle_69: -8486420569602211827
+      SkeletonBattle_7: -234474141550231540
+      SkeletonBattle_70: 685903687327357837
+      SkeletonBattle_71: -6409397329213515685
+      SkeletonBattle_72: 1674399193724798935
+      SkeletonBattle_73: -5946454284796070358
+      SkeletonBattle_74: -8728271170623031023
+      SkeletonBattle_75: 1729695863269714764
+      SkeletonBattle_76: 6582879916077434049
+      SkeletonBattle_77: -3182948372869592045
+      SkeletonBattle_78: 960916204604987350
+      SkeletonBattle_79: -3949946297922996174
+      SkeletonBattle_8: -2830064296632289590
+      SkeletonBattle_80: 6580030422408334026
+      SkeletonBattle_81: -8615535669101405407
+      SkeletonBattle_82: 7341611460414040810
+      SkeletonBattle_83: -978405392468629500
+      SkeletonBattle_84: -3534004403087196832
+      SkeletonBattle_85: 3067583571880581483
+      SkeletonBattle_86: -8162102635704691078
+      SkeletonBattle_87: 3816132205114484404
+      SkeletonBattle_88: -6196394713932552687
+      SkeletonBattle_89: 7457624293405323193
+      SkeletonBattle_9: 5914882675014087951
+      SkeletonBattle_90: 5261953938969365760
+      SkeletonBattle_91: -5109052194578008771
+      SkeletonBattle_92: 2899141543043363248
+      SkeletonBattle_93: -5049762053149414648
+      SkeletonBattle_94: -4498934121061261238
+      SkeletonBattle_95: 858704676526648192
+      SkeletonBattle_96: 8140256776886229767
+      SkeletonBattle_97: -5241341059139934245
+      SkeletonBattle_98: 6311239392023080217
+      SkeletonBattle_99: -3213531778163263167
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

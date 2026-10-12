@@ -1,5 +1,7 @@
 # Документация FalseMemory
 
+Текущие новые анимации героя/скелета: [CharacterAnimationUpgrade](CharacterAnimationUpgrade.md). [Импортёр](Scripts/Editor/DetailedAnimationImporter.md), [Edit-тесты](Scripts/Tests/EditMode/DetailedAnimationTests.md), [Play-сценарии](Scripts/Tests/PlayMode/DetailedAnimationFlowTests.md). Существующие системы расширены, источник HP/MP и все ранее принятые механики сохраняются. Художественная оценка новых поз остаётся ручной.
+
 Актуально2026-10-13: утверждённый герой большого разрешения подключён без уменьшения. [Отчёт/ручная проверка](ApprovedHeroIntegration.md), [правила pixel art](Guides/PixelArtStyleGuide.md), [импортёр](Scripts/Editor/ApprovedHeroImporter.md), [тесты импорта](Scripts/Tests/EditMode/ApprovedHeroAssetTests.md). Ниже сохранены прежние контрольные точки; ограничение64×64 для будущей графики отменено.
 
 Актуальная контрольнаяточка2026-10-13:82 собственныхC# (53 runtime,25 test,3 Editor,1 Welcome),90 Edit/49 Play. [Текущийотчёт/ручнаяприёмка](PlayerRework.md), [переносы](Systems/EquipmentDragSystem.md). Новыеописания: [EquipmentPlaceholderBuilder](Scripts/Editor/EquipmentPlaceholderBuilder.md), [EquipmentTransferTests](Scripts/Tests/EditMode/EquipmentTransferTests.md), [EquipmentDragFlowTests](Scripts/Tests/PlayMode/EquipmentDragFlowTests.md). Болееранниечисла ниже —история.

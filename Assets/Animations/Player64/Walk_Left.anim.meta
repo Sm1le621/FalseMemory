@@ -3,6 +3,6 @@ guid: d8ea0afa7327c3642a9ee52989b28e22
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
-  userData: 'Approved detailed hero: four native-resolution sprite poses, 8 FPS, ground pivot. Left angles mirrored.'
+  userData: 'Detailed hero: 8 native-resolution frames, 16 FPS / 0.5s, shared ground pivot; left angles mirrored.'
   assetBundleName: 
   assetBundleVariant: 

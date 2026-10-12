@@ -82,6 +82,10 @@ public static class ApprovedHeroImporter
 
     public static Sprite[] Frames(string direction)
     {
+        const string prepared="Assets/Art/Characters/Player/AnimationV2/World";
+        if(System.IO.Directory.Exists(prepared))
+            return System.IO.Directory.GetFiles(prepared,"ApprovedHero_"+direction+"_*.png")
+                .OrderBy(p=>p,StringComparer.Ordinal).Select(p=>AssetDatabase.LoadAssetAtPath<Sprite>(p.Replace('\\','/'))).ToArray();
         return AssetDatabase.LoadAllAssetsAtPath(Root + "/Walk" + direction + ".png")
             .OfType<Sprite>().OrderBy(s => s.name).ToArray();
     }
@@ -92,12 +96,12 @@ public static class ApprovedHeroImporter
         string path = "Assets/Animations/Player64/" + motion + "_" + direction + ".anim";
         var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
         if (clip == null) throw new InvalidOperationException("Missing existing clip: " + path);
-        clip.frameRate = 8f;
+        clip.frameRate = motion=="Walk" && frames.Length>=8?16f:8f;
         var binding = EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite");
         var keys = new ObjectReferenceKeyframe[frames.Length + 1];
         for (int i = 0; i < frames.Length; i++)
-            keys[i] = new ObjectReferenceKeyframe { time = i / 8f, value = frames[i] };
-        keys[frames.Length] = new ObjectReferenceKeyframe { time = frames.Length / 8f, value = frames[0] };
+            keys[i] = new ObjectReferenceKeyframe { time = i / clip.frameRate, value = frames[i] };
+        keys[frames.Length] = new ObjectReferenceKeyframe { time = frames.Length / clip.frameRate, value = frames[0] };
         AnimationUtility.SetObjectReferenceCurve(clip, binding, keys);
         var settings = AnimationUtility.GetAnimationClipSettings(clip);
         settings.loopTime = true;
@@ -117,12 +121,16 @@ public static class ApprovedHeroImporter
         player.GetComponent<SpriteRenderer>().sprite = sprite;
         player.GetComponent<SpriteRenderer>().color = Color.white;
         var unit = player.GetComponent<BattleUnit>();
-        unit.battleSprite = sprite;
+        var battleSet=AssetDatabase.LoadAssetAtPath<SpriteAnimationSet>("Assets/Settings/Battle/Visuals/HeroDetailed.asset");
+        if(battleSet!=null){unit.visualAnimations=battleSet;unit.battleSprite=battleSet.idle[0];}
+        else unit.battleSprite = sprite;
         unit.spriteColor = Color.white;
         var window = player.GetComponent<InventoryWindow>();
+        if(window.portraitSprite==null)
+            window.portraitSprite=AssetDatabase.LoadAllAssetsAtPath(Root+"/WalkDown.png").OfType<Sprite>().FirstOrDefault(s=>s.name=="ApprovedHero_Down_00");
         if (window.characterPortrait != null)
         {
-            window.characterPortrait.sprite = sprite;
+            window.characterPortrait.sprite = window.portraitSprite!=null?window.portraitSprite:unit.battleSprite;
             window.characterPortrait.color = Color.white;
         }
         EditorSceneManager.MarkSceneDirty(scene);

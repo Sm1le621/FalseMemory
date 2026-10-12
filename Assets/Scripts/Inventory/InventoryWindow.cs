@@ -19,6 +19,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
     public Image modalBackdrop;
     public InventoryTooltip tooltip;
     public Image characterPortrait;
+    public Sprite portraitSprite;
     public TextMeshProUGUI characterLabel, bagLabel;
     public AttributeRowView[] attributeRows;
     public event Action<int> UseRequested;
@@ -100,7 +101,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
         details.text=selected.IsEmpty?GameText.Get("inventory.empty"):
             GameText.Get("inventory.selected",item.LocalizedName,selected.Count,ItemPresentation.TypeName(item),GameText.Get("rarity."+item.rarity.ToString().ToLowerInvariant()),ItemPresentation.BonusText(item));
         if(bagLabel!=null){int occupied=0;for(int i=0;i<InventoryState.Capacity;i++)if(!Inventory.State.GetSlot(i).IsEmpty)occupied++;bagLabel.text=GameText.Get("inventory.bag", occupied, InventoryState.Capacity);}
-        if(characterPortrait!=null){characterPortrait.sprite=unit.battleSprite;characterPortrait.color=unit.spriteColor;characterPortrait.gameObject.SetActive(unit.battleSprite!=null);}
+        if(characterPortrait!=null){var portrait=portraitSprite!=null?portraitSprite:unit.battleSprite;characterPortrait.sprite=portrait;characterPortrait.color=unit.spriteColor;characterPortrait.gameObject.SetActive(portrait!=null);}
         splitButton.interactable=!selected.IsEmpty && selected.Count>1 && item.stackable && Inventory.State.FirstEmptySlot()>=0;
         useButton.interactable=!selected.IsEmpty && item is BattleConsumable && UseRequested!=null && (CanUseSelection==null || CanUseSelection(SelectedIndex));
         var equipment=GetComponent<EquipmentController>();

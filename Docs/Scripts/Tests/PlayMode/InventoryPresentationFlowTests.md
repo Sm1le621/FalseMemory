@@ -20,6 +20,8 @@ Player rework5: TooltipClamps... теперьтребуетequipmentButtons.Leng
 
 ## 4. Переменные и Inspector
 
+2026-10-13: TooltipClampsToAllScreenCornersAndLiveBagResourceCountsMatchModel проверяет назначенный InventoryWindow.portraitSprite, либо прежний battleSprite fallback при null. Проверки Tooltip/границ/30 слотов/9 gear slots/HP90/MP25 сохранены; графическая ссылка не копирует ресурсы.
+
 Временная Mouse/экранные координаты, существующие Potion/Sword/Player, публичные UI-ссылки. Inspector отсутствует. Тесты не сохраняют scene/SO.
 
 ## 5. Связи
@@ -45,3 +47,5 @@ BattleFlowTests lifecycle, InventoryWindow/Tooltip, InputSystem/MouseState, Equi
 - 2026-10-12 — Player rework5: девятыйOffHand, bidirectionaldrag/atomictransfers/совместимость/силуэты; sourceIDsсохранены.
 
 2026-10-12 — добавлены три сценария нового RPG-инвентаря, сохраняющие исходные боевые тесты.
+
+- 2026-10-13 — ожидание портрета обновлено под отдельную UI-ссылку; остальные проверки сохранены.

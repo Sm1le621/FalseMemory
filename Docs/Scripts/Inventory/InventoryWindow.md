@@ -1,5 +1,7 @@
 # InventoryWindow
 
+Актуальное изменение2026-10-13: optional portraitSprite задаёт отдельное изображение для существующего characterPortrait, чтобы боевой холст с мечом не уменьшал героя в инвентаре. При null сохраняется прежний fallback BattleUnit.battleSprite; все предметы/ресурсы/drag остаются прежними.
+
 ## 1. Название и назначение
 
 Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Inventory/InventoryWindow.cs.
@@ -38,6 +40,8 @@ Unity `Awake` получает Inventory/gate/unit, Bind30 ячеек и button 
 
 Editor `BuildLayout()` создаёт Canvas/панель/30 views/подписи/кнопки/ghost и ссылки, существующая panel запрещает повторную перестройку. Helpers `Panel(parent,name,color)` RectTransform с Image/Outline; `Place(rect,x,y,w,h)` устанавливает позицию/размер; `Label(...)` TMP с fallback/авторазмером; `Button(...)` Button без keyboard navigation. Сохранение сцены выполняет MCP.
 
+Refresh выбирает portraitSprite при наличии, иначе BattleUnit.battleSprite; выставляет прежний цвет участника и включённость Image по наличию Sprite. Никакие состояния инвентаря/здоровья этим выбором не меняются.
+
 ## 4. Переменные и Inspector
 
 draggingEquipment nullableprivate EquipmentSlot иdraggedItem private ItemData — transient, неInspector/save. equipmentButtons содержит9кнопок, первоначальныеиндексысохранены.
@@ -52,6 +56,8 @@ CanUseSelection Func<int,bool> — необязательный runtime predicat
 equipButton/equipmentButtons[8]/equipmentStats — UI-ссылки. EquipRequested Action<int,EquipmentSlot?> и UnequipRequested Action<EquipmentSlot> — команды без владения. equipmentClicks — private runtime массив callback для правильной отписки.
 
 panel, slots[30], details/goldLabel/message, split/use/close Button, dragIcon обязательны; SelectedIndex/Inventory/IsOpen readonly; dragging приватный transient. UseRequested Action<int> — обработчик применения; без подписчика кнопка disabled; с4.5 подключён WorldItemUseController.
+
+portraitSprite — optional Sprite в Inspector, по умолчанию null; в SampleScene назначен прежний ApprovedHero_Down_00 из четырёхкадрового листа512×640. characterPortrait по-прежнему ссылка на существующий Image.
 
 ## 5. Связи
 
@@ -97,3 +103,5 @@ Potion3 → Разделить½ →2/1; drag в пустой/на другой/
 2026-10-12 — 4.4: семь слотов/Stats/Equip/Unequip и корректные listeners.
 
 2026-10-12 — 4.2: окно, ввод, drag-and-drop и события.
+
+- 2026-10-13 — портрет отделён от боевого рисунка единственной optional ссылкой без изменения предметов/ресурсов.

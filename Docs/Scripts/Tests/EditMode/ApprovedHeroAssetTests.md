@@ -10,7 +10,9 @@
 
 ## 3. Методы и функции
 
-`SheetsKeepNativeResolutionAndConsistentGroundPivots()` проверяет четыре Sprite, реальные размеры texture/rect, PPU/pivot, Point, mipmaps/compression/NPOT. `WalkClipsUseFourFramesForTheirDirectionWithoutTransformAnimation()` проверяет пять ключей, четыре разных Sprite правильного направления, замыкание .5, Loop и отсутствие Transform-кривых. Возврат void; ошибки — NUnit assertions. Unity callbacks отсутствуют.
+`SheetsKeepNativeResolutionAndConsistentGroundPivots()` проверяет четыре Sprite, реальные размеры texture/rect, PPU/pivot, Point, mipmaps/compression/NPOT. `WalkClipsUseEightFramesForTheirDirectionWithoutTransformAnimation()` проверяет девять ключей, восемь разных Sprite правильного направления, замыкание .5, Loop и отсутствие Transform-кривых. Возврат void; ошибки — NUnit assertions. Unity callbacks отсутствуют.
+
+SheetsKeepNativeResolutionAndConsistentGroundPivots сохраняет проверку прежних резервных Multiple-листов. Тест Walk-клипов теперь проверяет текущие8 Single PNG/направление, замыкание на.5 и отсутствие Transform-кривых. Резервные4-кадровые ресурсы не выдаются за актуальную ходьбу.
 
 ## 4. Переменные и Inspector
 
@@ -35,3 +37,5 @@ Max Size1024 уменьшит Down-лист2048×640 и нарушит конт�
 ## 9. История изменений
 
 - 2026-10-13 — две проверки переменного разрешения и Sprite-ключей.
+
+- 2026-10-13 — контракт активных Walk-клипов обновлён на8 кадров; проверки прежних источников сохранены.

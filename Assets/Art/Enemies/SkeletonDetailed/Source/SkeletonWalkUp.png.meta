@@ -1,0 +1,795 @@
+fileFormatVersion: 2
+guid: 2ebab8d69299069408a2d6b304cb4660
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8315101871315436339
+    second: SkeletonWalkUp_0
+  - first:
+      213: -3181609520765105099
+    second: SkeletonWalkUp_1
+  - first:
+      213: -6703577974884189487
+    second: SkeletonWalkUp_2
+  - first:
+      213: 6972313671376045949
+    second: SkeletonWalkUp_3
+  - first:
+      213: 7916985051103906791
+    second: SkeletonWalkUp_4
+  - first:
+      213: 1102917990059579235
+    second: SkeletonWalkUp_5
+  - first:
+      213: -2899248695416093298
+    second: SkeletonWalkUp_6
+  - first:
+      213: 8944760799630447346
+    second: SkeletonWalkUp_7
+  - first:
+      213: 6599182161498404364
+    second: SkeletonWalkUp_8
+  - first:
+      213: 3990479138933855321
+    second: SkeletonWalkUp_9
+  - first:
+      213: -5527317155214364391
+    second: SkeletonWalkUp_10
+  - first:
+      213: -963337013851608351
+    second: SkeletonWalkUp_11
+  - first:
+      213: 5248639455590777089
+    second: SkeletonWalkUp_12
+  - first:
+      213: -7347005902838525354
+    second: SkeletonWalkUp_13
+  - first:
+      213: 8381505505228077862
+    second: SkeletonWalkUp_14
+  - first:
+      213: -6526056182626148727
+    second: SkeletonWalkUp_15
+  - first:
+      213: -1865166809826231791
+    second: SkeletonWalkUp_16
+  - first:
+      213: -784624487752537056
+    second: SkeletonWalkUp_17
+  - first:
+      213: -3610512835351609834
+    second: SkeletonWalkUp_18
+  - first:
+      213: -738500225949237342
+    second: SkeletonWalkUp_19
+  - first:
+      213: 4759875210852399601
+    second: SkeletonWalkUp_20
+  - first:
+      213: -2831667891583155354
+    second: SkeletonWalkUp_21
+  - first:
+      213: 598661574148987506
+    second: SkeletonWalkUp_22
+  - first:
+      213: 7605306161088211135
+    second: SkeletonWalkUp_23
+  - first:
+      213: -6916761285171677537
+    second: SkeletonWalkUp_24
+  - first:
+      213: -2630358639735055037
+    second: SkeletonWalkUp_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SkeletonWalkUp_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 471
+        width: 435
+        height: 553
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dccbe0147e2da9c80800000000000000
+      internalID: -8315101871315436339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_1
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 935
+        width: 17
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53c8bcc6ff6a8d3d0800000000000000
+      internalID: -3181609520765105099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_2
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 479
+        width: 328
+        height: 509
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1da35e2595b18f2a0800000000000000
+      internalID: -6703577974884189487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_3
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 479
+        width: 363
+        height: 507
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7708fcd752a2c060800000000000000
+      internalID: 6972313671376045949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_4
+      rect:
+        serializedVersion: 2
+        x: 1166
+        y: 496
+        width: 357
+        height: 492
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7eb402f35f7cedd60800000000000000
+      internalID: 7916985051103906791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_5
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 495
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36793e5811a5e4f00800000000000000
+      internalID: 1102917990059579235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_6
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 495
+        width: 15
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8585322cacc3c7d0800000000000000
+      internalID: -2899248695416093298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_7
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 0
+        width: 413
+        height: 481
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f2dfce4e8c222c70800000000000000
+      internalID: 8944760799630447346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_8
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 369
+        height: 473
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c06f4304631059b50800000000000000
+      internalID: 6599182161498404364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_9
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 0
+        width: 347
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95452c762a7016730800000000000000
+      internalID: 3990479138933855321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_10
+      rect:
+        serializedVersion: 2
+        x: 1132
+        y: 421
+        width: 47
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 911768215560b43b0800000000000000
+      internalID: -5527317155214364391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_11
+      rect:
+        serializedVersion: 2
+        x: 1156
+        y: 457
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1eaa362071a81a2f0800000000000000
+      internalID: -963337013851608351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_12
+      rect:
+        serializedVersion: 2
+        x: 1166
+        y: 0
+        width: 356
+        height: 482
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1018690c6c9e6d840800000000000000
+      internalID: 5248639455590777089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 413
+        width: 37
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6529c96be013a0a90800000000000000
+      internalID: -7347005902838525354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_14
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 429
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62bb91299d6115470800000000000000
+      internalID: 8381505505228077862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_15
+      rect:
+        serializedVersion: 2
+        x: 1174
+        y: 415
+        width: 11
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98e935a7a7ace65a0800000000000000
+      internalID: -6526056182626148727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_16
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 95
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11a75752ba89d16e0800000000000000
+      internalID: -1865166809826231791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_17
+      rect:
+        serializedVersion: 2
+        x: 854
+        y: 35
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02cef6d7f247c15f0800000000000000
+      internalID: -784624487752537056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_18
+      rect:
+        serializedVersion: 2
+        x: 862
+        y: 27
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61ef0ef94b1e4edc0800000000000000
+      internalID: -3610512835351609834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_19
+      rect:
+        serializedVersion: 2
+        x: 878
+        y: 21
+        width: 29
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2afffbd05f150c5f0800000000000000
+      internalID: -738500225949237342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_20
+      rect:
+        serializedVersion: 2
+        x: 932
+        y: 17
+        width: 15
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f97b0e09497e0240800000000000000
+      internalID: 4759875210852399601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_21
+      rect:
+        serializedVersion: 2
+        x: 1032
+        y: 29
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6638e403e05e3b8d0800000000000000
+      internalID: -2831667891583155354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_22
+      rect:
+        serializedVersion: 2
+        x: 1290
+        y: 0
+        width: 72
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27a93d3a78fde4800800000000000000
+      internalID: 598661574148987506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_23
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 13
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb8a0cba8a97b8960800000000000000
+      internalID: 7605306161088211135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_24
+      rect:
+        serializedVersion: 2
+        x: 646
+        y: 15
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f96fa29f14ab200a0800000000000000
+      internalID: -6916761285171677537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWalkUp_25
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 18
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34d56bed0c61f7bd0800000000000000
+      internalID: -2630358639735055037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SkeletonWalkUp_0: -8315101871315436339
+      SkeletonWalkUp_1: -3181609520765105099
+      SkeletonWalkUp_10: -5527317155214364391
+      SkeletonWalkUp_11: -963337013851608351
+      SkeletonWalkUp_12: 5248639455590777089
+      SkeletonWalkUp_13: -7347005902838525354
+      SkeletonWalkUp_14: 8381505505228077862
+      SkeletonWalkUp_15: -6526056182626148727
+      SkeletonWalkUp_16: -1865166809826231791
+      SkeletonWalkUp_17: -784624487752537056
+      SkeletonWalkUp_18: -3610512835351609834
+      SkeletonWalkUp_19: -738500225949237342
+      SkeletonWalkUp_2: -6703577974884189487
+      SkeletonWalkUp_20: 4759875210852399601
+      SkeletonWalkUp_21: -2831667891583155354
+      SkeletonWalkUp_22: 598661574148987506
+      SkeletonWalkUp_23: 7605306161088211135
+      SkeletonWalkUp_24: -6916761285171677537
+      SkeletonWalkUp_25: -2630358639735055037
+      SkeletonWalkUp_3: 6972313671376045949
+      SkeletonWalkUp_4: 7916985051103906791
+      SkeletonWalkUp_5: 1102917990059579235
+      SkeletonWalkUp_6: -2899248695416093298
+      SkeletonWalkUp_7: 8944760799630447346
+      SkeletonWalkUp_8: 6599182161498404364
+      SkeletonWalkUp_9: 3990479138933855321
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

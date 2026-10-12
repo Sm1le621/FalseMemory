@@ -54,13 +54,13 @@ public sealed partial class BattleFlowTests
         try
         {
             InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.S));
-            float until=Time.time+.65f;
+            float until=Time.time+.85f;
             while(Time.time<until)
             {
                 yield return null;
                 shown.Add(player.GetComponent<SpriteRenderer>().sprite.name);
             }
-            Assert.That(shown.Count,Is.GreaterThanOrEqualTo(4),"Walk must actually advance through the four source poses.");
+            Assert.That(shown.Count,Is.EqualTo(8),"Walk must actually advance through all eight source poses.");
             Assert.That(shown,Is.All.StartsWith("ApprovedHero_Down_"));
             InputSystem.QueueStateEvent(keyboard,new KeyboardState());yield return null;yield return null;
             Assert.That(player.GetComponent<SpriteRenderer>().sprite.name,Is.EqualTo("ApprovedHero_Down_00"));

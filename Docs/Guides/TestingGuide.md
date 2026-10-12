@@ -1,5 +1,9 @@
 # Как проверять FalseMemory
 
+## Анимации героя и скелета
+
+[CharacterAnimationUpgrade](../CharacterAnimationUpgrade.md) содержит новые job IDs/реальные кадры/ручные пункты. Edit: DetailedAnimationTests и Updated ApprovedHeroAssetTests. Play: DetailedAnimationFlowTests, PlayerDirectionFlowTests, PixelVisualFlowTests и полная регрессия. Разные Sprite/смена кадров/однократный урон проверяются автоматически; естественность шага/удара оценивается вручную.
+
 ## Новые кадры героя
 
 Свежие результаты/ручные пункты —[ApprovedHeroIntegration](../ApprovedHeroIntegration.md). В Edit Mode запустить ApprovedHeroAssetTests, в Play Mode PlayerDirectionFlowTests и регрессионную боевую сборку. Они проверяют импорт/смену кадров/реальный ввод, но не художественную естественность походки.

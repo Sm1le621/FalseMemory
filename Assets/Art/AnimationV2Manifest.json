@@ -1,0 +1,3143 @@
+{
+  "frames": [
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Idle-00.png",
+      "source": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "sourceBox": [
+        17,
+        85,
+        296,
+        404
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 192,
+      "pivotY": 24,
+      "ppu": 620,
+      "axisInCrop": 167,
+      "visibleBounds": [
+        25,
+        169,
+        304,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "17888cbdc207875583cb76704a677c6e553fe90b178c213a18020aa412f1eb48"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Idle-01.png",
+      "source": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "sourceBox": [
+        344,
+        85,
+        614,
+        404
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 192,
+      "pivotY": 24,
+      "ppu": 620,
+      "axisInCrop": 159,
+      "visibleBounds": [
+        33,
+        169,
+        303,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "25e87e7e835d7dd70723b8d50a2631b546f1bea49251e49a727297fd5cb8bdb7"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Idle-02.png",
+      "source": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "sourceBox": [
+        677,
+        87,
+        937,
+        404
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 192,
+      "pivotY": 24,
+      "ppu": 620,
+      "axisInCrop": 144,
+      "visibleBounds": [
+        48,
+        171,
+        308,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "e6a4aaed55f32b8502d91d902f9d3e3ee8f10d8e01428831aa2ca8834720d6b2"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Idle-03.png",
+      "source": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "sourceBox": [
+        967,
+        84,
+        1260,
+        404
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 192,
+      "pivotY": 24,
+      "ppu": 620,
+      "axisInCrop": 171,
+      "visibleBounds": [
+        21,
+        168,
+        314,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "3a9726a4ad03b71b49ae3a6f478056193c32306b6f992eb880416db7f9a6cd9d"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-00.png",
+      "source": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "sourceBox": [
+        21,
+        480,
+        310,
+        798
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 192,
+      "pivotY": 24,
+      "ppu": 620,
+      "axisInCrop": 156,
+      "visibleBounds": [
+        36,
+        170,
+        325,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "79353bd92b9d66d9924b95328e0d998c3de85da8eeb9ee97086d2e3d8446c333"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-01.png",
+      "source": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "sourceBox": [
+        343,
+        482,
+        631,
+        798
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 192,
+      "pivotY": 24,
+      "ppu": 620,
+      "axisInCrop": 158,
+      "visibleBounds": [
+        34,
+        172,
+        322,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "52f5dbe21135f6f1c747506e3523983f082d5d8709bb4aa965310c72025d087e"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-02.png",
+      "source": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "sourceBox": [
+        665,
+        434,
+        934,
+        798
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 192,
+      "pivotY": 24,
+      "ppu": 620,
+      "axisInCrop": 146,
+      "visibleBounds": [
+        46,
+        124,
+        315,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "147f7395f05f5a326142046c445116f51525101526bfe2222e23ae445bdee669"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-03.png",
+      "source": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "sourceBox": [
+        970,
+        498,
+        1261,
+        798
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 192,
+      "pivotY": 24,
+      "ppu": 620,
+      "axisInCrop": 169,
+      "visibleBounds": [
+        23,
+        188,
+        314,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "ea33f8040cb600bd1421b293dc0a53fa8987bc212b7b51c9b860a3e321482a83"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-04.png",
+      "source": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "sourceBox": [
+        16,
+        868,
+        453,
+        1152
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 192,
+      "pivotY": 24,
+      "ppu": 620,
+      "axisInCrop": 168,
+      "visibleBounds": [
+        24,
+        204,
+        461,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "016b449752517870bc8facc079f501bf0d34cd5a5abfd50fc71378a9765e2b87"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-05.png",
+      "source": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "sourceBox": [
+        371,
+        867,
+        675,
+        1152
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 192,
+      "pivotY": 24,
+      "ppu": 620,
+      "axisInCrop": 147,
+      "visibleBounds": [
+        45,
+        203,
+        349,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "5e88e2746646f2c2202ba2023719957493feb0db92c5a6bc7308102d6df6d5ce"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-06.png",
+      "source": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "sourceBox": [
+        677,
+        853,
+        942,
+        1159
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 192,
+      "pivotY": 24,
+      "ppu": 620,
+      "axisInCrop": 134,
+      "visibleBounds": [
+        58,
+        182,
+        323,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "b262ebb54eb6c6f149f59fb83514dec599627943c2d8a92b821139ac1843ec25"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-07.png",
+      "source": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "sourceBox": [
+        978,
+        854,
+        1258,
+        1159
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 192,
+      "pivotY": 24,
+      "ppu": 620,
+      "axisInCrop": 148,
+      "visibleBounds": [
+        44,
+        183,
+        324,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "1b8964a51de887d654d57f62c9be73e7a69ae08afb09c21b8b07e095d50cf735"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Idle-00.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        65,
+        53,
+        233,
+        278
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 99,
+      "visibleBounds": [
+        77,
+        135,
+        245,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "88b658c55152d03c809a9cad70e7b61303e69d0323c56d8c3c215cf276a84261"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Idle-01.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        348,
+        67,
+        520,
+        277
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 98,
+      "visibleBounds": [
+        78,
+        150,
+        250,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "5e0d9f621812fe5e772aeaa25789c85c1552ad9ab8a364d475b3dc46cd33ba84"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Idle-02.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        631,
+        61,
+        812,
+        278
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 107,
+      "visibleBounds": [
+        69,
+        143,
+        250,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "3296da37e90846d3870313d10ad9627bbde3c24cef5ef1f466850b816c1629ee"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Idle-03.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        923,
+        66,
+        1105,
+        277
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 111,
+      "visibleBounds": [
+        65,
+        149,
+        247,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "31b9ef0ab8e7989b3110d46a558487ec50f972ffb6c46066739ede0d8c2782be"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Attack-00.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        52,
+        338,
+        273,
+        547
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 118,
+      "visibleBounds": [
+        58,
+        151,
+        279,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "153a97414dfd9809b4b53345631c68918aaec70fdbabbfbd3962b1aca17d080c"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Attack-01.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        353,
+        294,
+        539,
+        544
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 110,
+      "visibleBounds": [
+        66,
+        110,
+        252,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "dff80d6b46a1f90c575b9c0b0b18c570515d6ca5317be15c493d96790f9214ac"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Attack-02.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        611,
+        347,
+        812,
+        545
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 131,
+      "visibleBounds": [
+        45,
+        162,
+        246,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "d884e98caba2316d315f067e48cd625108a48174fc385aea72bdf9b7651fa8b3"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Attack-03.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        881,
+        350,
+        1141,
+        542
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 106,
+      "visibleBounds": [
+        70,
+        168,
+        330,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "e608e1e9ee179ffd21993fbc3d5b5a481e59c100a0897e5f543e5fc13f892d1c"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Attack-04.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        46,
+        599,
+        338,
+        813
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 122,
+      "visibleBounds": [
+        54,
+        146,
+        346,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "9c2dc3a2f11b63c81304a60dfec2f6687f6de19c0efea6f621c15a9c09df59c1"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Attack-05.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        345,
+        602,
+        579,
+        813
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 124,
+      "visibleBounds": [
+        52,
+        149,
+        286,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "ff6f8f60c2fd77a6d30318f5cb0256cd903e45a5e5ec66f10a9eb52225531fbd"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Attack-06.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        624,
+        592,
+        809,
+        813
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 105,
+      "visibleBounds": [
+        71,
+        139,
+        256,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "41f7e4e7616cc29f2cfbd3cb94f939173c6936982141d0d764fa3661f2bebbc4"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Attack-07.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        901,
+        598,
+        1113,
+        812
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 121,
+      "visibleBounds": [
+        55,
+        146,
+        267,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "9d017b6b60be61437d624f813e4648ff50c681711a5523f6ce53de0ac94b0496"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Hurt-00.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        80,
+        859,
+        272,
+        1073
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 103,
+      "visibleBounds": [
+        73,
+        146,
+        265,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "6f3d328bf9907a01fe03c9a7812a239420897b75f6b5d3e521bbe7447fc69086"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Hurt-01.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        355,
+        856,
+        528,
+        1073
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 98,
+      "visibleBounds": [
+        78,
+        143,
+        251,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "14d0389fcfd318f25478335171da97aeb475cc3e2ba79ffa4182ad7f926b0aa0"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Death-00.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        612,
+        897,
+        818,
+        1088
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 110,
+      "visibleBounds": [
+        66,
+        169,
+        272,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "b895f1f04fd9cd00d42c211b7796abaef04092500b311ab5874d3b40be0c4ab7"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Death-01.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        870,
+        934,
+        1141,
+        1086
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 149,
+      "visibleBounds": [
+        27,
+        208,
+        298,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "978deff2ac8cbff79230b5fa4267b082c95b5011f953b2448017b95f9771a0df"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Death-02.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        27,
+        1191,
+        306,
+        1309
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 154,
+      "visibleBounds": [
+        22,
+        242,
+        301,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "e9c593ce9492bbbc56e5d9751f77d86313bf12687411ef209a31c908bcdc5be8"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Battle/Skeleton-Death-03.png",
+      "source": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "sourceBox": [
+        322,
+        1206,
+        596,
+        1311
+      ],
+      "canvasWidth": 384,
+      "canvasHeight": 384,
+      "pivotX": 176,
+      "pivotY": 24,
+      "ppu": 430,
+      "axisInCrop": 146,
+      "visibleBounds": [
+        30,
+        255,
+        304,
+        360
+      ],
+      "resampled": false,
+      "pixelHash": "6f619bd580e4ef3695ee76db806e8c5bb610b8e4a3d3061ae5170980a4e41849"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_00.png",
+      "source": "exec-b05c2b2f-6693-4436-8a2a-c06c293c8cf4.png",
+      "sourceBox": [
+        51,
+        29,
+        406,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 192,
+      "visibleBounds": [
+        128,
+        39,
+        483,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "d39824ca5af19f0c4aae36427af065fd7111356f3b5b4aef36883e463fb5c233"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_01.png",
+      "source": "exec-b05c2b2f-6693-4436-8a2a-c06c293c8cf4.png",
+      "sourceBox": [
+        434,
+        29,
+        775,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 164,
+      "visibleBounds": [
+        156,
+        39,
+        497,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "e3a88e85530c57ebc6c2fe5c421f76bec5cf6c6b952ef18ef0bfe70435377d34"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_02.png",
+      "source": "exec-b05c2b2f-6693-4436-8a2a-c06c293c8cf4.png",
+      "sourceBox": [
+        806,
+        29,
+        1148,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 168,
+      "visibleBounds": [
+        152,
+        39,
+        494,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "99772db844167fe0e8e8f5d26b47a5c91da17c10515e68329d9c9afd83e8c5ee"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_03.png",
+      "source": "exec-b05c2b2f-6693-4436-8a2a-c06c293c8cf4.png",
+      "sourceBox": [
+        1188,
+        29,
+        1535,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 160,
+      "visibleBounds": [
+        160,
+        39,
+        507,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "8feb4e6e86484d2b0539ba2e5b58082e896bcfce9fbf137cb650ef57379fda05"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_04.png",
+      "source": "exec-b05c2b2f-6693-4436-8a2a-c06c293c8cf4.png",
+      "sourceBox": [
+        47,
+        504,
+        406,
+        952
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 195,
+      "visibleBounds": [
+        125,
+        40,
+        484,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "9b055726703d33cd1c2be94a49e33ee136b74da0ec68b6ded5ea8b5aff675ff5"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_05.png",
+      "source": "exec-b05c2b2f-6693-4436-8a2a-c06c293c8cf4.png",
+      "sourceBox": [
+        433,
+        504,
+        777,
+        948
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 164,
+      "visibleBounds": [
+        156,
+        44,
+        500,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "8a7e8b34a7c58b3afbc8917b6ecd9192f75c4d458b0e3494b1f4f8601cfda5f3"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_06.png",
+      "source": "exec-b05c2b2f-6693-4436-8a2a-c06c293c8cf4.png",
+      "sourceBox": [
+        799,
+        506,
+        1148,
+        954
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 178,
+      "visibleBounds": [
+        142,
+        40,
+        491,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "7ffe20739457b7552dcc3c3d801f1be8963ee94e9489dfc653688066ced38896"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_07.png",
+      "source": "exec-b05c2b2f-6693-4436-8a2a-c06c293c8cf4.png",
+      "sourceBox": [
+        1185,
+        504,
+        1535,
+        958
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 174,
+      "visibleBounds": [
+        146,
+        34,
+        496,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "a927e76b3c8c3bd2e510001bff55cd66b190a3ed7d64af0c150e1a644fdbd67b"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_00.png",
+      "source": "exec-7ec7ffff-55d8-48f6-b6ce-977767020d3c.png",
+      "sourceBox": [
+        36,
+        20,
+        353,
+        466
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 202,
+      "visibleBounds": [
+        118,
+        42,
+        435,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "d35b1a309b1eef8822d10ee142bd83dc93474d8e6c9cfec82e20eeae1851c33d"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_01.png",
+      "source": "exec-7ec7ffff-55d8-48f6-b6ce-977767020d3c.png",
+      "sourceBox": [
+        451,
+        20,
+        745,
+        466
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 161,
+      "visibleBounds": [
+        159,
+        42,
+        453,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "1a535f681155b8abf2411606edce6c335faee5c6f96a2aee22ac292acbfe2494"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_02.png",
+      "source": "exec-7ec7ffff-55d8-48f6-b6ce-977767020d3c.png",
+      "sourceBox": [
+        833,
+        20,
+        1105,
+        466
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 156,
+      "visibleBounds": [
+        164,
+        42,
+        436,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "961ed31957707023efb2d7b662bed2274f72ac6cc1641eeea52a75591e53208d"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_03.png",
+      "source": "exec-7ec7ffff-55d8-48f6-b6ce-977767020d3c.png",
+      "sourceBox": [
+        1259,
+        21,
+        1554,
+        466
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 117,
+      "visibleBounds": [
+        203,
+        43,
+        498,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "b704b071983b5c1ec274e44cd1f1ebe103be6768e4223daf69072e6f32e8fd08"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_04.png",
+      "source": "exec-7ec7ffff-55d8-48f6-b6ce-977767020d3c.png",
+      "sourceBox": [
+        34,
+        500,
+        343,
+        946
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 200,
+      "visibleBounds": [
+        120,
+        42,
+        429,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "7752ffa4ceeb978da62c6a01bedf086bc37592a0176640e61cbb4d97ec417dab"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_05.png",
+      "source": "exec-7ec7ffff-55d8-48f6-b6ce-977767020d3c.png",
+      "sourceBox": [
+        424,
+        496,
+        727,
+        946
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 196,
+      "visibleBounds": [
+        124,
+        38,
+        427,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "a6a8798bd931f3e3a4cf23e4a55a0b2389e4208bd41f0fc4bcce0de0ff5a963a"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_06.png",
+      "source": "exec-7ec7ffff-55d8-48f6-b6ce-977767020d3c.png",
+      "sourceBox": [
+        856,
+        499,
+        1128,
+        946
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 130,
+      "visibleBounds": [
+        190,
+        41,
+        462,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "90b888aa92c441634002a9c4be0ed95bf5528096f0cd8bf8c19bbbc426af78b4"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_07.png",
+      "source": "exec-7ec7ffff-55d8-48f6-b6ce-977767020d3c.png",
+      "sourceBox": [
+        1209,
+        499,
+        1507,
+        946
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 860,
+      "axisInCrop": 177,
+      "visibleBounds": [
+        143,
+        41,
+        441,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "f9b7fa5a9c55f9591a2da8e00a9add42295b31c2939213deb4dd506295c7b40f"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_00.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        44,
+        41,
+        390,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 240,
+      "visibleBounds": [
+        80,
+        51,
+        426,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "f4c7777444e662fec1bff9609e7ec58179a46afbe112e5c69d4d0a2041fb1c49"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_00.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        44,
+        41,
+        390,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 240,
+      "visibleBounds": [
+        214,
+        51,
+        560,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "00623a48b29848c62e2c8e05d8ca792fe170cd4c6a84f7ba4d661f8fe089c993",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_01.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        435,
+        41,
+        753,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 256,
+      "visibleBounds": [
+        64,
+        51,
+        382,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "97472430629bb7b63e899fd0f1b13180634f23bd2103da5c7dd3e1996ee5e403"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_01.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        435,
+        41,
+        753,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 256,
+      "visibleBounds": [
+        258,
+        51,
+        576,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "3f7d93ccdc8906f27bbf7440415b282ed20a09275c82d9652b841998708f8128",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_02.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        831,
+        41,
+        1154,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 249,
+      "visibleBounds": [
+        71,
+        51,
+        394,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "52d83b4734cd3116bdb6dbec9d57752aa51489857aae0ab865f369813a016d44"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_02.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        831,
+        41,
+        1154,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 249,
+      "visibleBounds": [
+        246,
+        51,
+        569,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "206b8d2faad5a6dcf89c72c26565800566b7149997e32ed96ab6fb3b1bde7426",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_03.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        1238,
+        41,
+        1547,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 254,
+      "visibleBounds": [
+        66,
+        51,
+        375,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "9709f75d17f45ebe806053f6999a2a3a6fa89fe9ee45503aa0df8f010e1a6dad"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_03.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        1238,
+        41,
+        1547,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 254,
+      "visibleBounds": [
+        265,
+        51,
+        574,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "06c4eaf098e314da60106f331b5524a22d9357ea3f509f1fdbcf8a1cd2323eb1",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_04.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        27,
+        516,
+        392,
+        939
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 238,
+      "visibleBounds": [
+        82,
+        65,
+        447,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "67274842ed3d32b46b6eb68d659c9fb18ea373bac60e237cffd20ca7aeae8e8b"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_04.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        27,
+        516,
+        392,
+        939
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 238,
+      "visibleBounds": [
+        193,
+        65,
+        558,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "51bc973edd42e7a2d23ff07c667b7ea067cc6bb12a2ea4accfaa7d57965a8228",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_05.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        440,
+        516,
+        750,
+        940
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 242,
+      "visibleBounds": [
+        78,
+        64,
+        388,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "fcbca3ac841897444adaa824b663054a52dcccfc312aea127c915d60bc2f5edb"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_05.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        440,
+        516,
+        750,
+        940
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 242,
+      "visibleBounds": [
+        252,
+        64,
+        562,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "6205fd97959933d49aa660d7273bbe93935b387c64a0743eca2684d023639f04",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_06.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        831,
+        515,
+        1154,
+        941
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 233,
+      "visibleBounds": [
+        87,
+        62,
+        410,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "64ed557018c54f1aaa2343b961e74854c7facaf41a6642003667419bb7c710be"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_06.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        831,
+        515,
+        1154,
+        941
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 233,
+      "visibleBounds": [
+        230,
+        62,
+        553,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "2a7083dd4765155eb73c0df9957c8d59f8ac38fddacfa3400c1b0f73abff1b82",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_07.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        1260,
+        515,
+        1534,
+        942
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 213,
+      "visibleBounds": [
+        107,
+        61,
+        381,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "e1316b7d8fe1d9f978a92b0a9fc01c207b341d7adbb51621dff7ebefa321ffb2"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_07.png",
+      "source": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "sourceBox": [
+        1260,
+        515,
+        1534,
+        942
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 830,
+      "axisInCrop": 213,
+      "visibleBounds": [
+        259,
+        61,
+        533,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "0c1335cedf7454b4682b81b491295ffff35860fd533a05de9ad569cbf3c8a10b",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_00.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        30,
+        24,
+        362,
+        465
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 238,
+      "visibleBounds": [
+        82,
+        47,
+        414,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "596b07944f910c7f877822345859d9dea9eef770a72d03d245c957813ffabd54"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_00.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        30,
+        24,
+        362,
+        465
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 238,
+      "visibleBounds": [
+        226,
+        47,
+        558,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "19c345ec2ca2c30b806689ecb4a6b7709e177fd3b8ded1b748c5aa341eb7e792",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_01.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        426,
+        24,
+        752,
+        464
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 238,
+      "visibleBounds": [
+        82,
+        48,
+        408,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "ef309aea8d820fb7dd9d125340a09fc6a5286e46a926937dc6599df4f3289428"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_01.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        426,
+        24,
+        752,
+        464
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 238,
+      "visibleBounds": [
+        232,
+        48,
+        558,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "d09b07ac899dff095de22cd596a8bd6c8cbae6da9d6c671fb1dfffa31ae0cf83",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_02.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        827,
+        24,
+        1150,
+        464
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 236,
+      "visibleBounds": [
+        84,
+        48,
+        407,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "98f9db5e601bdb65e28489b005b6b960d2f05f364d050df540d255d4fc17b30d"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_02.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        827,
+        24,
+        1150,
+        464
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 236,
+      "visibleBounds": [
+        233,
+        48,
+        556,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "a32f4df8b217a8b6da1d50fe1f100ef1adebe26e55facc4adbb6ef881344c563",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_03.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        1243,
+        24,
+        1560,
+        464
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 226,
+      "visibleBounds": [
+        94,
+        48,
+        411,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "2b437ee38e9c57ddcb3fa399a4ea12abd8ecde8619bd7f71894199069bbc5b98"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_03.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        1243,
+        24,
+        1560,
+        464
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 226,
+      "visibleBounds": [
+        229,
+        48,
+        546,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "f356cc2b4f4bbc89e507c4df0c4dca4a81a8aae2e7047f8d3e9c8a270c4a4c15",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_04.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        31,
+        495,
+        366,
+        943
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 236,
+      "visibleBounds": [
+        84,
+        40,
+        419,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "8f957c2d599dba1889440dbd1126a68d0a34bfbdb66273d5e2adf5d8e92d131f"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_04.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        31,
+        495,
+        366,
+        943
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 236,
+      "visibleBounds": [
+        221,
+        40,
+        556,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "89defec0d003a7175e2a6683ec9bffeb7ac008abd06bf8a322a3f6f4fc89ebb2",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_05.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        434,
+        495,
+        758,
+        944
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 232,
+      "visibleBounds": [
+        88,
+        39,
+        412,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "b085acb4c1835a5a2b967ccfa015b37915dd23886048a178904af2e29b9fd11e"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_05.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        434,
+        495,
+        758,
+        944
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 232,
+      "visibleBounds": [
+        228,
+        39,
+        552,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "7cf054e6eef48b6266529b711af8186777cff7094bb8ddc18bea5f2079534c2c",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_06.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        827,
+        495,
+        1156,
+        941
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 236,
+      "visibleBounds": [
+        84,
+        42,
+        413,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "753ea98aa56106d93baa9fa1b3c53ad0ffd399cfd80ffca35ede97b23bef30d1"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_06.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        827,
+        495,
+        1156,
+        941
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 236,
+      "visibleBounds": [
+        227,
+        42,
+        556,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "525fc26f52b60d71e3fbe5bbad4788fd784f43dc806f23a83c5e646e1584f1f9",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_07.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        1229,
+        495,
+        1561,
+        942
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 234,
+      "visibleBounds": [
+        86,
+        41,
+        418,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "456607b678bc56a6a24e6711b2c55880edf56105c87c31be9f2e537a4332a9a6"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_07.png",
+      "source": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "sourceBox": [
+        1229,
+        495,
+        1561,
+        942
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 850,
+      "axisInCrop": 234,
+      "visibleBounds": [
+        222,
+        41,
+        554,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "10e2efc8c045b0578aa6b03d15d221c8955ee7516470ca655fa3d2047aae03aa",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_00.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        36,
+        20,
+        400,
+        441
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 272,
+      "visibleBounds": [
+        48,
+        67,
+        412,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "353e09f9382e0d59717dc38480e726444157a319851bb4886938f4c25f0c6042"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_00.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        36,
+        20,
+        400,
+        441
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 272,
+      "visibleBounds": [
+        228,
+        67,
+        592,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "19e2e7e9115c86f6d63632834b50f0997bbbb0d7eff7b73d4ff256592901873e",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_01.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        469,
+        22,
+        809,
+        437
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 248,
+      "visibleBounds": [
+        72,
+        73,
+        412,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "38da36acf6596ae8d18d33c7a45f9956824fd16f746ee71657d4f9027225f960"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_01.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        469,
+        22,
+        809,
+        437
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 248,
+      "visibleBounds": [
+        228,
+        73,
+        568,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "d78920a739728ea7d70696d5d58a414f39cdd36a3dd149f2ea9104c524e6790f",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_02.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        887,
+        22,
+        1230,
+        440
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 246,
+      "visibleBounds": [
+        74,
+        70,
+        417,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "5bdfae5f0120bf25718d5dc6654d704ee96248604f5117f93b26de94810b58ff"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_02.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        887,
+        22,
+        1230,
+        440
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 246,
+      "visibleBounds": [
+        223,
+        70,
+        566,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "3320dcb470ce9b03b4c9b0631ea97d1ae9336278cb258f6e068ebafdf7e013d5",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_03.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        1321,
+        20,
+        1679,
+        438
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 260,
+      "visibleBounds": [
+        60,
+        70,
+        418,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "caa316a679be2e235810c5d704852fc16d9ace23fce769f7875ff21887d8739b"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_03.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        1321,
+        20,
+        1679,
+        438
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 260,
+      "visibleBounds": [
+        222,
+        70,
+        580,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "384ec3a92f9c17b6ae4ff8f1b0c64aef82d9456b52ec105f019c046460dedbee",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_04.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        36,
+        452,
+        407,
+        860
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 280,
+      "visibleBounds": [
+        40,
+        80,
+        411,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "8eaf5439fd01b8c11af9a393e39b439116a565542480df7f133ccf9cd22c4c2e"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_04.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        36,
+        452,
+        407,
+        860
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 280,
+      "visibleBounds": [
+        229,
+        80,
+        600,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "3adc67876831d7797ea645421543665a78a67c13e4b64c501a55f65b6c6e42da",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_05.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        471,
+        450,
+        812,
+        860
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 254,
+      "visibleBounds": [
+        66,
+        78,
+        407,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "3023ce4040cbbb2f929687a51a4e74b4a8242d398cb1d6ee1b4192349414395e"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_05.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        471,
+        450,
+        812,
+        860
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 254,
+      "visibleBounds": [
+        233,
+        78,
+        574,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "7592fa090a2402a605527a68abf9e4f55c4bea7431a4b27862c8849bbb0ca070",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_06.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        887,
+        451,
+        1232,
+        862
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 252,
+      "visibleBounds": [
+        68,
+        77,
+        413,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "b82958b8e0847156f9fbd04d35c116852a284ff5eb31b7e3b7df8cd1640fd13a"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_06.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        887,
+        451,
+        1232,
+        862
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 252,
+      "visibleBounds": [
+        227,
+        77,
+        572,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "31cfd2642bfac784a011f441cb426458cbf44e42694595721217ca61d042c9c2",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_07.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        1313,
+        451,
+        1690,
+        862
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 282,
+      "visibleBounds": [
+        38,
+        77,
+        415,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "34ba3e4159b9ee43464dc32cf7fc73b03787b36b9f44d587eaf49d7ea2f20597"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_07.png",
+      "source": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "sourceBox": [
+        1313,
+        451,
+        1690,
+        862
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 790,
+      "axisInCrop": 282,
+      "visibleBounds": [
+        225,
+        77,
+        602,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "e08793b333bad791fcc880f9ef3dfb79a3f01c82c604bb0579fc5a08e70150c9",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Down-00.png",
+      "source": "exec-168b25dc-0f9b-457e-baac-ca5db75c1bc6.png",
+      "sourceBox": [
+        27,
+        26,
+        333,
+        477
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 880,
+      "axisInCrop": 167,
+      "visibleBounds": [
+        153,
+        37,
+        459,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "c0526ff07585a8969dc760a414a10f488f10b624777fddbecd2c390212aad813"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Down-01.png",
+      "source": "exec-168b25dc-0f9b-457e-baac-ca5db75c1bc6.png",
+      "sourceBox": [
+        391,
+        25,
+        718,
+        476
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 880,
+      "axisInCrop": 187,
+      "visibleBounds": [
+        133,
+        37,
+        460,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "3ac9bd0993096fce8ad3710f1fa5d419478bbd3924945d77aa967c6495506ab8"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Down-02.png",
+      "source": "exec-168b25dc-0f9b-457e-baac-ca5db75c1bc6.png",
+      "sourceBox": [
+        778,
+        24,
+        1102,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 880,
+      "axisInCrop": 179,
+      "visibleBounds": [
+        141,
+        34,
+        465,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "9cb2c85dd78e245d387e1acbd9491d8f5e07ac8bf9335e638f532d39f8be4e65"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Down-03.png",
+      "source": "exec-168b25dc-0f9b-457e-baac-ca5db75c1bc6.png",
+      "sourceBox": [
+        1158,
+        16,
+        1489,
+        478
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 880,
+      "axisInCrop": 184,
+      "visibleBounds": [
+        136,
+        26,
+        467,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "a727f2a045bcc68520c202b59c369ecbf5d9c1d33476b5b1c98e59b361d2abec"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Down-04.png",
+      "source": "exec-168b25dc-0f9b-457e-baac-ca5db75c1bc6.png",
+      "sourceBox": [
+        18,
+        519,
+        354,
+        980
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 880,
+      "axisInCrop": 192,
+      "visibleBounds": [
+        128,
+        27,
+        464,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "a45e9fb98313289883d5a1482d9adfde60c22daa62edd75c5a761388e16b54fd"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Down-05.png",
+      "source": "exec-168b25dc-0f9b-457e-baac-ca5db75c1bc6.png",
+      "sourceBox": [
+        393,
+        521,
+        728,
+        980
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 880,
+      "axisInCrop": 194,
+      "visibleBounds": [
+        126,
+        29,
+        461,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "5b8823606272801bd1e41bdbcdfb9d95899fba5c90d15dffcb66d8f83b652be5"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Down-06.png",
+      "source": "exec-168b25dc-0f9b-457e-baac-ca5db75c1bc6.png",
+      "sourceBox": [
+        775,
+        524,
+        1105,
+        980
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 880,
+      "axisInCrop": 194,
+      "visibleBounds": [
+        126,
+        32,
+        456,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "add8563cd11ad8c459d4adb9ae1d5947d9d180a2a236db9f3331d8a43828ba08"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Down-07.png",
+      "source": "exec-168b25dc-0f9b-457e-baac-ca5db75c1bc6.png",
+      "sourceBox": [
+        1157,
+        523,
+        1496,
+        976
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 880,
+      "axisInCrop": 204,
+      "visibleBounds": [
+        116,
+        35,
+        455,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "028d713cd010c33ce3207f677f7bd595e4ec7412aa0ac57d64c9572bcbd8f1bd"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Up-00.png",
+      "source": "exec-95bf4641-3945-4e28-9f63-90899b21f51b.png",
+      "sourceBox": [
+        52,
+        78,
+        389,
+        486
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 770,
+      "axisInCrop": 150,
+      "visibleBounds": [
+        170,
+        80,
+        507,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "12bfcf7f306f49fd7a582146f61fe6e27305fe5605a54ff9ede7ee3cae1e1f62"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Up-01.png",
+      "source": "exec-95bf4641-3945-4e28-9f63-90899b21f51b.png",
+      "sourceBox": [
+        448,
+        78,
+        751,
+        484
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 770,
+      "axisInCrop": 136,
+      "visibleBounds": [
+        184,
+        82,
+        487,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "7f7ad56cb998c7ae2b54d4ae8f760f84caf4367bb62b6cc81eef700eeaad7067"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Up-02.png",
+      "source": "exec-95bf4641-3945-4e28-9f63-90899b21f51b.png",
+      "sourceBox": [
+        825,
+        79,
+        1140,
+        484
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 770,
+      "axisInCrop": 141,
+      "visibleBounds": [
+        179,
+        83,
+        494,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "67e2c420a5ac0a2c06bbb846409f5cdd0b70ca608829f325640b34a439e10539"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Up-03.png",
+      "source": "exec-95bf4641-3945-4e28-9f63-90899b21f51b.png",
+      "sourceBox": [
+        1194,
+        78,
+        1511,
+        484
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 770,
+      "axisInCrop": 145,
+      "visibleBounds": [
+        175,
+        82,
+        492,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "ed404d615f59eab2ba5c71cc3b000f6d192aa627e2535d6323ac812153f7ce4c"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Up-04.png",
+      "source": "exec-95bf4641-3945-4e28-9f63-90899b21f51b.png",
+      "sourceBox": [
+        64,
+        556,
+        381,
+        952
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 770,
+      "axisInCrop": 144,
+      "visibleBounds": [
+        176,
+        92,
+        493,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "79bf55997fd66acdee00a7dee5fea196fc3e6cbfa7a3538747e30aae310fe787"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Up-05.png",
+      "source": "exec-95bf4641-3945-4e28-9f63-90899b21f51b.png",
+      "sourceBox": [
+        465,
+        557,
+        762,
+        945
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 770,
+      "axisInCrop": 120,
+      "visibleBounds": [
+        200,
+        100,
+        497,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "ef3825e8e5331be9283d31ee25e949f6eb1b42969bde234e53dc1a43d104320b"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Up-06.png",
+      "source": "exec-95bf4641-3945-4e28-9f63-90899b21f51b.png",
+      "sourceBox": [
+        840,
+        558,
+        1121,
+        939
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 770,
+      "axisInCrop": 125,
+      "visibleBounds": [
+        195,
+        107,
+        476,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "d3be92b3406c85dfbc5c8eb31cbcaccd94baed7607bda6da4e4f109b152aadf2"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Up-07.png",
+      "source": "exec-95bf4641-3945-4e28-9f63-90899b21f51b.png",
+      "sourceBox": [
+        1214,
+        555,
+        1511,
+        948
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 770,
+      "axisInCrop": 116,
+      "visibleBounds": [
+        204,
+        95,
+        501,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "9d13f1cdbccad010878b16faa0b57923f2ca86d3cf4fd6042338fa626d1469cc"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Right-00.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        35,
+        117,
+        383,
+        486
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 222,
+      "visibleBounds": [
+        98,
+        119,
+        446,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "140a6d3abdc38c4837f38b539f7d74fc0514d060823af0f58155ca8b6321d2d8"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Left-00.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        35,
+        117,
+        383,
+        486
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 222,
+      "visibleBounds": [
+        194,
+        119,
+        542,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "2b80dff71db5aa8ad1ab99cbd82d5c279cd0b060f5f57675731d7149afbc4470",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Right-01.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        417,
+        117,
+        744,
+        484
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 221,
+      "visibleBounds": [
+        99,
+        121,
+        426,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "127cac2dba8059917bbb15cfc0d4d42194a592f385c4b2411cff7d9e43d44331"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Left-01.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        417,
+        117,
+        744,
+        484
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 221,
+      "visibleBounds": [
+        214,
+        121,
+        541,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "96ccefac50c2320086db33b1e6e48ec95def5ef4ddf958de2de3fbe376c79281",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Right-02.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        794,
+        117,
+        1093,
+        484
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 204,
+      "visibleBounds": [
+        116,
+        121,
+        415,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "d420d0444fbf2e894edcb4050d5a2dbffd4bedb67877a8d17c6d51f7cf590d25"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Left-02.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        794,
+        117,
+        1093,
+        484
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 204,
+      "visibleBounds": [
+        225,
+        121,
+        524,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "32e3d5ef7e0f97658c83d84d739046f07e03c90f0324c911226822828011115f",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Right-03.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        1177,
+        118,
+        1504,
+        484
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 232,
+      "visibleBounds": [
+        88,
+        122,
+        415,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "64e669e7d2d560d5b3a56fba8866178dd496e154d613721c10cc8ab4b8f019b6"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Left-03.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        1177,
+        118,
+        1504,
+        484
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 232,
+      "visibleBounds": [
+        225,
+        122,
+        552,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "2bc97e0ff90d40bdf649b444a079b673cb807d41d0aa767a8133cdd1931d0646",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Right-04.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        30,
+        597,
+        364,
+        958
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 222,
+      "visibleBounds": [
+        98,
+        127,
+        432,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "15f95a9c75fad4a05804c8528f69d070362df70788cdccd135ccab4307107fd5"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Left-04.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        30,
+        597,
+        364,
+        958
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 222,
+      "visibleBounds": [
+        208,
+        127,
+        542,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "1171887a77182154e96cfb62b698806fb90c92d734ffa852382febf329c313d5",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Right-05.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        410,
+        598,
+        771,
+        955
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 214,
+      "visibleBounds": [
+        106,
+        131,
+        467,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "0ca00bb00c02371fefbdfe6966375d789b41d34d6abb326e28259a28efc46e0f"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Left-05.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        410,
+        598,
+        771,
+        955
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 214,
+      "visibleBounds": [
+        173,
+        131,
+        534,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "8586c746a67c3a2a8ee7af41e2bf97aa4a47eb0b4115ee0a6318c07aa251143c",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Right-06.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        809,
+        597,
+        1107,
+        960
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 202,
+      "visibleBounds": [
+        118,
+        125,
+        416,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "d3d09a3af5abec4d4925a2759f99a6a8dfce3d0846187683fbee949f9ed0f5c2"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Left-06.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        809,
+        597,
+        1107,
+        960
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 202,
+      "visibleBounds": [
+        224,
+        125,
+        522,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "4b397d8b5306faaee76203c36df12d676219172fe7442fb0e30c0f74caf58810",
+      "mirrored": true
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Right-07.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        1175,
+        597,
+        1507,
+        958
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 226,
+      "visibleBounds": [
+        94,
+        127,
+        426,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "034f096b84f66c86d597318c898e2cb665efe5ac0131204b21e6fb0b41880ab1"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/World/Skeleton-Move-Left-07.png",
+      "source": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "sourceBox": [
+        1175,
+        597,
+        1507,
+        958
+      ],
+      "canvasWidth": 640,
+      "canvasHeight": 512,
+      "pivotX": 320,
+      "pivotY": 24,
+      "ppu": 700,
+      "axisInCrop": 226,
+      "visibleBounds": [
+        214,
+        127,
+        546,
+        488
+      ],
+      "resampled": false,
+      "pixelHash": "5e65adf5e85c93dc736b908546cb42e42f14314e1a157ee011517550d59dccd5",
+      "mirrored": true
+    }
+  ],
+  "sources": [
+    {
+      "name": "HeroBattle",
+      "file": "exec-0b300d74-e1cc-4ab4-b7e6-a6baa1b88494.png",
+      "size": [
+        1295,
+        1214
+      ]
+    },
+    {
+      "name": "SkeletonBattle",
+      "file": "exec-97a6b1a0-7332-4fa4-a8ff-8ef1d6023a53.png",
+      "size": [
+        1159,
+        1358
+      ]
+    },
+    {
+      "name": "HeroDown",
+      "file": "exec-b05c2b2f-6693-4436-8a2a-c06c293c8cf4.png",
+      "size": [
+        1586,
+        992
+      ]
+    },
+    {
+      "name": "HeroRight",
+      "file": "exec-3ca911d0-9a0f-4e82-aa63-9f51ec66eb56.png",
+      "size": [
+        1586,
+        992
+      ]
+    },
+    {
+      "name": "HeroUp",
+      "file": "exec-7ec7ffff-55d8-48f6-b6ce-977767020d3c.png",
+      "size": [
+        1586,
+        992
+      ]
+    },
+    {
+      "name": "HeroUpRight",
+      "file": "exec-921e6645-91d8-4e62-9bde-262a0abbf8fc.png",
+      "size": [
+        1586,
+        992
+      ]
+    },
+    {
+      "name": "HeroDownRight",
+      "file": "exec-1252b6b4-3272-4341-8d12-02e68fdb6026.png",
+      "size": [
+        1774,
+        887
+      ]
+    },
+    {
+      "name": "SkeletonDown",
+      "file": "exec-168b25dc-0f9b-457e-baac-ca5db75c1bc6.png",
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "name": "SkeletonUp",
+      "file": "exec-95bf4641-3945-4e28-9f63-90899b21f51b.png",
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "name": "SkeletonRight",
+      "file": "exec-edaacd26-d8b7-449d-80b0-83a42b9f0af9.png",
+      "size": [
+        1536,
+        1024
+      ]
+    }
+  ],
+  "method": "Alpha connected-component extraction; fixed canvas, ground pivot; no scaling/interpolation. Alpha <=16 and isolated noise more than8px from body excluded. Original PNG copies unchanged."
+}

@@ -1,0 +1,899 @@
+fileFormatVersion: 2
+guid: 425af97cec64c3d42acfece7d1eeb2ce
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2692923724779900932
+    second: HeroWalkUp_0
+  - first:
+      213: -5867937943062369164
+    second: HeroWalkUp_1
+  - first:
+      213: -8388963187470919243
+    second: HeroWalkUp_2
+  - first:
+      213: -516263104251949779
+    second: HeroWalkUp_3
+  - first:
+      213: -7069783627643896655
+    second: HeroWalkUp_4
+  - first:
+      213: -7653179559570063375
+    second: HeroWalkUp_5
+  - first:
+      213: -310092381306857122
+    second: HeroWalkUp_6
+  - first:
+      213: 8576129917407053368
+    second: HeroWalkUp_7
+  - first:
+      213: -7567417109679959156
+    second: HeroWalkUp_8
+  - first:
+      213: -7201996000871609650
+    second: HeroWalkUp_9
+  - first:
+      213: 2456295369910637291
+    second: HeroWalkUp_10
+  - first:
+      213: -2779786585631381543
+    second: HeroWalkUp_11
+  - first:
+      213: -953195064550763183
+    second: HeroWalkUp_12
+  - first:
+      213: -2582900877499430548
+    second: HeroWalkUp_13
+  - first:
+      213: -7042158156341117249
+    second: HeroWalkUp_14
+  - first:
+      213: -6226189051116531477
+    second: HeroWalkUp_15
+  - first:
+      213: 3194937490362963287
+    second: HeroWalkUp_16
+  - first:
+      213: 5596028275495374538
+    second: HeroWalkUp_17
+  - first:
+      213: 2241749694398074135
+    second: HeroWalkUp_18
+  - first:
+      213: 4393072058034250484
+    second: HeroWalkUp_19
+  - first:
+      213: 6623343083380627970
+    second: HeroWalkUp_20
+  - first:
+      213: -1821293521023772857
+    second: HeroWalkUp_21
+  - first:
+      213: -4673341032360588775
+    second: HeroWalkUp_22
+  - first:
+      213: 1647030937613536141
+    second: HeroWalkUp_23
+  - first:
+      213: 8667564732331738360
+    second: HeroWalkUp_24
+  - first:
+      213: -6669884792743737412
+    second: HeroWalkUp_25
+  - first:
+      213: -3529615557428932558
+    second: HeroWalkUp_26
+  - first:
+      213: -4613506782344853136
+    second: HeroWalkUp_27
+  - first:
+      213: -6188334608763828114
+    second: HeroWalkUp_28
+  - first:
+      213: -2437104612620113032
+    second: HeroWalkUp_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HeroWalkUp_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 493
+        width: 374
+        height: 485
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4005ab62cdf2f5520800000000000000
+      internalID: 2692923724779900932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_1
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 970
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47c2bbbc785e09ea0800000000000000
+      internalID: -5867937943062369164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 967
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b997f87d6a649b80800000000000000
+      internalID: -8388963187470919243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_3
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 449
+        width: 376
+        height: 527
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2d0c64217dd5d8f0800000000000000
+      internalID: -516263104251949779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_4
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 475
+        width: 422
+        height: 501
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bcb96b7f3513ed90800000000000000
+      internalID: -7069783627643896655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_5
+      rect:
+        serializedVersion: 2
+        x: 1151
+        y: 855
+        width: 86
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ffbb852db17ac590800000000000000
+      internalID: -7653179559570063375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_6
+      rect:
+        serializedVersion: 2
+        x: 1233
+        y: 411
+        width: 334
+        height: 564
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5956a44f9452bbf0800000000000000
+      internalID: -310092381306857122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_7
+      rect:
+        serializedVersion: 2
+        x: 1151
+        y: 929
+        width: 51
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 836c5aab8b8840770800000000000000
+      internalID: 8576129917407053368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_8
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 935
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c83105e8b322bf690800000000000000
+      internalID: -7567417109679959156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_9
+      rect:
+        serializedVersion: 2
+        x: 1169
+        y: 599
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eca83468bce5d0c90800000000000000
+      internalID: -7201996000871609650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_10
+      rect:
+        serializedVersion: 2
+        x: 1175
+        y: 593
+        width: 42
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be2d5faff93861220800000000000000
+      internalID: 2456295369910637291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_11
+      rect:
+        serializedVersion: 2
+        x: 1191
+        y: 547
+        width: 40
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d7ab0c04d63c69d0800000000000000
+      internalID: -2779786585631381543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_12
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 0
+        width: 334
+        height: 506
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 155dbc7932295c2f0800000000000000
+      internalID: -953195064550763183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_13
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 481
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c690a923651b72cd0800000000000000
+      internalID: -2582900877499430548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_14
+      rect:
+        serializedVersion: 2
+        x: 799
+        y: 445
+        width: 17
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbefa2fb77a354e90800000000000000
+      internalID: -7042158156341117249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_15
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 497
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be0d5c7bb022899a0800000000000000
+      internalID: -6226189051116531477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_16
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 447
+        width: 33
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75599a058b2b65c20800000000000000
+      internalID: 3194937490362963287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_17
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 483
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ace81f9411619ad40800000000000000
+      internalID: 5596028275495374538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_18
+      rect:
+        serializedVersion: 2
+        x: 1159
+        y: 0
+        width: 402
+        height: 506
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71d00f1487b4c1f10800000000000000
+      internalID: 2241749694398074135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 394
+        height: 496
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f263d3e2c357fc30800000000000000
+      internalID: 4393072058034250484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_20
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 484
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20a517e3177daeb50800000000000000
+      internalID: 6623343083380627970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_21
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 481
+        width: 30
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74758a7313779b6e0800000000000000
+      internalID: -1821293521023772857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_22
+      rect:
+        serializedVersion: 2
+        x: 747
+        y: 0
+        width: 400
+        height: 496
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91ac3eb6715f42fb0800000000000000
+      internalID: -4673341032360588775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_23
+      rect:
+        serializedVersion: 2
+        x: 1145
+        y: 465
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8b888259ed6bd610800000000000000
+      internalID: 1647030937613536141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_24
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 454
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f4465a8330694870800000000000000
+      internalID: 8667564732331738360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_25
+      rect:
+        serializedVersion: 2
+        x: 791
+        y: 439
+        width: 9
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb7cabb9e1fcf63a0800000000000000
+      internalID: -6669884792743737412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_26
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 391
+        width: 61
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23091c9e959440fc0800000000000000
+      internalID: -3529615557428932558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_27
+      rect:
+        serializedVersion: 2
+        x: 1157
+        y: 416
+        width: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 079ca7d560889ffb0800000000000000
+      internalID: -4613506782344853136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_28
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 31
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e684065e57e9e1aa0800000000000000
+      internalID: -6188334608763828114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroWalkUp_29
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 15
+        width: 37
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87bef44644aad2ed0800000000000000
+      internalID: -2437104612620113032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HeroWalkUp_0: 2692923724779900932
+      HeroWalkUp_1: -5867937943062369164
+      HeroWalkUp_10: 2456295369910637291
+      HeroWalkUp_11: -2779786585631381543
+      HeroWalkUp_12: -953195064550763183
+      HeroWalkUp_13: -2582900877499430548
+      HeroWalkUp_14: -7042158156341117249
+      HeroWalkUp_15: -6226189051116531477
+      HeroWalkUp_16: 3194937490362963287
+      HeroWalkUp_17: 5596028275495374538
+      HeroWalkUp_18: 2241749694398074135
+      HeroWalkUp_19: 4393072058034250484
+      HeroWalkUp_2: -8388963187470919243
+      HeroWalkUp_20: 6623343083380627970
+      HeroWalkUp_21: -1821293521023772857
+      HeroWalkUp_22: -4673341032360588775
+      HeroWalkUp_23: 1647030937613536141
+      HeroWalkUp_24: 8667564732331738360
+      HeroWalkUp_25: -6669884792743737412
+      HeroWalkUp_26: -3529615557428932558
+      HeroWalkUp_27: -4613506782344853136
+      HeroWalkUp_28: -6188334608763828114
+      HeroWalkUp_29: -2437104612620113032
+      HeroWalkUp_3: -516263104251949779
+      HeroWalkUp_4: -7069783627643896655
+      HeroWalkUp_5: -7653179559570063375
+      HeroWalkUp_6: -310092381306857122
+      HeroWalkUp_7: 8576129917407053368
+      HeroWalkUp_8: -7567417109679959156
+      HeroWalkUp_9: -7201996000871609650
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -14,7 +14,8 @@ public sealed partial class BattleFlowTests
         enemy.transform.position+=Vector3.right*0.1f;yield return new WaitForEndOfFrame();
         Assert.That(visual.sprite.name,Does.Contain("Move"));enemy.transform.position=position;
         yield return BeginBattle(player,enemy);var manager=Manager();manager.presentation.attackDuration=0.8f;
-        Assert.That(manager.ui.enemyPortrait.sprite.texture.width,Is.EqualTo(64));
+        Assert.That(manager.ui.enemyPortrait.sprite.texture.filterMode,Is.EqualTo(FilterMode.Point));
+        Assert.That(manager.ui.enemyPortrait.sprite.texture.width,Is.EqualTo(384));
         Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.True);
         yield return WaitUntil(()=>manager.ui.enemyPortrait.sprite.name.Contains("Hurt"));
         Assert.That(enemy.Health.currentHealth,Is.EqualTo(50));

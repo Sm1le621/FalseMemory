@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ff3d5fc06ec304d9546b175ab94f02, type: 3}
+  m_Name: HeroDetailed
+  m_EditorClassIdentifier: FalseMemory.Runtime::SpriteAnimationSet
+  idle:
+  - {fileID: 21300000, guid: de08eb18f5bbc9d4e9fe656fe4e6d547, type: 3}
+  - {fileID: 21300000, guid: d3a295991340e5941915b103e419b595, type: 3}
+  - {fileID: 21300000, guid: 80879db78640d8c4c803dbbf29fa3637, type: 3}
+  - {fileID: 21300000, guid: 8d041c35370002c40bc5c23edbef114f, type: 3}
+  move:
+  - {fileID: 21300000, guid: 91c6152be2de88949b01a15ba070afbb, type: 3}
+  - {fileID: 21300000, guid: 71e2dbd97d684f34495fd9f39b8b3378, type: 3}
+  - {fileID: 21300000, guid: 0b377127e3f4a794f910fc236ee6b4bf, type: 3}
+  - {fileID: 21300000, guid: 0540553b2d4f7924a82f75937014124b, type: 3}
+  - {fileID: 21300000, guid: e2c91f00d331d82439bb014257d24302, type: 3}
+  - {fileID: 21300000, guid: 341ff8dd7de0114428f3775e6e5f966b, type: 3}
+  - {fileID: 21300000, guid: 0a54a10f556a71244925908fd083e28f, type: 3}
+  - {fileID: 21300000, guid: 31d84d456693d5846bba3d345e1ea8f6, type: 3}
+  attack:
+  - {fileID: 21300000, guid: ef0423fef3bae6a45b91fe0928656e0b, type: 3}
+  - {fileID: 21300000, guid: f4cded8382e07e34b9a0ac92b4e79041, type: 3}
+  - {fileID: 21300000, guid: b5bf0420d04a9604991ce142a9431108, type: 3}
+  - {fileID: 21300000, guid: 9d2e6eda8eb6dd74c8ba71d254227089, type: 3}
+  - {fileID: 21300000, guid: 1ba7ccc5bfd5e234f847b08e1da621fb, type: 3}
+  - {fileID: 21300000, guid: 512e19f2ee482a14e908b37a7695f0b2, type: 3}
+  - {fileID: 21300000, guid: 7daddf4768d5aae4a8318b2ae1d5a184, type: 3}
+  - {fileID: 21300000, guid: 7ade90c6b8a0dd74691e7ea1ea1264d5, type: 3}
+  hurt: []
+  death: []
+  framesPerSecond: 16
+  idleFramesPerSecond: 4
+  attackContactProgress: 0.5
+  worldDirections: []

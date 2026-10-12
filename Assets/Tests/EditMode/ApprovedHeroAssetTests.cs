@@ -35,7 +35,7 @@ public sealed class ApprovedHeroAssetTests
     }
 
     [Test]
-    public void WalkClipsUseFourFramesForTheirDirectionWithoutTransformAnimation()
+    public void WalkClipsUseEightFramesForTheirDirectionWithoutTransformAnimation()
     {
         foreach (string direction in Directions)
         {
@@ -44,11 +44,11 @@ public sealed class ApprovedHeroAssetTests
             Assert.That(bindings.Length, Is.EqualTo(1));
             Assert.That(bindings[0].type, Is.EqualTo(typeof(SpriteRenderer)));
             var keys = AnimationUtility.GetObjectReferenceCurve(clip, bindings[0]);
-            Assert.That(keys.Length, Is.EqualTo(5));
-            Assert.That(keys.Take(4).Select(k => k.value).Distinct().Count(), Is.EqualTo(4));
-            Assert.That(keys.Take(4).All(k => k.value.name.StartsWith("ApprovedHero_" + direction + "_")), Is.True);
-            Assert.That(keys[4].value, Is.SameAs(keys[0].value));
-            Assert.That(keys[4].time, Is.EqualTo(.5f));
+            Assert.That(keys.Length, Is.EqualTo(9));
+            Assert.That(keys.Take(8).Select(k => k.value).Distinct().Count(), Is.EqualTo(8));
+            Assert.That(keys.Take(8).All(k => k.value.name.StartsWith("ApprovedHero_" + direction + "_")), Is.True);
+            Assert.That(keys[8].value, Is.SameAs(keys[0].value));
+            Assert.That(keys[8].time, Is.EqualTo(.5f).Within(.0001f));
             Assert.That(AnimationUtility.GetCurveBindings(clip), Is.Empty);
             Assert.That(AnimationUtility.GetAnimationClipSettings(clip).loopTime, Is.True);
         }

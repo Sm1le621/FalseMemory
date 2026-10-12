@@ -1,5 +1,9 @@
 # Настройка существующего проекта в Unity
 
+## Подключение CharacterAnimationUpgrade
+
+Использовать существующие SampleScene/BattleScene и[DetailedAnimationImporter](../Scripts/Editor/DetailedAnimationImporter.md). Player/Enemy→BattleUnit.visualAnimations назначены HeroDetailed/SkeletonDetailed. EnemySpriteAnimation уже присутствовал; нового Animator врага не требуется. InventoryWindow.portraitSprite сохраняет прежний утверждённый фронтальный портрет. Не менять moveSpeed/Collider/Scale ради текстур.
+
 ## Утверждённый герой —2026-10-13
 
 Открыть существующую SampleScene: Player использует прежний Animator и новые16 клипов с ApprovedHero. Настройки импортёра и PPU —[PixelArtStyleGuide](PixelArtStyleGuide.md), адресный инструмент —[ApprovedHeroImporter](../Scripts/Editor/ApprovedHeroImporter.md). Source PNG/старыеASE сохранены; не менять Scale/moveSpeed ради разрешения. BattleScene сохранена с тем же Down-портретом.

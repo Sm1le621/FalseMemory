@@ -14,6 +14,8 @@
 
 `WorldSkeletonMovesAndBattleUsesAttackHurtAndDeathFrames()` проверяет Move/масштаб/два коллайдера, физическую Attack→Hurt/Attack, единственный урон, последний Death-кадр и завершение. `AnimatedFireHealAndDisabledVfxDoNotDuplicateEffectsOrResources()` проверяет повторную команду, Fire19/8MP, Heal/6MP, отсутствие прямоугольного magic glow, очистку при disable и продолжение хода. Unity lifecycle тестов задаёт общий fixture.
 
+WorldSkeletonMovesAndBattleUsesAttackHurtAndDeathFrames теперь проверяет текущий SkeletonDetailed/Point/боевой холст384 вместо жёсткого64. Остальные assertions сохранены: мировое Move, attack/hurt/death, HP50/96, конечная Death[3]/alpha0 и отсутствие зависания. Старые PNG64 отдельно защищены Edit Mode PixelArtTests.
+
 ## 4. Переменные и Inspector
 
 Параметров Inspector нет; attackDuration0.8 изменяется только на runtime-компоненте теста для наблюдения кадров. Scene-профили/правила восстанавливаются общим Cleanup.
@@ -37,3 +39,5 @@ Test Runner → Play Mode → FalseMemory.Battle.PlayModeTests. К GameObject н
 ## 9. История изменений
 
 2026-10-12 — создан в задаче native 64px Skeleton/Fire/Heal/Hit и интеграции кадров; текущие проверки — [PixelVisuals](../../../PixelVisuals.md).
+
+- 2026-10-13 — сценарий использует подробный скелет переменного разрешения без ослабления проверки боевого урона/VFX/смерти.

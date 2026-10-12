@@ -5277,7 +5277,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: e8b3f7969ac3a974c889b3b2a7984741, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e1ce3c395b18b544e84ac285a89c48c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5396,8 +5396,8 @@ MonoBehaviour:
   missChance: 0.05
   currentExperience: 0
   experienceReward: 20
-  battleSprite: {fileID: 21300000, guid: e8b3f7969ac3a974c889b3b2a7984741, type: 3}
-  visualAnimations: {fileID: 11400000, guid: 9b5604a7fd518bd4cb69e85bbb808acf, type: 2}
+  battleSprite: {fileID: 21300000, guid: 254e9fe5c5bce914989e601446891953, type: 3}
+  visualAnimations: {fileID: 11400000, guid: b6769233ab0213f4aa6638dc018daef4, type: 2}
   spriteColor: {r: 1, g: 1, b: 1, a: 1}
   flipInBattle: 0
   growthRules: {fileID: 0}
@@ -5433,6 +5433,7 @@ MonoBehaviour:
   hurtDuration: 0.16
   deathDuration: 0.4
   faceMovement: 1
+  movementHoldDuration: 0.08
 --- !u!1 &497420708
 GameObject:
   m_ObjectHideFlags: 0
@@ -5667,7 +5668,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 112917971, guid: 37e845bf8e6ed6b4992f4cf66ebe44d4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aded58206f918a342a880f72edfa1c90, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5774,8 +5775,8 @@ MonoBehaviour:
   missChance: 0.05
   currentExperience: 0
   experienceReward: 0
-  battleSprite: {fileID: 112917971, guid: 37e845bf8e6ed6b4992f4cf66ebe44d4, type: 3}
-  visualAnimations: {fileID: 0}
+  battleSprite: {fileID: 21300000, guid: de08eb18f5bbc9d4e9fe656fe4e6d547, type: 3}
+  visualAnimations: {fileID: 11400000, guid: 420be5e6c22a20849bd40382c637bd40, type: 2}
   spriteColor: {r: 1, g: 1, b: 1, a: 1}
   flipInBattle: 1
   growthRules: {fileID: 11400000, guid: 5f8c9d4468ef24e46ad5577754648a4a, type: 2}
@@ -5862,6 +5863,7 @@ MonoBehaviour:
   modalBackdrop: {fileID: 263615876}
   tooltip: {fileID: 1856859420}
   characterPortrait: {fileID: 1042868137}
+  portraitSprite: {fileID: 112917971, guid: 37e845bf8e6ed6b4992f4cf66ebe44d4, type: 3}
   characterLabel: {fileID: 48704088}
   bagLabel: {fileID: 240526751}
   attributeRows:

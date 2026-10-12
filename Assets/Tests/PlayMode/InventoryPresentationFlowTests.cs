@@ -51,6 +51,6 @@ public sealed partial class BattleFlowTests
         Assert.That(window.bagLabel.text,Does.Contain("1 / 30"));
         player.Inventory.State.TrySplit(0,1,1);Assert.That(window.bagLabel.text,Does.Contain("2 / 30"));
         player.Health.TakeDamage(10);player.TrySpendMP(5);window.Refresh();Assert.That(window.resourcesLabel.text,Does.Contain("90 / 100").And.Contain("25 / 30"));
-        Assert.That(window.characterPortrait.sprite,Is.SameAs(player.battleSprite));Assert.That(window.equipmentButtons.Length,Is.EqualTo(9));window.Close();
+        Assert.That(window.characterPortrait.sprite,Is.SameAs(window.portraitSprite!=null?window.portraitSprite:player.battleSprite));Assert.That(window.equipmentButtons.Length,Is.EqualTo(9));window.Close();
     }
 }

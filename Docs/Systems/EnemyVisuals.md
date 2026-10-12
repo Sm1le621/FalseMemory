@@ -1,5 +1,13 @@
 # Визуал врагов FalseMemory
 
+## SkeletonDetailed —2026-10-13
+
+Существующий Enemy в SampleScene теперь использует Assets/Art/Enemies/SkeletonDetailed:18 Battle-кадров (Idle4/Attack8/Hurt2/Death4) и32 World-кадра (Walk Down/Up/Right/Left по8). Left зеркален Right, поэтому стороны меча/щита отражаются. Встроенный imagegen создал подробную нежить с ржавой бронёй/бордовой тканью, по прежнему дизайну и стилю утверждённого героя; исходные четыре листа сохранены в Source. Резервные Skeleton64/skeleton-topdown-64 и профиль не изменены.
+
+World640×512, pivot(320,24), PPU Down880/Up770/Right и Left700; Battle384×384/pivot(176,24)/PPU430. Размер тела в мире около1.04 единицы при прежнемScale2, не размер холста. Import Single/Point/no compression/mipmaps/NPOT None. Реакции/смерть берутся из того же профиля, урон по-прежнему вычисляет Manager.
+
+Мировой EnemySpriteAnimation хранит последнее направление и выбирает ближайший worldDirections по dot product; между физическими кадрами удерживает Walk.08 секунды. World Idle пока один соответствующий кадр, Battle Idle четыре. Animator/Controller для врага не добавлен: существующая data-driven система уже обслуживает эти состояния. Enemy в SampleScene не является экземпляром Prefab; существующие Prefabs проекта не менялись. [Новый отчёт](../CharacterAnimationUpgrade.md). Ниже — история и настройки прежнего резервного набора.
+
 ## Назначение и данные
 
 2026-10-12 — существующий Enemy SampleScene использует Skeleton64: original native PNG64×64, тёмные кости/ржавая броня/бордовая ткань/меч/щит. Старый Assets/skeleton-topdown-64.png и его импорт сохранены. Источник новых рисунков — Assets/Editor/PixelBattleAssetBuilder.cs, напрямую заполняющий RGBA на сетке64; увеличенный AI-референс не является игровым исходником.

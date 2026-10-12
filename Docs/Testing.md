@@ -1,5 +1,9 @@
 # Проверки документации и текущего проекта
 
+## CharacterAnimationUpgrade2026-10-13
+
+Новые95 Edit/52 Play,126 PNG/10 источников и реальные игровые кадры —[CharacterAnimationUpgrade](CharacterAnimationUpgrade.md). В повторном прогоне после сохранения inventory portrait найдено старое ожидание SameAs(battleSprite); проверка обновлена на назначенный portraitSprite/fallback с сохранением границ/HP/MP/gear assertions. Финальные job IDs приведены в отчёте; художественная приёмка не заменяется количеством кадров.
+
 ## Утверждённый герой2026-10-13
 
 Свежие92 Edit/50 Play, технический PNG audit32 кадров и реальные Play-кадры карты/инвентаря/боя —[ApprovedHeroIntegration](ApprovedHeroIntegration.md). Старые результаты ниже исторические. Проверки разных Sprite/воспроизведения не означают художественную приёмку естественного шага.

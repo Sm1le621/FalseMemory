@@ -24,6 +24,7 @@ public sealed class BattlePresentation : MonoBehaviour
     private bool bound;
     private float idleClock;
     private bool playerAttacking,enemyAttacking;
+    private bool holdPlayerPose,holdEnemyPose;
     public int HitEffectsPlayed { get; private set; }
     public bool IsAnimating { get; private set; }
     public float VisualDelta => Time.unscaledDeltaTime *
@@ -49,7 +50,7 @@ public sealed class BattlePresentation : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(bound && !IsAnimating){idleClock+=Time.unscaledDeltaTime;IdleFrame(true);IdleFrame(false);}
+        if(bound){idleClock+=Time.unscaledDeltaTime;if(!holdPlayerPose)IdleFrame(true);if(!holdEnemyPose)IdleFrame(false);}
         if (playerGuard != null) playerGuard.gameObject.SetActive(player != null && player.IsAlive && player.IsDefending);
         if (enemyGuard != null) enemyGuard.gameObject.SetActive(enemy != null && enemy.IsAlive && enemy.IsDefending);
     }
@@ -65,6 +66,12 @@ public sealed class BattlePresentation : MonoBehaviour
         var unit=onPlayer?player:enemy;var portrait=ui!=null?(onPlayer?ui.playerPortrait:ui.enemyPortrait):null;
         if(unit!=null && portrait!=null && unit.visualAnimations!=null)portrait.sprite=unit.visualAnimations.At(pose,progress,unit.battleSprite);
     }
+    private void AttackFrame(bool onPlayer,float progress,bool recovering)
+    {
+        var unit=onPlayer?player:enemy;var portrait=ui!=null?(onPlayer?ui.playerPortrait:ui.enemyPortrait):null;
+        if(unit!=null && portrait!=null && unit.visualAnimations!=null)
+            portrait.sprite=unit.visualAnimations.AttackAt(progress,recovering,unit.battleSprite);
+    }
 
     public IEnumerator Windup(bool onPlayer, BattleAction action, float pace)
     {
@@ -72,6 +79,7 @@ public sealed class BattlePresentation : MonoBehaviour
         var portrait = onPlayer ? ui.playerPortrait : ui.enemyPortrait;
         if (portrait == null) yield break;
         IsAnimating = true;
+        holdPlayerPose=onPlayer;holdEnemyPose=!onPlayer;
         if(onPlayer)playerAttacking=action==BattleAction.Attack;else enemyAttacking=action==BattleAction.Attack;
         float duration = Mathf.Clamp(attackDuration, 0f, 1f) * 0.5f * Pace(pace);
         Vector2 home = onPlayer ? playerHome : enemyHome;
@@ -80,13 +88,13 @@ public sealed class BattlePresentation : MonoBehaviour
         for (float t=0;t<duration;t+=VisualDelta)
         {
             if (portrait == null) yield break;
-            if(action==BattleAction.Attack)PoseFrame(onPlayer,SpritePose.Attack,t/duration);
+            if(action==BattleAction.Attack)AttackFrame(onPlayer,t/duration,false);
             portrait.rectTransform.anchoredPosition = Vector2.Lerp(home,destination,Mathf.SmoothStep(0,1,t/duration));
             if (action == BattleAction.Defend) portrait.rectTransform.localScale = Vector3.Scale(onPlayer ? playerScale : enemyScale, new Vector3(1f,1f-0.08f*Mathf.Sin(t/duration*Mathf.PI),1f));
             if (action == BattleAction.Magic) portrait.color=Color.Lerp(onPlayer?player.spriteColor:enemy.spriteColor,new Color(0.78f,0.7f,1f),Mathf.Sin(t/duration*Mathf.PI)*0.7f);
             yield return null;
         }
-        if(action==BattleAction.Attack)PoseFrame(onPlayer,SpritePose.Attack,1f);
+        if(action==BattleAction.Attack)AttackFrame(onPlayer,1f,false);
         if (portrait != null) portrait.rectTransform.anchoredPosition = destination;
     }
 
@@ -100,13 +108,14 @@ public sealed class BattlePresentation : MonoBehaviour
         Vector2 attackerHome = attackerIsPlayer ? playerHome : enemyHome;
         Vector2 targetHome = attackerIsPlayer ? enemyHome : playerHome;
         Color targetColor = attackerIsPlayer ? enemy.spriteColor : player.spriteColor;
+        holdPlayerPose=attackerIsPlayer || successfulHit;holdEnemyPose=!attackerIsPlayer || successfulHit;
         if(successfulHit) HitEffectsPlayed++;
         float duration = Mathf.Max(Mathf.Clamp(attackDuration,0,1)*0.5f,Mathf.Clamp(hitDuration,0,1)) * Pace(pace);
         for(float t=0;t<duration;t+=VisualDelta)
         {
             if(attacker == null || target == null) yield break;
             float progress=t/duration;
-            if(attackerIsPlayer?playerAttacking:enemyAttacking)PoseFrame(attackerIsPlayer,SpritePose.Attack,1f-progress);
+            if(attackerIsPlayer?playerAttacking:enemyAttacking)AttackFrame(attackerIsPlayer,progress,true);
             attacker.rectTransform.anchoredPosition=Vector2.Lerp(attackerStart,attackerHome,progress);
             if(successfulHit)
             {
@@ -128,6 +137,7 @@ public sealed class BattlePresentation : MonoBehaviour
         var portrait=outcome==BattleState.Victory?ui.enemyPortrait:ui.playerPortrait;
         if(portrait==null)yield break;
         IsAnimating=true;
+        holdPlayerPose=outcome!=BattleState.Victory;holdEnemyPose=outcome==BattleState.Victory;
         Color color=portrait.color;float initialAlpha=color.a;Vector3 scale=portrait.rectTransform.localScale;Vector2 home=portrait.rectTransform.anchoredPosition;
         float duration=Mathf.Clamp(outcomeDuration,0,1)*Pace(pace);
         for(float t=0;t<duration;t+=VisualDelta)
@@ -145,6 +155,7 @@ public sealed class BattlePresentation : MonoBehaviour
     {
         IsAnimating = false;
         playerAttacking=enemyAttacking=false;
+        holdPlayerPose=holdEnemyPose=false;
         IdleFrame(true);IdleFrame(false);
         if(!bound || ui==null) return;
         if(ui.playerPortrait!=null) {ui.playerPortrait.rectTransform.anchoredPosition=playerHome;ui.playerPortrait.rectTransform.localScale=playerScale;ui.playerPortrait.color=player!=null&&player.IsAlive?player.spriteColor:new Color(0.3f,0.3f,0.3f,0.3f);}

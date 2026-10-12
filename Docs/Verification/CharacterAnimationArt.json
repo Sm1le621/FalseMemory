@@ -1,0 +1,72 @@
+{
+  "frames": 126,
+  "groups": 18,
+  "differentFramesInEachGroup": true,
+  "sourceCopiesByteExact": true,
+  "resampled": false,
+  "edgeClipping": false,
+  "feetAligned": true,
+  "sources": [
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Source/HeroBattle.png",
+      "sha256": "36feb7367dd2b8c651abe0bb9c7629878f2d2f5fb3cb7ec59c6ce6b986f476eb"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Source/SkeletonBattle.png",
+      "sha256": "f28b5e21ce8810e87667b068cbb6f80de5b2f02af8b3efe6a73edd2e9d45b814"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Source/HeroWalkDown.png",
+      "sha256": "6fcd87c6fc821e5487449ac343f72da49dc0e77255512f962145de168f569bb1"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Source/HeroWalkRight.png",
+      "sha256": "d0cab7a028c2b6af7a397be43468075a484cf16460ec3d04b3aa7fb08e20e47d"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Source/HeroWalkUp.png",
+      "sha256": "32e7db8bb31e634bedfbde4b6b8132ac020657d9d20e55b94a0707c9bb5894f7"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Source/HeroWalkUpRight.png",
+      "sha256": "bdf4cd4efb4542192603868330e958d41c99e0cf6bef625bfa87bb8ca8b2be4c"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/AnimationV2/Source/HeroWalkDownRight.png",
+      "sha256": "59129a025b499e8fdac84aadc8f7a9d964410b5fd8d81f217f39887b21b1bc04"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Source/SkeletonWalkDown.png",
+      "sha256": "7a83d6c553f10527ba2a9035173e680b4d604836c9f860d7745b1ae6d69d624c"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Source/SkeletonWalkUp.png",
+      "sha256": "7d1d083b828cbed715c50f91342998e015ad727e4292781541fdeb297dccdb84"
+    },
+    {
+      "path": "Assets/Art/Enemies/SkeletonDetailed/Source/SkeletonWalkRight.png",
+      "sha256": "6cf3cdc013f39287146db511c62a09ca29d85522d13c95884155ce268051068f"
+    }
+  ],
+  "sets": {
+    "Hero-Idle": 4,
+    "Hero-Attack": 8,
+    "Skeleton-Idle": 4,
+    "Skeleton-Attack": 8,
+    "Skeleton-Hurt": 2,
+    "Skeleton-Death": 4,
+    "ApprovedHero_Down": 8,
+    "ApprovedHero_Up": 8,
+    "ApprovedHero_Right": 8,
+    "ApprovedHero_Left": 8,
+    "ApprovedHero_UpRight": 8,
+    "ApprovedHero_UpLeft": 8,
+    "ApprovedHero_DownRight": 8,
+    "ApprovedHero_DownLeft": 8,
+    "Skeleton-Move-Down": 8,
+    "Skeleton-Move-Up": 8,
+    "Skeleton-Move-Right": 8,
+    "Skeleton-Move-Left": 8
+  },
+  "method": "Alpha connected-component extraction; fixed canvas, ground pivot; no scaling/interpolation. Alpha <=16 and isolated noise more than8px from body excluded. Original PNG copies unchanged."
+}

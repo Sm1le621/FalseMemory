@@ -1,5 +1,11 @@
 # Анимации боя
 
+## Текущие профили —2026-10-13
+
+HeroDetailed и SkeletonDetailed добавляют каждому4 Battle Idle/8 Attack; скелет также получил совместимые Hurt2/Death4. BattleUnit сохраняет владельца Health/MP/EXP, новые данные отвечают только за Sprite. BattlePresentation проигрывает Idle4FPS для ожидающего участника даже во время Windup другого; блокировки поз не позволяют LateUpdate затирать Attack/Hurt/Death. AttackAt делит0…1 по contact.5: Windup0→.5, единственное применение в прежнем Manager, Recover.5→1 вперёд, затем Idle. Ранее обратная последовательность больше не используется.
+
+Hero attack — универсальный меч, а не автоматическая подмена по экипированному Staff/оружию; оружейные наборы пока отсутствуют. Hero Hurt/Death сохраняют прежнюю flash/fade реакцию с fallback боевого idle, новый отдельный набор не создавался. Skeleton поддерживает Hurt/Death новым рисунком без смены дизайна. Guard/Magic/Items/Flee/Space и порядок ходов сохранены. Source PNG/старые профили остаются резервом. [Проверки/ручная оценка](../CharacterAnimationUpgrade.md). Ниже сохранена история прежнего Skeleton64.
+
 2026-10-12 — Enemy получил общий SpriteAnimationSet Skeleton64: Idle2/Move4/Attack3/Hurt2/Death4, кадры64×64. EnemySpriteAnimation показывает состояние по позиции/Health, не меняя AI/физику. BattlePresentation проигрывает те же кадры на Image: Idle2FPS, Attack до контакта/возврат, Hurt при попадании и Death при исходе. Герой сохраняет прежние движения. Применение урона/MP остаётся в Manager, Animation Events не используются. [Кадры/проверки](../PixelVisuals.md), [EnemyVisuals](EnemyVisuals.md).
 
 BattlePresentation отображает исходные портреты через RectTransform/Image: Attack — выпад и возврат, попадание — вспышка/реакция, крит — усиленная реакция. Defend показывает голубой ромб до следующего собственного хода. MISS не вызывает удара/отдачи. BattleUI поднимает число и плавно скрывает его за feedbackDuration; крит отличается цветом и размером.
