@@ -1,5 +1,7 @@
 # Архитектура FalseMemory
 
+2026-10-12, Player rework1: существующий myproject1idle.ase является общим источником SpriteRenderer/порта инвентаря/боевого портрета. Player.controller пока использует один новый статический Idle-клип во всех трёх прежних состояниях; прежние клипы и Idle1 сохранены. C#/физика/ресурсы не менялись. [Проверки и дальнейшие подэтапы](PlayerRework.md).
+
 Подэтап5.1: CharacterGrowthRules — данные cumulative EXP-кривой и growth. BattleUnit владеет level/currentExperience и вычисляет LevelBonuses поверх базовых полей до EquipmentBonuses; MaxMP включает рост, текущийMP остаётся тем же. Health.SetMaximumHealth получает новый maxHP с сохранением текущегоHP и обновляет прежний HUD. ProgressChanged обслуживает открытый Inventory; BattleUI показывает итог после однократной награды Transition. Нет второго HP/EXP-менеджера. [ProgressionSystem](Systems/ProgressionSystem.md), [проверки](ProgressionStage5.md).
 
 Дополнение2026-10-12 — SpriteAnimationSet является данными пяти поз; EnemySpriteAnimation читает позицию/Health в мире, BattlePresentation читает тот же набор для боевого Image. Время анимаций не владеет уроном/MP. BattleVFXProfile хранит кадры, Controller управляет временным overlay/пулом. PixelBattleAssetBuilder — Editor-only авторинг native64PNG. Сцены/пакеты/остальные механики сохраняются; [EnemyVisuals](Systems/EnemyVisuals.md), [PixelVisuals](PixelVisuals.md).

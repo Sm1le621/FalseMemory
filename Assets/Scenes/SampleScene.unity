@@ -5051,7 +5051,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 2941999975309645056, guid: c36f7b58fc766374da5802aea4164127, type: 3}
+  m_Sprite: {fileID: -4349945617502272482, guid: 8479f750fae074d4983f3b2143c518a3, type: 3}
   m_Color: {r: 0.6862745, g: 0.6862745, b: 0.6862745, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5158,7 +5158,7 @@ MonoBehaviour:
   missChance: 0.05
   currentExperience: 0
   experienceReward: 0
-  battleSprite: {fileID: 2941999975309645056, guid: c36f7b58fc766374da5802aea4164127, type: 3}
+  battleSprite: {fileID: -4349945617502272482, guid: 8479f750fae074d4983f3b2143c518a3, type: 3}
   visualAnimations: {fileID: 0}
   spriteColor: {r: 0.6862745, g: 0.6862745, b: 0.6862745, a: 1}
   flipInBattle: 1
@@ -9197,7 +9197,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2941999975309645056, guid: c36f7b58fc766374da5802aea4164127, type: 3}
+  m_Sprite: {fileID: -4349945617502272482, guid: 8479f750fae074d4983f3b2143c518a3, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

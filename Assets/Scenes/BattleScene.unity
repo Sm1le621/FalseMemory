@@ -3644,7 +3644,7 @@ MonoBehaviour:
   - {fileID: 1100215830}
   - {fileID: 359759330}
   - {fileID: 405423363}
-  previewPlayerSprite: {fileID: 2941999975309645056, guid: c36f7b58fc766374da5802aea4164127, type: 3}
+  previewPlayerSprite: {fileID: -4349945617502272482, guid: 8479f750fae074d4983f3b2143c518a3, type: 3}
   previewEnemySprite: {fileID: 21300000, guid: e8b3f7969ac3a974c889b3b2a7984741, type: 3}
   feedbackGlow: {fileID: 1411990458}
   impactSprite: {fileID: 21300000, guid: 2d072f1d5f028d040a6860be3385daea, type: 3}
@@ -5405,7 +5405,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2941999975309645056, guid: c36f7b58fc766374da5802aea4164127, type: 3}
+  m_Sprite: {fileID: -4349945617502272482, guid: 8479f750fae074d4983f3b2143c518a3, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

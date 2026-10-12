@@ -6,6 +6,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 
 ## Общие документы
 
+- [Переработка Player](PlayerRework.md) — myproject1idle, поэтапные проверки и ограничения новой задачи.
+
 - [Прокачка5.1](ProgressionStage5.md) — EXP/уровни/рост и текущие проверки.
 
 - [Skeleton64 и pixel VFX](PixelVisuals.md) — реальные64px кадры, подключение, проверки и ограничения.

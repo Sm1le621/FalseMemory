@@ -35,6 +35,8 @@ Tested:32 PNG64×64,15 кадров Skeleton/8 Fire/8 Heal/Hit, новый ко�
 
 ## Последующие этапы
 
+Дополнительное задание Player rework: подэтап1 замены на существующий myproject1idle — Tested (81 Edit/42 Play). Подэтап2 — подготовка восьми направлений; затем подэтапы3–4 расширяют5.2 до **десяти** STR/AGI/DEX/END/VIT/INT/WIS/CHA/MAG/MCR по новому заданию вместо прежней модели. Подэтап5 расширяет экипировку без повторной реализации этапа4. Общая задача In Progress; [подробности](PlayerRework.md).
+
 - Этап5 — In Progress. **5.1 Tested:** кривая cumulative EXP/несколько level-up/производный growth/Level Up/Next,81 Edit Mode/42 Play Mode. [ProgressionStage5](ProgressionStage5.md). **5.2 следующий:** primary attributes и централизованные формулы. 5.3 классы,5.4 способности,5.5 Character C и5.6 ручная приёмка — Not Started. Предыдущая ручная граница4 пройдена.
 - Этап6 World AI/навигация, типы врагов, Battle AI/данные/награды — Not Started.
 - Этап7 Общая система взаимодействия E, NPC, диалоги и торговля Gold — Not Started.
