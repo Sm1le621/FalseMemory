@@ -6,6 +6,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 
 ## Общие документы
 
+- [Skeleton64 и pixel VFX](PixelVisuals.md) — реальные64px кадры, подключение, проверки и ограничения.
+
 - [Английская локализация](EnglishLocalization.md) — восстановленная работа, текущие тесты/кадры и ручная приёмка.
 
 - [Переработка инвентаря](InventoryRedesign.md) — персонаж/экипировка/сумка, редкости, hover, результаты и ручная проверка.
@@ -26,6 +28,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [Отчёт этапа 2](BattleStage2.md) — реализация, список файлов, ограничения и подробная инструкция Play Mode.
 
 ## Игровые системы
+
+- [Визуал врагов](Systems/EnemyVisuals.md) — общий набор кадров мира/боя.
 
 - [Локализация](Systems/LocalizationSystem.md) — английские Unity StringTables и GameText.
 - [Экипировка](Systems/EquipmentSystem.md) — восемь слотов/бонусы/безопасный обмен.
@@ -51,6 +55,14 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 Полноценного SaveSystem, партийного боя, классов и level-up пока нет; они не документируются как готовые системы. PlayerPrefs уже сохраняет настройки меню, но не RPG-прогресс.
 
 ## Описания скриптов
+
+После native pixel visual подэтапа —69 собственных C# (48 runtime,18 test,2 Editor,1 Welcome); у каждого отдельное описание. Результаты ниже о предыдущих этапах исторические.
+
+- [SpriteAnimationSet](Scripts/Battle/SpriteAnimationSet.md).
+- [EnemySpriteAnimation](Scripts/Battle/EnemySpriteAnimation.md).
+- [PixelBattleAssetBuilder](Scripts/Editor/PixelBattleAssetBuilder.md).
+- [PixelArtTests](Scripts/Tests/EditMode/PixelArtTests.md).
+- [PixelVisualFlowTests](Scripts/Tests/PlayMode/PixelVisualFlowTests.md).
 
 - [GameText](Scripts/Localization/GameText.md) — ключи, форматирование, fallback.
 - [LocalizedLabel](Scripts/Localization/LocalizedLabel.md) — привязка статической TMP-подписи.

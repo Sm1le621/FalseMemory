@@ -30,6 +30,7 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
     [SerializeField, Min(0)] private int currentExperience;
     [Min(0)] public int experienceReward;
     public Sprite battleSprite;
+    public SpriteAnimationSet visualAnimations;
     public Color spriteColor = Color.white;
     public bool flipInBattle;
 

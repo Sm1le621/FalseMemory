@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-12",
+  "edit": {
+    "job": "135367f12a3d46d6b8f0fe46c2c2de1e",
+    "total": 78,
+    "passed": 78,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 0.1975897,
+    "resultState": "Passed"
+  },
+  "play": {
+    "job": "42db4bf03e504271967e8ae248d5f5f3",
+    "total": 40,
+    "passed": 40,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 30.2745098,
+    "resultState": "Passed"
+  },
+  "layout": {
+    "state": "pixel-battle-1920",
+    "width": 1920,
+    "height": 1080,
+    "graphics": 37,
+    "outside": [],
+    "overflow": [],
+    "russian": [],
+    "missingGlyphs": [],
+    "texts": [
+      {
+        "object": "BattleMessage",
+        "text": "Your turn. Choose an action."
+      },
+      {
+        "object": "PlayerStatus",
+        "text": "Player   LV 1\nHP  100 / 100\nMP  16 / 30"
+      },
+      {
+        "object": "EnemyStatus",
+        "text": "Skeleton   LV 1   |   HP 41 / 60   DEFEND"
+      },
+      {
+        "object": "Round",
+        "text": "ROUND 3"
+      },
+      {
+        "object": "Controls",
+        "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+      },
+      {
+        "object": "SessionResources",
+        "text": "Potion ×3   |   EXP 0"
+      },
+      {
+        "object": "MenuTitle",
+        "text": "COMMANDS"
+      },
+      {
+        "object": "Label",
+        "text": "> Attack"
+      },
+      {
+        "object": "Label",
+        "text": "  Magic"
+      },
+      {
+        "object": "Label",
+        "text": "  Items"
+      },
+      {
+        "object": "Label",
+        "text": "  Defend"
+      },
+      {
+        "object": "Label",
+        "text": "  Flee"
+      }
+    ],
+    "frame": 66590
+  },
+  "fire": "MP22 / EnemyHP41 / frame2",
+  "heal": "MP16 / PlayerHP100 / frame3"
+}

@@ -12,6 +12,8 @@ Awake заполняет MP единожды. Менеджер начинает 
 
 ## 3. Методы и функции
 
+2026-10-12 — native pixel visuals: EnemySpriteAnimation и BattlePresentation используют одни и те же данные кадров; Unit сам их не проигрывает.
+
 2026-10-12 — актуальная локализация: localizationId — ключ unit.player/unit.skeleton, LocalizedName → GameText.Content(localizationId+".name",displayName). Это только имя; уровни/EXP/характеристики/Health не меняются.
 `Equipment` получает EquipmentController того же объекта; private `EquipmentBonuses` читает его State либо нулевые. `EffectiveAttack/EffectiveDefense/EffectiveMagicAttack/EffectiveMagicDefense` → int: неотрицательная база+соответствующий бонус с насыщением int.MaxValue. `Speed` учитывает speed-бонус. Без Equipment прежние значения. Базовые поля/HP/MP не меняются.
 
@@ -23,6 +25,8 @@ Awake заполняет MP единожды. Менеджер начинает 
 - Свойства `Health`/`Inventory` получают компоненты, `Speed`/`MaxMP`/`CurrentMP`/`CurrentExperience` ограничивают читаемые значения, `IsAlive` проверяет HP>0, `IsDefending` хранит защиту.
 
 ## 4. Переменные и параметры Inspector
+
+visualAnimations — новый необязательный SpriteAnimationSet; в Enemy назначен Skeleton64, в Player отсутствует. battleSprite остаётся исходным/fallback Sprite; боевые характеристики/идентификаторы не менялись.
 
 localizationId — новое serialized string-поле: spell.fire/spell.heal у заклинаний, unit.player/unit.skeleton у участников сцены. LocalizedName readonly читает таблицу, displayName остаётся английским fallback. Ни ID, ни боевые параметры это поле не меняет.
 
@@ -47,6 +51,8 @@ Fire → TrySpendMP(8): 30→22. Возврат в мир не запускае�
 Новый экземпляр/перезагрузка карты сбрасывает MP. Прямая запись сериализованных полей может обойти ограничения; Inspector-атрибуты не полная защита. Нет level-up. MP/EXP/защита и сохранение сессии проверены тестами.
 
 ## 9. История изменений
+
+2026-10-12 — кадры Skeleton64/Fire/Heal/Hit подключены к существующему представлению; игровые ресурсы не перенесены в анимации. [Текущие проверки](../../PixelVisuals.md).
 
 2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 - 2026-10-12 — 4.4: readonly итоговые характеристики экипировки, без накопления/лечения. С4.5 менеджер/магия читают эти свойства; цены/формулы сохранены.

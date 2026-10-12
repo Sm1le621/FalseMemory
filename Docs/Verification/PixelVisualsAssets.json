@@ -1,0 +1,386 @@
+[
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Attack-00.png",
+    "width": 64,
+    "height": 64,
+    "colors": 14,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1057,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Attack-01.png",
+    "width": 64,
+    "height": 64,
+    "colors": 14,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1080,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Attack-02.png",
+    "width": 64,
+    "height": 64,
+    "colors": 14,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1017,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Death-00.png",
+    "width": 64,
+    "height": 64,
+    "colors": 13,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1085,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Death-01.png",
+    "width": 64,
+    "height": 64,
+    "colors": 13,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1014,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Death-02.png",
+    "width": 64,
+    "height": 64,
+    "colors": 10,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 598,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Death-03.png",
+    "width": 64,
+    "height": 64,
+    "colors": 10,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 598,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Hurt-00.png",
+    "width": 64,
+    "height": 64,
+    "colors": 14,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1104,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Hurt-01.png",
+    "width": 64,
+    "height": 64,
+    "colors": 14,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1104,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Idle-00.png",
+    "width": 64,
+    "height": 64,
+    "colors": 14,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1111,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Idle-01.png",
+    "width": 64,
+    "height": 64,
+    "colors": 14,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1093,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Move-00.png",
+    "width": 64,
+    "height": 64,
+    "colors": 14,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1125,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Move-01.png",
+    "width": 64,
+    "height": 64,
+    "colors": 14,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1093,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Move-02.png",
+    "width": 64,
+    "height": 64,
+    "colors": 14,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1102,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/Enemies/Skeleton64/Skeleton-Move-03.png",
+    "width": 64,
+    "height": 64,
+    "colors": 14,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 1093,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Fire64/Fire-00.png",
+    "width": 64,
+    "height": 64,
+    "colors": 5,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 498,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Fire64/Fire-01.png",
+    "width": 64,
+    "height": 64,
+    "colors": 5,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 540,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Fire64/Fire-02.png",
+    "width": 64,
+    "height": 64,
+    "colors": 5,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 571,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Fire64/Fire-03.png",
+    "width": 64,
+    "height": 64,
+    "colors": 5,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 591,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Fire64/Fire-04.png",
+    "width": 64,
+    "height": 64,
+    "colors": 5,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 590,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Fire64/Fire-05.png",
+    "width": 64,
+    "height": 64,
+    "colors": 5,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 572,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Fire64/Fire-06.png",
+    "width": 64,
+    "height": 64,
+    "colors": 5,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 363,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Fire64/Fire-07.png",
+    "width": 64,
+    "height": 64,
+    "colors": 5,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 164,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Heal64/Heal-00.png",
+    "width": 64,
+    "height": 64,
+    "colors": 5,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 143,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Heal64/Heal-01.png",
+    "width": 64,
+    "height": 64,
+    "colors": 5,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 149,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Heal64/Heal-02.png",
+    "width": 64,
+    "height": 64,
+    "colors": 6,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 176,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Heal64/Heal-03.png",
+    "width": 64,
+    "height": 64,
+    "colors": 6,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 192,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Heal64/Heal-04.png",
+    "width": 64,
+    "height": 64,
+    "colors": 6,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 195,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Heal64/Heal-05.png",
+    "width": 64,
+    "height": 64,
+    "colors": 6,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 202,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Heal64/Heal-06.png",
+    "width": 64,
+    "height": 64,
+    "colors": 5,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 199,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Heal64/Heal-07.png",
+    "width": 64,
+    "height": 64,
+    "colors": 5,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 144,
+    "opaqueEdgePixels": 0
+  },
+  {
+    "path": "Assets/Art/VFX/Hit64/Impact.png",
+    "width": 64,
+    "height": 64,
+    "colors": 3,
+    "alpha": [
+      0,
+      255
+    ],
+    "opaquePixels": 289,
+    "opaqueEdgePixels": 0
+  }
+]

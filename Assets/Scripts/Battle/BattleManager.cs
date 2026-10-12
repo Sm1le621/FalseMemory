@@ -108,7 +108,7 @@ public sealed class BattleManager : MonoBehaviour
                         if (audioController != null) audioController.Play(BattleSound.Potion);
                         string resource=pendingItem.manaRestoration>0?"MP":"HP";
                         ui.ShowMessage(GameText.Get("battle.item_used", actor.LocalizedName, pendingItem.LocalizedName, amount, resource));
-                        ui.ShowFeedback(itemTarget == Player, "+" + amount + " "+resource, pendingItem.effectColor);
+                        ui.ShowFeedback(itemTarget == Player, "+" + amount + " "+resource, pendingItem.effectColor,false);
                         if (vfx != null) vfx.Play(itemTarget == Player, pendingItem.visualEffect, pendingItem.effectColor, true);
                     }
                 }
@@ -121,7 +121,7 @@ public sealed class BattleManager : MonoBehaviour
                         if (audioController != null) audioController.Play(healing ? BattleSound.Heal : BattleSound.Fire);
                         hit = !healing;
                         ui.ShowMessage(healing ? GameText.Get("battle.spell_heal",actor.LocalizedName,pendingSpell.LocalizedName,amount) : GameText.Get("battle.spell_damage",actor.LocalizedName,pendingSpell.LocalizedName,amount));
-                        ui.ShowFeedback(spellTarget == Player, (healing ? "+" : "−") + amount + (healing ? " HP" : " " + pendingSpell.LocalizedName), pendingSpell.effectColor);
+                        ui.ShowFeedback(spellTarget == Player, (healing ? "+" : "−") + amount + (healing ? " HP" : " " + pendingSpell.LocalizedName), pendingSpell.effectColor,false);
                         if (vfx != null) vfx.Play(spellTarget == Player, pendingSpell.visualEffect, pendingSpell.effectColor, healing);
                     }
                 }

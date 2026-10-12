@@ -21,6 +21,7 @@ public sealed class BattleUI : MonoBehaviour
     public Sprite previewPlayerSprite;
     public Sprite previewEnemySprite;
     public Image feedbackGlow;
+    public Sprite impactSprite;
     public TextMeshProUGUI feedbackText;
     [Min(0.1f)] public float feedbackDuration = 0.8f;
     public Image resultPanel;
@@ -131,7 +132,7 @@ public sealed class BattleUI : MonoBehaviour
         RenderMenu();
     }
 
-    public void ShowFeedback(bool onPlayer, string text, Color color)
+    public void ShowFeedback(bool onPlayer, string text, Color color, bool showImpact=true)
     {
         if (feedbackGlow == null || feedbackText == null) return;
         if (feedbackRoutine != null) StopCoroutine(feedbackRoutine);
@@ -141,18 +142,19 @@ public sealed class BattleUI : MonoBehaviour
         feedbackGlow.rectTransform.pivot = target.pivot;
         feedbackGlow.rectTransform.anchoredPosition = target.anchoredPosition;
         feedbackGlow.rectTransform.sizeDelta = target.rect.size;
+        feedbackGlow.sprite=impactSprite;feedbackGlow.preserveAspect=true;
         feedbackText.rectTransform.anchorMin = feedbackText.rectTransform.anchorMax = target.anchorMin;
         feedbackText.rectTransform.pivot = new Vector2(0.5f, 0f);
         feedbackText.rectTransform.anchoredPosition = target.anchoredPosition + new Vector2(target.rect.width * (0.5f-target.pivot.x), target.rect.height * (0.75f-target.pivot.y));
         feedbackText.rectTransform.sizeDelta = new Vector2(220, 38);
         feedbackText.text = text; feedbackText.color = color;
         feedbackText.fontSize = text.Contains("CRITICAL") ? 22 : 18;
-        feedbackRoutine = StartCoroutine(Feedback(color));
+        feedbackRoutine = StartCoroutine(Feedback(color,showImpact));
     }
 
-    private IEnumerator Feedback(Color color)
+    private IEnumerator Feedback(Color color,bool showImpact)
     {
-        bool impact = feedbackText.text != "MISS";
+        bool impact = showImpact && feedbackText.text != "MISS";
         feedbackGlow.gameObject.SetActive(impact); feedbackText.gameObject.SetActive(true);
         float duration = Mathf.Max(0.1f, feedbackDuration);
         Vector2 origin = feedbackText.rectTransform.anchoredPosition;

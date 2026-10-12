@@ -4533,6 +4533,7 @@ GameObject:
   - component: {fileID: 497416146}
   - component: {fileID: 497416145}
   - component: {fileID: 497416144}
+  - component: {fileID: 497416147}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -4661,7 +4662,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7621585376946980347, guid: e9106ea2e64069241b3b894e662653fc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e8b3f7969ac3a974c889b3b2a7984741, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4780,7 +4781,8 @@ MonoBehaviour:
   missChance: 0.05
   currentExperience: 0
   experienceReward: 20
-  battleSprite: {fileID: 7621585376946980347, guid: e9106ea2e64069241b3b894e662653fc, type: 3}
+  battleSprite: {fileID: 21300000, guid: e8b3f7969ac3a974c889b3b2a7984741, type: 3}
+  visualAnimations: {fileID: 11400000, guid: 9b5604a7fd518bd4cb69e85bbb808acf, type: 2}
   spriteColor: {r: 1, g: 1, b: 1, a: 1}
   flipInBattle: 0
 --- !u!114 &497416146
@@ -4799,6 +4801,22 @@ MonoBehaviour:
   currentHealth: 0
   hpSlider: {fileID: 0}
   hpText: {fileID: 0}
+--- !u!114 &497416147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497416136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf7de4f32cda88449a0f24ad013b759b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::EnemySpriteAnimation
+  movementThreshold: 0.001
+  hurtDuration: 0.16
+  deathDuration: 0.4
+  faceMovement: 1
 --- !u!1 &497420708
 GameObject:
   m_ObjectHideFlags: 0
@@ -5140,6 +5158,7 @@ MonoBehaviour:
   currentExperience: 0
   experienceReward: 0
   battleSprite: {fileID: 2941999975309645056, guid: c36f7b58fc766374da5802aea4164127, type: 3}
+  visualAnimations: {fileID: 0}
   spriteColor: {r: 0.6862745, g: 0.6862745, b: 0.6862745, a: 1}
   flipInBattle: 1
 --- !u!114 &504028422

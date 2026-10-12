@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ff3d5fc06ec304d9546b175ab94f02, type: 3}
+  m_Name: Skeleton64
+  m_EditorClassIdentifier: FalseMemory.Runtime::SpriteAnimationSet
+  idle:
+  - {fileID: 21300000, guid: e8b3f7969ac3a974c889b3b2a7984741, type: 3}
+  - {fileID: 21300000, guid: 79f24546c96fc99488e39a853cc77f97, type: 3}
+  move:
+  - {fileID: 21300000, guid: d497e01ccb117d6499dfe20dec2c8121, type: 3}
+  - {fileID: 21300000, guid: 1c649b3f4be3ec24ea0afd1fe9455ac0, type: 3}
+  - {fileID: 21300000, guid: d9ae823ff2a848a499af069bc6da3be4, type: 3}
+  - {fileID: 21300000, guid: e5d747270072c924eb83957d58bf4b1c, type: 3}
+  attack:
+  - {fileID: 21300000, guid: 0f191dcc49799ca4ea212108d521ac80, type: 3}
+  - {fileID: 21300000, guid: 7a601665b30d1c34390a6a6aa8bb7b6d, type: 3}
+  - {fileID: 21300000, guid: 2d1510b931a533f4e93790f67383ccad, type: 3}
+  hurt:
+  - {fileID: 21300000, guid: d472d88946bbb1c40815fcb9db643ed5, type: 3}
+  - {fileID: 21300000, guid: b553c0fc9a837a14e86ec7911f18cb2f, type: 3}
+  death:
+  - {fileID: 21300000, guid: e59333aa39ca4464e9935dc208c2b304, type: 3}
+  - {fileID: 21300000, guid: 69a6d316ea256604eb146799f77670df, type: 3}
+  - {fileID: 21300000, guid: 4e96144f9417e9a4383b3f9791bc9d10, type: 3}
+  - {fileID: 21300000, guid: 505866a88fabb1b4eb5bb3fcc4581265, type: 3}
+  framesPerSecond: 8
+  idleFramesPerSecond: 2

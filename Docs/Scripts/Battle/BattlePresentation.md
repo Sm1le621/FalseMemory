@@ -10,6 +10,8 @@ Bind запоминает исходные позиции и отражение.
 
 ## 3. Методы и функции
 
+2026-10-12 — native pixel visuals: LateUpdate дополнительно проигрывает Idle живых участников, когда IsAnimating=false. IdleFrame(onPlayer) выбирает циклический Sprite. PoseFrame(onPlayer,pose,progress) выбирает конечный кадр. Windup показывает Attack до контакта; Recover возвращает кадры Attack только для физической атаки и Hurt только для попадания; Finish показывает Death/Move и завершает IsAnimating. ResetPoses возвращает Idle и сбрасывает флаги; игровые события остаются в Manager.
+
 - `Finish(outcome,pace)` → IEnumerator: при Victory исчезает Enemy, Defeat — Player, Escaped — Player смещается наружу и исчезает. Длительность outcomeDuration (0.35, 0..1) и Pace; не удаляет мировой объект и не выдаёт награды.
 
 - `VisualDelta` → float: unscaledDeltaTime, при разрешённом удержании Space умноженный на fastForwardMultiplier (1..6). Не меняет Time.timeScale. `ReadPause(enemyThinking,pace)` → IEnumerator: конечная пауза 0.5/0.75 секунды по VisualDelta и Pace; вызывается Manager между действиями.
@@ -22,6 +24,8 @@ Bind запоминает исходные позиции и отражение.
 - Editor: `BuildGuards()` создаёт/находит два символа через `Guard(portrait,name)` → Image и назначает ссылки; помечает dirty, сцена сохраняется вызывающим MCP.
 
 ## 4. Переменные и Inspector
+
+idleClock и playerAttacking/enemyAttacking — внутреннее визуальное состояние, не Inspector. Профиль берётся из BattleUnit.visualAnimations; существующие длительности/позы сохранены.
 
 messageDuration=0.75, enemyThinkDuration=0.5 (0..2 секунды) и allowFastForward=true/fastForwardMultiplier=3 (1..6) в коде и сцене. При rules.actionDelay=0.8 паузы штатные; ускоренные тесты масштабируют их через Pace. Space ускоряет только Windup/Recover/Finish/ReadPause, не самостоятельные VFX, полосы, всплывающий текст и затемнение сцен.
 ui, playerGuard/enemyGuard — ссылки. attackDuration=0.4, hitDuration=0.18 секунды (0..1); lungeDistance=42, reactionDistance=8 условных UI-пикселей. HitEffectsPlayed/IsAnimating — диагностическое чтение. Внутренние home/scale/player/enemy/bound не являются игровым состоянием.
@@ -43,6 +47,8 @@ Attack → выпад → Manager наносит 10 HP один раз → вс�
 Расчёты не зависят от Animator/events. Все циклы ограничены временем; отсутствие визуала не останавливает ход. При смерти во время Windup Manager повторно проверяет обоих участников и не списывает ресурсы. Для будущих Aseprite-кадров расширять визуальный контроллер, сохранив единственное применение в Manager.
 
 ## 9. История изменений
+
+2026-10-12 — кадры Skeleton64/Fire/Heal/Hit подключены к существующему представлению; игровые ресурсы не перенесены в анимации. [Текущие проверки](../../PixelVisuals.md).
 
 - 2026-10-11 — 3.7: конечные паузы чтения/выбора врага, безопасное ускорение Space без изменения времени игры и применения эффектов.
 

@@ -15,7 +15,17 @@ MonoBehaviour:
   shape: 0
   color: {r: 1, g: 0.42, b: 0.08, a: 1}
   particleSprite: {fileID: 0}
-  duration: 0.45
+  frames:
+  - {fileID: 21300000, guid: 51ce83f122b82c947bcb979aaed29829, type: 3}
+  - {fileID: 21300000, guid: a0b67b9f97218c74a8cd0463e57303bc, type: 3}
+  - {fileID: 21300000, guid: ee0f9e9e6a1dbb14aa670eb1883cceb2, type: 3}
+  - {fileID: 21300000, guid: 7d15278c96c627549bf0204cb75dad30, type: 3}
+  - {fileID: 21300000, guid: 425ad86e5fd67a049bf4960ef669e841, type: 3}
+  - {fileID: 21300000, guid: 225decfe924ca0a40a2f3ce1a465c42e, type: 3}
+  - {fileID: 21300000, guid: 13a4a7a243b3f944895ed27793a774b0, type: 3}
+  - {fileID: 21300000, guid: 3d2c1a979df2fac4e88abe406f259be3, type: 3}
+  frameSize: 128
+  duration: 0.6
   particleCount: 12
   particleSize: 8
   radius: 42

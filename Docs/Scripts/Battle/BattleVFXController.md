@@ -10,6 +10,8 @@ Manager вызывает Play только после успешного TryCast
 
 ## 3. Методы и функции
 
+2026-10-12 — native pixel visuals: Animate создаёт PixelSpellFrame при первом наборе, выбирает индекс по progress, следует центру портрета, показывает кадры вместе с прежними частицами. Clear сбрасывает кадр/частицы; OnDisable останавливает coroutine, OnDestroy уничтожает также overlay. Null-кадр скрывается через enabled=false; ход не ждёт VFX.
+
 - `Play(onPlayer,profile,fallback,healing)` — выбирает цель/профиль, отменяет прежнюю coroutine, Clear и Animate; void, не меняет Health/MP.
 - `Animate(portrait,profile,fallback,healing)` → IEnumerator: безопасные пределы параметров, EnsurePool, положение/размер/цвет частиц по unscaledDeltaTime; в конце Clear.
 - `EnsurePool(parent,count)` — создаёт недостающие Image без raycast, максимум 24.
@@ -17,6 +19,8 @@ Manager вызывает Play только после успешного TryCast
 - `OnDisable()` — останавливает эффект и очищает; `OnDestroy()` — освобождает созданные дочерние объекты и пул.
 
 ## 4. Переменные и Inspector
+
+frameImage — один переиспользуемый Image, не Inspector. CurrentFrame (-1 вне эффекта) и HasAnimatedFrame — диагностика чтения; последний учитывает enabled и ненулевой Sprite.
 
 ui, fireProfile/healProfile — ссылки; particles/effect — внутренний пул/текущая coroutine. EffectsPlayed и ActiveParticles — диагностика чтения; не игровые события.
 
@@ -37,5 +41,7 @@ Fire наносит прежние 19 HP/8 MP; у цели одновремен�
 Отсутствующий профиль использует запасной профиль либо встроенную анимацию; отсутствующий UI/выключенный контроллер безопасно пропускается. Ход не ждёт завершения VFX. Для нового визуального семейства расширять профиль/траекторию, не Abilities.
 
 ## 9. История изменений
+
+2026-10-12 — кадры Skeleton64/Fire/Heal/Hit подключены к существующему представлению; игровые ресурсы не перенесены в анимации. [Текущие проверки](../../PixelVisuals.md).
 
 - 2026-10-11 — 3.3 — Fire, Heal/Potion и безопасное окончание эффектов.
