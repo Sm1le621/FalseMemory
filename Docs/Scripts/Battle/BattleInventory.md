@@ -12,6 +12,8 @@
 
 ## 3. Методы и функции
 
+2026-10-12 — актуальная локализация: Summary читает LocalizedName предмета и шаблон item.quantity. State/начальные seed/расход/совместимость сохранены.
+
 `State` → InventoryState: кандидат из положительных ненулевых seed. `Definitions` → текущие BattleConsumable плюс прежние начальные определения: исчерпанные Potion видимы/недоступны в Items. `Count(ItemData)` → число State; `TryConsume(BattleConsumable)` удаляет1; `TryAdd(ItemData,amount)` → bool; `Summary` → имена/количества расходуемых. Unity callbacks нет.
 
 ## 4. Переменные и Inspector
@@ -19,6 +21,8 @@
 items List<BattleItemStack> — старый начальный набор definition/count≥0, SampleScene Potion3. startingItems List<StartingItem> — начальные любые ItemData/count1. state NonSerialized, после инициализации количества seed не источник текущего запаса.
 
 ## 5. Связи
+
+GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
 Unit.Inventory, Manager/Abilities/HUD читают прежний API; State.Changed обслуживает новый UI.
 
@@ -35,6 +39,8 @@ Unit.Inventory, Manager/Abilities/HUD читают прежний API; State.Cha
 Начальный набор обязан помещаться; legacy negative игнорируется. Сохранений на диск нет. UI/подбор/экипировка следующие подэтапы.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 
 2026-10-12 — 4.1: общий запас30, прежние seed/API и GUID сохранены.
 

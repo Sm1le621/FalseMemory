@@ -36,6 +36,8 @@ public class ItemData : ScriptableObject
     public ItemUseLocation useLocations=ItemUseLocation.Anywhere;
     public EquipmentSlot equipmentSlot=EquipmentSlot.Chest;
     public ItemStatBonus bonuses;
+    public string LocalizedName=>GameText.Content(id+".name",displayName);
+    public string LocalizedDescription=>GameText.Content(id+".description",description);
     public bool IsEquipment => category==ItemCategory.Weapon || category==ItemCategory.Armor || category==ItemCategory.Accessory;
     public int StackLimit => IsEquipment || !stackable ? 1 : Math.Max(1,maxStack);
     public bool CanSell => category!=ItemCategory.QuestItem && sellPrice>0;

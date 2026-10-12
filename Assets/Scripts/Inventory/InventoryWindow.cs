@@ -61,7 +61,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
     }
     private void Update()
     {
-        if(IsOpen && characterLabel!=null)characterLabel.text=unit.displayName+"\nУровень "+unit.level+"  •  EXP "+unit.CurrentExperience;
+        if(IsOpen && characterLabel!=null)characterLabel.text=GameText.Get("character.header", unit.LocalizedName, unit.level, unit.CurrentExperience);
         if(IsOpen)RefreshResources();
         var keyboard=Keyboard.current;if(keyboard==null)return;
         if(keyboard.iKey.wasPressedThisFrame){if(IsOpen)Close();else Open();return;}
@@ -90,11 +90,11 @@ public sealed partial class InventoryWindow : MonoBehaviour
         if(!IsOpen || Inventory==null)return;
         for(int i=0;i<(slots?.Length ?? 0);i++)slots[i].Render(Inventory.State.GetSlot(i),i==SelectedIndex);
         var selected=Inventory.State.GetSlot(SelectedIndex);var item=selected.Item;
-        goldLabel.text="GOLD "+Inventory.State.Gold;
+        goldLabel.text=GameText.Get("inventory.gold", Inventory.State.Gold);
         RefreshResources();
-        details.text=selected.IsEmpty?"Пустая ячейка\nВыберите предмет. Наведите курсор, чтобы узнать подробности.":
-            item.displayName+"  ×"+selected.Count+"\n"+ItemPresentation.TypeName(item)+"  •  "+item.rarity+"\n"+ItemPresentation.BonusText(item);
-        if(bagLabel!=null){int occupied=0;for(int i=0;i<InventoryState.Capacity;i++)if(!Inventory.State.GetSlot(i).IsEmpty)occupied++;bagLabel.text="СУМКА   "+occupied+" / "+InventoryState.Capacity;}
+        details.text=selected.IsEmpty?GameText.Get("inventory.empty"):
+            GameText.Get("inventory.selected",item.LocalizedName,selected.Count,ItemPresentation.TypeName(item),GameText.Get("rarity."+item.rarity.ToString().ToLowerInvariant()),ItemPresentation.BonusText(item));
+        if(bagLabel!=null){int occupied=0;for(int i=0;i<InventoryState.Capacity;i++)if(!Inventory.State.GetSlot(i).IsEmpty)occupied++;bagLabel.text=GameText.Get("inventory.bag", occupied, InventoryState.Capacity);}
         if(characterPortrait!=null){characterPortrait.sprite=unit.battleSprite;characterPortrait.color=unit.spriteColor;characterPortrait.gameObject.SetActive(unit.battleSprite!=null);}
         splitButton.interactable=!selected.IsEmpty && selected.Count>1 && item.stackable && Inventory.State.FirstEmptySlot()>=0;
         useButton.interactable=!selected.IsEmpty && item is BattleConsumable && UseRequested!=null && (CanUseSelection==null || CanUseSelection(SelectedIndex));
@@ -105,10 +105,10 @@ public sealed partial class InventoryWindow : MonoBehaviour
             var slot=(EquipmentSlot)i;var worn=equipment!=null?equipment.State.GetSlot(slot):null;
             var view=equipmentButtons[i].GetComponent<EquipmentSlotView>();
             if(view!=null)view.Render(worn);
-            else equipmentButtons[i].GetComponentInChildren<TextMeshProUGUI>().text=slot+": "+(worn!=null?worn.displayName:"—");
+            else equipmentButtons[i].GetComponentInChildren<TextMeshProUGUI>().text=slot+": "+(worn!=null?worn.LocalizedName:"—");
             equipmentButtons[i].interactable=equipment!=null && (worn!=null || (item!=null && item.Fits(slot) && item.requiredLevel<=unit.level));
         }
-        if(equipmentStats!=null)equipmentStats.text="ATK "+unit.EffectiveAttack+"     DEF "+unit.EffectiveDefense+"\nMATK "+unit.EffectiveMagicAttack+"     MDEF "+unit.EffectiveMagicDefense+"\nSPD "+unit.Speed;
+        if(equipmentStats!=null)equipmentStats.text=GameText.Get("character.attributes", unit.EffectiveAttack, unit.EffectiveDefense, unit.EffectiveMagicAttack, unit.EffectiveMagicDefense, unit.Speed);
         if(tooltip!=null)tooltip.RefreshContent();
     }
     private void RefreshResources()
@@ -117,14 +117,14 @@ public sealed partial class InventoryWindow : MonoBehaviour
         int hp=unit.Health.currentHealth,maxHP=unit.Health.maxHealth,mp=unit.CurrentMP,maxMP=unit.MaxMP;
         if(hp==shownHP && maxHP==shownMaxHP && mp==shownMP && maxMP==shownMaxMP)return;
         shownHP=hp;shownMaxHP=maxHP;shownMP=mp;shownMaxMP=maxMP;
-        resourcesLabel.text="HP "+hp+" / "+maxHP+"    MP "+mp+" / "+maxMP;
+        resourcesLabel.text=GameText.Get("resources.hp_mp", hp, maxHP, mp, maxMP);
     }
     public void SplitSelected()
     {
         if(!IsOpen)return;var source=Inventory.State.GetSlot(SelectedIndex);
         int destination=Inventory.State.FirstEmptySlot();
         bool ok=destination>=0 && Inventory.State.TrySplit(SelectedIndex,destination,source.Count/2);
-        ShowMessage(ok?"Стопка разделена пополам.":"Для деления нужны хотя бы2 предмета и пустой слот.");
+        ShowMessage(ok?GameText.Get("inventory.split_success"):GameText.Get("inventory.split_failed"));
     }
     private void RequestUse(){if(IsOpen)UseRequested?.Invoke(SelectedIndex);}
     private void RequestEquip(){if(IsOpen)EquipRequested?.Invoke(SelectedIndex,null);}
@@ -152,7 +152,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
     {
         if(!IsOpen || dragging<0)return false;
         bool ok=Inventory.State.TryMoveOrMerge(dragging,destination);EndDrag();
-        if(ok)Select(destination);else ShowMessage("Перенос невозможен: проверьте слот и лимит стопки.");return ok;
+        if(ok)Select(destination);else ShowMessage(GameText.Get("inventory.move_failed"));return ok;
     }
     public void EndDrag(){dragging=-1;if(dragIcon!=null)dragIcon.gameObject.SetActive(false);}
 
@@ -183,8 +183,8 @@ public sealed partial class InventoryWindow : MonoBehaviour
             Place(buttons[i].GetComponent<RectTransform>(),xs[i],76,widths[i],30);
             Place(buttons[i].GetComponentInChildren<TextMeshProUGUI>().rectTransform,4,2,widths[i]-8,26);
         }
-        equipButton=Button(panel,"Equip","Экипировать",248,76,100,30);
-        Label(panel,"EquipmentTitle","EQUIPMENT — нажмите слот",12,500,244,424,20);
+        equipButton=Button(panel,"Equip",GameText.Get("inventory.equip"),248,76,100,30);
+        Label(panel,"EquipmentTitle",GameText.Get("inventory.equipment_hint"),12,500,244,424,20);
         equipmentButtons=new Button[7];
         for(int i=0;i<7;i++)equipmentButtons[i]=Button(panel,"Equipment"+(EquipmentSlot)i,(EquipmentSlot)i+": —",500,216-i*23,424,20);
         equipmentStats=Label(panel,"EquipmentStats","",12,500,45,424,28);
@@ -198,7 +198,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
         var scaler=obj.GetComponent<CanvasScaler>();scaler.uiScaleMode=CanvasScaler.ScaleMode.ScaleWithScreenSize;scaler.referenceResolution=new Vector2(960,540);scaler.matchWidthOrHeight=1f;
         panel=Panel(obj.transform,"InventoryPanel",new Color32(22,20,31,250));
         panel.anchorMin=panel.anchorMax=new Vector2(0.5f,0.5f);panel.pivot=new Vector2(0.5f,0.5f);panel.sizeDelta=new Vector2(960,540);
-        Label(panel,"Title","INVENTORY  /  I",24,36,490,600,30);
+        Label(panel,"Title",GameText.Get("inventory.title"),24,36,490,600,30);
         goldLabel=Label(panel,"Gold","GOLD 0",18,740,490,184,30);goldLabel.alignment=TextAlignmentOptions.MidlineRight;
         slots=new InventorySlotView[30];
         for(int i=0;i<30;i++)
@@ -208,12 +208,12 @@ public sealed partial class InventoryWindow : MonoBehaviour
             view.icon=Panel(rect,"Icon",Color.white).GetComponent<Image>();Place(view.icon.rectTransform,12,16,40,40);view.icon.raycastTarget=false;view.icon.preserveAspect=true;
             view.quantity=Label(rect,"Quantity","",12,4,2,56,16);view.quantity.alignment=TextAlignmentOptions.MidlineRight;slots[i]=view;
         }
-        details=Label(panel,"Details","Выберите предмет.",18,500,268,424,210);
-        useButton=Button(panel,"Use","Использовать",36,76,130,30);
-        splitButton=Button(panel,"Split","Разделить ½",182,76,130,30);
-        closeButton=Button(panel,"Close","Закрыть",328,76,132,30);
+        details=Label(panel,"Details",GameText.Get("inventory.select"),18,500,268,424,210);
+        useButton=Button(panel,"Use",GameText.Get("inventory.use"),36,76,130,30);
+        splitButton=Button(panel,"Split",GameText.Get("inventory.split"),182,76,130,30);
+        closeButton=Button(panel,"Close",GameText.Get("menu.close"),328,76,132,30);
         message=Label(panel,"Message","",14,36,40,888,28);
-        Label(panel,"Controls","I / Esc — закрыть • Стрелки — выбор • Мышь — перенос / обмен / слияние",12,36,12,888,20);
+        Label(panel,"Controls",GameText.Get("inventory.controls"),12,36,12,888,20);
         dragIcon=Panel(obj.transform,"DragIcon",new Color(1,1,1,0.85f)).GetComponent<Image>();
         var ghost=dragIcon.rectTransform;ghost.anchorMin=ghost.anchorMax=ghost.pivot=new Vector2(0.5f,0.5f);ghost.sizeDelta=new Vector2(48,48);dragIcon.raycastTarget=false;dragIcon.preserveAspect=true;dragIcon.gameObject.SetActive(false);
         panel.gameObject.SetActive(false);UnityEditor.EditorUtility.SetDirty(this);

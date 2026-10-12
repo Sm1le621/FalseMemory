@@ -25,20 +25,20 @@ public static class ItemPresentation
     {
         switch(slot)
         {
-            case EquipmentSlot.Weapon:return "Оружие";case EquipmentSlot.Head:return "Голова";
-            case EquipmentSlot.Chest:return "Нагрудник";case EquipmentSlot.Legs:return "Поножи";
-            case EquipmentSlot.Boots:return "Обувь";case EquipmentSlot.Gloves:return "Перчатки";
-            case EquipmentSlot.Accessory1:return "Аксессуар I";case EquipmentSlot.Accessory2:return "Аксессуар II";
-            default:return "Экипировка";
+            case EquipmentSlot.Weapon:return GameText.Get("equipment.slot.weapon");case EquipmentSlot.Head:return GameText.Get("equipment.slot.head");
+            case EquipmentSlot.Chest:return GameText.Get("equipment.slot.chest");case EquipmentSlot.Legs:return GameText.Get("equipment.slot.legs");
+            case EquipmentSlot.Boots:return GameText.Get("equipment.slot.boots");case EquipmentSlot.Gloves:return GameText.Get("equipment.slot.gloves");
+            case EquipmentSlot.Accessory1:return GameText.Get("equipment.slot.accessory1");case EquipmentSlot.Accessory2:return GameText.Get("equipment.slot.accessory2");
+            default:return GameText.Get("equipment.slot.default");
         }
     }
     public static string TypeName(ItemData item)
     {
         switch(item.category)
         {
-            case ItemCategory.Weapon:return "Оружие";case ItemCategory.Armor:return SlotName(item.equipmentSlot);
-            case ItemCategory.Accessory:return "Аксессуар";case ItemCategory.Material:return "Материал";
-            case ItemCategory.QuestItem:return "Квестовый предмет";default:return "Расходник";
+            case ItemCategory.Weapon:return GameText.Get("equipment.slot.weapon");case ItemCategory.Armor:return SlotName(item.equipmentSlot);
+            case ItemCategory.Accessory:return GameText.Get("item.type.accessory");case ItemCategory.Material:return GameText.Get("item.type.material");
+            case ItemCategory.QuestItem:return GameText.Get("item.type.quest");default:return GameText.Get("item.type.consumable");
         }
     }
     public static string BonusText(ItemData item)
@@ -46,21 +46,21 @@ public static class ItemPresentation
         var parts=new List<string>();var b=item.bonuses;
         Add(parts,"ATK",b.attack);Add(parts,"DEF",b.defense);Add(parts,"MATK",b.magicAttack);Add(parts,"MDEF",b.magicDefense);Add(parts,"SPD",b.speed);
         var consumable=item as BattleConsumable;
-        if(consumable!=null){if(consumable.healing>0)parts.Add("Восстанавливает до "+consumable.healing+" HP");if(consumable.manaRestoration>0)parts.Add("Восстанавливает до "+consumable.manaRestoration+" MP");}
+        if(consumable!=null){if(consumable.healing>0)parts.Add(GameText.Get("item.restore_hp", consumable.healing));if(consumable.manaRestoration>0)parts.Add(GameText.Get("item.restore_mp", consumable.manaRestoration));}
         return string.Join("  •  ",parts);
     }
-    private static void Add(List<string> parts,string name,int value){if(value>0)parts.Add(name+" +"+value);}
+    private static void Add(List<string> parts,string name,int value){if(value>0)parts.Add(GameText.Get("item.bonus",GameText.Get("stat."+name.ToLowerInvariant()),value));}
     public static string Description(ItemData item,int count)
     {
         if(item==null)return "";
         // Assets are content, not TMP markup. Do not allow names/descriptions to alter layout.
-        var lines=new List<string>{"<b>"+Escape(item.displayName)+"</b>"+(count>1?"  ×"+count:""),
-            "<color=#"+ColorUtility.ToHtmlStringRGB(RarityColor(item.rarity))+">"+item.rarity+"</color>  •  "+TypeName(item)};
+        var lines=new List<string>{"<b>"+Escape(item.LocalizedName)+"</b>"+(count>1?"  ×"+count:""),
+            "<color=#"+ColorUtility.ToHtmlStringRGB(RarityColor(item.rarity))+">"+GameText.Get("rarity."+item.rarity.ToString().ToLowerInvariant())+"</color>  •  "+TypeName(item)};
         string bonuses=BonusText(item);if(bonuses.Length>0)lines.Add(bonuses);
-        if(!string.IsNullOrWhiteSpace(item.description))lines.Add("\n"+Escape(item.description));
-        lines.Add("\nУровень: "+Mathf.Max(1,item.requiredLevel));
-        if(item.buyPrice>0)lines.Add("Покупка: "+item.buyPrice+" зол.");
-        if(item.CanSell)lines.Add("Продажа: "+item.sellPrice+" зол.");
+        if(!string.IsNullOrWhiteSpace(item.LocalizedDescription))lines.Add("\n"+Escape(item.LocalizedDescription));
+        lines.Add("\n"+GameText.Get("item.level", Mathf.Max(1,item.requiredLevel)));
+        if(item.buyPrice>0)lines.Add(GameText.Get("item.buy_price", item.buyPrice));
+        if(item.CanSell)lines.Add(GameText.Get("item.sell_price", item.sellPrice));
         return string.Join("\n",lines);
     }
     private static string Escape(string text)=>string.IsNullOrEmpty(text)?"":text.Replace("<","‹").Replace(">","›");

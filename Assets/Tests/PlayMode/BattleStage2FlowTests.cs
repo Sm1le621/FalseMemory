@@ -156,7 +156,7 @@ public sealed partial class BattleFlowTests
                 InputSystem.QueueStateEvent(keyboard, new KeyboardState()); yield return null; yield return null;
             }
             Assert.That(manager.ui.SelectedIndex, Is.EqualTo(6));
-            Assert.That(manager.ui.commandLabels[4].text, Does.Contain("Назад"));
+            Assert.That(manager.ui.commandLabels[4].text, Does.Contain("Back"));
             manager.ui.commandButtons[4].onClick.Invoke();
             Assert.That(manager.ui.MenuCount, Is.EqualTo(5)); Assert.That(manager.Round, Is.EqualTo(1));
             Assert.That(player.CurrentMP, Is.EqualTo(30)); Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(3));
@@ -225,7 +225,7 @@ public sealed partial class BattleFlowTests
         yield return BeginBattle(player, Enemy()); var manager = Manager(); int round = manager.Round;
         Assert.That(manager.OpenItemsMenu(), Is.True);
         yield return null; yield return null; yield return null;
-        Assert.That(manager.ui.messageText.text, Does.Contain("Предметов нет"));
+        Assert.That(manager.ui.messageText.text, Does.Contain("No items available"));
         Assert.That(manager.ui.commandButtons[0].interactable, Is.False);
         Assert.That(manager.TryPlayerItem(potion), Is.False);
         Assert.That(manager.ui.CancelMenu(), Is.True);

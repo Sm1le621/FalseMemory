@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: FalseMemory.Runtime::ItemData
   id: item.iron_helmet
   displayName: Iron Helmet
-  description: "\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u0448\u043B\u0435\u043C. Defense +2."
+  description: An iron helmet that shields its wearer from harm.
   icon: {fileID: 21300000, guid: 3c7bcef2ec768c44a80f45e15490b025, type: 3}
   category: 2
   rarity: 0

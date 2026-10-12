@@ -12,6 +12,8 @@ Awake получает Unit/Inventory/Window. OnEnable подключает ко
 
 ## 3. Методы и функции
 
+2026-10-12 — актуальная локализация: HandleEquip/HandleUnequip показывают equipment.equipped/equip_failed/unequipped/unequip_failed; транзакции/слоты/уровень не меняются.
+
 Unity `Awake` ссылки; `OnEnable` подписывает EquipRequested/UnequipRequested/State.Changed, `OnDisable` снимает те же подписки. `CanChange` bool проверки. `TryEquip(index,target=null)` bool определяет Weapon/Armor-слот либо первый свободный Accessory1/2 (иначе1) и делегирует State.TryEquip с level. `TryUnequip(slot)` bool делегирует при CanChange. `HandleEquip`/`HandleUnequip` void — ответы окну/Refresh после результата.
 
 ## 4. Переменные и Inspector
@@ -19,6 +21,8 @@ Unity `Awake` ссылки; `OnEnable` подписывает EquipRequested/Une
 State readonly создан один раз, private unit/inventory/window. Inspector дополнительных настроек нет, данные в ItemData. Target enumnullable позволяет явно выбрать слот.
 
 ## 5. Связи
+
+GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
 BattleUnit читает новые EffectiveAttack/Defense/MagicAttack/MagicDefense/Speed из State, базовые поля не меняются; формула боя будет подключена4.5. InventoryWindow даёт команды/семь кнопок.
 
@@ -35,5 +39,7 @@ BattleUnit читает новые EffectiveAttack/Defense/MagicAttack/MagicDefe
 В бою/при скрытом Player/смерти смена экипировки запрещена. Нет классов/HPMP-бонусов, только пять поддержанных характеристик. Новая игра создаёт пустой State, hide/show его сохраняет.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 
 2026-10-12 — 4.4: интеграция компонентов/ограничение фазы/команды окна.

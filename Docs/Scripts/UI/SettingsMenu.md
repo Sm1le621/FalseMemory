@@ -12,19 +12,23 @@ Bind соединяет UI и применяет настройки. Show отк
 
 ## 3. Методы и функции
 
+2026-10-12 — актуальная локализация: RefreshFullscreenLabel читает settings.fullscreen_on/off. OnEnable подписывает этот метод на GameText.LanguageChanged и обновляет текст; OnDisable отписывает. Настройки громкости/fullscreen и ключи PlayerPrefs сохранены.
+
 - `Bind(GameObject panelRoot,Slider slider,TextMeshProUGUI fullscreenValueLabel)` — записывает ссылки, Hide, LoadAndApply; void.
 - `Show()` — root включён, LoadAndApply; `Hide()` — root выключен.
 - `OnVolumeChanged(float value)` — Clamp01 → AudioListener.volume → SetFloat/Save.
 - `ToggleFullscreen()` — меняет bool, ApplyFullscreen, SetInt/Save, RefreshFullscreenLabel.
 - `LoadAndApply()` — читает PlayerPrefs, SetValueWithoutNotify, применяет fullscreen/подпись.
 - `ApplyFullscreen()` — Screen.fullScreen=fullscreen.
-- `RefreshFullscreenLabel()` — пишет FULLSCREEN ON/OFF. Методы без перечисленных параметров — void и без аргументов.
+- `RefreshFullscreenLabel()` — пишет Fullscreen: On/Off из GameText. Методы без перечисленных параметров — void и без аргументов.
 
 ## 4. Переменные и параметры Inspector
 
 root/volumeSlider/fullscreenLabel — сериализованные ссылки из Bind. fullscreen — внутренний bool. VolumePrefKey=FalseMemory.Volume, 0…1; FullscreenPrefKey=FalseMemory.Fullscreen, 0/1.
 
 ## 5. Связи с другими системами
+
+GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
 MainMenuController вызывает Show, Bootstrap создаёт элементы, PixelUi оформляет. Screen/AudioListener/PlayerPrefs независимы от BattleUnit.
 
@@ -38,9 +42,11 @@ Volume=0.5 → громкость 50% → сохранена при следую
 
 ## 8. Возможные проблемы и проверки
 
-Bind применяет настройки при закрытой панели. Fullscreen в Editor отличается от сборки. Код прочитан; звук, fullscreen и PlayerPrefs в этой задаче не проверялись поведением.
+Bind применяет настройки при закрытой панели. Fullscreen в Editor отличается от сборки. В задаче локализации проверены английские подписи, открытие/закрытие Settings и границы UI; смена громкости, fullscreen и сохранение PlayerPrefs заново не проверялись поведением.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 

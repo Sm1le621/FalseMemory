@@ -12,6 +12,8 @@
 
 ## 3. Методы и функции
 
+2026-10-12 — актуальная локализация: Update/Refresh/RefreshResources формируют подписи имени/уровня/EXP/HPMP/сумки/Gold/выбора/характеристик через GameText.Get с аргументами. SplitSelected/DropOn/первоначальные editor builders читают централизованные ключи. State и события не меняются.
+
 `RefreshResources()` читает HP/maxHP/MP/maxMP и меняет строку только при изменении четырёх чисел. Update вызывает его в открытом окне и показывает имя/уровень/EXP. Refresh дополнительно обновляет занятость сумки, портрет и EquipmentSlotView, затем текущую подсказку. Close/BeginDrag скрывают tooltip. details показывает краткие сведения выбранного предмета; полное описание находится в hover.
 
 `BuildFantasyLayout()` — повторяемая редакторная перестройка существующих объектов без удаления, реализована в [InventoryWindow.Layout](InventoryWindow.Layout.md). Старые первоначальные Build* сохранены; в уже оформленной сцене их повторять не нужно.
@@ -37,6 +39,8 @@ panel, slots[30], details/goldLabel/message, split/use/close Button, dragIcon о
 
 ## 5. Связи
 
+GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
+
 BattleInventory.State, BattleUnit, WorldInputGate, InventorySlotView, существующий EventSystem. Canvas Scale With Screen Size1200×780/Expand, PixelPerfect, sorting60.
 
 ## 6. Пример
@@ -52,6 +56,8 @@ Potion3 → Разделить½ →2/1; drag в пустой/на другой/
 Не работает в BattleScene: мир скрыт, Open отвергает активную встречу. Не паузит время/врагов. Callback-подписчик обязан проверять реальные условия использования. Курсор/ощущения окончательно проверить владельцу.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 
 2026-10-12 — RPG-панель персонажа, восемь слотов, сумка и hover; живое чтение HP/MP, прежние события/модель сохранены.
 2026-10-12 — 4.6: HPMP шапка/фон открытого окна, сохранённые ссылки/доступность.

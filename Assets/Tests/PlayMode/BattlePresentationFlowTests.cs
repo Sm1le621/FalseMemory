@@ -75,7 +75,7 @@ public sealed partial class BattleFlowTests
         var manager=Manager();Assert.That(manager.ui.hud.screenGroup.alpha,Is.EqualTo(1f));
         player.Health.TakeDamage(100);yield return WaitUntil(()=>manager.State==BattleState.Defeat);
         Assert.That(manager.ui.resultPanel.gameObject.activeSelf,Is.True);
-        Assert.That(manager.ui.resultText.text,Does.Contain("Game Over"));
+        Assert.That(manager.ui.resultText.text,Does.Contain("DEFEAT"));
         Assert.That(manager.ui.playerPortrait.color.a,Is.Zero);
         Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.False);
     }

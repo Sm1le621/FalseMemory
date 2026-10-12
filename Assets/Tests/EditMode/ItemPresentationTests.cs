@@ -24,10 +24,10 @@ public sealed class ItemPresentationTests
         {
             item.displayName="<size=200>Potion</size>";item.description="";item.healing=30;
             var text=ItemPresentation.Description(item,3);
-            Assert.That(text,Does.Contain("×3").And.Contain("до 30 HP"));
-            Assert.That(text,Does.Not.Contain("<size=").And.Not.Contain("Покупка:").And.Not.Contain("Продажа:").And.Not.Contain("MATK"));
+            Assert.That(text,Does.Contain("×3").And.Contain("Restores up to 30 HP"));
+            Assert.That(text,Does.Not.Contain("<size=").And.Not.Contain("Buy:").And.Not.Contain("Sell:").And.Not.Contain("MATK"));
             item.healing=0;item.manaRestoration=20;item.buyPrice=50;item.sellPrice=25;
-            Assert.That(ItemPresentation.Description(item,1),Does.Contain("до 20 MP").And.Contain("Покупка: 50").And.Contain("Продажа: 25").And.Not.Contain(" HP"));
+            Assert.That(ItemPresentation.Description(item,1),Does.Contain("Restores up to 20 MP").And.Contain("Buy: 50").And.Contain("Sell: 25").And.Not.Contain(" HP"));
         }
         finally {Object.DestroyImmediate(item);}
     }

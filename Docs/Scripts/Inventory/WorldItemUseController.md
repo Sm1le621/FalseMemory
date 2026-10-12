@@ -12,6 +12,8 @@ Awake получает Unit/Window; OnEnable связывает UseRequested и 
 
 ## 3. Методы и функции
 
+2026-10-12 — актуальная локализация: TryUse показывает inventory.item_used с именем/amount/HP либоMP, отказ inventory.unavailable. Общая Abilities и защита кадра сохранены.
+
 Unity `Awake` ссылки, `OnEnable` подписывает HandleUse/назначает CanUse, `OnDisable` снимает собственные подписку/predicate. `CanUse(index)` bool требует активного компонента/открытого окна/индекс0..29/отсутствия встречи; получает BattleConsumable и вызывает CanUseItem с Exploration. `TryUse(index)` bool проверяет lastUseFrame/CanUse, ставит кадр до TryUseItem, показывает фактический HP или MP/Refresh. `HandleUse(index)` void делегирует. Игра не ждёт coroutine.
 
 ## 4. Переменные и Inspector
@@ -19,6 +21,8 @@ Unity `Awake` ссылки, `OnEnable` подписывает HandleUse/назн
 unit/window private ссылки; lastUseFrame=-1 transient. Нет отдельного количества/HP/MP/Inspector-параметров. Predicate не содержит lastUseFrame, чтобы кнопка не оставалась disabled после операции.
 
 ## 5. Связи
+
+GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
 InventoryWindow.UseRequested/CanUseSelection, BattleAbilities и прежние Health/BattleUnit.Inventory. После скрытия мира отписывается, после возврата подписывается без сброса ресурсов.
 
@@ -35,5 +39,7 @@ HP50/MP5 → Potion (+30HP)80, Ether (+20MP)25. Каждый уменьшает 
 Как раньше Potion, положительный расходуемый можно потратить при полном ресурсе: фактический amount0. HPMP-гибриды/нулевые эффекты не поддержаны. Самые быстрые отдельные нажатия разных кадров — отдельные действия, не копии. Нет лечения погибшего.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 
 2026-10-12 — 4.5: общая логика мира/боя и защита callback кадра.

@@ -30,8 +30,8 @@ public sealed class BattleManager : MonoBehaviour
         transition = BattleTransition.Instance;
         if (transition == null || !transition.EncounterActive)
         {
-            ui.ShowMessage("Для боя запустите SampleScene и коснитесь скелета.");
-            ui.ShowMenu(new[] { "Исследовать", "Главное меню" }, new System.Action[] {
+            ui.ShowMessage(GameText.Get("battle.preview"));
+            ui.ShowMenu(new[] { GameText.Get("menu.explore"), GameText.Get("menu.main") }, new System.Action[] {
                 () => UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene"),
                 () => UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu") });
             yield break;
@@ -40,7 +40,7 @@ public sealed class BattleManager : MonoBehaviour
         ui.ShowUnits(Player, Enemy);
         if (presentation != null) presentation.Bind(Player, Enemy);
         if (ui.hud != null) ui.hud.HideForEntrance();
-        ui.ShowMessage("Скелет преграждает путь.");
+        ui.ShowMessage(GameText.Get("battle.encounter"));
         ui.SetCommandsEnabled(false);
         while (transition.IsTransitioning) yield return null;
         if (ui.hud != null) yield return ui.hud.RevealScreen(rules.actionDelay);
@@ -61,7 +61,7 @@ public sealed class BattleManager : MonoBehaviour
                     pendingAction = null;
                     pendingSpell = null;
                     pendingItem = null;
-                    ui.ShowMessage("Ваш ход. Выберите действие.");
+                    ui.ShowMessage(GameText.Get("battle.your_turn"));
                     gate.Open();
                     ShowMainMenu();
                     while (!pendingAction.HasValue && Player.IsAlive && Enemy.IsAlive) yield return null;
@@ -69,7 +69,7 @@ public sealed class BattleManager : MonoBehaviour
                 else
                 {
                     State = BattleState.Resolving;
-                    ui.ShowMessage(Enemy.displayName + " выбирает действие...");
+                    ui.ShowMessage(GameText.Get("battle.thinking", Enemy.LocalizedName));
                     yield return Pause(true);
                     if (!Player.IsAlive || !Enemy.IsAlive) break;
                     pendingAction = EnemyBattleAI.Choose(rules, random);
@@ -91,14 +91,14 @@ public sealed class BattleManager : MonoBehaviour
                     if (audioController != null) audioController.Play(BattleSound.Flee);
                     bool escaped = BattleCalculator.ChanceSucceeds(BattleCalculator.FleeChance(Player.Speed, Enemy.Speed, rules), random.Next01());
                     if (escaped) { State = BattleState.Escaped; CurrentActor = null; }
-                    ui.ShowMessage(escaped ? "Escaped! Возвращение на карту." : "Couldn't escape! Побег не удался.");
+                    ui.ShowMessage(escaped ? GameText.Get("battle.escaped") : GameText.Get("battle.escape_failed"));
                 }
                 else if (pendingAction == BattleAction.Defend)
                 {
                     actor.Defend();
                     if (audioController != null) audioController.Play(BattleSound.Defend);
                     int reduction = Mathf.RoundToInt((1f - Mathf.Clamp01(rules.defendMultiplier)) * 100f);
-                    ui.ShowMessage(actor.displayName + " защищается. Физический урон снижен на " + reduction + "%.");
+                    ui.ShowMessage(GameText.Get("battle.defend", actor.LocalizedName, reduction));
                 }
                 else if (pendingAction == BattleAction.Items)
                 {
@@ -107,7 +107,7 @@ public sealed class BattleManager : MonoBehaviour
                     {
                         if (audioController != null) audioController.Play(BattleSound.Potion);
                         string resource=pendingItem.manaRestoration>0?"MP":"HP";
-                        ui.ShowMessage(actor.displayName + " использует " + pendingItem.displayName + ": +" + amount + " "+resource+".");
+                        ui.ShowMessage(GameText.Get("battle.item_used", actor.LocalizedName, pendingItem.LocalizedName, amount, resource));
                         ui.ShowFeedback(itemTarget == Player, "+" + amount + " "+resource, pendingItem.effectColor);
                         if (vfx != null) vfx.Play(itemTarget == Player, pendingItem.visualEffect, pendingItem.effectColor, true);
                     }
@@ -120,9 +120,8 @@ public sealed class BattleManager : MonoBehaviour
                         bool healing = pendingSpell.effect == BattleEffect.RestoreHealth;
                         if (audioController != null) audioController.Play(healing ? BattleSound.Heal : BattleSound.Fire);
                         hit = !healing;
-                        ui.ShowMessage(actor.displayName + " использует " + pendingSpell.displayName + ": " +
-                            (healing ? "+" + amount + " HP." : amount + " магического урона."));
-                        ui.ShowFeedback(spellTarget == Player, (healing ? "+" : "−") + amount + (healing ? " HP" : " " + pendingSpell.displayName), pendingSpell.effectColor);
+                        ui.ShowMessage(healing ? GameText.Get("battle.spell_heal",actor.LocalizedName,pendingSpell.LocalizedName,amount) : GameText.Get("battle.spell_damage",actor.LocalizedName,pendingSpell.LocalizedName,amount));
+                        ui.ShowFeedback(spellTarget == Player, (healing ? "+" : "−") + amount + (healing ? " HP" : " " + pendingSpell.LocalizedName), pendingSpell.effectColor);
                         if (vfx != null) vfx.Play(spellTarget == Player, pendingSpell.visualEffect, pendingSpell.effectColor, healing);
                     }
                 }
@@ -133,16 +132,16 @@ public sealed class BattleManager : MonoBehaviour
                     if (result.Missed)
                     {
                         if (audioController != null) audioController.Play(BattleSound.Miss);
-                        ui.ShowMessage(actor.displayName + " атакует: MISS.");
-                        ui.ShowFeedback(target == Player, "MISS", Color.white);
+                        ui.ShowMessage(GameText.Get("battle.missed", actor.LocalizedName));
+                        ui.ShowFeedback(target == Player, GameText.Get("battle.miss"), Color.white);
                     }
                     else
                     {
                         target.Health.TakeDamage(result.Damage);
                         hit = true; criticalHit = result.Critical;
                         if (audioController != null) audioController.Play(result.Critical ? BattleSound.Critical : BattleSound.Hit);
-                        ui.ShowMessage((result.Critical ? "CRITICAL! " : "") + actor.displayName + " атакует " + target.displayName + ": " + result.Damage + " урона.");
-                        ui.ShowFeedback(target == Player, (result.Critical ? "CRITICAL!\n" : "") + "−" + result.Damage,
+                        ui.ShowMessage((result.Critical ? GameText.Get("battle.critical")+" " : "") + GameText.Get("battle.attack", actor.LocalizedName, target.LocalizedName, result.Damage));
+                        ui.ShowFeedback(target == Player, (result.Critical ? GameText.Get("battle.critical")+"\n" : "") + "−" + result.Damage,
                             result.Critical ? new Color(1f, 0.82f, 0.2f) : new Color(1f, 0.4f, 0.4f));
                     }
                 }
@@ -169,8 +168,8 @@ public sealed class BattleManager : MonoBehaviour
             transition.TryGrantVictoryExperience(out int gained);
             ui.RefreshStats(Player, Enemy, Round);
             ui.ShowVictoryResults(gained, Player);
-            ui.ShowMessage("Victory — скелет побеждён! Ресурсы сохранены.");
-            ui.ShowMenu(new[] { "Вернуться на карту" }, new System.Action[] {
+            ui.ShowMessage(GameText.Get("battle.victory_message"));
+            ui.ShowMenu(new[] { GameText.Get("menu.return_map") }, new System.Action[] {
                 () => { if (transition.ReturnAfterVictory()) ui.SetCommandsEnabled(false); } });
         }
         else
@@ -179,9 +178,9 @@ public sealed class BattleManager : MonoBehaviour
             State = BattleState.Defeat;
             if (audioController != null) audioController.Play(BattleSound.Defeat);
             ui.RefreshStats(Player, Enemy, Round);
-            ui.ShowMessage("Game Over — герой пал.");
+            ui.ShowMessage(GameText.Get("battle.defeat_message"));
             ui.ShowDefeatResults();
-            ui.ShowMenu(new[] { "Начать заново", "Главное меню" }, new System.Action[] {
+            ui.ShowMenu(new[] { GameText.Get("menu.new_game"), GameText.Get("menu.main") }, new System.Action[] {
                 () => { ui.SetCommandsEnabled(false); transition.RestartGame(); },
                 () => { ui.SetCommandsEnabled(false); transition.ReturnToMainMenu(); } });
         }
@@ -210,8 +209,8 @@ public sealed class BattleManager : MonoBehaviour
     public bool ShowMainMenu()
     {
         if (!CanChoose) return false;
-        ui.ShowMessage("Ваш ход. Выберите действие.");
-        ui.ShowMenu(new[] {"Attack", "Magic", "Items", "Defend", "Flee"}, new Action[] {
+        ui.ShowMessage(GameText.Get("battle.your_turn"));
+        ui.ShowMenu(new[] {GameText.Get("command.attack"), GameText.Get("command.magic"), GameText.Get("command.items"), GameText.Get("command.defend"), GameText.Get("command.flee")}, new Action[] {
             () => TryPlayerAction(BattleAction.Attack), () => OpenMagicMenu(), () => OpenItemsMenu(),
             () => TryPlayerAction(BattleAction.Defend), () => TryPlayerAction(BattleAction.Flee) });
         return true;
@@ -225,13 +224,13 @@ public sealed class BattleManager : MonoBehaviour
         {
             if (spell == null) continue;
             var entry = spell;
-            names.Add(entry.displayName + "  " + entry.mpCost + " MP");
+            names.Add(GameText.Get("battle.spell_entry", entry.LocalizedName, entry.mpCost));
             actions.Add(() => TryPlayerSpell(entry));
             enabled.Add(BattleAbilities.CanCast(Player, entry.target == BattleTarget.Self ? Player : Enemy, entry));
         }
-        if (names.Count == 0) ui.ShowMessage("Нет доступных заклинаний.");
-        else ui.ShowMessage("Выберите заклинание. Esc — назад.");
-        names.Add("Назад"); actions.Add(() => ShowMainMenu()); enabled.Add(true);
+        if (names.Count == 0) ui.ShowMessage(GameText.Get("battle.no_spells"));
+        else ui.ShowMessage(GameText.Get("battle.choose_spell"));
+        names.Add(GameText.Get("menu.back")); actions.Add(() => ShowMainMenu()); enabled.Add(true);
         ui.ShowMenu(names.ToArray(), actions.ToArray(), enabled.ToArray(), () => ShowMainMenu());
         return true;
     }
@@ -255,14 +254,14 @@ public sealed class BattleManager : MonoBehaviour
             foreach (var item in Player.Inventory.Definitions)
             {
                 var entry = item;
-                names.Add(entry.displayName + " ×" + Player.Inventory.Count(entry));
+                names.Add(GameText.Get("item.quantity", entry.LocalizedName, Player.Inventory.Count(entry)));
                 actions.Add(() => TryPlayerItem(entry));
                 bool canUse = BattleAbilities.CanUseItem(Player, entry.target == BattleTarget.Self ? Player : Enemy, entry);
                 enabled.Add(canUse); anyAvailable |= canUse;
             }
         }
-        ui.ShowMessage(anyAvailable ? "Выберите предмет. Esc — назад." : "Предметов нет. Esc — назад.");
-        names.Add("Назад"); actions.Add(() => ShowMainMenu()); enabled.Add(true);
+        ui.ShowMessage(anyAvailable ? GameText.Get("battle.choose_item") : GameText.Get("battle.no_items"));
+        names.Add(GameText.Get("menu.back")); actions.Add(() => ShowMainMenu()); enabled.Add(true);
         ui.ShowMenu(names.ToArray(), actions.ToArray(), enabled.ToArray(), () => ShowMainMenu());
         return true;
     }

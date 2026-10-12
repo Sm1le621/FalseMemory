@@ -16,6 +16,8 @@ Awake подключает мышь и отключает дублирующий
 
 ## 3. Методы и функции
 
+2026-10-12 — актуальная локализация: ShowVictoryResults/ShowDefeatResults/RefreshStats/Stats и editor builders читают ключи battle.*. Статусы/раунд/EXP форматируются аргументами, Player/Enemy/Spell/Item используют LocalizedName. Устройство меню/ввод/анимации/параметры сохранены.
+
 - Этап 3.5: `ShowDefeatResults()` включает прежний resultPanel с Game Over и вариантами Restart/Main Menu. ShowVictoryResults и ShowDefeatResults запускают hud.RevealResult. RefreshStats не перезаписывает цвет смерти, если есть BattlePresentation.
 
 - `Awake()` — Unity: на текущем EventSystem делает move/submit/cancel=null, подключает listeners кнопок к Invoke.
@@ -42,6 +44,8 @@ Awake подключает мышь и отключает дублирующий
 
 ## 5. Связи с другими системами
 
+GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
+
 Компонент на BattleManager в BattleScene; Manager назначает callbacks и обновления. Требуются TMP/uGUI/Input System/EventSystem. Source-спрайты не меняются; их временные копии освобождаются.
 
 ## 6. Пример работы
@@ -57,6 +61,8 @@ Magic → Fire 8 MP и Heal6 MP → Escape возвращает Attack/Magic/Ite
 Отсутствующие основные ссылки/несогласованные массивы дают ошибки. UI listeners button.onClick в тестах проверяют обработку команд, не весь физический путь курсора. Only Enter, не Space. Gamepad нет. Длинные списки прокручиваются, выбор цели партии отсутствует. Меню, сообщения и эффекты проверены Play Mode; на этапе 3.6 через MCP проверены главное меню, Magic, Items, Victory и Game Over в 1280×720, 1920×1080, 2560×1440 и 3440×1440; границы/переполнение проверены автоматически, снимки просмотрены.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 - 2026-10-12 — 4.5: fallback Stats читает итоговые ATK/DEF/Speed с экипировкой, ресурсы прежние.
 
 - 2026-10-11 — 3.6: feedback привязан к внутренней области портрета, чёрная обводка; проверены пять состояний на четырёх разрешениях.

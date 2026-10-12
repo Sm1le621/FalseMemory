@@ -1390,7 +1390,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041D\u0430\u0433\u0440\u0443\u0434\u043D\u0438\u043A"
+  m_text: Chest
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1481,6 +1481,7 @@ GameObject:
   - component: {fileID: 194136759}
   - component: {fileID: 194136761}
   - component: {fileID: 194136760}
+  - component: {fileID: 194136762}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -1527,7 +1528,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0418\u041D\u0412\u0415\u041D\u0422\u0410\u0420\u042C"
+  m_text: INVENTORY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1607,6 +1608,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194136758}
   m_CullTransparentMesh: 1
+--- !u!114 &194136762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194136758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4179893e913464e4ea8b8e26f5074c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::LocalizedLabel
+  key: inventory.title
 --- !u!1 &232619634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1684,7 +1698,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0421\u0423\u041C\u041A\u0410   0 / 30"
+  m_text: BAG   0 / 30
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1976,6 +1990,7 @@ GameObject:
   - component: {fileID: 265363388}
   - component: {fileID: 265363390}
   - component: {fileID: 265363389}
+  - component: {fileID: 265363391}
   m_Layer: 0
   m_Name: CharacterTitle
   m_TagString: Untagged
@@ -2022,7 +2037,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041F\u0415\u0420\u0421\u041E\u041D\u0410\u0416 \u0418 \u042D\u041A\u0418\u041F\u0418\u0420\u041E\u0412\u041A\u0410"
+  m_text: CHARACTER & EQUIPMENT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2102,6 +2117,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 265363387}
   m_CullTransparentMesh: 1
+--- !u!114 &265363391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265363387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4179893e913464e4ea8b8e26f5074c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::LocalizedLabel
+  key: inventory.character_equipment
 --- !u!1 &279374683
 GameObject:
   m_ObjectHideFlags: 0
@@ -4023,7 +4051,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041F\u0435\u0440\u0447\u0430\u0442\u043A\u0438"
+  m_text: Gloves
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4179,7 +4207,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0413\u043E\u043B\u043E\u0432\u0430"
+  m_text: Head
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4738,6 +4766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: FalseMemory.Runtime::BattleUnit
   displayName: Skeleton
+  localizationId: unit.skeleton
   level: 1
   attack: 12
   defense: 5
@@ -5094,6 +5123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: FalseMemory.Runtime::BattleUnit
   displayName: Player
+  localizationId: unit.player
   level: 1
   attack: 15
   defense: 8
@@ -6712,6 +6742,7 @@ GameObject:
   - component: {fileID: 714836000}
   - component: {fileID: 714836002}
   - component: {fileID: 714836001}
+  - component: {fileID: 714836003}
   m_Layer: 0
   m_Name: Label
   m_TagString: Untagged
@@ -6758,7 +6789,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u042D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C"
+  m_text: Equip
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6838,6 +6869,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 714835999}
   m_CullTransparentMesh: 1
+--- !u!114 &714836003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714835999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4179893e913464e4ea8b8e26f5074c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::LocalizedLabel
+  key: inventory.equip
 --- !u!1 &746695858
 GameObject:
   m_ObjectHideFlags: 0
@@ -7884,7 +7928,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0410\u043A\u0441\u0435\u0441\u0441\u0443\u0430\u0440 I"
+  m_text: Accessory 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11277,7 +11321,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041F\u043E\u043D\u043E\u0436\u0438"
+  m_text: Legs
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -12403,7 +12447,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041E\u0431\u0443\u0432\u044C"
+  m_text: Boots
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13497,6 +13541,7 @@ GameObject:
   - component: {fileID: 1452830501}
   - component: {fileID: 1452830503}
   - component: {fileID: 1452830502}
+  - component: {fileID: 1452830504}
   m_Layer: 0
   m_Name: Controls
   m_TagString: Untagged
@@ -13543,7 +13588,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "I / Esc \u2014 \u0437\u0430\u043A\u0440\u044B\u0442\u044C   \u2022   \u041D\u0430\u0432\u0435\u0434\u0435\u043D\u0438\u0435 \u2014 \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0435   \u2022   \u041C\u044B\u0448\u044C \u2014 \u043F\u0435\u0440\u0435\u043D\u043E\u0441   \u2022   \u0421\u0442\u0440\u0435\u043B\u043A\u0438 \u2014 \u0432\u044B\u0431\u043E\u0440"
+  m_text: "I / Esc: Close \u2022 Hover: Details \u2022 Mouse: Drag \u2022 Arrows: Select"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13623,6 +13668,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452830500}
   m_CullTransparentMesh: 1
+--- !u!114 &1452830504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452830500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4179893e913464e4ea8b8e26f5074c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::LocalizedLabel
+  key: inventory.controls
 --- !u!1 &1455501684
 GameObject:
   m_ObjectHideFlags: 0
@@ -35150,7 +35208,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041E\u0440\u0443\u0436\u0438\u0435"
+  m_text: Weapon
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -35287,7 +35345,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043F\u0440\u0435\u0434\u043C\u0435\u0442."
+  m_text: Select an item.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -35872,7 +35930,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0410\u043A\u0441\u0435\u0441\u0441\u0443\u0430\u0440 II"
+  m_text: Accessory 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -37474,6 +37532,7 @@ GameObject:
   - component: {fileID: 1802281491}
   - component: {fileID: 1802281493}
   - component: {fileID: 1802281492}
+  - component: {fileID: 1802281494}
   m_Layer: 0
   m_Name: Label
   m_TagString: Untagged
@@ -37520,7 +37579,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0420\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u044C \xBD"
+  m_text: "Split \xBD"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -37600,6 +37659,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1802281490}
   m_CullTransparentMesh: 1
+--- !u!114 &1802281494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802281490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4179893e913464e4ea8b8e26f5074c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::LocalizedLabel
+  key: inventory.split
 --- !u!1 &1804625146
 GameObject:
   m_ObjectHideFlags: 0
@@ -38059,6 +38131,7 @@ GameObject:
   - component: {fileID: 1851014792}
   - component: {fileID: 1851014794}
   - component: {fileID: 1851014793}
+  - component: {fileID: 1851014795}
   m_Layer: 0
   m_Name: Label
   m_TagString: Untagged
@@ -38105,7 +38178,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C"
+  m_text: Use
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -38185,6 +38258,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1851014791}
   m_CullTransparentMesh: 1
+--- !u!114 &1851014795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851014791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4179893e913464e4ea8b8e26f5074c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::LocalizedLabel
+  key: inventory.use
 --- !u!1 &1855502232
 GameObject:
   m_ObjectHideFlags: 0
@@ -39380,6 +39466,7 @@ GameObject:
   - component: {fileID: 1981155866}
   - component: {fileID: 1981155868}
   - component: {fileID: 1981155867}
+  - component: {fileID: 1981155869}
   m_Layer: 0
   m_Name: EquipmentTitle
   m_TagString: Untagged
@@ -39426,7 +39513,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0425\u0410\u0420\u0410\u041A\u0422\u0415\u0420\u0418\u0421\u0422\u0418\u041A\u0418"
+  m_text: ATTRIBUTES
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -39506,6 +39593,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981155865}
   m_CullTransparentMesh: 1
+--- !u!114 &1981155869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981155865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4179893e913464e4ea8b8e26f5074c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::LocalizedLabel
+  key: inventory.attributes
 --- !u!1 &1981638947
 GameObject:
   m_ObjectHideFlags: 0
@@ -40631,6 +40731,7 @@ GameObject:
   - component: {fileID: 2120313119}
   - component: {fileID: 2120313121}
   - component: {fileID: 2120313120}
+  - component: {fileID: 2120313122}
   m_Layer: 0
   m_Name: Label
   m_TagString: Untagged
@@ -40677,7 +40778,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0417\u0430\u043A\u0440\u044B\u0442\u044C"
+  m_text: Close
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -40757,6 +40858,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2120313118}
   m_CullTransparentMesh: 1
+--- !u!114 &2120313122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120313118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4179893e913464e4ea8b8e26f5074c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::LocalizedLabel
+  key: menu.close
 --- !u!1 &2123895722
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,8 @@ BattleUI передаёт участников через Bind. Каждый к�
 
 ## 3. Методы и функции
 
+2026-10-12 — актуальная локализация: Refresh показывает battle.exp/defending/low_hp; OnMenuChanged и BuildPolishedLayout читают commands/submenu/controls. Считывает прежние ресурсы/инвентарь, анимация/геометрия не меняются.
+
 - Этап 3.5: `HideForEntrance()` скрывает только screenGroup активного HUD; `RevealScreen(pace)` → IEnumerator проявляет его за revealDuration с масштабом темпа; `RevealResult()` запускает `ResultFade()` для окна исхода. `OnDisable()` возвращает alpha=1, чтобы выключенный визуальный компонент не оставлял экран невидимым.
 
 - `Bind(hero, foe)` — назначает BattleUnit и сразу заполняет полосы; void.
@@ -32,6 +34,8 @@ hpBar/mpBar/enemyHPBar — полосы 0..1; resourceText — Potion/EXP/Defend
 
 ## 5. Связи
 
+GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
+
 BattleManager в BattleScene содержит BattleUI и BattleHUD. UI вызывает Bind/MenuChanged/StyleCommand; Health, BattleUnit и BattleInventory остаются владельцами значений. Нужны uGUI и TMP.
 
 ## 6. Пример
@@ -47,6 +51,8 @@ BattleManager в BattleScene содержит BattleUI и BattleHUD. UI вызы
 Отсутствующий необязательный элемент пропускается; основные ссылки UI всё ещё обязательны. Анимация полосы не должна использоваться как источник HP. Оценку стиля/баланса выполняет владелец. Полоса с нулевым максимумом пуста. Нет партийного HUD.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 
 - 2026-10-11 — 3.7: подсказка Space добавлена в Controls; взаимодействие с ресурсами не менялось.
 

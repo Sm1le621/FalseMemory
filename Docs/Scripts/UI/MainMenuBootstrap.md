@@ -12,6 +12,8 @@ Awake обеспечивает EventSystem и строит Canvas/кнопки/S
 
 ## 3. Методы и функции
 
+2026-10-12 — актуальная локализация: BuildUi/BuildSettingsPanel получают New Game/Settings/Exit/Volume/Back через GameText.Get; LocalizedLabel.Bind подписывает статические подписи на смену языка. Размеры/события кнопок сохранены.
+
 - `Awake()` — Unity: EnsureEventSystem, BuildUi; void.
 - `EnsureEventSystem()` — создаёт EventSystem+InputSystemUIInputModule при отсутствии.
 - `BuildUi()` — PixelUi создаёт элементы и MainMenuController, подключает события.
@@ -20,15 +22,17 @@ Awake обеспечивает EventSystem и строит Canvas/кнопки/S
 
 ## 4. Переменные и параметры Inspector
 
-gameTitle — сериализованный заголовок FALSE MEMORY; gameSceneName — SampleScene. Размеры 360×280/380×280 и подписи прописаны в методах.
+gameTitle — сохранённое legacy-поле FALSE MEMORY, используемое при создании TMP; после Bind отображаемый заголовок берётся из ключа game.title. Менять пользовательский заголовок нужно в таблице. gameSceneName — SampleScene. Размеры 360×280/380×280 прописаны в методах; подписи — в английской StringTable.
 
 ## 5. Связи с другими системами
+
+GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
 Компонент на MenuBootstrap MainMenu; использует PixelUi/MainMenuController/SettingsMenu, TMP/uGUI/Input System.
 
 ## 6. Пример работы
 
-MainMenu → Awake строит MainMenuCanvas → START начинает игру.
+MainMenu → Awake строит MainMenuCanvas → New Game начинает игру.
 
 ## 7. Настройка в Unity
 
@@ -39,6 +43,8 @@ MainMenu → Awake строит MainMenuCanvas → START начинает игр
 Два Bootstrap создадут дубликаты; resize не пересчитывает масштаб PixelUi. Создание меню и Start проверены Play Mode; все разрешения не проверены.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 

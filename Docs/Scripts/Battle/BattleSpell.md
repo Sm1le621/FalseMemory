@@ -12,15 +12,21 @@ ScriptableObject определения заклинания и перечисл
 
 ## 3. Методы и функции
 
+2026-10-12 — актуальная локализация: localizationId — стабильный ключ (назначены spell.fire/spell.heal), LocalizedName → GameText.Content(localizationId+".name",displayName). Старое serialized displayName сохранено как английский fallback, параметры/ссылки не меняются.
+
 Методов/Unity callbacks нет. CreateAssetMenu FalseMemory/Battle Spell. BattleEffect: MagicDamage, RestoreHealth; BattleTarget: Opponent, Self.
 
 ## 4. Переменные и параметры Inspector
+
+localizationId — новое serialized string-поле: spell.fire/spell.heal у заклинаний, unit.player/unit.skeleton у участников сцены. LocalizedName readonly читает таблицу, displayName остаётся английским fallback. Ни ID, ни боевые параметры это поле не меняет.
 
 Этап 3.3: visualEffect — необязательный BattleVFXProfile; только оформление. Fire/Heal имеют назначенные FireVisual/HealVisual. Отсутствие ссылки не меняет CanCast/TryCast.
 
 displayName — строка, код Fire. mpCost≥0, код 8. effect — код MagicDamage; target — код Opponent. power≥0, код 10. effectColor — Color, код оранжевый. Fire.asset: эти значения; Heal.asset: цена 6, RestoreHealth, Self, power25, зелёный.
 
 ## 5. Связи с другими системами
+
+GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
 Assets/Settings/Battle/Spells/Fire.asset и Heal.asset назначены Player.BattleUnit.spells. BattleManager показывает, BattleAbilities применяет, UI отображает effectColor.
 
@@ -37,6 +43,8 @@ Assets/Settings/Battle/Spells/Fire.asset и Heal.asset назначены Player
 Новый тип эффекта требует расширения BattleAbilities; несколько союзников пока не поддержаны. Неверное сочетание цели/эффекта не является отдельной проверкой дизайна. Fire/Heal проверены тестами; произвольные новые заклинания не реализованы.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 
 - 2026-10-11 — 3.3: независимая ссылка visualEffect.
 

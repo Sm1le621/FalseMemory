@@ -52,20 +52,24 @@ public class MainMenuBootstrap : MonoBehaviour
 
         MainMenuController controller = gameObject.AddComponent<MainMenuController>();
 
-        Button startButton = PixelUi.CreateButton(menuRoot, "StartButton", "START", new Vector2(280f, 40f));
+        Button startButton = PixelUi.CreateButton(menuRoot, "StartButton", GameText.Get("menu.new_game"), new Vector2(280f, 40f));
         startButton.gameObject.AddComponent<LayoutElement>().preferredHeight = 40f;
         startButton.onClick.AddListener(controller.OnStart);
 
-        Button settingsButton = PixelUi.CreateButton(menuRoot, "SettingsButton", "SETTING", new Vector2(280f, 40f));
+        Button settingsButton = PixelUi.CreateButton(menuRoot, "SettingsButton", GameText.Get("menu.settings"), new Vector2(280f, 40f));
         settingsButton.gameObject.AddComponent<LayoutElement>().preferredHeight = 40f;
 
-        Button exitButton = PixelUi.CreateButton(menuRoot, "ExitButton", "EXIT", new Vector2(280f, 40f));
+        Button exitButton = PixelUi.CreateButton(menuRoot, "ExitButton", GameText.Get("menu.exit"), new Vector2(280f, 40f));
         exitButton.gameObject.AddComponent<LayoutElement>().preferredHeight = 40f;
         exitButton.onClick.AddListener(controller.OnExit);
 
         SettingsMenu settingsMenu = BuildSettingsPanel(canvas.transform);
         controller.Initialize(gameSceneName, settingsMenu);
         settingsButton.onClick.AddListener(controller.OnSettings);
+        LocalizedLabel.Bind(title,"game.title");
+        LocalizedLabel.Bind(startButton.GetComponentInChildren<TMP_Text>(),"menu.new_game");
+        LocalizedLabel.Bind(settingsButton.GetComponentInChildren<TMP_Text>(),"menu.settings");
+        LocalizedLabel.Bind(exitButton.GetComponentInChildren<TMP_Text>(),"menu.exit");
     }
 
     private static SettingsMenu BuildSettingsPanel(Transform canvas)
@@ -93,7 +97,7 @@ public class MainMenuBootstrap : MonoBehaviour
         TextMeshProUGUI heading = PixelUi.CreateLabel(
             panel,
             "SettingsTitle",
-            "SETTING",
+            GameText.Get("menu.settings"),
             20,
             TextAlignmentOptions.Center);
         heading.gameObject.AddComponent<LayoutElement>().preferredHeight = 32f;
@@ -101,7 +105,7 @@ public class MainMenuBootstrap : MonoBehaviour
         TextMeshProUGUI volumeLabel = PixelUi.CreateLabel(
             panel,
             "VolumeLabel",
-            "VOLUME",
+            GameText.Get("settings.volume"),
             12,
             TextAlignmentOptions.Center);
         volumeLabel.color = PixelUi.TextMuted;
@@ -110,11 +114,11 @@ public class MainMenuBootstrap : MonoBehaviour
         Slider volumeSlider = PixelUi.CreateSlider(panel, "VolumeSlider", new Vector2(280f, 18f));
         volumeSlider.gameObject.AddComponent<LayoutElement>().preferredHeight = 18f;
 
-        Button fullscreenButton = PixelUi.CreateButton(panel, "FullscreenButton", "FULLSCREEN  ON", new Vector2(280f, 36f));
+        Button fullscreenButton = PixelUi.CreateButton(panel, "FullscreenButton", GameText.Get("settings.fullscreen_on"), new Vector2(280f, 36f));
         fullscreenButton.gameObject.AddComponent<LayoutElement>().preferredHeight = 36f;
         TextMeshProUGUI fullscreenLabel = fullscreenButton.GetComponentInChildren<TextMeshProUGUI>();
 
-        Button backButton = PixelUi.CreateButton(panel, "BackButton", "BACK", new Vector2(280f, 36f));
+        Button backButton = PixelUi.CreateButton(panel, "BackButton", GameText.Get("menu.back"), new Vector2(280f, 36f));
         backButton.gameObject.AddComponent<LayoutElement>().preferredHeight = 36f;
 
         SettingsMenu settings = dim.gameObject.AddComponent<SettingsMenu>();
@@ -122,6 +126,9 @@ public class MainMenuBootstrap : MonoBehaviour
         volumeSlider.onValueChanged.AddListener(settings.OnVolumeChanged);
         fullscreenButton.onClick.AddListener(settings.ToggleFullscreen);
         backButton.onClick.AddListener(settings.Hide);
+        LocalizedLabel.Bind(heading,"menu.settings");
+        LocalizedLabel.Bind(volumeLabel,"settings.volume");
+        LocalizedLabel.Bind(backButton.GetComponentInChildren<TMP_Text>(),"menu.back");
         return settings;
     }
 

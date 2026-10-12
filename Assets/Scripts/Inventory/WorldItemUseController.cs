@@ -29,7 +29,7 @@ public sealed class WorldItemUseController : MonoBehaviour
         var item=(BattleConsumable)unit.Inventory.State.GetSlot(index).Item;
         lastUseFrame=Time.frameCount;
         bool ok=BattleAbilities.TryUseItem(unit,unit,item,out int amount,ItemUseLocation.Exploration);
-        window.ShowMessage(ok?item.displayName+": +"+amount+(item.manaRestoration>0?" MP":" HP"):"Предмет недоступен.");window.Refresh();return ok;
+        window.ShowMessage(ok?GameText.Get("inventory.item_used", item.LocalizedName, amount, item.manaRestoration>0?"MP":"HP"):GameText.Get("inventory.unavailable"));window.Refresh();return ok;
     }
     private void HandleUse(int index)=>TryUse(index);
 }

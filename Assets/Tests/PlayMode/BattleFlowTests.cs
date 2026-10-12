@@ -130,8 +130,8 @@ public sealed partial class BattleFlowTests
         yield return WaitUntil(() => manager.State == BattleState.Defeat);
         Assert.That(player.Health.currentHealth, Is.Zero);
         Assert.That(manager.TryPlayerAction(BattleAction.Attack), Is.False);
-        Assert.That(manager.ui.commandLabels[0].text, Does.Contain("Начать заново"));
-        Assert.That(manager.ui.commandLabels[1].text, Does.Contain("Главное меню"));
+        Assert.That(manager.ui.commandLabels[0].text, Does.Contain("New Game"));
+        Assert.That(manager.ui.commandLabels[1].text, Does.Contain("Main Menu"));
         int enemyHP = enemy.Health.currentHealth;
         yield return new WaitForSecondsRealtime(0.4f);
         Assert.That(enemy.Health.currentHealth, Is.EqualTo(enemyHP));

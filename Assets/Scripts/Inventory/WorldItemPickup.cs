@@ -15,7 +15,7 @@ public sealed class WorldItemPickup : MonoBehaviour, IWorldInteractable
     [Min(1)] public int quantity=1;
     public bool Collected {get;private set;}
     public bool Available => isActiveAndEnabled && !Collected && item!=null && quantity>0;
-    public string Prompt => item!=null?"E — подобрать "+item.displayName+" ×"+quantity:"";
+    public string Prompt => item!=null?GameText.Get("pickup.prompt", item.LocalizedName, quantity):"";
     public bool TryInteract(BattleUnit player,out string message)
     {
         message="";
@@ -29,9 +29,9 @@ public sealed class WorldItemPickup : MonoBehaviour, IWorldInteractable
         Collected=true;
         if(!player.Inventory.TryAdd(item,quantity))
         {
-            Collected=false;message="Нет места в инвентаре. Предмет остался на земле.";return false;
+            Collected=false;message=GameText.Get("pickup.full");return false;
         }
-        message="Получено: "+item.displayName+" ×"+quantity;
+        message=GameText.Get("pickup.received", item.LocalizedName, quantity);
         gameObject.SetActive(false);return true;
     }
 }

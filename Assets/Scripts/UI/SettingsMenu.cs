@@ -72,7 +72,9 @@ public class SettingsMenu : MonoBehaviour
     {
         if (fullscreenLabel != null)
         {
-            fullscreenLabel.text = fullscreen ? "FULLSCREEN  ON" : "FULLSCREEN  OFF";
+            fullscreenLabel.text = fullscreen ? GameText.Get("settings.fullscreen_on") : GameText.Get("settings.fullscreen_off");
         }
     }
+    private void OnEnable(){GameText.LanguageChanged+=RefreshFullscreenLabel;RefreshFullscreenLabel();}
+    private void OnDisable(){GameText.LanguageChanged-=RefreshFullscreenLabel;}
 }

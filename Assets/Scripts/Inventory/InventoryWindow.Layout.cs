@@ -14,13 +14,13 @@ public sealed partial class InventoryWindow
         panel.sizeDelta=new Vector2(1140,720);panel.GetComponent<Image>().color=new Color32(18,19,24,255);
         var scaler=panel.GetComponentInParent<CanvasScaler>();scaler.referenceResolution=new Vector2(1200,780);scaler.screenMatchMode=CanvasScaler.ScreenMatchMode.Expand;
         Place(panel.Find("Title").GetComponent<RectTransform>(),32,662,400,32);
-        panel.Find("Title").GetComponent<TextMeshProUGUI>().text="ИНВЕНТАРЬ";
+        panel.Find("Title").GetComponent<TextMeshProUGUI>().text=GameText.Get("inventory.title");
         Place(resourcesLabel.rectTransform,490,662,390,32);resourcesLabel.fontSizeMax=18;
         Place(goldLabel.rectTransform,890,662,218,32);goldLabel.fontSizeMax=18;
         var character=Section("CharacterPanel",24,202,430,442);var bag=Section("BagPanel",474,202,642,442);
         character.SetAsFirstSibling();bag.SetAsFirstSibling();
-        EnsureLabel("CharacterTitle","ПЕРСОНАЖ И ЭКИПИРОВКА",16,44,614,390,24);
-        bagLabel=EnsureLabel("BagTitle","СУМКА   0 / 30",18,500,614,582,24);
+        EnsureLabel("CharacterTitle",GameText.Get("inventory.character_equipment"),16,44,614,390,24);
+        bagLabel=EnsureLabel("BagTitle",GameText.Get("inventory.bag_initial"),18,500,614,582,24);
         characterLabel=EnsureLabel("CharacterName","",16,146,550,190,54);characterLabel.alignment=TextAlignmentOptions.Center;
         var portraitFrame=Section("PortraitFrame",158,300,164,246);portraitFrame.GetComponent<Image>().color=new Color32(22,23,29,255);
         portraitFrame.SetSiblingIndex(2);
@@ -51,12 +51,12 @@ public sealed partial class InventoryWindow
         }
         // Preserve old labels as useful parts of the new layout rather than deleting them.
         Place(panel.Find("EquipmentTitle").GetComponent<RectTransform>(),40,170,398,22);
-        panel.Find("EquipmentTitle").GetComponent<TextMeshProUGUI>().text="ХАРАКТЕРИСТИКИ";
+        panel.Find("EquipmentTitle").GetComponent<TextMeshProUGUI>().text=GameText.Get("inventory.attributes");
         Place(equipmentStats.rectTransform,40,96,398,66);equipmentStats.fontSizeMax=18;
         details.richText=false;Place(details.rectTransform,494,84,594,90);details.fontSizeMax=17;
         Place(message.rectTransform,32,54,1076,22);message.fontSizeMax=14;
         Place(panel.Find("Controls").GetComponent<RectTransform>(),32,20,1076,22);
-        panel.Find("Controls").GetComponent<TextMeshProUGUI>().text="I / Esc — закрыть   •   Наведение — описание   •   Мышь — перенос   •   Стрелки — выбор";
+        panel.Find("Controls").GetComponent<TextMeshProUGUI>().text=GameText.Get("inventory.controls");
         MoveButton(useButton,494,184,138);MoveButton(equipButton,642,184,138);MoveButton(splitButton,790,184,138);MoveButton(closeButton,938,184,150);
         if(tooltip==null)tooltip=panel.parent.GetComponent<InventoryTooltip>();
         if(tooltip==null)tooltip=panel.parent.gameObject.AddComponent<InventoryTooltip>();

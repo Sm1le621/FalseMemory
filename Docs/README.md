@@ -6,6 +6,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 
 ## Общие документы
 
+- [Английская локализация](EnglishLocalization.md) — восстановленная работа, текущие тесты/кадры и ручная приёмка.
+
 - [Переработка инвентаря](InventoryRedesign.md) — персонаж/экипировка/сумка, редкости, hover, результаты и ручная проверка.
 - [Roadmap](Roadmap.md) — статусы этапов4–10 и ручные границы.
 - [MasterDevelopmentPlan](MasterDevelopmentPlan.md) — полный план владельца.
@@ -24,6 +26,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [Отчёт этапа 2](BattleStage2.md) — реализация, список файлов, ограничения и подробная инструкция Play Mode.
 
 ## Игровые системы
+
+- [Локализация](Systems/LocalizationSystem.md) — английские Unity StringTables и GameText.
 - [Экипировка](Systems/EquipmentSystem.md) — восемь слотов/бонусы/безопасный обмен.
 - [Взаимодействие E](Systems/InteractionSystem.md) — общий контракт и подбор.
 
@@ -47,6 +51,12 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 Полноценного SaveSystem, партийного боя, классов и level-up пока нет; они не документируются как готовые системы. PlayerPrefs уже сохраняет настройки меню, но не RPG-прогресс.
 
 ## Описания скриптов
+
+- [GameText](Scripts/Localization/GameText.md) — ключи, форматирование, fallback.
+- [LocalizedLabel](Scripts/Localization/LocalizedLabel.md) — привязка статической TMP-подписи.
+- [GameTextEditor](Scripts/Editor/GameTextEditor.md) — редактирование English в Unity без программирования.
+- [LocalizationTests](Scripts/Tests/EditMode/LocalizationTests.md) — таблица/ключи/форматы.
+- [LocalizationFlowTests](Scripts/Tests/PlayMode/LocalizationFlowTests.md) — английские меню/бой/подсказки.
 
 - [InventoryWindow.Layout](Scripts/Inventory/InventoryWindow.Layout.md) — оформление существующей сцены.
 - [InventoryTooltip](Scripts/Inventory/InventoryTooltip.md) — одна ограниченная экраном hover-панель.
@@ -82,7 +92,7 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [BattleHUD](Scripts/Battle/BattleHUD.md) — оформление, полосы и предупреждение HP.
 - [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md) — проверки представления боя.
 
-После подэтапа4.6 — **53 C#-файла в Assets**:40 игровых,12 тестовых и1 служебный. Частичные тестовые классы объединяют несколько файлов, но каждый исходный файл имеет отдельное описание. Скрипты внешних пакетов и Library сюда не входят.
+Историческая статистика после подэтапа4.6 — **53 C#-файла в Assets**:40 игровых,12 тестовых и1 служебный. Частичные тестовые классы объединяют несколько файлов, но каждый исходный файл имеет отдельное описание. Скрипты внешних пакетов и Library сюда не входят.
 
 - [BattleAbilities](Scripts/Battle/BattleAbilities.md) — `Assets/Scripts/Battle/BattleAbilities.cs`.
 - [BattleCalculator](Scripts/Battle/BattleCalculator.md) — `Assets/Scripts/Battle/BattleCalculator.cs`.
@@ -128,3 +138,6 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 Первоначальная документация сохранена коммитом `bd17fa0`, дополнения постоянных правил и руководства — `0f609a1`. Реализация этапа 2 сохранена коммитом 07a1a34; этап 3 развивается семью локальными коммитами. Актуальные результаты и изменения приведены в BattleStage3.md, исторические проверки этапа2 — 40 Edit Mode и 17 Play Mode. Новые игровые системы в задаче главного промпта повторно не создавались. Push не выполнялся.
 
 Локальные коммиты обязательны после успешно проверенных задач; push выполняется исключительно по явной команде владельца. Если перед задачей есть сторонние изменения, добавляются только относящиеся к текущей задаче пути.
+
+
+Актуально после локализации:64 собственных C#-файла и64 отдельных описания (46 runtime,16 тестовых,1 Editor-инструмент,1 Welcome). Игровой язык English en-US; Docs/отчёты русские. Предыдущие отчёты и кадры сохраняются как история, не подтверждение текущего интерфейса.

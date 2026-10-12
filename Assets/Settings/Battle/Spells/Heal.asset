@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Heal
   m_EditorClassIdentifier: FalseMemory.Runtime::BattleSpell
   displayName: Heal
+  localizationId: spell.heal
   mpCost: 6
   effect: 1
   target: 1

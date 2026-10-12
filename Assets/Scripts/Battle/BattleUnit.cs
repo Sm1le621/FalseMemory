@@ -11,6 +11,8 @@ public interface IBattleParticipant
 public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
 {
     public string displayName = "Player";
+    public string localizationId;
+    public string LocalizedName=>GameText.Content(localizationId+".name",displayName);
     [Min(1)] public int level = 1;
     [Min(0)] public int attack = 15;
     [Min(0)] public int defense = 8;

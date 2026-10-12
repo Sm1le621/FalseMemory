@@ -50,3 +50,8 @@ Create → FalseMemory → Battle Spell создаёт заклинание с �
 InventoryWindow.BuildFantasyLayout через Unity MCP переиспользует сохранённые объекты SampleScene. InventoryCanvas: reference1200×780/Expand/PixelPerfect/sorting60; InventoryPanel1140×720; слева CharacterPanel/PortraitFrame/CharacterPortrait/CharacterName, вокруг восемь Equipment-кнопок с EquipmentSlotView; справа BagPanel/BagTitle/прежние30 Slot. Tooltip-компонент на том же Canvas, отдельный child InventoryTooltip с TMP Content (raycast=false). Все ссылки сохранены, окно и tooltip закрыты вне игры. Исходный герой/импорт не менялись.
 
 ItemData → rarity определяет только цвет; Gloves=Armor с equipmentSlot Gloves, maxStack автоматически1. В наборе пока нет такой вещи, слот пустой. Не менять enum-индексы прежних аксессуаров. Настройки/ручная проверка в [InventoryRedesign](../InventoryRedesign.md).
+
+
+## English и редактирование текста
+
+Игровой интерфейс English en-US. Unity → FalseMemory → Localization → English Text: поиск ключа, правка Value, Save table; новый ключ через Add entry. Таблица Resources/Localization/GameText_en-US и SharedData рядом,136 записей. Static TMP получает LocalizedLabel/key; динамические поля управляются прежними контроллерами через GameText. ItemData id+.name/.description; Unit/Spell localizationId назначены в сцене/ассетах. PixelUi.extraPadding=false для bitmap-атласа, исходный PressStart2P не меняется. Полная инструкция [LocalizationSystem](../Systems/LocalizationSystem.md).

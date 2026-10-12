@@ -7,6 +7,8 @@ public enum BattleTarget { Opponent, Self }
 public sealed class BattleSpell : ScriptableObject
 {
     public string displayName = "Fire";
+    public string localizationId;
+    public string LocalizedName=>GameText.Content(localizationId+".name",displayName);
     [Min(0)] public int mpCost = 8;
     public BattleEffect effect = BattleEffect.MagicDamage;
     public BattleTarget target = BattleTarget.Opponent;

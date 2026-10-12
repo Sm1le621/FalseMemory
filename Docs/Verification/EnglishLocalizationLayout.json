@@ -1,0 +1,2391 @@
+{
+  "date": "2026-10-12",
+  "unity": "6000.6.2f1",
+  "locale": "en-US",
+  "method": "Native Unity MCP; снимки Game View после расчёта UI. Для каждого разрешения меню — новый Play; инвентарь/бой используют существующий CanvasScaler. Настоящая Attack привела к Victory; ответный ход врага — к Defeat. Подготовка инвентаря и HP временная, сцены не сохранялись с этими данными.",
+  "editMode": {
+    "jobId": "56a3d9392d0f4d51a3de47b7f23de3f2",
+    "total": 75,
+    "passed": 75,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 0.7175259,
+    "resultState": "Passed"
+  },
+  "playMode": {
+    "jobId": "4ca5a6f4321d4b508497a55b8267ef4a",
+    "total": 38,
+    "passed": 38,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 28.1597521,
+    "resultState": "Passed"
+  },
+  "victory": {
+    "state": "Victory",
+    "enemyHP": 0,
+    "playerHP": 100,
+    "exp": 20,
+    "preparedEnemyHP": 1
+  },
+  "defeat": {
+    "state": "Defeat",
+    "enemyHP": 50,
+    "playerHP": 0,
+    "result": "DEFEAT\nYour journey ends here.\nNew Game / Main Menu"
+  },
+  "checks": [
+    {
+      "state": "menu-1280",
+      "width": 1280,
+      "height": 720,
+      "graphics": 8,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "Title",
+          "text": "FALSE MEMORY"
+        },
+        {
+          "object": "Label",
+          "text": "New Game"
+        },
+        {
+          "object": "Label",
+          "text": "Settings"
+        },
+        {
+          "object": "Label",
+          "text": "Exit"
+        }
+      ],
+      "frame": 1438
+    },
+    {
+      "state": "settings-1280",
+      "width": 1280,
+      "height": 720,
+      "graphics": 21,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "Title",
+          "text": "FALSE MEMORY"
+        },
+        {
+          "object": "Label",
+          "text": "New Game"
+        },
+        {
+          "object": "Label",
+          "text": "Settings"
+        },
+        {
+          "object": "Label",
+          "text": "Exit"
+        },
+        {
+          "object": "SettingsTitle",
+          "text": "Settings"
+        },
+        {
+          "object": "VolumeLabel",
+          "text": "Volume"
+        },
+        {
+          "object": "Label",
+          "text": "Fullscreen: Off"
+        },
+        {
+          "object": "Label",
+          "text": "Back"
+        }
+      ],
+      "frame": 4437
+    },
+    {
+      "state": "menu-1920",
+      "width": 1920,
+      "height": 1080,
+      "graphics": 8,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "Title",
+          "text": "FALSE MEMORY"
+        },
+        {
+          "object": "Label",
+          "text": "New Game"
+        },
+        {
+          "object": "Label",
+          "text": "Settings"
+        },
+        {
+          "object": "Label",
+          "text": "Exit"
+        }
+      ],
+      "frame": 1403
+    },
+    {
+      "state": "settings-1920",
+      "width": 1920,
+      "height": 1080,
+      "graphics": 21,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "Title",
+          "text": "FALSE MEMORY"
+        },
+        {
+          "object": "Label",
+          "text": "New Game"
+        },
+        {
+          "object": "Label",
+          "text": "Settings"
+        },
+        {
+          "object": "Label",
+          "text": "Exit"
+        },
+        {
+          "object": "SettingsTitle",
+          "text": "Settings"
+        },
+        {
+          "object": "VolumeLabel",
+          "text": "Volume"
+        },
+        {
+          "object": "Label",
+          "text": "Fullscreen: Off"
+        },
+        {
+          "object": "Label",
+          "text": "Back"
+        }
+      ],
+      "frame": 4441
+    },
+    {
+      "state": "menu-2560",
+      "width": 2560,
+      "height": 1440,
+      "graphics": 8,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "Title",
+          "text": "FALSE MEMORY"
+        },
+        {
+          "object": "Label",
+          "text": "New Game"
+        },
+        {
+          "object": "Label",
+          "text": "Settings"
+        },
+        {
+          "object": "Label",
+          "text": "Exit"
+        }
+      ],
+      "frame": 1475
+    },
+    {
+      "state": "settings-2560",
+      "width": 2560,
+      "height": 1440,
+      "graphics": 21,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "Title",
+          "text": "FALSE MEMORY"
+        },
+        {
+          "object": "Label",
+          "text": "New Game"
+        },
+        {
+          "object": "Label",
+          "text": "Settings"
+        },
+        {
+          "object": "Label",
+          "text": "Exit"
+        },
+        {
+          "object": "SettingsTitle",
+          "text": "Settings"
+        },
+        {
+          "object": "VolumeLabel",
+          "text": "Volume"
+        },
+        {
+          "object": "Label",
+          "text": "Fullscreen: Off"
+        },
+        {
+          "object": "Label",
+          "text": "Back"
+        }
+      ],
+      "frame": 4338
+    },
+    {
+      "state": "menu-3440",
+      "width": 3440,
+      "height": 1440,
+      "graphics": 8,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "Title",
+          "text": "FALSE MEMORY"
+        },
+        {
+          "object": "Label",
+          "text": "New Game"
+        },
+        {
+          "object": "Label",
+          "text": "Settings"
+        },
+        {
+          "object": "Label",
+          "text": "Exit"
+        }
+      ],
+      "frame": 1420
+    },
+    {
+      "state": "settings-3440",
+      "width": 3440,
+      "height": 1440,
+      "graphics": 21,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "Title",
+          "text": "FALSE MEMORY"
+        },
+        {
+          "object": "Label",
+          "text": "New Game"
+        },
+        {
+          "object": "Label",
+          "text": "Settings"
+        },
+        {
+          "object": "Label",
+          "text": "Exit"
+        },
+        {
+          "object": "SettingsTitle",
+          "text": "Settings"
+        },
+        {
+          "object": "VolumeLabel",
+          "text": "Volume"
+        },
+        {
+          "object": "Label",
+          "text": "Fullscreen: Off"
+        },
+        {
+          "object": "Label",
+          "text": "Back"
+        }
+      ],
+      "frame": 4371
+    },
+    {
+      "state": "inventory-1280",
+      "width": 1280,
+      "height": 720,
+      "graphics": 116,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "HPText",
+          "text": "100 / 100"
+        },
+        {
+          "object": "Title",
+          "text": "INVENTORY"
+        },
+        {
+          "object": "Gold",
+          "text": "GOLD 0"
+        },
+        {
+          "object": "Quantity",
+          "text": "3"
+        },
+        {
+          "object": "Quantity",
+          "text": "5"
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": "1"
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": "5"
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Details",
+          "text": "Wooden Staff  ×1\nWeapon  •  Uncommon\nMATK +4"
+        },
+        {
+          "object": "Label",
+          "text": "Use"
+        },
+        {
+          "object": "Label",
+          "text": "Split ½"
+        },
+        {
+          "object": "Label",
+          "text": "Close"
+        },
+        {
+          "object": "Message",
+          "text": ""
+        },
+        {
+          "object": "Controls",
+          "text": "I / Esc: Close • Hover: Details • Mouse: Drag • Arrows: Select"
+        },
+        {
+          "object": "Label",
+          "text": "Equip"
+        },
+        {
+          "object": "EquipmentTitle",
+          "text": "ATTRIBUTES"
+        },
+        {
+          "object": "Label",
+          "text": "Weapon"
+        },
+        {
+          "object": "Label",
+          "text": "Head"
+        },
+        {
+          "object": "Label",
+          "text": "Chest"
+        },
+        {
+          "object": "Label",
+          "text": "Legs"
+        },
+        {
+          "object": "Label",
+          "text": "Boots"
+        },
+        {
+          "object": "Label",
+          "text": "Accessory 1"
+        },
+        {
+          "object": "Label",
+          "text": "Accessory 2"
+        },
+        {
+          "object": "EquipmentStats",
+          "text": "ATK 20     DEF 14\nMATK 12     MDEF 8\nSPD 10"
+        },
+        {
+          "object": "Resources",
+          "text": "HP 100 / 100    MP 30 / 30"
+        },
+        {
+          "object": "CharacterTitle",
+          "text": "CHARACTER & EQUIPMENT"
+        },
+        {
+          "object": "BagTitle",
+          "text": "BAG   4 / 30"
+        },
+        {
+          "object": "CharacterName",
+          "text": "Player\nLevel 1  •  EXP 0"
+        },
+        {
+          "object": "PortraitCaption",
+          "text": "FALSE MEMORY"
+        },
+        {
+          "object": "Label",
+          "text": "Gloves"
+        },
+        {
+          "object": "InteractionPrompt",
+          "text": ""
+        },
+        {
+          "object": "PickupNotification",
+          "text": ""
+        },
+        {
+          "object": "Content",
+          "text": "<b>Wooden Staff</b>\n<color=#639D6F>Uncommon</color>  •  Weapon\nMATK +4\n\nAn apprentice's staff, a focus for fledgling magic.\n\nRequired Level: 1\nBuy: 100 gold\nSell: 50 gold"
+        }
+      ],
+      "frame": 13126
+    },
+    {
+      "state": "inventory-1920",
+      "width": 1920,
+      "height": 1080,
+      "graphics": 116,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "HPText",
+          "text": "100 / 100"
+        },
+        {
+          "object": "Title",
+          "text": "INVENTORY"
+        },
+        {
+          "object": "Gold",
+          "text": "GOLD 0"
+        },
+        {
+          "object": "Quantity",
+          "text": "3"
+        },
+        {
+          "object": "Quantity",
+          "text": "5"
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": "1"
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": "5"
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Details",
+          "text": "Wooden Staff  ×1\nWeapon  •  Uncommon\nMATK +4"
+        },
+        {
+          "object": "Label",
+          "text": "Use"
+        },
+        {
+          "object": "Label",
+          "text": "Split ½"
+        },
+        {
+          "object": "Label",
+          "text": "Close"
+        },
+        {
+          "object": "Message",
+          "text": ""
+        },
+        {
+          "object": "Controls",
+          "text": "I / Esc: Close • Hover: Details • Mouse: Drag • Arrows: Select"
+        },
+        {
+          "object": "Label",
+          "text": "Equip"
+        },
+        {
+          "object": "EquipmentTitle",
+          "text": "ATTRIBUTES"
+        },
+        {
+          "object": "Label",
+          "text": "Weapon"
+        },
+        {
+          "object": "Label",
+          "text": "Head"
+        },
+        {
+          "object": "Label",
+          "text": "Chest"
+        },
+        {
+          "object": "Label",
+          "text": "Legs"
+        },
+        {
+          "object": "Label",
+          "text": "Boots"
+        },
+        {
+          "object": "Label",
+          "text": "Accessory 1"
+        },
+        {
+          "object": "Label",
+          "text": "Accessory 2"
+        },
+        {
+          "object": "EquipmentStats",
+          "text": "ATK 20     DEF 14\nMATK 12     MDEF 8\nSPD 10"
+        },
+        {
+          "object": "Resources",
+          "text": "HP 100 / 100    MP 30 / 30"
+        },
+        {
+          "object": "CharacterTitle",
+          "text": "CHARACTER & EQUIPMENT"
+        },
+        {
+          "object": "BagTitle",
+          "text": "BAG   4 / 30"
+        },
+        {
+          "object": "CharacterName",
+          "text": "Player\nLevel 1  •  EXP 0"
+        },
+        {
+          "object": "PortraitCaption",
+          "text": "FALSE MEMORY"
+        },
+        {
+          "object": "Label",
+          "text": "Gloves"
+        },
+        {
+          "object": "InteractionPrompt",
+          "text": ""
+        },
+        {
+          "object": "PickupNotification",
+          "text": ""
+        },
+        {
+          "object": "Content",
+          "text": "<b>Wooden Staff</b>\n<color=#639D6F>Uncommon</color>  •  Weapon\nMATK +4\n\nAn apprentice's staff, a focus for fledgling magic.\n\nRequired Level: 1\nBuy: 100 gold\nSell: 50 gold"
+        }
+      ],
+      "frame": 16940
+    },
+    {
+      "state": "inventory-2560",
+      "width": 2560,
+      "height": 1440,
+      "graphics": 116,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "HPText",
+          "text": "100 / 100"
+        },
+        {
+          "object": "Title",
+          "text": "INVENTORY"
+        },
+        {
+          "object": "Gold",
+          "text": "GOLD 0"
+        },
+        {
+          "object": "Quantity",
+          "text": "3"
+        },
+        {
+          "object": "Quantity",
+          "text": "5"
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": "1"
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": "5"
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Details",
+          "text": "Wooden Staff  ×1\nWeapon  •  Uncommon\nMATK +4"
+        },
+        {
+          "object": "Label",
+          "text": "Use"
+        },
+        {
+          "object": "Label",
+          "text": "Split ½"
+        },
+        {
+          "object": "Label",
+          "text": "Close"
+        },
+        {
+          "object": "Message",
+          "text": ""
+        },
+        {
+          "object": "Controls",
+          "text": "I / Esc: Close • Hover: Details • Mouse: Drag • Arrows: Select"
+        },
+        {
+          "object": "Label",
+          "text": "Equip"
+        },
+        {
+          "object": "EquipmentTitle",
+          "text": "ATTRIBUTES"
+        },
+        {
+          "object": "Label",
+          "text": "Weapon"
+        },
+        {
+          "object": "Label",
+          "text": "Head"
+        },
+        {
+          "object": "Label",
+          "text": "Chest"
+        },
+        {
+          "object": "Label",
+          "text": "Legs"
+        },
+        {
+          "object": "Label",
+          "text": "Boots"
+        },
+        {
+          "object": "Label",
+          "text": "Accessory 1"
+        },
+        {
+          "object": "Label",
+          "text": "Accessory 2"
+        },
+        {
+          "object": "EquipmentStats",
+          "text": "ATK 20     DEF 14\nMATK 12     MDEF 8\nSPD 10"
+        },
+        {
+          "object": "Resources",
+          "text": "HP 100 / 100    MP 30 / 30"
+        },
+        {
+          "object": "CharacterTitle",
+          "text": "CHARACTER & EQUIPMENT"
+        },
+        {
+          "object": "BagTitle",
+          "text": "BAG   4 / 30"
+        },
+        {
+          "object": "CharacterName",
+          "text": "Player\nLevel 1  •  EXP 0"
+        },
+        {
+          "object": "PortraitCaption",
+          "text": "FALSE MEMORY"
+        },
+        {
+          "object": "Label",
+          "text": "Gloves"
+        },
+        {
+          "object": "InteractionPrompt",
+          "text": ""
+        },
+        {
+          "object": "PickupNotification",
+          "text": ""
+        },
+        {
+          "object": "Content",
+          "text": "<b>Wooden Staff</b>\n<color=#639D6F>Uncommon</color>  •  Weapon\nMATK +4\n\nAn apprentice's staff, a focus for fledgling magic.\n\nRequired Level: 1\nBuy: 100 gold\nSell: 50 gold"
+        }
+      ],
+      "frame": 20603
+    },
+    {
+      "state": "inventory-3440",
+      "width": 3440,
+      "height": 1440,
+      "graphics": 116,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "HPText",
+          "text": "100 / 100"
+        },
+        {
+          "object": "Title",
+          "text": "INVENTORY"
+        },
+        {
+          "object": "Gold",
+          "text": "GOLD 0"
+        },
+        {
+          "object": "Quantity",
+          "text": "3"
+        },
+        {
+          "object": "Quantity",
+          "text": "5"
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": "1"
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": "5"
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Quantity",
+          "text": ""
+        },
+        {
+          "object": "Details",
+          "text": "Wooden Staff  ×1\nWeapon  •  Uncommon\nMATK +4"
+        },
+        {
+          "object": "Label",
+          "text": "Use"
+        },
+        {
+          "object": "Label",
+          "text": "Split ½"
+        },
+        {
+          "object": "Label",
+          "text": "Close"
+        },
+        {
+          "object": "Message",
+          "text": ""
+        },
+        {
+          "object": "Controls",
+          "text": "I / Esc: Close • Hover: Details • Mouse: Drag • Arrows: Select"
+        },
+        {
+          "object": "Label",
+          "text": "Equip"
+        },
+        {
+          "object": "EquipmentTitle",
+          "text": "ATTRIBUTES"
+        },
+        {
+          "object": "Label",
+          "text": "Weapon"
+        },
+        {
+          "object": "Label",
+          "text": "Head"
+        },
+        {
+          "object": "Label",
+          "text": "Chest"
+        },
+        {
+          "object": "Label",
+          "text": "Legs"
+        },
+        {
+          "object": "Label",
+          "text": "Boots"
+        },
+        {
+          "object": "Label",
+          "text": "Accessory 1"
+        },
+        {
+          "object": "Label",
+          "text": "Accessory 2"
+        },
+        {
+          "object": "EquipmentStats",
+          "text": "ATK 20     DEF 14\nMATK 12     MDEF 8\nSPD 10"
+        },
+        {
+          "object": "Resources",
+          "text": "HP 100 / 100    MP 30 / 30"
+        },
+        {
+          "object": "CharacterTitle",
+          "text": "CHARACTER & EQUIPMENT"
+        },
+        {
+          "object": "BagTitle",
+          "text": "BAG   4 / 30"
+        },
+        {
+          "object": "CharacterName",
+          "text": "Player\nLevel 1  •  EXP 0"
+        },
+        {
+          "object": "PortraitCaption",
+          "text": "FALSE MEMORY"
+        },
+        {
+          "object": "Label",
+          "text": "Gloves"
+        },
+        {
+          "object": "InteractionPrompt",
+          "text": ""
+        },
+        {
+          "object": "PickupNotification",
+          "text": ""
+        },
+        {
+          "object": "Content",
+          "text": "<b>Wooden Staff</b>\n<color=#639D6F>Uncommon</color>  •  Weapon\nMATK +4\n\nAn apprentice's staff, a focus for fledgling magic.\n\nRequired Level: 1\nBuy: 100 gold\nSell: 50 gold"
+        }
+      ],
+      "frame": 24240
+    },
+    {
+      "state": "battle-main-1280",
+      "width": 1280,
+      "height": 720,
+      "graphics": 36,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Your turn. Choose an action."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 60 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "COMMANDS"
+        },
+        {
+          "object": "Label",
+          "text": "> Attack"
+        },
+        {
+          "object": "Label",
+          "text": "  Magic"
+        },
+        {
+          "object": "Label",
+          "text": "  Items"
+        },
+        {
+          "object": "Label",
+          "text": "  Defend"
+        },
+        {
+          "object": "Label",
+          "text": "  Flee"
+        }
+      ],
+      "frame": 59418
+    },
+    {
+      "state": "battle-main-1920",
+      "width": 1920,
+      "height": 1080,
+      "graphics": 36,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Your turn. Choose an action."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 60 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "COMMANDS"
+        },
+        {
+          "object": "Label",
+          "text": "> Attack"
+        },
+        {
+          "object": "Label",
+          "text": "  Magic"
+        },
+        {
+          "object": "Label",
+          "text": "  Items"
+        },
+        {
+          "object": "Label",
+          "text": "  Defend"
+        },
+        {
+          "object": "Label",
+          "text": "  Flee"
+        }
+      ],
+      "frame": 62311
+    },
+    {
+      "state": "battle-main-2560",
+      "width": 2560,
+      "height": 1440,
+      "graphics": 36,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Your turn. Choose an action."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 60 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "COMMANDS"
+        },
+        {
+          "object": "Label",
+          "text": "> Attack"
+        },
+        {
+          "object": "Label",
+          "text": "  Magic"
+        },
+        {
+          "object": "Label",
+          "text": "  Items"
+        },
+        {
+          "object": "Label",
+          "text": "  Defend"
+        },
+        {
+          "object": "Label",
+          "text": "  Flee"
+        }
+      ],
+      "frame": 65242
+    },
+    {
+      "state": "battle-main-3440",
+      "width": 3440,
+      "height": 1440,
+      "graphics": 36,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Your turn. Choose an action."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 60 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "COMMANDS"
+        },
+        {
+          "object": "Label",
+          "text": "> Attack"
+        },
+        {
+          "object": "Label",
+          "text": "  Magic"
+        },
+        {
+          "object": "Label",
+          "text": "  Items"
+        },
+        {
+          "object": "Label",
+          "text": "  Defend"
+        },
+        {
+          "object": "Label",
+          "text": "  Flee"
+        }
+      ],
+      "frame": 68029
+    },
+    {
+      "state": "battle-magic-1280",
+      "width": 1280,
+      "height": 720,
+      "graphics": 29,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Choose a spell. Esc to go back."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 60 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "SELECT / ESC: BACK"
+        },
+        {
+          "object": "Label",
+          "text": "> Fire  8 MP"
+        },
+        {
+          "object": "Label",
+          "text": "  Heal  6 MP"
+        },
+        {
+          "object": "Label",
+          "text": "  Back"
+        }
+      ],
+      "frame": 70792
+    },
+    {
+      "state": "battle-magic-1920",
+      "width": 1920,
+      "height": 1080,
+      "graphics": 29,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Choose a spell. Esc to go back."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 60 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "SELECT / ESC: BACK"
+        },
+        {
+          "object": "Label",
+          "text": "> Fire  8 MP"
+        },
+        {
+          "object": "Label",
+          "text": "  Heal  6 MP"
+        },
+        {
+          "object": "Label",
+          "text": "  Back"
+        }
+      ],
+      "frame": 73681
+    },
+    {
+      "state": "battle-magic-2560",
+      "width": 2560,
+      "height": 1440,
+      "graphics": 29,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Choose a spell. Esc to go back."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 60 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "SELECT / ESC: BACK"
+        },
+        {
+          "object": "Label",
+          "text": "> Fire  8 MP"
+        },
+        {
+          "object": "Label",
+          "text": "  Heal  6 MP"
+        },
+        {
+          "object": "Label",
+          "text": "  Back"
+        }
+      ],
+      "frame": 76483
+    },
+    {
+      "state": "battle-magic-3440",
+      "width": 3440,
+      "height": 1440,
+      "graphics": 29,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Choose a spell. Esc to go back."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 60 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "SELECT / ESC: BACK"
+        },
+        {
+          "object": "Label",
+          "text": "> Fire  8 MP"
+        },
+        {
+          "object": "Label",
+          "text": "  Heal  6 MP"
+        },
+        {
+          "object": "Label",
+          "text": "  Back"
+        }
+      ],
+      "frame": 79442
+    },
+    {
+      "state": "battle-items-1280",
+      "width": 1280,
+      "height": 720,
+      "graphics": 30,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Choose an item. Esc to go back."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 60 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "SELECT / ESC: BACK"
+        },
+        {
+          "object": "Label",
+          "text": "> Potion ×3"
+        },
+        {
+          "object": "Label",
+          "text": "  Ether ×5"
+        },
+        {
+          "object": "Label",
+          "text": "  Back"
+        }
+      ],
+      "frame": 82271
+    },
+    {
+      "state": "battle-items-1920",
+      "width": 1920,
+      "height": 1080,
+      "graphics": 30,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Choose an item. Esc to go back."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 60 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "SELECT / ESC: BACK"
+        },
+        {
+          "object": "Label",
+          "text": "> Potion ×3"
+        },
+        {
+          "object": "Label",
+          "text": "  Ether ×5"
+        },
+        {
+          "object": "Label",
+          "text": "  Back"
+        }
+      ],
+      "frame": 85153
+    },
+    {
+      "state": "battle-items-2560",
+      "width": 2560,
+      "height": 1440,
+      "graphics": 30,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Choose an item. Esc to go back."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 60 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "SELECT / ESC: BACK"
+        },
+        {
+          "object": "Label",
+          "text": "> Potion ×3"
+        },
+        {
+          "object": "Label",
+          "text": "  Ether ×5"
+        },
+        {
+          "object": "Label",
+          "text": "  Back"
+        }
+      ],
+      "frame": 88081
+    },
+    {
+      "state": "battle-items-3440",
+      "width": 3440,
+      "height": 1440,
+      "graphics": 30,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Choose an item. Esc to go back."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 60 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "SELECT / ESC: BACK"
+        },
+        {
+          "object": "Label",
+          "text": "> Potion ×3"
+        },
+        {
+          "object": "Label",
+          "text": "  Ether ×5"
+        },
+        {
+          "object": "Label",
+          "text": "  Back"
+        }
+      ],
+      "frame": 90930
+    },
+    {
+      "state": "battle-victory-1280",
+      "width": 1280,
+      "height": 720,
+      "graphics": 26,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Victory! The skeleton has fallen."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 0 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 20"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "COMMANDS"
+        },
+        {
+          "object": "Label",
+          "text": "> Return to Map"
+        },
+        {
+          "object": "VictoryResultText",
+          "text": "Victory!\nEXP Gained: +20\nTotal EXP: 20\nCurrent Level: 1"
+        }
+      ],
+      "frame": 125227
+    },
+    {
+      "state": "battle-victory-1920",
+      "width": 1920,
+      "height": 1080,
+      "graphics": 26,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Victory! The skeleton has fallen."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 0 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 20"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "COMMANDS"
+        },
+        {
+          "object": "Label",
+          "text": "> Return to Map"
+        },
+        {
+          "object": "VictoryResultText",
+          "text": "Victory!\nEXP Gained: +20\nTotal EXP: 20\nCurrent Level: 1"
+        }
+      ],
+      "frame": 128309
+    },
+    {
+      "state": "battle-victory-2560",
+      "width": 2560,
+      "height": 1440,
+      "graphics": 26,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Victory! The skeleton has fallen."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 0 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 20"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "COMMANDS"
+        },
+        {
+          "object": "Label",
+          "text": "> Return to Map"
+        },
+        {
+          "object": "VictoryResultText",
+          "text": "Victory!\nEXP Gained: +20\nTotal EXP: 20\nCurrent Level: 1"
+        }
+      ],
+      "frame": 131363
+    },
+    {
+      "state": "battle-victory-3440",
+      "width": 3440,
+      "height": 1440,
+      "graphics": 26,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Victory! The skeleton has fallen."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  100 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 0 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3  Ether ×5   |   EXP 20"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "COMMANDS"
+        },
+        {
+          "object": "Label",
+          "text": "> Return to Map"
+        },
+        {
+          "object": "VictoryResultText",
+          "text": "Victory!\nEXP Gained: +20\nTotal EXP: 20\nCurrent Level: 1"
+        }
+      ],
+      "frame": 134333
+    },
+    {
+      "state": "battle-defeat-1280",
+      "width": 1280,
+      "height": 720,
+      "graphics": 27,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Defeat. Your journey ends here."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  0 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 50 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "COMMANDS"
+        },
+        {
+          "object": "Label",
+          "text": "> New Game"
+        },
+        {
+          "object": "Label",
+          "text": "  Main Menu"
+        },
+        {
+          "object": "VictoryResultText",
+          "text": "DEFEAT\nYour journey ends here.\nNew Game / Main Menu"
+        }
+      ],
+      "frame": 15648
+    },
+    {
+      "state": "battle-defeat-1920",
+      "width": 1920,
+      "height": 1080,
+      "graphics": 27,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Defeat. Your journey ends here."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  0 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 50 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "COMMANDS"
+        },
+        {
+          "object": "Label",
+          "text": "> New Game"
+        },
+        {
+          "object": "Label",
+          "text": "  Main Menu"
+        },
+        {
+          "object": "VictoryResultText",
+          "text": "DEFEAT\nYour journey ends here.\nNew Game / Main Menu"
+        }
+      ],
+      "frame": 18825
+    },
+    {
+      "state": "battle-defeat-2560",
+      "width": 2560,
+      "height": 1440,
+      "graphics": 27,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Defeat. Your journey ends here."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  0 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 50 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "COMMANDS"
+        },
+        {
+          "object": "Label",
+          "text": "> New Game"
+        },
+        {
+          "object": "Label",
+          "text": "  Main Menu"
+        },
+        {
+          "object": "VictoryResultText",
+          "text": "DEFEAT\nYour journey ends here.\nNew Game / Main Menu"
+        }
+      ],
+      "frame": 21921
+    },
+    {
+      "state": "battle-defeat-3440",
+      "width": 3440,
+      "height": 1440,
+      "graphics": 27,
+      "outside": [],
+      "overflow": [],
+      "russian": [],
+      "missingGlyphs": [],
+      "texts": [
+        {
+          "object": "BattleMessage",
+          "text": "Defeat. Your journey ends here."
+        },
+        {
+          "object": "PlayerStatus",
+          "text": "Player   LV 1\nHP  0 / 100\nMP  30 / 30"
+        },
+        {
+          "object": "EnemyStatus",
+          "text": "Skeleton   LV 1   |   HP 50 / 60"
+        },
+        {
+          "object": "Round",
+          "text": "ROUND 1"
+        },
+        {
+          "object": "Controls",
+          "text": "WASD / Arrows • Enter: Confirm • Esc: Back • Space: Faster"
+        },
+        {
+          "object": "SessionResources",
+          "text": "Potion ×3   |   EXP 0"
+        },
+        {
+          "object": "MenuTitle",
+          "text": "COMMANDS"
+        },
+        {
+          "object": "Label",
+          "text": "> New Game"
+        },
+        {
+          "object": "Label",
+          "text": "  Main Menu"
+        },
+        {
+          "object": "VictoryResultText",
+          "text": "DEFEAT\nYour journey ends here.\nNew Game / Main Menu"
+        }
+      ],
+      "frame": 24893
+    }
+  ]
+}

@@ -15,7 +15,7 @@ Bootstrap вызывает функции. Font/WhiteSprite создают ле�
 - `Font` — свойство TMP_FontAsset: Resources-шрифт или TMP default, ApplyPointFilter.
 - `WhiteSprite` — Sprite из whiteTexture.
 - `CreateCanvas(string objectName)` → экранный Canvas, max(1,floor(Screen.height/360)).
-- `CreateLabel(Transform parent,string objectName,string content,int fontSize,TextAlignmentOptions alignment)` → TMP-текст.
+- `CreateLabel(Transform parent,string objectName,string content,int fontSize,TextAlignmentOptions alignment)` → TMP-текст. extraPadding=false не даёт растровому атласу захватывать пиксели соседних букв.
 - `CreatePanel(Transform parent,string objectName,Color color)` → Image.
 - `CreateButton(Transform parent,string objectName,string caption,Vector2 size)` → Button с рамкой/текстом без событий.
 - `CreateSlider(Transform parent,string objectName,Vector2 size)` → Slider 0…1.
@@ -32,7 +32,7 @@ MainMenuBootstrap, uGUI, TMP, Assets/Resources/Fonts. BattleUI имеет отд
 
 ## 6. Пример работы
 
-CreateButton START → фон/рамка/Label → Bootstrap связывает OnStart.
+CreateButton с текстом New Game → фон/рамка/Label → Bootstrap связывает OnStart; текст берётся из GameText в Bootstrap.
 
 ## 7. Настройка в Unity
 
@@ -40,9 +40,11 @@ CreateButton START → фон/рамка/Label → Bootstrap связывает 
 
 ## 8. Возможные проблемы и проверки
 
-Fallback-шрифт тоже получает Point-фильтр; динамические атласы могут менять кеш. Масштаб выбирается один раз; освобождения кеша нет. Меню создавалось тестами, его внешний вид отдельно здесь не проверялся.
+Fallback-шрифт тоже получает Point-фильтр; динамические атласы могут менять кеш. Масштаб выбирается один раз; освобождения кеша нет. Первичная документация описывала создание меню тестами. Актуальная визуальная проверка и исправление bitmap padding описаны в EnglishLocalization.md.
 
 ## 9. История изменений
+
+2026-10-12 — при визуальной проверке английского меню обнаружены фрагменты соседних букв. CreateLabel отключает extraPadding для растрового атласа с1px padding; исходный PressStart2P, материал, цвета и геометрия сохранены. Исправление подтверждается кадрами и дополнительным условием Play Mode проверки меню.
 
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 

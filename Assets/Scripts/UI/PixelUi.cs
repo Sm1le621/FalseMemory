@@ -104,7 +104,9 @@ public static class PixelUi
         label.raycastTarget = false;
         label.enableAutoSizing = false;
         label.overflowMode = TextOverflowModes.Overflow;
-        label.extraPadding = true;
+        // A bitmap atlas has only one pixel between glyphs. Extra TMP padding
+        // samples neighboring glyphs and produces fragments around the letters.
+        label.extraPadding = false;
         return label;
     }
 

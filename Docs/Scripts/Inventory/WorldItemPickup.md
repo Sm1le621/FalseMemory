@@ -12,6 +12,8 @@
 
 ## 3. Методы и функции
 
+2026-10-12 — актуальная локализация: Prompt возвращает pickup.prompt с именем/quantity; TryInteract использует pickup.full/received. Радиус/резерв/полный отказ и количество сохранены.
+
 IWorldInteractable: `Prompt` string подсказка; `Available` bool; `TryInteract(player,out message)` bool+текст. WorldItemPickup реализует их: Prompt E/имя/количество, Available правильные данные/неподобранный; TryInteract проверяет дальность по PlayerInteractor либо1.2 и мировой gate, ставит резерв, вызывает общий TryAdd, откатывает отказ или выключает объект. Unity callbacks нет.
 
 ## 4. Переменные и Inspector
@@ -19,6 +21,8 @@ IWorldInteractable: `Prompt` string подсказка; `Available` bool; `TryIn
 worldId — стабильный уникальный ID размещения; item — статический ItemData; quantity≥1 (код1), в сцене Potion2/Ether2/оружие/броня1/Bone5. Дополнительный BoneStressTest2871 выключен по умолчанию, только ручной Play-тест полного запаса. Collected readonly runtime bool, начальноfalse. WorldId не хранит прогресс на диск.
 
 ## 5. Связи
+
+GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
 PlayerInteractor/IWorldInteractable, общий BattleInventory.State, Collider2D trigger. SpriteRenderer временных значков — только оформление. Префаб WorldItemPickup сохранён MCP, семь обычных instance и выключенный BoneStressTest имеют разные IDs.
 
@@ -35,5 +39,7 @@ PlayerInteractor/IWorldInteractable, общий BattleInventory.State, Collider2
 Нельзя копировать одинаковый worldId для будущей загрузки. Нет дисковых сохранений/лос/торговли. Подбор не требует покупной цены/уровня; ограничения использования отдельно. Null/неположительные данные не активны.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 
 2026-10-12 — 4.3: резерв/атомарный подбор и общий контракт взаимодействия.

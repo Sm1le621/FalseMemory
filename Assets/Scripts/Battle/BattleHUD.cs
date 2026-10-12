@@ -45,12 +45,12 @@ public sealed class BattleHUD : MonoBehaviour
         SetBar(enemyHPBar, enemy.Health.currentHealth, enemy.Health.maxHealth);
         if (resourceText != null)
             resourceText.text = (player.Inventory != null ? player.Inventory.Summary + "   |   " : "") +
-                "EXP " + player.CurrentExperience + (player.IsDefending ? "   |   DEFEND" : "");
+                GameText.Get("battle.exp",player.CurrentExperience) + (player.IsDefending ? "   |   "+GameText.Get("battle.defending") : "");
         bool low = player.IsAlive && player.Health.currentHealth <= player.Health.maxHealth * lowHealthThreshold;
         if (lowHealthText != null)
         {
             lowHealthText.gameObject.SetActive(low);
-            lowHealthText.text = "LOW HP";
+            lowHealthText.text = GameText.Get("battle.low_hp");
         }
         if (hpBar != null && hpBar.fillRect != null)
             hpBar.fillRect.GetComponent<Image>().color = low ? new Color32(222, 96, 89, 255) : new Color32(86, 168, 121, 255);
@@ -67,7 +67,7 @@ public sealed class BattleHUD : MonoBehaviour
 
     public void MenuChanged(bool submenu)
     {
-        if (menuTitle != null) menuTitle.text = submenu ? "SELECT / ESC - BACK" : "COMMANDS";
+        if (menuTitle != null) menuTitle.text = submenu ? GameText.Get("battle.submenu") : GameText.Get("battle.commands");
         if (menuGroup == null || !isActiveAndEnabled) return;
         if (menuRoutine != null) StopCoroutine(menuRoutine);
         menuRoutine = StartCoroutine(RevealMenu());
@@ -172,7 +172,7 @@ public sealed class BattleHUD : MonoBehaviour
         hpBar = GetBar(content,"PlayerHPBar",new Color32(86,168,121,255)); Place(hpBar.GetComponent<RectTransform>(),285,133,275,12);
         mpBar = GetBar(content,"PlayerMPBar",new Color32(96,134,216,255)); Place(mpBar.GetComponent<RectTransform>(),285,94,275,12);
         enemyHPBar = GetBar(content,"EnemyHPBar",new Color32(185,99,111,255)); Place(enemyHPBar.GetComponent<RectTransform>(),710,450,202,8);
-        menuTitle = GetLabel(content,"MenuTitle"); Place(menuTitle.rectTransform,622,183,296,18); Format(menuTitle,10); menuTitle.text = "COMMANDS";
+        menuTitle = GetLabel(content,"MenuTitle"); Place(menuTitle.rectTransform,622,183,296,18); Format(menuTitle,10); menuTitle.text = GameText.Get("battle.commands");
         var menuRoot = content.Find("CommandRows");
         if (menuRoot == null) menuRoot = new GameObject("CommandRows",typeof(RectTransform),typeof(CanvasGroup)).transform;
         menuRoot.SetParent(content,false); Place((RectTransform)menuRoot,620,35,300,142); menuGroup=menuRoot.GetComponent<CanvasGroup>();
@@ -185,7 +185,7 @@ public sealed class BattleHUD : MonoBehaviour
             StyleCommand(button,label,i==0,true);
         }
         var controls = content.Find("Controls").GetComponent<TextMeshProUGUI>();
-        Place(controls.rectTransform,30,4,900,16); Format(controls,10); controls.alignment=TextAlignmentOptions.Center; controls.text="WASD / стрелки • Enter — выбор • Esc — назад • Space — быстрее";
+        Place(controls.rectTransform,30,4,900,16); Format(controls,10); controls.alignment=TextAlignmentOptions.Center; controls.text=GameText.Get("battle.controls");
         Place(ui.resultPanel.rectTransform,310,238,340,178); Frame(ui.resultPanel,new Color32(29,25,40,248));
         Format(ui.resultText,22); ui.resultText.lineSpacing = 8;
         ui.resultPanel.transform.SetAsLastSibling(); ui.resultPanel.gameObject.SetActive(false);

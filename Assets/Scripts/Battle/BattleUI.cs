@@ -173,7 +173,7 @@ public sealed class BattleUI : MonoBehaviour
     public void ShowVictoryResults(int gained, BattleUnit player)
     {
         resultPanel.gameObject.SetActive(true);
-        resultText.text = "Victory!\nEXP Gained: +" + gained + "\nTotal EXP: " + player.CurrentExperience + "\nCurrent Level: " + player.level;
+        resultText.text = GameText.Get("battle.victory_result", gained, player.CurrentExperience, player.level);
         if(hud!=null)hud.RevealResult();
     }
 
@@ -181,7 +181,7 @@ public sealed class BattleUI : MonoBehaviour
     {
         if(resultPanel==null || resultText==null)return;
         resultPanel.color=new Color32(43,24,35,248);resultPanel.gameObject.SetActive(true);
-        resultText.text="Game Over\nВаш путь оборвался.\nНачать заново / Главное меню";
+        resultText.text=GameText.Get("battle.defeat_result");
         if(hud!=null)hud.RevealResult();
     }
 
@@ -234,19 +234,18 @@ public sealed class BattleUI : MonoBehaviour
 
     public void RefreshStats(BattleUnit player, BattleUnit enemy, int round)
     {
-        playerStats.text = hud == null ? Stats(player) : player.displayName + "   LV " + player.level + "\nHP  " + player.Health.currentHealth + " / " + player.Health.maxHealth + "\nMP  " + player.CurrentMP + " / " + player.MaxMP;
-        enemyStats.text = hud == null ? Stats(enemy) : enemy.displayName + "   LV " + enemy.level + "   |   HP " + enemy.Health.currentHealth + " / " + enemy.Health.maxHealth + (enemy.IsDefending ? "   DEFEND" : "");
-        roundText.text = "РАУНД " + round;
+        playerStats.text = hud == null ? Stats(player) : GameText.Get("battle.player_status",player.LocalizedName,player.level,player.Health.currentHealth,player.Health.maxHealth,player.CurrentMP,player.MaxMP);
+        enemyStats.text = hud == null ? Stats(enemy) : GameText.Get("battle.enemy_status",enemy.LocalizedName,enemy.level,enemy.Health.currentHealth,enemy.Health.maxHealth)+(enemy.IsDefending?"   "+GameText.Get("battle.defending"):"");
+        roundText.text = GameText.Get("battle.round", round);
         if(enemy.IsAlive)enemyPortrait.color=enemy.spriteColor;
         else if(GetComponent<BattlePresentation>()==null)enemyPortrait.color=new Color(0.35f,0.35f,0.35f,0.35f);
     }
 
     private static string Stats(BattleUnit unit) =>
-        unit.displayName + "   LV " + unit.level + "\nHP  " + unit.Health.currentHealth + " / " + unit.Health.maxHealth +
-        "\nMP  " + unit.CurrentMP + " / " + unit.MaxMP +
-               "\nATK " + unit.EffectiveAttack + "   DEF " + unit.EffectiveDefense + "   SPD " + unit.Speed +
-        "\nMATK " + unit.magicAttack + "   MDEF " + unit.magicDefense +
-        (unit.Inventory != null ? "\n" + unit.Inventory.Summary : "") + "\nEXP " + unit.CurrentExperience + (unit.IsDefending ? "\nDEFEND" : "");
+        GameText.Get("battle.full_stats",unit.LocalizedName,unit.level,unit.Health.currentHealth,unit.Health.maxHealth,
+            unit.CurrentMP,unit.MaxMP,unit.EffectiveAttack,unit.EffectiveDefense,unit.Speed,unit.magicAttack,unit.magicDefense)+
+        (unit.Inventory!=null?"\n"+unit.Inventory.Summary:"")+"\n"+GameText.Get("battle.exp",unit.CurrentExperience)+
+        (unit.IsDefending?"\n"+GameText.Get("battle.defending"):"");
 
 #if UNITY_EDITOR
     // Upgrade the saved stage-1 objects in place, invoked only through Unity MCP.
@@ -278,10 +277,10 @@ public sealed class BattleUI : MonoBehaviour
             Fit(commandButtons[i].GetComponent<RectTransform>(), new Vector2(0.69f, y), new Vector2(0.96f, y + 0.047f));
             commandLabels[i].fontSize = 17;
             commandLabels[i].enableAutoSizing = true; commandLabels[i].fontSizeMin = 11; commandLabels[i].fontSizeMax = 17;
-            commandLabels[i].text = new[] {"> Attack", "Magic", "Items", "Defend", "Flee"}[i];
+            commandLabels[i].text = new[] {"> "+GameText.Get("command.attack"), GameText.Get("command.magic"), GameText.Get("command.items"), GameText.Get("command.defend"), GameText.Get("command.flee")}[i];
         }
         var controls = root.Find("Controls").GetComponent<TextMeshProUGUI>();
-        controls.text = "WASD / стрелки • Enter • Esc — назад"; controls.fontSize = 11;
+        controls.text = GameText.Get("battle.controls_short"); controls.fontSize = 11;
         controls.enableAutoSizing = true; controls.fontSizeMin = 9; controls.fontSizeMax = 11;
         if (feedbackGlow == null) feedbackGlow = Panel(root, "AbilityGlow", Color.clear, Vector2.zero, Vector2.zero);
         if (feedbackText == null) feedbackText = Label(root, "AbilityAmount", "", 17, Vector2.zero, Vector2.zero);
@@ -291,7 +290,7 @@ public sealed class BattleUI : MonoBehaviour
         if (resultPanel == null)
             resultPanel = Panel(root, "BattleResults", new Color32(36, 30, 44, 255), new Vector2(0.30f, 0.46f), new Vector2(0.67f, 0.81f));
         if (resultText == null)
-            resultText = Label(resultPanel.transform, "VictoryResultText", "Victory!\nEXP Gained: +20\nTotal EXP: 20\nCurrent Level: 1", 21,
+            resultText = Label(resultPanel.transform, "VictoryResultText", GameText.Get("battle.victory_initial"), 21,
                 new Vector2(0.05f, 0.05f), new Vector2(0.95f, 0.95f));
         resultText.alignment = TextAlignmentOptions.Center;
         resultText.enableAutoSizing = true; resultText.fontSizeMin = 14; resultText.fontSizeMax = 21;
@@ -313,14 +312,14 @@ public sealed class BattleUI : MonoBehaviour
         var root = canvasObject.transform;
         Panel(root, "Backdrop", new Color32(18, 14, 24, 255), Vector2.zero, Vector2.one);
         Panel(root, "Battlefield", new Color32(31, 27, 37, 255), new Vector2(0.02f, 0.32f), new Vector2(0.98f, 0.82f));
-        messageText = Label(root, "BattleMessage", "Скелет преграждает путь.", 23, new Vector2(0.04f, 0.84f), new Vector2(0.96f, 0.98f));
+        messageText = Label(root, "BattleMessage", GameText.Get("battle.encounter"), 23, new Vector2(0.04f, 0.84f), new Vector2(0.96f, 0.98f));
         playerPortrait = Portrait(root, "PlayerBattleSprite", previewPlayerSprite, new Vector2(0.70f, 0.42f), new Vector2(0.84f, 0.76f));
         playerPortrait.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
         enemyPortrait = Portrait(root, "SkeletonBattleSprite", previewEnemySprite, new Vector2(0.19f, 0.42f), new Vector2(0.33f, 0.76f));
         Panel(root, "StatusPanel", new Color32(26, 22, 34, 255), new Vector2(0.02f, 0.02f), new Vector2(0.65f, 0.30f));
-        playerStats = Label(root, "PlayerStatus", "Player   LV 1\nHP 100 / 100\nATK 15   DEF 8   SPD 10", 19, new Vector2(0.04f, 0.07f), new Vector2(0.34f, 0.27f));
-        enemyStats = Label(root, "EnemyStatus", "Skeleton   LV 1\nHP 60 / 60\nATK 12   DEF 5   SPD 7", 19, new Vector2(0.35f, 0.07f), new Vector2(0.63f, 0.27f));
-        roundText = Label(root, "Round", "РАУНД 1", 13, new Vector2(0.04f, 0.025f), new Vector2(0.30f, 0.065f));
+        playerStats = Label(root, "PlayerStatus", GameText.Get("battle.player_initial"), 19, new Vector2(0.04f, 0.07f), new Vector2(0.34f, 0.27f));
+        enemyStats = Label(root, "EnemyStatus", GameText.Get("battle.enemy_initial"), 19, new Vector2(0.35f, 0.07f), new Vector2(0.63f, 0.27f));
+        roundText = Label(root, "Round", GameText.Get("battle.round_initial"), 13, new Vector2(0.04f, 0.025f), new Vector2(0.30f, 0.065f));
         Panel(root, "CommandPanel", new Color32(26, 22, 34, 255), new Vector2(0.67f, 0.02f), new Vector2(0.98f, 0.30f));
         commandButtons = new Button[2]; commandLabels = new TextMeshProUGUI[2];
         for (int i = 0; i < 2; i++)
@@ -333,9 +332,9 @@ public sealed class BattleUI : MonoBehaviour
             button.navigation = new Navigation { mode = Navigation.Mode.None };
             var colors = button.colors; colors.highlightedColor = new Color(1f, 0.9f, 0.7f); colors.disabledColor = new Color(0.6f, 0.6f, 0.6f); button.colors = colors;
             commandButtons[i] = button;
-            commandLabels[i] = Label(image.transform, "Label", i == 0 ? "> Attack" : "  Defend", 18, new Vector2(0.05f, 0f), new Vector2(0.95f, 1f));
+            commandLabels[i] = Label(image.transform, "Label", i == 0 ? "> "+GameText.Get("command.attack") : "  "+GameText.Get("command.defend"), 18, new Vector2(0.05f, 0f), new Vector2(0.95f, 1f));
         }
-        Label(root, "Controls", "WASD / стрелки • Enter — выбор", 12, new Vector2(0.69f, 0.025f), new Vector2(0.96f, 0.075f));
+        Label(root, "Controls", GameText.Get("battle.controls_basic"), 12, new Vector2(0.69f, 0.025f), new Vector2(0.96f, 0.075f));
         UnityEditor.EditorUtility.SetDirty(this);
     }
 

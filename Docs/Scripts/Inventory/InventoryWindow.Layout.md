@@ -12,6 +12,8 @@ BuildFantasyLayout переиспользует сохранённые ячей�
 
 ## 3. Методы и функции
 
+2026-10-12 — актуальная локализация: BuildFantasyLayout читает inventory.title/character_equipment/bag_initial/attributes/controls, сохраняя геометрию. Saved подписи SampleScene и статические LocalizedLabel настроены отдельно через MCP.
+
 `BuildFantasyLayout()` void запрещает Play Mode/отсутствующую panel/не30 slots; задаёт размер/Scaler, переставляет старые элементы, добавляет8-й слот Gloves без изменения индексов, назначает views/tooltip/ссылки, закрывает окно и помечает существующую сцену dirty. Сохранение отдельно через Unity MCP.
 
 `Section(name,x,y,w,h)` → RectTransform найденной/новой панели с рамкой, raycast=false. `EnsureLabel(name,text,size,x,y,w,h)` → найденный/новый TMP и позиция. `EnsureImage(parent,name)` → найденный/новый Image без raycast. `MoveButton(button,x,y,width)` void переставляет существующую кнопку/подпись и задаёт тёмный фон. Общие helpers Panel/Place/Label/Button остаются в InventoryWindow.cs. Unity callbacks нет.
@@ -21,6 +23,8 @@ BuildFantasyLayout переиспользует сохранённые ячей�
 Ссылки хранятся в основной части InventoryWindow. Panel1140×720; Canvas reference1200×780, Expand — равномерное масштабирование по доступному экрану; PixelPerfect/sorting60 сохранены. Сумка6×5, ячейка68/шаг96 поX76 поY. Две колонки экипировки вокруг исходного Point-спрайта. Спрайт/импорт не меняются.
 
 ## 5. Связи
+
+GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
 Существующий InventoryCanvas SampleScene, InventoryWindow на Player, ItemPresentation/EquipmentSlotView/InventoryTooltip, UnityEditor сохранение сцены.
 
@@ -37,5 +41,7 @@ BuildFantasyLayout переиспользует сохранённые ячей�
 Предполагает существующий этап4 с Resources/Title/EquipmentTitle/Controls. Не является универсальным автоматическим мигратором произвольных сцен. Позиции — единый дизайн окна, масштабирование обеспечивает Scaler; ориентировано на ПК, не мобильную навигацию.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 
 2026-10-12 — повторяемая перестройка старого UI без удаления объектов, центрированный портрет/характеристики/сумка/hover.

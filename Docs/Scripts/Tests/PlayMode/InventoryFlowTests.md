@@ -11,6 +11,8 @@
 Использует прежние Setup/Cleanup реальной SampleScene. Создаёт/удаляет синтетическую клавиатуру и только тестовые данные.
 
 ## 3. Методы и функции
+
+2026-10-12 — актуальная локализация: Текстовые ожидания приведены к английскому UI (New Game/Main Menu/Back/No items available/Inventory full/DEFEAT/описания HPMP/цен). Проверки состояния, количества, урона, ресурсов и поведения сохранены.
 `RealMouseRaycastDragsAndCancelsThroughInputSystem` UnityTest IEnumerator: добавляет Mouse, вычисляет screen-центры через helper `SlotScreenCenter(slot)` → Vector2, отправляет настоящие MouseState position/buttons/delta в Input System, не вызывает handlers сам. Проверяет перенос0→9 и отмену вне экрана без потери3 Potion/ghost; finally удаляет устройство/закрывает. Тест I/Escape теперь также проверяет backdrop.
 `SharedInventoryEquipmentAndEtherSurviveBattleVictoryAndWorldReturn` UnityTest IEnumerator: окно/Potion/Ether/повтор кадра, Sword/Armor/Helmet, настоящая BattleScene, Attack15/ответ1, HPMP-предметы/Fire/победа/возврат. Итог97HP/30MP/Potion1/Ether0/EXP20 и те же InventoryState/экипировка/позиция/мировой HUD. `WorldUseRestrictionsDisableButtonsWithoutConsumingItems` UnityTest: разрешённость только Battle/нехватка уровня, disabled кнопка и отказ без qty/HP.
 `EquipmentButtonsApplyAndRemoveBonusesWithoutChangingBaseStatsOrResources` UnityTest IEnumerator: реальные сценовые определения/кнопки, пять циклов меча, Armor/Helmet; ATK20/DEF14, база15/8, HP100/MP30, одиночное владение и Stats.
@@ -39,6 +41,8 @@ FalseMemory.Battle.PlayModeTests/Runtime/InputSystem/EventSystem и общие f
 Отдельный DragSlot вызывает handlers напрямую; новый Mouse-сценарий проходит настоящий Input System/UI-raycast. В набор также входят подбор/экипировка/общие предметы/бой/возврат. Человеческое удобство/мышь на рабочем месте/звук/standalone оцениваются отдельно.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 2026-10-12 — 4.6: настоящий mouse/raycast/drop/cancel и backdrop.
 2026-10-12 — 4.5: два сценария общей сессии/ресурсов и ограничений.
 2026-10-12 — 4.4: сценарий кнопок экипировки/повторных бонусов.

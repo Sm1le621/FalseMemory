@@ -1,6 +1,6 @@
 {
   "name": "FalseMemory.Battle.EditModeTests",
-  "references": ["FalseMemory.Runtime", "UnityEngine.UI", "Unity.TextMeshPro"],
+  "references": ["FalseMemory.Runtime", "UnityEngine.UI", "Unity.TextMeshPro", "Unity.Localization"],
   "includePlatforms": ["Editor"],
   "optionalUnityReferences": ["TestAssemblies"],
   "autoReferenced": false

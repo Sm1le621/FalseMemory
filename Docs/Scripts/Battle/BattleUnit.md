@@ -11,6 +11,8 @@
 Awake заполняет MP единожды. Менеджер начинает ход и сбрасывает Defend, действия расходуют MP или дают опыт. Исходный объект мира используется в бою.
 
 ## 3. Методы и функции
+
+2026-10-12 — актуальная локализация: localizationId — ключ unit.player/unit.skeleton, LocalizedName → GameText.Content(localizationId+".name",displayName). Это только имя; уровни/EXP/характеристики/Health не меняются.
 `Equipment` получает EquipmentController того же объекта; private `EquipmentBonuses` читает его State либо нулевые. `EffectiveAttack/EffectiveDefense/EffectiveMagicAttack/EffectiveMagicDefense` → int: неотрицательная база+соответствующий бонус с насыщением int.MaxValue. `Speed` учитывает speed-бонус. Без Equipment прежние значения. Базовые поля/HP/MP не меняются.
 
 - `Awake()` — Unity: currentMP=MaxMP; void, не повторяется при скрытии мира.
@@ -22,9 +24,13 @@ Awake заполняет MP единожды. Менеджер начинает 
 
 ## 4. Переменные и параметры Inspector
 
+localizationId — новое serialized string-поле: spell.fire/spell.heal у заклинаний, unit.player/unit.skeleton у участников сцены. LocalizedName readonly читает таблицу, displayName остаётся английским fallback. Ни ID, ни боевые параметры это поле не меняет.
+
 displayName — подпись; level≥1; attack/defense/speed≥0 (код 15/8/10). maxMP/currentMP/magicAttack/magicDefense≥0; currentMP сериализован, Awake перезаписывает. spells — список BattleSpell. criticalChance/missChance 0…1 (0.1/0.05). currentExperience/experienceReward≥0; battleSprite/spriteColor/flipInBattle — внешний вид. Сцена Player: MP30, MATK12, MDEF8; Enemy: ATK12 DEF5 SPD7 MDEF3 Reward20.
 
 ## 5. Связи с другими системами
+
+GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
 RequireComponent Health. Inventory необязателен, но нужен для предметов. Player/Enemy в SampleScene; BattleManager, Transition, UI, Abilities и очередь читают его.
 
@@ -41,6 +47,8 @@ Fire → TrySpendMP(8): 30→22. Возврат в мир не запускае�
 Новый экземпляр/перезагрузка карты сбрасывает MP. Прямая запись сериализованных полей может обойти ограничения; Inspector-атрибуты не полная защита. Нет level-up. MP/EXP/защита и сохранение сессии проверены тестами.
 
 ## 9. История изменений
+
+2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 - 2026-10-12 — 4.4: readonly итоговые характеристики экипировки, без накопления/лечения. С4.5 менеджер/магия читают эти свойства; цены/формулы сохранены.
 
 - 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.

@@ -1,6 +1,6 @@
 # Архитектура FalseMemory
 
-Состояние прочитанного кода и проверенных ссылок на 2026-10-11. Существующая реализация этапа 2 повторно проверена и сохраняется в локальном Git вместе со сценами, ассетами, тестами и документацией. Новые игровые системы в задаче главного промпта повторно не создавались.
+Текущие дополнения на 2026-10-12 описаны ниже; историческая основа аудита — 2026-10-11. Существующая реализация этапа 2 повторно проверена и сохраняется в локальном Git вместе со сценами, ассетами, тестами и документацией. Новые игровые системы в задаче главного промпта повторно не создавались.
 
 ## Структура проекта
 
@@ -33,7 +33,7 @@
 
 - WorldItemUseController делегирует Abilities с Exploration, Manager с Battle; общие ограничения/однократный расход и Health/MP. Менеджер читает Effective*, формулы не меняются. EtherVisual — отдельный голубой профиль, не новый тип магии.
 
-- EquipmentController.State — семь надетых ItemData, атомарный обмен с InventoryState. BattleUnit.Effective* читает базу+сумму заново, базовые поля не изменяются/ресурсы не восстанавливаются. InventoryWindow даёт команды; это не LevelUp/классы/HPMP-бонусы.
+- EquipmentController.State — восемь надетых ItemData, атомарный обмен с InventoryState. BattleUnit.Effective* читает базу+сумму заново, базовые поля не изменяются/ресурсы не восстанавливаются. InventoryWindow даёт команды; это не LevelUp/классы/HPMP-бонусы.
 
 - PlayerInteractor/IWorldInteractable — один вход E/поиск ближайшей физической цели. WorldItemPickup резервирует выдачу в общий State и выключает только себя; prefab/семь тестовых instance TestLoot сохраняются в SampleScene. Это не SaveSystem/NPC.
 
@@ -89,3 +89,10 @@
 ## Представление инвентаря по RPG-референсу
 
 InventoryWindow сохранён на Player; редакторная partial-часть InventoryWindow.Layout переиспользует старый Canvas/30 ячеек/кнопки, добавляет портрет и Gloves. InventorySlotView/EquipmentSlotView читают ItemPresentation, а одна InventoryTooltip на Canvas читает текущий предмет при hover. Редкость хранится только в ItemData, цвета/описания не изменяют расчёты и количество. HPMP/EXP читаются с исходного Unit/Health; окно не создаёт отдельного персонажа/уровней. Canvas Expand вписывает1140×720 в доступное разрешение. Реальные проверки описаны в [InventoryRedesign](InventoryRedesign.md).
+
+
+## Английский контент и локализация
+
+GameText читает одну native Unity StringTable Resources/Localization/GameText_en-US и SharedData (136 ключей), форматирует HPMP/EXP/количество. LocalizedLabel обновляет статические TMP; прежние контроллеры формируют динамический текст. ItemData/Unit/Spell имеют локализованные getters без изменения ID/GUID/баланса. Editor GameTextEditor позволяет менять/добавлять English-значения. Unity Localization1.5.13 установлен; автоматически создана конфигурация Addressables/Locale, порядок сцен сохранён. Runtime читает таблицу через Resources, Unity LocalizationSettings не является вторым владельцем выбора языка. Других переводов нет; полная горячая смена языка/Smart Strings не подключены.
+
+PixelUi сохраняет PressStart2P/пиксельный стиль: extraPadding=false устраняет захват соседних glyphs bitmap-атласа. Общая игровая логика не переписана. Новые правила/инструкции — [LocalizationSystem](Systems/LocalizationSystem.md), текущая проверка — [EnglishLocalization](EnglishLocalization.md).

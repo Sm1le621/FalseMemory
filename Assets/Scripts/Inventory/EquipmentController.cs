@@ -31,10 +31,10 @@ public sealed class EquipmentController : MonoBehaviour
     public bool TryUnequip(EquipmentSlot slot) => CanChange && State.TryUnequip(inventory.State,slot);
     private void HandleEquip(int index,EquipmentSlot? target)
     {
-        bool ok=TryEquip(index,target);window.ShowMessage(ok?"Предмет экипирован.":"Нельзя экипировать: проверьте слот и требуемый уровень.");window.Refresh();
+        bool ok=TryEquip(index,target);window.ShowMessage(ok?GameText.Get("equipment.equipped"):GameText.Get("equipment.equip_failed"));window.Refresh();
     }
     private void HandleUnequip(EquipmentSlot slot)
     {
-        bool ok=TryUnequip(slot);window.ShowMessage(ok?"Предмет снят.":"Невозможно снять: нет места либо слот пуст.");window.Refresh();
+        bool ok=TryUnequip(slot);window.ShowMessage(ok?GameText.Get("equipment.unequipped"):GameText.Get("equipment.unequip_failed"));window.Refresh();
     }
 }

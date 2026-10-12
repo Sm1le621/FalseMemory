@@ -166,7 +166,7 @@ public sealed partial class BattleFlowTests
             InputSystem.QueueStateEvent(keyboard,new KeyboardState());yield return new WaitForSecondsRealtime(0.2f);
             InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.E));yield return null;yield return null;
             Assert.That(pickup.Collected,Is.False);Assert.That(obj.activeSelf,Is.True);Assert.That(inventory.Count(loot),Is.Zero);
-            Assert.That(player.GetComponent<PlayerInteractor>().notification.text,Does.Contain("Нет места"));
+            Assert.That(player.GetComponent<PlayerInteractor>().notification.text,Does.Contain("Inventory full"));
             inventory.TryRemove(filler,1);
             InputSystem.QueueStateEvent(keyboard,new KeyboardState());yield return new WaitForSecondsRealtime(0.2f);
             InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.E));yield return null;yield return null;
