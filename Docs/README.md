@@ -33,6 +33,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 
 ## Игровые системы
 
+- [Primary attributes](Systems/CharacterStatsSystem.md) — данные10 характеристик/формулы; подключение к геймплею отдельным подэтапом.
+
 - [Направления игрока](Systems/AnimationSystem.md) — два directional Blend Tree; настоящие walk-кадры ещё нужны.
 
 - [Прокачка](Systems/ProgressionSystem.md) — первые уровни и growth.
@@ -63,6 +65,10 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 Полноценного SaveSystem, партийного боя и классов пока нет; level-up подключён в5.1; они не документируются как готовые системы. PlayerPrefs уже сохраняет настройки меню, но не RPG-прогресс.
 
 ## Описания скриптов
+
+После Player rework3 —77 собственных C# (52 runtime,22 test,2 Editor,1 Welcome). Fresh84 Edit Mode;43 Play — предыдущая подготовка Animator, игровая интеграция primary ещё впереди.
+
+- [CharacterAttributeValues](Scripts/Battle/CharacterAttributeValues.md), [CharacterAttributeRules](Scripts/Battle/CharacterAttributeRules.md), [CharacterAttributes](Scripts/Battle/CharacterAttributes.md), [CharacterAttributeTests](Scripts/Tests/EditMode/CharacterAttributeTests.md).
 
 - [PlayerDirectionFlowTests](Scripts/Tests/PlayMode/PlayerDirectionFlowTests.md) — восемь направлений/Idle/последний взгляд/modal gate.
 

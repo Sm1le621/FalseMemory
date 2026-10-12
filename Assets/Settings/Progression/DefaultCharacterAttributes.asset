@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fda3648e45f9764196b5b5efd6dcf9e, type: 3}
+  m_Name: DefaultCharacterAttributes
+  m_EditorClassIdentifier: FalseMemory.Runtime::CharacterAttributeRules
+  referenceValue: 10
+  growthPerLevel:
+    strength: 1
+    agility: 1
+    dexterity: 1
+    endurance: 1
+    vitality: 1
+    intelligence: 1
+    wisdom: 1
+    charisma: 1
+    magicPower: 1
+    magicControl: 1
+  strengthAttack: 1
+  dexterityAttack: 1
+  enduranceDefense: 1
+  magicPowerAttack: 1
+  wisdomDefense: 1
+  agilitySpeed: 1
+  vitalityHealth: 5
+  intelligenceMana: 1
+  wisdomMana: 1
+  agilityMovement: 0.03
+  dexterityAccuracy: 0.005
+  dexterityCritical: 0.002
+  agilityCritical: 0.001
+  agilityEvasion: 0.005
+  magicControlEfficiency: 0.02
+  magicPowerHealing: 1
+  maximumManaReduction: 0.5
+  maximumCritical: 0.95
+  maximumEvasion: 0.5
+  strengthCapacity: 2
+  enduranceStamina: 5
+  enduranceRecovery: 0.1
+  vitalityResistance: 1
+  intelligenceKnowledge: 1
+  wisdomPerception: 1
+  charismaPersuasion: 1
+  magicControlPrecision: 1

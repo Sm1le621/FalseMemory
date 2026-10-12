@@ -1,5 +1,9 @@
 # История значимых изменений FalseMemory
 
+## 2026-10-12 — Player rework3: десять primary attributes, данные
+
+Добавлены CharacterAttributeValues/Rules/Attributes, настраиваемый DefaultCharacterAttributes и3 проверки формул/JSON базы/насыщения. Нейтральные10 сохраняют исходные параметры, рост+1 повторяет прежние derived increments.84 Edit Mode passed; игровой компонент намеренно подключается следующим подэтапом вместе с ресурсами/боем/UI, существующие механики пока не менялись. [Система](Systems/CharacterStatsSystem.md), [отчёт](PlayerRework.md). Классы/стамина/диалоги/дисковые сохранения отсутствуют; prepared scores не являются этими механиками. Push не выполнялся.
+
 ## 2026-10-12 — Player rework2: подготовка directional Animator
 
 PlayerController сохраняет последний нормализованный вектор, управляет Move/LastMove, сбрасывает скорость при выключении; legacy-ветка отражения сохраняется. В прежний Animator добавлены два2D Blend Tree и16 именованных клипов со статическим оригинальным fallback; полноценные ракурсы не заявляются. Built-in image_gen дал1983×793/изменённый дизайн вместо native64, результат не подключён.81 Edit/43 Play passed, включая новый сценарий восьми клавиатурных направлений/gate; компиляция успешна, финальная Console чистая. [Отчёт/нужные кадры](PlayerRework.md), [система](Systems/AnimationSystem.md).10 attributes/экипировка — следующие подэтапы; push не выполнялся.
