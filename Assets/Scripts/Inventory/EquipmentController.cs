@@ -29,12 +29,16 @@ public sealed class EquipmentController : MonoBehaviour
         return State.TryEquip(inventory.State,index,slot,unit.level);
     }
     public bool TryUnequip(EquipmentSlot slot) => CanChange && State.TryUnequip(inventory.State,slot);
+    public bool CanEquip(int index,EquipmentSlot slot) => CanChange && State.CanEquip(inventory.State,index,slot,unit.level);
+    public bool CanMove(EquipmentSlot from,EquipmentSlot to) => CanChange && State.CanMove(from,to,unit.level);
+    public bool TryMove(EquipmentSlot from,EquipmentSlot to) => CanChange && State.TryMove(from,to,unit.level);
+    public bool TryUnequipTo(EquipmentSlot from,int destination) => CanChange && State.TryUnequipTo(inventory.State,from,destination,unit.level);
     private void HandleEquip(int index,EquipmentSlot? target)
     {
         bool ok=TryEquip(index,target);window.ShowMessage(ok?GameText.Get("equipment.equipped"):GameText.Get("equipment.equip_failed"));window.Refresh();
     }
     private void HandleUnequip(EquipmentSlot slot)
     {
-        bool ok=TryUnequip(slot);window.ShowMessage(ok?GameText.Get("equipment.unequipped"):GameText.Get("equipment.unequip_failed"));window.Refresh();
+        bool ok=TryUnequip(slot);window.ShowMessage(GameText.Get(ok?"equipment.unequipped":inventory.State.FirstEmptySlot()<0?"inventory.full":"equipment.unequip_failed"));window.Refresh();
     }
 }

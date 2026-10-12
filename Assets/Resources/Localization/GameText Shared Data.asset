@@ -731,6 +731,46 @@ MonoBehaviour:
     m_Key: character.derived_summary
     m_Metadata:
       m_Items: []
+  - m_Id: 130532131717120
+    m_Key: equipment.slot.offhand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130532240769024
+    m_Key: inventory.full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 131526957711360
+    m_Key: item.iron_shield.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 131526982877184
+    m_Key: item.iron_shield.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132540616130560
+    m_Key: stat.move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132540653879296
+    m_Key: stat.critical
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132540653879297
+    m_Key: stat.evasion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132540653879298
+    m_Key: item.float_bonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132540653879299
+    m_Key: item.percent_bonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132540653879300
+    m_Key: equipment.two_handed
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

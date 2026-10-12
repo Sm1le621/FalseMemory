@@ -786,6 +786,46 @@ MonoBehaviour:
       MATK {2}    MDEF {3}'
     m_Metadata:
       m_Items: []
+  - m_Id: 130532131717120
+    m_Localized: Off-Hand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130532240769024
+    m_Localized: Inventory is full.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 131526957711360
+    m_Localized: Iron Shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 131526982877184
+    m_Localized: An iron shield for the off-hand. Increases Defense.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132540616130560
+    m_Localized: Movement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132540653879296
+    m_Localized: Critical Chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132540653879297
+    m_Localized: Evasion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132540653879298
+    m_Localized: '{0} {1:+0.##;-0.##;0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132540653879299
+    m_Localized: '{0} {1:+0.##;-0.##;0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132540653879300
+    m_Localized: Requires both hands.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

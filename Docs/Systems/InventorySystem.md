@@ -1,5 +1,9 @@
 # Общий инвентарь и предметы
 
+## Актуально2026-10-13
+
+9 gear slots и30bag ячеек используют прежние модели. Bag↔gear/gear↔gear/cancel/fullbag проверены90 Edit/49 Play; настоящийMouse сценарий подтверждаетraycast. [Подробности](EquipmentDragSystem.md). Нетдисковогосохранения; текущаясессия сохраняетсямеждумиром иBattleScene.
+
 ## Дополнение2026-10-12
 
 Player rework4: прежний Inventory I показывает10 primary rows иобщую hover-панель источников; сумка30 иоперации остались. Derived summary компактно2 строки, UI/tooltip проверены в4 разрешениях. [Система характеристик](CharacterStatsSystem.md).

@@ -1,5 +1,7 @@
 # Документация FalseMemory
 
+Актуальная контрольнаяточка2026-10-13:82 собственныхC# (53 runtime,25 test,3 Editor,1 Welcome),90 Edit/49 Play. [Текущийотчёт/ручнаяприёмка](PlayerRework.md), [переносы](Systems/EquipmentDragSystem.md). Новыеописания: [EquipmentPlaceholderBuilder](Scripts/Editor/EquipmentPlaceholderBuilder.md), [EquipmentTransferTests](Scripts/Tests/EditMode/EquipmentTransferTests.md), [EquipmentDragFlowTests](Scripts/Tests/PlayMode/EquipmentDragFlowTests.md). Болееранниечисла ниже —история.
+
 После Player rework4 —79 собственных C# (53 runtime,23 test,2 Editor,1 Welcome);84 Edit/46 Play и8 UI cases. Primary подключены; CHA/prepared scores пока без NPC/стамины/сопротивлений. [AttributeRowView](Scripts/Inventory/AttributeRowView.md), [CharacterAttributeFlowTests](Scripts/Tests/PlayMode/CharacterAttributeFlowTests.md), [отчёт](PlayerRework.md).
 
 FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Документы написаны для владельца без опыта C# и описывают текущую рабочую копию на **2026-10-12**.

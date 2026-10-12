@@ -12,6 +12,8 @@
 
 ## 3. Методы и функции
 
+Player rework5: добавленTooltipIncludesPrimaryCapacityFloatBonusesAndTwoHandRequirement(): voidTest временногоWeapon. ПроверяетSTR+3/HP+10/MP+5/Movement+.2/Crit+5%/Evasion+1%/Requiresbothhands, finally освобождаеттолькоtemporaryasset.
+
 2026-10-12 — актуальная локализация: Текстовые ожидания приведены к английскому UI (New Game/Main Menu/Back/No items available/Inventory full/DEFEAT/описания HPMP/цен). Проверки состояния, количества, урона, ресурсов и поведения сохранены.
 
 `RarityIsNamedAndColoredWithoutChangingGameplay(rarity)` шесть TestCase: имя редкости/ATK+5/непрозрачный цвет/StackLimit1/неизменный бонус. `TooltipHidesEmptyFieldsEscapesMarkupAndReportsRealConsumableEffect()` void проверяет количество3, HP30, защиту от TMP markup, отсутствие пустых цен/бонусов; затем MP20/цены50/25 без HP. `AppendingGlovesPreservesOriginalSerializedSlotsAndDoesNotAcceptAccessories()` void проверяет5/6, Armor Gloves, отказ Boots/Accessory Gloves и null Description. Unity callbacks нет.
@@ -34,9 +36,13 @@ NUnit и FalseMemory.Battle.EditModeTests; EquipmentTests отдельно пр�
 
 ## 8. Ограничения и расширение
 
+Текстпредмета/коэффициент не означаетготовыеNPC/торговлю; данныеpricesещёбезshop.
+
 Не доказывает художественную читаемость цветов и реальный hover; это покрыто другими сценариями/снимками и ручной приёмкой.
 
 ## 9. История изменений
+
+- 2026-10-12 — Player rework5: девятыйOffHand, bidirectionaldrag/atomictransfers/совместимость/силуэты; sourceIDsсохранены.
 
 2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 

@@ -1,5 +1,9 @@
 # Настройка существующего проекта в Unity
 
+## Актуально2026-10-13
+
+SampleScene содержит9equipmentButtons сemptySprite ипрежний30bag. ВTestLoot добавленPickup_IronShield (−3.4,−3.5), его ItemData —Assets/Settings/Inventory/IronShield.asset. Слоты54×54/шаг80 избегаютпересеченияподписей. НаProfile/Enemy/Camera/Rigidbody другихизмененийнет. [Настройкапереносов](../Systems/EquipmentDragSystem.md).
+
 ## Player rework4 — актуальная настройка
 
 На исходном Player SampleScene назначены CharacterAttributes/DefaultCharacterAttributes и прежний DefaultCharacterGrowth. Не складывать legacy growth с primary: BattleUnit сам выбирает источник. InventoryWindow содержит10 AttributeRowView, общий прежний tooltip и компактную сводку. Scene сохранена через MCP. Enemy без primary, исходные коллайдеры/камера сохранены. [Система](../Systems/CharacterStatsSystem.md).

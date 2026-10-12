@@ -1,5 +1,7 @@
 # Архитектура FalseMemory
 
+2026-10-13, Player rework5: прежние EquipmentState/Controller теперь9 slots (OffHand8); один Window drag хранит source/item, model выполняет single exchange/gear swap. EquipmentSlotView показывает item либо muted emptySprite и обрабатывает Pointer events, rarity и validity разделены. Новый Editor-only EquipmentPlaceholderBuilder создал8 native64 masks; ItemData поддерживает hand flags, IronShield/pickup дополняет TestLoot. Ownership/resources не дублируются. [Переносы](Systems/EquipmentDragSystem.md), [проверки/ручная граница](PlayerRework.md).
+
 Player rework4/5.2: primary component подключён к исходному Player. BattleUnit использует primary growth вместо legacy increments, агрегирует gear, владеет прежнимMP/EXP; Health прежний. Подписки Attribute/Equipment живут до OnDestroy даже при скрытом мире; StatsChanged обновляет Inventory. Производные читают Calculator/Manager/Abilities/PlayerController, единый SpellCost показывается Magic-menu. AttributeRowView использует прежний Tooltip. [Формулы и границы](Systems/CharacterStatsSystem.md), [проверки](PlayerRework.md).
 
 Player rework3 — добавлены primary data/формулы в CharacterAttributeValues/Rules/Attributes и профиль DefaultCharacterAttributes. На этой контрольной точке они не подключены к сцене: это последовательный data-подэтап перед интеграцией. Base/class/temporary и производный growth разделены, ресурсы остаются в прежних владельцах. [Роли/формулы](Systems/CharacterStatsSystem.md).

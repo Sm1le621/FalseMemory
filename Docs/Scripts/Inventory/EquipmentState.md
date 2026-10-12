@@ -2,42 +2,45 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Inventory/EquipmentState.cs.
-
-Сериализуемое владение восемью надетыми предметами отдельно от статических определений.
+Assets/Scripts/Inventory/EquipmentState.cs. Serializable владелец девяти надетых ItemData отдельно от исходного InventoryState. Статические определения не хранят количество.
 
 ## 2. Как работает
 
-Надевание обменивает один предмет инвентаря с надетым в том же исходном слоте, поэтому полная сумка не мешает замене. Снятие сначала проверяет место; отказ оставляет обе стороны неизменными. changing запрещает повторный вход из событий.
+Надевание меняет одну bag вещь на надетую. Возврат идёт в свободное место либо указанную ячейку; compatible singleton допускает обмен. Перенос между gear слотами перемещает/обменивает ссылки. Все условия проверяются до изменения; changing исключает повторный вход из уведомлений. Отказ сохраняет исходное владение.
 
 ## 3. Методы и функции
 
-`GetSlot(slot)` → ItemData/null, неверный enum бросает исключение. `Bonuses` → новая сумма ItemStatBonus всех8, не накапливает историю. `TryEquip(inventory,index,slot,level)` bool проверяет индекс/содержимое1/Fits/уровень; выставляет надетый предмет перед Inventory notification, вызывает TryExchangeSingle, при отказе восстанавливает прежнее и не даёт Changed. `TryUnequip(inventory,slot)` bool проверяет CanAdd, снимает/добавляет предмет целиком, откатывает отказ. `Valid(slot)` private bool0..7. changing снимается finally, Changed после успеха. Unity callbacks нет.
+GetSlot(slot) возвращает ItemData/null, неверный enum — исключение; EnsureSize сохраняет старые0…7 и расширяет массив до9. Bonuses каждый раз суммирует определения, не записывает в базовые характеристики.
+Valid(slot) проверяет0…8. HandsAllow(target,incoming,emptied=null) проверяет будущую пару Main Weapon/OffHand: twoHanded Weapon несовместим с любым OffHand. Не снимает вещи автоматически.
+CanEquip(inventory,index,slot,level) проверяет guard/индекс/Count1/Fits/level/hands. TryEquip повторно проверяет, задаёт gear перед InventoryState.TryExchangeSingle и откатывает при false; после успеха Changed.
+TryUnequip(inventory,slot) проверяет CanAdd, снимает и TryAdd целиком; отказ откатывается. GetSlot обеспечивает legacy size.
+CanMove(from,to,level) проверяет обоих участников обмена/Fits/уровень и будущую пару рук. Тот же nonempty slot разрешён как no-op. TryMove применяет подтверждённый swap, Changed один раз, no-op без Changed.
+TryUnequipTo(inventory,from,destination,level) проверяет конкретный bag slot: пустой либо compatible equipment Count1/level/hands. Меняет gear/точный bag singleton, откатывает false; Changed после успеха. Full incompatible bag не теряет надетое.
+Все Try/Can возвращают bool. Changing снимается finally. Unity callbacks отсутствуют.
 
 ## 4. Переменные и Inspector
 
-SlotCount=8 — постоянный размер массива: прежние семь и Gloves7. EquipmentController создаёт модель в текущей сессии. Старых дисковых сохранений с массивом7 нет.
-
-slots ItemData[8] private сериализуемые, пусты сначала; changing private transient; Changed Action. Предмет в equipped больше не лежит в inventory, старый при замене возвращается ровно1.
+SlotCount=9 const, private SerializeField slots ItemData[9], initial empty; changing private transient, Changed Action. Weapon0/Head1/Chest2/Legs3/Boots4/Accessory1=5/Accessory2=6/Gloves7/OffHand8. Legacy8 расширяется без переиндексации; реальных дисковых сохранений старой игры нет.
 
 ## 5. Связи
 
-ItemData.Fits/bonuses/requiredLevel, InventoryState.TryExchangeSingle/CanAdd/TryAdd; EquipmentController владеет моделью.
+EquipmentController.State владеет моделью; ItemData.Fits/twoHanded/requiredLevel, InventoryState.TryExchangeSingle/CanAdd/TryAdd. BattleUnit читает Bonuses и подписан на Changed; UI только отправляет операции.
 
 ## 6. Пример
 
-Меч ATK+5 меняется на Staff MATK+4 в полной сумке: меч становится предметом прежней ячейки, Staff надет, ATK-бонус0/MATK4. Снять Staff без места нельзя.
+Sword перетаскивается из Weapon в bag12: один экземпляр оказывается именно в12, gear пуст и бонус снят. Ring изAccessory1 вAccessory2 меняет слот без удвоения бонуса. Two-handed sword при надетомShield отклоняется, обе вещи остаются.
 
 ## 7. Настройка в Unity
 
-Не компонент; создаётся EquipmentController.State. Для новых типов нужен Slot enum/размер/правила/UI; текущих7 достаточно.
+Не компонент и не ScriptableObject. Создаётся прежним EquipmentController. Для новых типов добавлять enum в конец, обновлять SlotCount/Fits/UI и тесты. В текущей SampleScene подключены9 views.
 
-## 8. Ограничения и расширение
+## 8. Возможные проблемы
 
-SaveSystem ещё не подключён. Нельзя править private slots или общий SO вместо операции. Подписчики должны быть корректными; модель запрещает рекурсивные Equip/Unequip во время уведомления.
+Нет дискового SaveSystem; будущему loader нужны stable item IDs, версия и validation. JsonUtility ссылки Unity Object не являются переносимыми IDs между запусками. Подписчики Changed должны быть корректными; состояние уже согласовано до уведомления. OffHand weapon даёт обычные bonuses, отдельной второй атаки/dual-wield механики нет.
 
 ## 9. История изменений
 
+- 2026-10-12 — Player rework5: OffHand8/atomic transfers или view silhouette/drag/compatibility; старые IDs сохранены.
 2026-10-12 — добавлен восьмой слот Gloves; протокол атомарных операций сохранён.
 
 2026-10-12 — 4.4: семь слотов, атомарный обмен/снятие/бонусы/защита событий.

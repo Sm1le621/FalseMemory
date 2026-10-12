@@ -8,9 +8,13 @@
 
 ## 2. Как работает
 
+Player rework5: внутреннийsingle exchange также принимает empty destination для адресногоunequip. Capacity30/Gold/обычныеstack/move/use операции прежние.
+
 Операции проверяются целиком до мутации, отказ не вызывает Changed/частичный расход. Событие после успешной операции. UI не хранит запас.
 
 ## 3. Методы и функции
+
+TryExchangeSingle(index,expected,replacement) проверяеттекущийItem==expected; еслиexpectednull, ячейкаобязательнопустая, иначеCount==1. Replacement singleton/definition conflicts проверяютсядо записи. Одинновыйreadonlyслот иChanged; falseничегонеменяет. Этообщаяточкадляbag→gear/gear→bag swaps, не второйинвентарь.
 
 `Definitions` → уникальные занятые определения. `GetSlot(index)` → readonly слот/Empty, неверный индекс бросает исключение. `Count(item)` суммирует с насыщением int.MaxValue. `CanAdd` проверяет ID/место/положительное количество; `TryAdd` сначала дополняет стопки, затем пустые. `TryRemove` проверяет полный запас, удаляет через стопки, освобождает нулевые. Все Try возвращают bool.
 
@@ -34,8 +38,12 @@ BattleInventory.State владеет данными; ItemData статичны. 
 
 ## 8. Ограничения и расширение
 
+Неиспользоватьinternal exchange вместообычныхstack операций: replacement.StackLimit1. Save/load игры ещёнеподключён; JSON структуры сампонеозначает стабильныеassetID.
+
 Внешняя десериализация/сохранения — этап9. Изменение maxStack ниже текущего количества требует отдельной миграции. Count насыщается int.MaxValue; некорректные события подписчиков не считаются валидной транзакцией. Торговля ещё не создана.
 
 ## 9. История изменений
+
+- 2026-10-12 — Player rework5: девятыйOffHand, bidirectionaldrag/atomictransfers/совместимость/силуэты; sourceIDsсохранены.
 
 2026-10-12 — 4.1:30 слотов, атомарные операции, стопки и Gold.

@@ -2,38 +2,39 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Inventory/EquipmentSlotView.cs.
-
-Отображение одного надетого предмета и hover-подсказки рядом с персонажем; обработка экипировки остаётся у InventoryWindow/EquipmentController.
+Assets/Scripts/Inventory/EquipmentSlotView.cs. Одна gear ячейка: item или серый silhouette, подпись/rarity/hover и обработчики drag/drop.
 
 ## 2. Как работает
 
-Refresh окна передаёт надетый ItemData в Render. Иконка показывается при наличии Sprite, рамка соответствует редкости. При наведении Tooltip читает актуальную модель, при уходе скрывается.
+Render читает переданный worn item. Для пустого показывает emptySprite полупрозрачно; для занятого только item.icon с full alpha. Hover использует прежний tooltip. DropAllowed окрашивает фон совместимости отдельно от rarityBorder. Движение вещи делегируется одному InventoryWindow.
 
 ## 3. Методы и функции
 
-`Item` → текущий ItemData из EquipmentController.State.GetSlot(slot) либо null без владельца/контроллера. `Render(worn)` void запоминает только отображаемую ссылку, обновляет icon/slotLabel/цвет. `RefreshColors()` void обновляет фон и Outline через ItemPresentation. `OnPointerEnter(e)` Unity EventSystem callback включает hover/Tooltip.Show(this,e.position); `OnPointerExit(e)` выключает hover/Hide(this). `OnDisable()` очищает hover/подсказку при закрытии; владение не меняется.
+Item readonly читает текущую State того же owner. Render(worn) сохраняет только view cache, меняет sprite/alpha/active/label и RefreshColors; не владеет предметом. SetDropAllowed(bool?) задаёт green/red/neutral состояние и вызывает RefreshColors; rarity всегда по item.
+RefreshColors() меняет background и отдельно rarityBorder. OnDisable() Unity очищает hover/tooltip, ownership не меняет. OnPointerEnter/Exit(EventData) меняют hover и Show/Hide только этого источника.
+OnBeginDrag(e) для LMB вызывает BeginEquipmentDrag(slot,position); OnDrag перемещает общийcursor; OnEndDrag завершает. OnDrop принимает pointerDrag InventorySlotView или EquipmentSlotView только того жеowner, затем DropOnEquipment(slot). Unity Awake/Update/физических callbacks нет.
 
 ## 4. Переменные и Inspector
 
-owner — InventoryWindow; slot — EquipmentSlot (в сцене все8); icon/background Image, rarityBorder Outline, slotLabel TMP — назначены построителем. item/hovered — private кеш представления.
+owner InventoryWindow, slot enum0…8, icon/background Image, rarityBorder Outline, slotLabel TMP, emptySprite Sprite — Inspector links. item/hovered private view cache; DropAllowed readonly nullable bool, не Inspector. Empty alpha.4/color.65; worn white/alpha1. Green(40,76,48), red(91,39,43); rarityBorder цвета отдельно.
 
 ## 5. Связи
 
-На существующих equipmentButtons есть Button со старым onClick окна; данный компонент добавляет только визуальное представление. Иконка/текст не перехватывают raycast.
+Button прежней команды, InventoryWindow/EquipmentController.State, ItemPresentation.SlotName/RarityColor, InventoryTooltip. Icon/label raycast=false, background/button остаются drop target.
 
 ## 6. Пример
 
-Выберите Iron Sword → Экипировать. Слот Оружие показывает меч и голубую рамку; наведите — Rare, ATK+5. Снятие обновляет тот же слот.
+Пустой Weapon показывает muted Sword. При перетаскивании Iron Sword фонWeapon green/Head red, Rare border не становится зелёным. Drop надеваетSword; возвратвbag снова показываетsilhouette.
 
 ## 7. Настройка в Unity
 
-BuildFantasyLayout назначает компоненты на восьми кнопках SampleScene. Не добавлять вторые обработчики экипировки или отдельный запас.
+BuildFantasyLayout назначил view на9 кнопок; MCP назначил восемь Native64 sprites (общийRing длядвухAccessory) и сохранилSampleScene. Самостоятельно не добавлять второйвладелецgear или второйcursor. emptySprite менять накачественнуюграфикуприготовности.
 
-## 8. Ограничения и расширение
+## 8. Возможные проблемы
 
-Пустой слот не показывает item-tooltip. В демонстрационных данных нет Gloves/Legs/Boots/Accessory; их UI и модель существуют, назначить ItemData соответствующего типа. Кнопка при несовместимом выборе снимает надетое — прежнее поведение.
+Empty не имеет item-tooltip. Временные icons требуютхудожественнойприёмки; productionGloves/Legs/Boots/Accessory items покаотсутствуют, UI иrulesпроверены временнымиitems. Вещьбезitem.icon имеетзанятоесостояние, ноизображениепусто; назначитьicon. СнятиепоClick прежнее, полныйbagотказывает.
 
 ## 9. История изменений
 
+- 2026-10-12 — Player rework5: OffHand8/atomic transfers или view silhouette/drag/compatibility; старые IDs сохранены.
 2026-10-12 — создано отображение экипировки/редкости/hover для текущих кнопок.

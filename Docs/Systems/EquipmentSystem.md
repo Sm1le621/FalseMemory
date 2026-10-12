@@ -1,5 +1,9 @@
 # Экипировка
 
+## Актуально2026-10-13
+
+Теперь9 слотов: OffHand8 добавлен без изменения0…7. Поддерживаются переносы bag↔gear и compatible gear↔gear, проверка источника и повторного входа, двуручные ограничения, силуэты/подписи и green-red отдельно отrarity. [EquipmentDragSystem](EquipmentDragSystem.md). Inventory30 и единый state сохранены. IronShield/DEF3 дополняет демо-лут. Предыдущие описания8 слотов ниже — историческая контрольная точка.
+
 ## Дополнение2026-10-12
 
 Player rework4: ItemStatBonus теперь содержит primary modifiers/HPMP capacities/float movement/crit/evasion поверх прежних5 derived. State агрегируетодин раз; Unit StatsChanged обновляет UI/ресурсы без лечения. Восемь слотов пока сохранены, Off-Hand и полноценный двусторонний drag — следующийподэтап. Дисковыхсохранений нет.

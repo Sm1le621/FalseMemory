@@ -8,11 +8,15 @@
 
 ## 2. Как работает
 
+Player rework5: Off-Hand ивсеprimary/HPMP/float modifiers имеютанглийскоепредставление; прежняяrarityнеопределяетсовместимостьпереноса.
+
 Актуально Player rework4: BonusText показывает primary equipment modifiers и прямые HP/MP capacities поверх прежних bonuses, из централизованных keys.
 
 View запрашивает фон/рамку; Tooltip запрашивает описание. Используются реальные ItemData и BattleConsumable. Строки с отсутствующими бонусами/нулевой ценой не добавляются.
 
 ## 3. Методы и функции
+
+SlotName добавляетOffHand→equipment.slot.offhand. BonusText вызываетAddFloat дляmovementSpeed/criticalChance/evasion. AddFloat(parts,key,value,percentage) void пропускает0/NaN/Infinity, форматируетsigned число/процентычерезGameText. Description дляtwoHanded WeaponдобавляетRequires both hands.; остальнаялогикаescape/ценпрежняя.
 
 BonusText обход Count10: nonzero primary читает attribute.<enum>.abbr и item.bonus/character.signed_bonus; добавляет maximumHealth/maximumMana через stat.hp/stat.mp. Description автоматически включает эти строки в прежний tooltip. Редкость/цены/правила не менялись.
 
@@ -44,11 +48,15 @@ Iron Sword Rare → голубая рамка, ATK +5, реальная цена
 
 ## 8. Ограничения и расширение
 
+Предыдущийподэтапнепоказывалfloat bonuses; теперьэтоограничениеустранено. Gameplaycapможетснизитьэффективныйшанс:tooltip показываетбонусвещи, не итоговыйcombat шанс.
+
 Новые float movement/critical/evasion modifiers участвуют в игре, их числовые строки в item tooltip пока не добавлены; primary/HPMP бонусы показаны. Rarity не меняет balance.
 
 Ancient и влияние редкости на награды не добавлены. Названия шести существующих редкостей берутся из английской таблицы. TypeName/BonusText требуют ненулевой ItemData; вызывающий проверяет null. Торговля не реализована, цены информационные.
 
 ## 9. История изменений
+
+- 2026-10-12 — Player rework5: девятыйOffHand, bidirectionaldrag/atomictransfers/совместимость/силуэты; sourceIDsсохранены.
 
 - 2026-10-12 — Player rework4: primary attributes подключены к исходным ресурсам/бою/UI; прежние идентификаторы и игровая сессия сохранены.
 

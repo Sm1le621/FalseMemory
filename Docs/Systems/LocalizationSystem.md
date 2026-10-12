@@ -1,5 +1,9 @@
 # Локализация FalseMemory
 
+## Актуально2026-10-13
+
+Текущая английская StringTable189 keys. Добавлены Off-Hand/Inventory is full./IronShield name-description/float bonus format/Requires both hands. Все статические идинамические пользовательские текстычерезGameText.12 UIcases безрусского/пропавшихglyphs; [отчёт](../PlayerRework.md).
+
 ## Дополнение2026-10-12
 
 Player rework4: английская StringTable179 keys (141+38), включая10 name/abbr/description, equipment suffix, source tooltip иcompact derived summary. Dynamic numbers по-прежнему через GameText. Новые CHA/stamina/resistance descriptions честно указываютplanned mechanics.

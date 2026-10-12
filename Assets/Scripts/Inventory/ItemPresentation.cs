@@ -29,6 +29,7 @@ public static class ItemPresentation
             case EquipmentSlot.Chest:return GameText.Get("equipment.slot.chest");case EquipmentSlot.Legs:return GameText.Get("equipment.slot.legs");
             case EquipmentSlot.Boots:return GameText.Get("equipment.slot.boots");case EquipmentSlot.Gloves:return GameText.Get("equipment.slot.gloves");
             case EquipmentSlot.Accessory1:return GameText.Get("equipment.slot.accessory1");case EquipmentSlot.Accessory2:return GameText.Get("equipment.slot.accessory2");
+            case EquipmentSlot.OffHand:return GameText.Get("equipment.slot.offhand");
             default:return GameText.Get("equipment.slot.default");
         }
     }
@@ -47,11 +48,17 @@ public static class ItemPresentation
         Add(parts,"ATK",b.attack);Add(parts,"DEF",b.defense);Add(parts,"MATK",b.magicAttack);Add(parts,"MDEF",b.magicDefense);Add(parts,"SPD",b.speed);
         for(int i=0;i<CharacterAttributeValues.Count;i++){var attribute=(CharacterAttribute)i;int value=b.attributes.Get(attribute);if(value!=0)parts.Add(GameText.Get(value>0?"item.bonus":"character.signed_bonus",GameText.Get("attribute."+attribute.ToString().ToLowerInvariant()+".abbr"),value));}
         Add(parts,"HP",b.maximumHealth);Add(parts,"MP",b.maximumMana);
+        AddFloat(parts,"move",b.movementSpeed,false);AddFloat(parts,"critical",b.criticalChance,true);AddFloat(parts,"evasion",b.evasion,true);
         var consumable=item as BattleConsumable;
         if(consumable!=null){if(consumable.healing>0)parts.Add(GameText.Get("item.restore_hp", consumable.healing));if(consumable.manaRestoration>0)parts.Add(GameText.Get("item.restore_mp", consumable.manaRestoration));}
         return string.Join("  •  ",parts);
     }
     private static void Add(List<string> parts,string name,int value){if(value>0)parts.Add(GameText.Get("item.bonus",GameText.Get("stat."+name.ToLowerInvariant()),value));}
+    private static void AddFloat(List<string> parts,string key,float value,bool percentage)
+    {
+        if(value==0 || float.IsNaN(value) || float.IsInfinity(value))return;
+        parts.Add(GameText.Get(percentage?"item.percent_bonus":"item.float_bonus",GameText.Get("stat."+key),percentage?value*100:value));
+    }
     public static string Description(ItemData item,int count)
     {
         if(item==null)return "";
@@ -60,6 +67,7 @@ public static class ItemPresentation
             "<color=#"+ColorUtility.ToHtmlStringRGB(RarityColor(item.rarity))+">"+GameText.Get("rarity."+item.rarity.ToString().ToLowerInvariant())+"</color>  •  "+TypeName(item)};
         string bonuses=BonusText(item);if(bonuses.Length>0)lines.Add(bonuses);
         if(!string.IsNullOrWhiteSpace(item.LocalizedDescription))lines.Add("\n"+Escape(item.LocalizedDescription));
+        if(item.category==ItemCategory.Weapon && item.twoHanded)lines.Add(GameText.Get("equipment.two_handed"));
         lines.Add("\n"+GameText.Get("item.level", Mathf.Max(1,item.requiredLevel)));
         if(item.buyPrice>0)lines.Add(GameText.Get("item.buy_price", item.buyPrice));
         if(item.CanSell)lines.Add(GameText.Get("item.sell_price", item.sellPrice));

@@ -34,6 +34,7 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPo
     public void OnDrop(PointerEventData e)
     {
         var source=e.pointerDrag!=null?e.pointerDrag.GetComponent<InventorySlotView>():null;
-        if(source!=null && source.Owner==Owner)Owner.DropOn(Index);
+        var gear=e.pointerDrag!=null?e.pointerDrag.GetComponent<EquipmentSlotView>():null;
+        if((source!=null && source.Owner==Owner)||(gear!=null && gear.owner==Owner))Owner.DropOn(Index);
     }
 }

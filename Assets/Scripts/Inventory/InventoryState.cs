@@ -118,7 +118,7 @@ public sealed class InventoryState
     }
     internal bool TryExchangeSingle(int index,ItemData expected,ItemData replacement)
     {
-        if(!Valid(index) || GetSlot(index).Item!=expected || GetSlot(index).Count!=1 ||
+        if(!Valid(index) || GetSlot(index).Item!=expected || (expected!=null?GetSlot(index).Count!=1:!GetSlot(index).IsEmpty) ||
             (replacement!=null && (replacement.StackLimit!=1 || Conflicts(replacement))))return false;
         slots[index]=replacement==null?null:new InventorySlot(replacement,1);Changed?.Invoke();return true;
     }

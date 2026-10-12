@@ -14,6 +14,8 @@ BuildFantasyLayout переиспользует сохранённые ячей�
 
 ## 3. Методы и функции
 
+Player rework5: BuildFantasyLayout расширяетequipmentButtons до9 идобавляетOffHand безперестановкиenumиндексов; layout порядокWeapon,OffHand,Head,Chest,Gloves,Legs,Boots,Accessory1,Accessory2. Icon emptySprite отдельноназначаетсяMCP; послеBuildFantasyLayout вызываетсяBuildAttributeLayout. Scene сохраняетсяотдельно.
+
 BuildAttributeLayout() Editor-only void требует вне Play и готовую panel. Переиспользует EquipmentTitle/EquipmentStats/message, добавляет или находит10 Attribute* с Image/AttributeRowView/TMP; задаёт owner/enum/label и массивattributeRows. Layout два столбца по5, затем SetDirty/MarkSceneDirty; сохранение вызывается отдельно MCP. Повторный вызов не создаёт дубликаты.
 
 2026-10-12 — актуальная локализация: BuildFantasyLayout читает inventory.title/character_equipment/bag_initial/attributes/controls, сохраняя геометрию. Saved подписи SampleScene и статические LocalizedLabel настроены отдельно через MCP.
@@ -23,6 +25,8 @@ BuildAttributeLayout() Editor-only void требует вне Play и готов
 `Section(name,x,y,w,h)` → RectTransform найденной/новой панели с рамкой, raycast=false. `EnsureLabel(name,text,size,x,y,w,h)` → найденный/новый TMP и позиция. `EnsureImage(parent,name)` → найденный/новый Image без raycast. `MoveButton(button,x,y,width)` void переставляет существующую кнопку/подпись и задаёт тёмный фон. Общие helpers Panel/Place/Label/Button остаются в InventoryWindow.cs. Unity callbacks нет.
 
 ## 4. Переменные и Inspector
+
+Две колонки gear x71/345, y552−80×row, пять строк слева/четыре справа; icons44×44/button54×54, labels112×22 с отступом−25. Это оставляет место подписи до следующей ячейки; первоначальная сетка68/78 пересекалась и исправлена до финального сохранения. Bag6×5 и10 Attributes сохранены.
 
 Строки x40/246, y156−20×row,192×18; TMP10…13. Заголовок177, derived summary44 высота28 font10…12, message только справа494/54. Сводка имеет отдельный двухстрочный key character.derived_summary, чтобы не переполнять прежние три строки. Panel/Canvas/sumka30 сохраняются.
 
@@ -46,11 +50,15 @@ GameText и английская Unity StringTable; детали [LocalizationSy
 
 ## 8. Ограничения и расширение
 
+Силуэт маскинеявляетсяitem ownership. Нельзя удалитьстарыеbuttons/slotIDs радиlayout; новый9-йButtonперепроверен черезMCP.
+
 Проверять4 заданных разрешения и tooltip; подготовка directional art не относится к этому UI.
 
 Предполагает существующий этап4 с Resources/Title/EquipmentTitle/Controls. Не является универсальным автоматическим мигратором произвольных сцен. Позиции — единый дизайн окна, масштабирование обеспечивает Scaler; ориентировано на ПК, не мобильную навигацию.
 
 ## 9. История изменений
+
+- 2026-10-12 — Player rework5: девятыйOffHand, bidirectionaldrag/atomictransfers/совместимость/силуэты; sourceIDsсохранены.
 
 - 2026-10-12 — Player rework4: primary attributes подключены к исходным ресурсам/бою/UI; прежние идентификаторы и игровая сессия сохранены.
 

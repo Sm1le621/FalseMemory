@@ -15,7 +15,7 @@ public sealed class EquipmentTests
     }
     [TearDown] public void Cleanup(){Object.DestroyImmediate(sword);Object.DestroyImmediate(staff);Object.DestroyImmediate(filler);}
     [TestCase(EquipmentSlot.Weapon)] [TestCase(EquipmentSlot.Head)] [TestCase(EquipmentSlot.Chest)]
-    [TestCase(EquipmentSlot.Legs)] [TestCase(EquipmentSlot.Boots)] [TestCase(EquipmentSlot.Accessory1)] [TestCase(EquipmentSlot.Accessory2)] [TestCase(EquipmentSlot.Gloves)]
+    [TestCase(EquipmentSlot.Legs)] [TestCase(EquipmentSlot.Boots)] [TestCase(EquipmentSlot.Accessory1)] [TestCase(EquipmentSlot.Accessory2)] [TestCase(EquipmentSlot.Gloves)] [TestCase(EquipmentSlot.OffHand)]
     public void EachEquipmentSlotAcceptsOnlyMatchingCategoryAndReturnsItem(EquipmentSlot slot)
     {
         sword.category=slot==EquipmentSlot.Weapon?ItemCategory.Weapon:

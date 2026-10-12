@@ -3,7 +3,7 @@ using UnityEngine;
 
 public enum ItemCategory { Consumable, Weapon, Armor, Accessory, Material, QuestItem }
 // Append new slots: existing serialized numeric values must stay unchanged.
-public enum EquipmentSlot { Weapon, Head, Chest, Legs, Boots, Accessory1, Accessory2, Gloves }
+public enum EquipmentSlot { Weapon, Head, Chest, Legs, Boots, Accessory1, Accessory2, Gloves, OffHand }
 public enum ItemRarity { Common, Uncommon, Rare, Epic, Legendary, Mythic }
 [Flags] public enum ItemUseLocation { None=0, Exploration=1, Battle=2, Anywhere=3 }
 
@@ -40,14 +40,15 @@ public class ItemData : ScriptableObject
     [Min(1)] public int requiredLevel=1;
     public ItemUseLocation useLocations=ItemUseLocation.Anywhere;
     public EquipmentSlot equipmentSlot=EquipmentSlot.Chest;
+    public bool twoHanded, canUseOffHand;
     public ItemStatBonus bonuses;
     public string LocalizedName=>GameText.Content(id+".name",displayName);
     public string LocalizedDescription=>GameText.Content(id+".description",description);
     public bool IsEquipment => category==ItemCategory.Weapon || category==ItemCategory.Armor || category==ItemCategory.Accessory;
     public int StackLimit => IsEquipment || !stackable ? 1 : Math.Max(1,maxStack);
     public bool CanSell => category!=ItemCategory.QuestItem && sellPrice>0;
-    public bool Fits(EquipmentSlot slot) => category==ItemCategory.Weapon ? slot==EquipmentSlot.Weapon :
+    public bool Fits(EquipmentSlot slot) => category==ItemCategory.Weapon ? slot==EquipmentSlot.Weapon || (slot==EquipmentSlot.OffHand && canUseOffHand && !twoHanded) :
         category==ItemCategory.Accessory ? slot==EquipmentSlot.Accessory1 || slot==EquipmentSlot.Accessory2 :
         category==ItemCategory.Armor && equipmentSlot==slot &&
-        ((slot>=EquipmentSlot.Head && slot<=EquipmentSlot.Boots) || slot==EquipmentSlot.Gloves);
+        ((slot>=EquipmentSlot.Head && slot<=EquipmentSlot.Boots) || slot==EquipmentSlot.Gloves || slot==EquipmentSlot.OffHand);
 }

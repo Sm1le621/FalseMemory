@@ -1,5 +1,9 @@
 # Primary attributes персонажа
 
+## Актуально2026-10-13
+
+Экипировка теперь9slots, включаяOffHand8; primary/direct gear bonuses агрегируются тойжеState. Переносы между gear не дублируютбонус и не записываютего вbase. Всеprimary/HPMP/float bonus строки предмета теперьпоказаныTooltip; прежнееограничениеfloat display устранено.
+
 ## Назначение и текущая граница
 
 2026-10-12, Player rework3–4: данные/формулы десяти primary подключены к существующим Player/BattleUnit/Health/Equipment/Inventory. Нет второй копииHP/MP/Level. Действуют Attack/Defense/MagicAttack/MagicDefense/Speed/world movement/HPMP capacities/physical accuracy/crit/evasion/MCR-cost/MAG-healing. CHA и prepared scores остаются данными будущих механик, не готовой торговлей/диалогами/стаминой.

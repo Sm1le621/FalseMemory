@@ -1,5 +1,9 @@
 # История значимых изменений FalseMemory
 
+## 2026-10-13 — Player rework5: экипировка/силуэты
+
+Добавлены OffHand8 без смены прежнихID, bidirectional drag, compatible gear swap, green/red background отдельно отrarity, captured-source validation/reentry guards. Созданы8 native64 временныхсерыхмасок иIronShield/pickup;189 Englishkeys, float gear tooltip/двуручныйфлаг. Исправлено пересечениеподписей уменьшениемsquare slot54/шага80 иединоеfullbag сообщение.90 Edit/49 Play,12 UIcases4resolutions/0overlap; ссылкинаjobs/измеренияв[отчёте](PlayerRework.md).Все82 собственных C# имеют отдельные документы с9 разделами. HeroAnimator подготовлен, качественная8-wayart ещёнужна; ручнаяприёмка/standalone/disksave не подтверждены. Push не выполнялся.
+
 ## 2026-10-12 — Player rework4/5.2: игровая интеграция primary
 
 Профиль10 attributes подключён к Player/прежним ресурсам/gear/battle/movement; primary growth заменяет legacy без удвоения. Добавлены StatsChanged,10 UI rows/hover sources, единый MCR-cost и MAG healing;179 English keys. Новые3 Play сценария проверяют ресурсы/level/restore base/UI/Fire/Heal. Исправлены setup новых тестов и переполнение EquipmentStats (два ряда).84 Edit/46 Play passed;8 UI cases/4 resolutions без overflow/outside/glyph/Russian. Итоговая Console:0 ошибок,2 служебных предупреждения Account API/MCP WebSocket; MCP отвечает. [Отчёт](PlayerRework.md). CHA/prepared scores/классы/дисковые сохранения ещё будущие; hero Walk art отсутствует. Off-Hand/drag/силуэты — следующий подэтап. Push не выполнялся.

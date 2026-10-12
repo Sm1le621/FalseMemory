@@ -30,17 +30,17 @@ public sealed partial class InventoryWindow
         EnsureLabel("PortraitCaption","FALSE MEMORY",12,170,278,138,22).alignment=TextAlignmentOptions.Center;
         Array.Resize(ref equipmentButtons,EquipmentState.SlotCount);
         // Layout order differs from enum order: serialized Accessory1/2 still remain 5/6.
-        var order=new[]{EquipmentSlot.Weapon,EquipmentSlot.Head,EquipmentSlot.Chest,EquipmentSlot.Gloves,EquipmentSlot.Legs,EquipmentSlot.Accessory1,EquipmentSlot.Boots,EquipmentSlot.Accessory2};
+        var order=new[]{EquipmentSlot.Weapon,EquipmentSlot.OffHand,EquipmentSlot.Head,EquipmentSlot.Chest,EquipmentSlot.Gloves,EquipmentSlot.Legs,EquipmentSlot.Boots,EquipmentSlot.Accessory1,EquipmentSlot.Accessory2};
         for(int j=0;j<order.Length;j++)
         {
-            int index=(int)order[j];float x=j%2==0?64:338;float y=526-(j/2)*100;
+            int index=(int)order[j];float x=j%2==0?71:345;float y=552-(j/2)*80;
             if(equipmentButtons[index]==null)equipmentButtons[index]=Button(panel,"Equipment"+order[j],"",x,y,68,68);
-            var button=equipmentButtons[index];Place(button.GetComponent<RectTransform>(),x,y,68,68);button.transition=Selectable.Transition.None;
+            var button=equipmentButtons[index];Place(button.GetComponent<RectTransform>(),x,y,54,54);button.transition=Selectable.Transition.None;
             var view=button.GetComponent<EquipmentSlotView>();if(view==null)view=button.gameObject.AddComponent<EquipmentSlotView>();
             view.owner=this;view.slot=order[j];view.background=button.GetComponent<Image>();view.rarityBorder=button.GetComponent<Outline>();
-            view.slotLabel=button.GetComponentInChildren<TextMeshProUGUI>();Place(view.slotLabel.rectTransform,-22,-25,112,22);
+            view.slotLabel=button.GetComponentInChildren<TextMeshProUGUI>();Place(view.slotLabel.rectTransform,-29,-25,112,22);
             view.slotLabel.fontSizeMax=13;view.slotLabel.alignment=TextAlignmentOptions.Center;view.slotLabel.text=ItemPresentation.SlotName(order[j]);
-            view.icon=EnsureImage(button.transform,"EquipmentIcon");Place(view.icon.rectTransform,10,10,48,48);view.icon.preserveAspect=true;
+            view.icon=EnsureImage(button.transform,"EquipmentIcon");Place(view.icon.rectTransform,5,5,44,44);view.icon.preserveAspect=true;
             view.icon.gameObject.SetActive(false);
         }
         for(int i=0;i<slots.Length;i++)

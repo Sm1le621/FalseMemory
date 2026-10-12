@@ -44,4 +44,17 @@ public sealed class ItemPresentationTests
         }
         finally {Object.DestroyImmediate(item);}
     }
+    [Test] public void TooltipIncludesPrimaryCapacityFloatBonusesAndTwoHandRequirement()
+    {
+        var item=ScriptableObject.CreateInstance<ItemData>();
+        try
+        {
+            item.category=ItemCategory.Weapon;item.twoHanded=true;
+            item.bonuses=new ItemStatBonus{attributes=new CharacterAttributeValues{strength=3},maximumHealth=10,maximumMana=5,movementSpeed=.2f,criticalChance=.05f,evasion=.01f};
+            var text=ItemPresentation.Description(item,1);
+            Assert.That(text,Does.Contain("STR +3").And.Contain("HP +10").And.Contain("MP +5"));
+            Assert.That(text,Does.Contain("Movement +0.2").And.Contain("Critical Chance +5%").And.Contain("Evasion +1%").And.Contain("Requires both hands."));
+        }
+        finally {Object.DestroyImmediate(item);}
+    }
 }

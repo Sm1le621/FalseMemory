@@ -12,6 +12,8 @@
 
 ## 3. Методы и функции
 
+Player rework5: TooltipClamps... теперьтребуетequipmentButtons.Length9 вместо8, посколькуOffHand8добавленбезсменыстарыхID. Прежниеmousehover/rarity/ресурсы/границысохранены.
+
 `RealMouseHoverShowsItemAndHidesOnEmptyDragAndClose()` IEnumerator создаёт тестовую Mouse, отправляет MouseState в реальные screen-центры ячеек, ждёт EventSystem, проверяет Potion/Common/HP, уход на пустую ячейку, скрытие при drag/close и неизменность3 предметов; finally удаляет только тестовую мышь.
 
 `EquippedHoverAndRarityRemainCorrectAfterReplacementAndEmptying()` IEnumerator надевает Sword, проверяет tooltip Rare/ATK5, icon/рамку; снимает, проверяет скрытие/базу15, удаляет тестово добавленный Sword из сумки и проверяет обновление hover. `TooltipClampsToAllScreenCornersAndLiveBagResourceCountsMatchModel()` IEnumerator показывает tooltip в4 углах, проверяет worldcorners в Screen; деление обновляет занятость1→2, HP/MP читаются реально, портрет/8 кнопок назначены. Не все Show здесь через мышь — первый сценарий отдельно подтверждает настоящий raycast.
@@ -34,8 +36,12 @@ BattleFlowTests lifecycle, InventoryWindow/Tooltip, InputSystem/MouseState, Equi
 
 ## 8. Ограничения и расширение
 
+Новыйmousegear-transfer проверяетEquipmentDragFlowTests; художественныеiconsиstandaloneвэтомтестенеоцениваются.
+
 Проверка углов выполняется в текущем размере Game View; четыре разных разрешения проверяются отдельно через MCP/измерения/снимки. Художественное впечатление, standalone и физическая мышь владельца требуют ручной проверки.
 
 ## 9. История изменений
+
+- 2026-10-12 — Player rework5: девятыйOffHand, bidirectionaldrag/atomictransfers/совместимость/силуэты; sourceIDsсохранены.
 
 2026-10-12 — добавлены три сценария нового RPG-инвентаря, сохраняющие исходные боевые тесты.

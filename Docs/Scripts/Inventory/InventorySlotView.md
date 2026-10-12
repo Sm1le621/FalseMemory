@@ -12,6 +12,8 @@ Window.Bind задаёт Owner/Index; Render читает readonly слот. Poi
 
 ## 3. Методы и функции
 
+Player rework5: OnDrop(PointerEventData) теперь принимаетpointerDrag EquipmentSlotView того жеowner наряду с прежнимInventorySlotView. ЗатемOwner.DropOn(Index) выбираетbag move илиадресныйunequip. Событиямыши/выбор/rarity/quantityпрежние.
+
 `RefreshColors()` обновляет приглушённый фон/рамку по ItemPresentation; выбор и hover усиливают фон, выбранная рамка толще. `OnPointerEnter(e)` включает hover и вызывает Tooltip.Show(this,e.position); `OnPointerExit(e)` выключает его и скрывает только собственную подсказку. `OnDisable()` сбрасывает hover и скрывает подсказку при закрытии. Методы void, количество не меняют.
 
 `Bind(owner,index)` void назначает ссылки. `Render(slot,selected)` обновляет фон/иконку/число. `OnPointerClick(e)` выбирает левым кликом; `OnBeginDrag(e)` начинает drag левой кнопкой; `OnDrag(e)` передвигает ghost; `OnEndDrag(e)` отменяет/заканчивает его. `OnDrop(e)` принимает только source из того же Owner и вызывает DropOn. Эти Unity EventSystem callbacks не применяют предметы сами.
@@ -23,6 +25,8 @@ rarityBorder Outline — рамка; item/selected/hovered — приватны�
 background/icon Image, quantity TMP обязательны; Owner/Index runtime readonly, индекс0..29.
 
 ## 5. Связи
+
+EquipmentSlotView — новыйдопустимыйsource; чужойInventoryWindow не можетперенестиitem вэтотbag.
 
 InventoryWindow, EventSystem/GraphicRaycaster/Input System, InventoryState.
 
@@ -36,9 +40,13 @@ Drag Potion в пустую ячейку → одно перемещение; dr
 
 ## 8. Ограничения и расширение
 
+Sourcepointer иcaptureditem перепроверяетWindow. Иконка/qty не владеютвещью; быстрыйповторныйdrop послеEndDrag отвергается.
+
 Правильные ссылки обязательны. Иконки/количество не перехватывают raycast. Нельзя перетаскивать между разными игроками/окнами.
 
 ## 9. История изменений
+
+- 2026-10-12 — Player rework5: девятыйOffHand, bidirectionaldrag/atomictransfers/совместимость/силуэты; sourceIDsсохранены.
 
 2026-10-12 — редкости, hover, рамка выбора и сброс состояния при закрытии.
 

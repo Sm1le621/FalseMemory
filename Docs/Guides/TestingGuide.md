@@ -1,5 +1,9 @@
 # Как проверять FalseMemory
 
+## Актуально2026-10-13
+
+90 Edit/49 Play прошлипослефинальныхизменений. EquipmentDragFlowTests посылаетнастоящиеMouse events bag1→Weapon→bag12; другиеcases проверяютcompatibility/fullbag/reentry/двуручность/Accessories/OffHand.12 UIcases/4resolutions безoverflow/outside/Russian/missingGlyphs; label-slot overlaps0. [Ручнаяприёмка и результаты](../PlayerRework.md).
+
 ## Player rework4 — текущие проверки
 
 84 Edit/46 Play прошли; три новых сценария проверяют gear/growth/capacity без heal,10 строк/tooltip и Fire/Heal с MAG/MCR. В8 сочетаниях окна/tooltip и4 разрешений нет выхода/переполнения/русского/пропавших glyphs. Это не проверка standalone, дискового сохранения или качественных восьми ракурсов. [Результаты и ручная проверка](../PlayerRework.md).

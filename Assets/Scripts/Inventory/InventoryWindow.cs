@@ -31,6 +31,8 @@ public sealed partial class InventoryWindow : MonoBehaviour
     private WorldInputGate gate;
     private BattleUnit unit;
     private int dragging=-1;
+    private EquipmentSlot? draggingEquipment;
+    private ItemData draggedItem;
     private UnityEngine.Events.UnityAction[] equipmentClicks;
     private int shownHP=-1, shownMaxHP=-1, shownMP=-1, shownMaxMP=-1;
 
@@ -141,24 +143,58 @@ public sealed partial class InventoryWindow : MonoBehaviour
     public void ShowMessage(string text){if(message!=null)message.text=text;}
     public void BeginDrag(int index,Vector2 position)
     {
-        if(!IsOpen || Inventory.State.GetSlot(index).IsEmpty)return;
+        if(!IsOpen || index<0 || index>=InventoryState.Capacity || Inventory.State.GetSlot(index).IsEmpty)return;
+        EndDrag();
         if(tooltip!=null)tooltip.Hide();
-        Select(index);dragging=index;dragIcon.sprite=Inventory.State.GetSlot(index).Item.icon;
+        Select(index);dragging=index;draggedItem=Inventory.State.GetSlot(index).Item;dragIcon.sprite=draggedItem.icon;
         dragIcon.gameObject.SetActive(true);MoveDrag(position);
+        HighlightEquipmentTargets();
+    }
+    public void BeginEquipmentDrag(EquipmentSlot slot,Vector2 position)
+    {
+        if(!IsOpen || (int)slot<0 || (int)slot>=EquipmentState.SlotCount)return;
+        var equipment=GetComponent<EquipmentController>();if(equipment==null || equipment.State.GetSlot(slot)==null)return;
+        EndDrag();if(tooltip!=null)tooltip.Hide();draggingEquipment=slot;draggedItem=equipment.State.GetSlot(slot);
+        dragIcon.sprite=draggedItem.icon;dragIcon.gameObject.SetActive(true);MoveDrag(position);HighlightEquipmentTargets();
+    }
+    private bool DragSourceValid()
+    {
+        if(draggedItem==null)return false;
+        return draggingEquipment.HasValue?GetComponent<EquipmentController>().State.GetSlot(draggingEquipment.Value)==draggedItem:
+            dragging>=0 && Inventory.State.GetSlot(dragging).Item==draggedItem;
+    }
+    private void HighlightEquipmentTargets()
+    {
+        var equipment=GetComponent<EquipmentController>();
+        if(equipment==null || equipmentButtons==null)return;
+        foreach(var button in equipmentButtons)
+        {
+            if(button==null)continue;var view=button.GetComponent<EquipmentSlotView>();if(view==null)continue;
+            view.SetDropAllowed(draggedItem==null?(bool?)null:draggingEquipment.HasValue?
+                equipment.CanMove(draggingEquipment.Value,view.slot):equipment.CanEquip(dragging,view.slot));
+        }
     }
     public void MoveDrag(Vector2 position)
     {
-        if(dragging<0 || dragIcon==null)return;
+        if((dragging<0 && !draggingEquipment.HasValue) || dragIcon==null)return;
         var parent=dragIcon.transform.parent as RectTransform;
         if(RectTransformUtility.ScreenPointToLocalPointInRectangle(parent,position,null,out var local))dragIcon.rectTransform.anchoredPosition=local;
     }
     public bool DropOn(int destination)
     {
-        if(!IsOpen || dragging<0)return false;
-        bool ok=Inventory.State.TryMoveOrMerge(dragging,destination);EndDrag();
-        if(ok)Select(destination);else ShowMessage(GameText.Get("inventory.move_failed"));return ok;
+        if(!IsOpen || !DragSourceValid()){EndDrag();return false;}
+        bool gear=draggingEquipment.HasValue;
+        bool ok=gear?GetComponent<EquipmentController>().TryUnequipTo(draggingEquipment.Value,destination):Inventory.State.TryMoveOrMerge(dragging,destination);
+        EndDrag();if(ok)Select(destination);else ShowMessage(GameText.Get(gear && Inventory.State.FirstEmptySlot()<0?"inventory.full":"inventory.move_failed"));Refresh();return ok;
     }
-    public void EndDrag(){dragging=-1;if(dragIcon!=null)dragIcon.gameObject.SetActive(false);}
+    public bool DropOnEquipment(EquipmentSlot slot)
+    {
+        if(!IsOpen || !DragSourceValid()){EndDrag();return false;}
+        var equipment=GetComponent<EquipmentController>();bool ok=draggingEquipment.HasValue?
+            equipment.TryMove(draggingEquipment.Value,slot):equipment.TryEquip(dragging,slot);
+        EndDrag();ShowMessage(GameText.Get(ok?"equipment.equipped":"equipment.equip_failed"));Refresh();return ok;
+    }
+    public void EndDrag(){dragging=-1;draggingEquipment=null;draggedItem=null;if(dragIcon!=null)dragIcon.gameObject.SetActive(false);HighlightEquipmentTargets();}
 
 #if UNITY_EDITOR
     public void BuildModalBackdrop()

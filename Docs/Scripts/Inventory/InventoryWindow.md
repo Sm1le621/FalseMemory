@@ -8,11 +8,15 @@
 
 ## 2. Как работает
 
+Player rework5: одинdrag содержитлибоbag index, либоgear slot иcapturedItem. Begin/Move/Drop/End сохраняютодинcursor Image. Приdrop пересчитываютсяте же совместимость/level/hands; выбраннаяячейка/количество не копируютсявUI.
+
 Актуально Player rework4: прежний Inventory дополнен10 строками primary; Refresh получает один итоговый набор/gear и вызывает AttributeRowView.Render. StatsChanged обновляет открытое окно при modifier/gear/resource-capacity изменении.
 
 Открытие I, закрытие I/Escape; стрелки выбирают. Событие State.Changed обновляет30 views только после изменения/выбора. UI не хранит количества; использование делегируется UseRequested/WorldItemUseController.
 
 ## 3. Методы и функции
+
+BeginDrag(index,pos) теперьвалидируетиндекс, завершаетстарыйdrag ификсируетItem. BeginEquipmentDrag(slot,pos) получаетвещьизgear. DragSourceValid() bool перепроверяетcapturedItem втомжеслоте. HighlightEquipmentTargets() задаётnullablecompatibility каждойView, неменяетrarityBorder. MoveDrag поддерживаетобаисточника. DropOn(destination) выбираетTryMoveOrMerge илиTryUnequipTo, затемEnd/Refresh; fullbag даётinventory.full. DropOnEquipment(slot) выбираетTryEquip илиTryMove исообщаетрезультат. EndDrag очищаетобаисточника/capturedItem/cursor/highlight. Close/OnDisable вызываютEndDrag. Перемещениевнецелевойзонынезабираетвладение.
 
 OnEnable/OnDisable теперь дополнительно подписываются/отписываются от BattleUnit.StatsChanged→Refresh. Refresh после derived summary обновляет attributeRows; существующие операции/drag/выбор30 ячеек не менялись.
 
@@ -36,6 +40,8 @@ Editor `BuildLayout()` создаёт Canvas/панель/30 views/подпис�
 
 ## 4. Переменные и Inspector
 
+draggingEquipment nullableprivate EquipmentSlot иdraggedItem private ItemData — transient, неInspector/save. equipmentButtons содержит9кнопок, первоначальныеиндексысохранены.
+
 attributeRows — новый массив10 AttributeRowView в Inspector, назначен сохранённой SampleScene; это views, не отдельные характеристики.
 
 Новых Inspector-полей нет. Три строки в прежнем characterLabel, параметры/геометрия не заменены.
@@ -48,6 +54,8 @@ equipButton/equipmentButtons[8]/equipmentStats — UI-ссылки. EquipRequest
 panel, slots[30], details/goldLabel/message, split/use/close Button, dragIcon обязательны; SelectedIndex/Inventory/IsOpen readonly; dragging приватный transient. UseRequested Action<int> — обработчик применения; без подписчика кнопка disabled; с4.5 подключён WorldItemUseController.
 
 ## 5. Связи
+
+EquipmentController/State выполняютатомарнуюлогику; Window не пишетgear массив/bonuses сам. Pointerhandlers находятсявSlots.
 
 CharacterAttributes/Rules через BattleUnit, AttributeRowView и прежний InventoryTooltip. Старые ресурсы/InventoryState остаются общими.
 
@@ -67,11 +75,15 @@ Potion3 → Разделить½ →2/1; drag в пустой/на другой/
 
 ## 8. Ограничения и расширение
 
+Сумка30сохранена. Приdrop вoccupied bag можнообменятьтолькосовместимуюодиночнуюgear; consumable/material/stack несовместимы. Полныйbagнеудаляетнадетое. Покаэтоcurrent session, не дисковоеsave/load.
+
 Окно показывает primary и equipment suffix отдельно; источники class/temporary/growth в tooltip. Class modifier не означает готовый выбор класса. Дисковых сохранений нет.
 
 Не работает в BattleScene: мир скрыт, Open отвергает активную встречу. Не паузит время/врагов. Callback-подписчик обязан проверять реальные условия использования. Курсор/ощущения окончательно проверить владельцу.
 
 ## 9. История изменений
+
+- 2026-10-12 — Player rework5: девятыйOffHand, bidirectionaldrag/atomictransfers/совместимость/силуэты; sourceIDsсохранены.
 
 - 2026-10-12 — Player rework4: primary attributes подключены к исходным ресурсам/бою/UI; прежние идентификаторы и игровая сессия сохранены.
 
