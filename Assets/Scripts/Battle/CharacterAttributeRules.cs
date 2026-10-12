@@ -11,6 +11,7 @@ public sealed class CharacterAttributeRules : ScriptableObject
     [Min(0)] public float magicPowerAttack=1f, wisdomDefense=1f, agilitySpeed=1f;
     [Min(0)] public float vitalityHealth=5f, intelligenceMana=1f, wisdomMana=1f;
     [Min(0)] public float agilityMovement=.03f, dexterityAccuracy=.005f;
+    [Min(0)] public float maximumMovementSpeed=12f;
     [Min(0)] public float dexterityCritical=.002f, agilityCritical=.001f, agilityEvasion=.005f;
     [Min(0)] public float magicControlEfficiency=.02f, magicPowerHealing=1f;
     [Range(0,1)] public float maximumManaReduction=.5f, maximumCritical=.95f, maximumEvasion=.5f;

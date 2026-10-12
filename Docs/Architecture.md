@@ -1,5 +1,7 @@
 # Архитектура FalseMemory
 
+Player rework4/5.2: primary component подключён к исходному Player. BattleUnit использует primary growth вместо legacy increments, агрегирует gear, владеет прежнимMP/EXP; Health прежний. Подписки Attribute/Equipment живут до OnDestroy даже при скрытом мире; StatsChanged обновляет Inventory. Производные читают Calculator/Manager/Abilities/PlayerController, единый SpellCost показывается Magic-menu. AttributeRowView использует прежний Tooltip. [Формулы и границы](Systems/CharacterStatsSystem.md), [проверки](PlayerRework.md).
+
 Player rework3 — добавлены primary data/формулы в CharacterAttributeValues/Rules/Attributes и профиль DefaultCharacterAttributes. На этой контрольной точке они не подключены к сцене: это последовательный data-подэтап перед интеграцией. Base/class/temporary и производный growth разделены, ресурсы остаются в прежних владельцах. [Роли/формулы](Systems/CharacterStatsSystem.md).
 
 2026-10-12, Player rework1–2: существующий myproject1idle.ase — общий источник SpriteRenderer/портрета инвентаря/боевого портрета. PlayerController хранит последний нормализованный вектор и передаёт четыре float в два SimpleDirectional2D дерева исходного Player.controller. Новые Idle/Walk состояния выбирают16 клипов; пока все используют одиночный исходный ракурс. Прежние состояния/клипы/Idle1 сохранены; движение через Rigidbody2D/ресурсы/баланс прежние. [Система](Systems/AnimationSystem.md), [проверки и следующие подэтапы](PlayerRework.md).

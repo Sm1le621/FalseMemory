@@ -16,9 +16,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private WorldInputGate inputGate;
     private bool directionalAnimator;
+    private BattleUnit unit;
     private Vector2 lastDirection = Vector2.down;
     public Vector2 MovementInput => moveInput;
     public Vector2 LastDirection => lastDirection;
+    public float MovementSpeed => Mathf.Clamp(moveSpeed+(unit!=null?unit.MovementAdjustment:0),0,
+        unit!=null && unit.UsesPrimaryAttributes?Mathf.Max(0,unit.Attributes.rules.maximumMovementSpeed):float.MaxValue);
 
     private void Start()
     {
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         inputGate = GetComponent<WorldInputGate>();
+        unit = GetComponent<BattleUnit>();
         directionalAnimator = animator != null &&
             HasFloat("MoveX") && HasFloat("MoveY") && HasFloat("LastMoveX") && HasFloat("LastMoveY");
         UpdateAnimation();
@@ -92,7 +96,7 @@ public class PlayerController : MonoBehaviour
     {
         if (inputGate != null && inputGate.IsBlocked) { rb.linearVelocity = Vector2.zero; return; }
         // Физическое перемещение
-        rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + moveInput * MovementSpeed * Time.fixedDeltaTime);
     }
 
     private void HandleSpriteFlipping()

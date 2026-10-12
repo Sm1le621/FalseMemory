@@ -1,5 +1,9 @@
 # Прокачка FalseMemory — основа5.1
 
+## Дополнение2026-10-12
+
+Player rework4/5.2: исходныйPlayer получает10 primary attributes и growth всех+1/level. Derived increments совпадают с прежними5.1, legacy growth не добавляется второй раз. EXP-кривая/награда прежние. Дополнительно растутaccuracy/crit/evasion/movement/MAG-healing/MCR efficiency. Классы/распределениеочков не реализованы.
+
 ## Назначение и текущая граница
 
 Подключены накопительный EXP, достижимый level, настраиваемая кривая, несколько level-up за награду и производный рост. Primary Strength/Vitality/Intelligence/Mind/Agility/Luck, классы и новые способности/Character C ещё относятся к5.2–5.5. Нет дискового сохранения; карта остаётся загруженной в бою, поэтому растёт исходный Player.

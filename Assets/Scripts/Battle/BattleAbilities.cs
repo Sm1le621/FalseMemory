@@ -22,7 +22,7 @@ public static class BattleAbilities
     public static bool CanCast(BattleUnit caster, BattleUnit target, BattleSpell spell)
     {
         return caster != null && target != null && spell != null && caster.IsAlive && target.IsAlive &&
-               spell.mpCost >= 0 && caster.CurrentMP >= spell.mpCost &&
+               spell.mpCost >= 0 && caster.SpellCost(spell)>=0 && caster.CurrentMP >= caster.SpellCost(spell) &&
                (spell.target == BattleTarget.Self ? caster == target : caster != target) &&
                (spell.effect == BattleEffect.MagicDamage || spell.effect == BattleEffect.RestoreHealth);
     }
@@ -30,8 +30,8 @@ public static class BattleAbilities
     public static bool TryCast(BattleUnit caster, BattleUnit target, BattleSpell spell, BattleRules rules, out int amount)
     {
         amount = 0;
-        if (rules == null || !CanCast(caster, target, spell) || !caster.TrySpendMP(spell.mpCost)) return false;
-        if (spell.effect == BattleEffect.RestoreHealth) amount = target.Health.Heal(spell.power);
+        if (rules == null || !CanCast(caster, target, spell) || !caster.TrySpendMP(caster.SpellCost(spell))) return false;
+        if (spell.effect == BattleEffect.RestoreHealth) amount = target.Health.Heal(caster.SpellHealing(spell));
         else
         {
             amount = BattleCalculator.MagicalDamage(caster.EffectiveMagicAttack, target.EffectiveMagicDefense, spell.power, rules);

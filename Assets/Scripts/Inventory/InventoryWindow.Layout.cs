@@ -72,6 +72,25 @@ public sealed partial class InventoryWindow
         tooltip.Hide();dragIcon.transform.SetAsLastSibling();panel.gameObject.SetActive(false);
         UnityEditor.EditorUtility.SetDirty(this);UnityEditor.EditorUtility.SetDirty(tooltip);UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
     }
+    public void BuildAttributeLayout()
+    {
+        if(Application.isPlaying || panel==null)throw new InvalidOperationException("Нужен сохранённый Inventory вне Play Mode.");
+        Place(panel.Find("EquipmentTitle").GetComponent<RectTransform>(),40,177,398,22);
+        panel.Find("EquipmentTitle").GetComponent<TextMeshProUGUI>().text=GameText.Get("inventory.attributes");
+        Place(equipmentStats.rectTransform,40,44,398,28);equipmentStats.fontSizeMin=10;equipmentStats.fontSizeMax=12;
+        Place(message.rectTransform,494,54,614,22);
+        attributeRows=new AttributeRowView[CharacterAttributeValues.Count];
+        for(int i=0;i<attributeRows.Length;i++)
+        {
+            var attribute=(CharacterAttribute)i;string name="Attribute"+attribute;
+            var found=panel.Find(name);var rect=found!=null?(RectTransform)found:Panel(panel,name,new Color32(32,31,36,70));
+            Place(rect,40+(i/5)*206,156-(i%5)*20,192,18);rect.GetComponent<Image>().raycastTarget=true;
+            var row=rect.GetComponent<AttributeRowView>();if(row==null)row=rect.gameObject.AddComponent<AttributeRowView>();
+            row.owner=this;row.attribute=attribute;var label=rect.Find("Label");row.label=label!=null?label.GetComponent<TextMeshProUGUI>():Label(rect,"Label","",13,2,0,188,18);
+            row.label.fontSizeMin=10;row.label.fontSizeMax=13;row.label.raycastTarget=false;row.label.text=GameText.Get("character.attribute_row",GameText.Get(row.Key+".abbr"),GameText.Get(row.Key+".name"),10,"");attributeRows[i]=row;
+        }
+        UnityEditor.EditorUtility.SetDirty(this);UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
+    }
     private RectTransform Section(string name,float x,float y,float w,float h)
     {
         var existing=panel.Find(name);var rect=existing!=null?(RectTransform)existing:Panel(panel,name,new Color32(24,25,30,255));

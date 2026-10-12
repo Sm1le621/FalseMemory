@@ -2,7 +2,7 @@
 
 ## Назначение и текущая граница
 
-2026-10-12, Player rework3: реализованы **данные и формулы** десяти primary attributes, без второй копии HP/MP/Level. Интеграция с Player/BattleUnit/экипировкой/UI — следующий подэтап4; на этой контрольной точке наличие формулы не выдаётся за действующее игровое влияние.
+2026-10-12, Player rework3–4: данные/формулы десяти primary подключены к существующим Player/BattleUnit/Health/Equipment/Inventory. Нет второй копииHP/MP/Level. Действуют Attack/Defense/MagicAttack/MagicDefense/Speed/world movement/HPMP capacities/physical accuracy/crit/evasion/MCR-cost/MAG-healing. CHA и prepared scores остаются данными будущих механик, не готовой торговлей/диалогами/стаминой.
 
 ## Компоненты и источники
 
@@ -35,14 +35,14 @@ CharacterAttributeValues — Serializable десять int/стабильный 
 - MP-cost:ceil(baseCost×(1−clamp(ΔMCR×0.02,0,0.5))), минимум1 для платного,0 для бесплатного; отрицательная стоимость отклоняется.
 - Healing bonus:ΔMAG.
 
-База всех10 даёт нулевые поправки, сохраняет исходный level1 баланс. Growth всехprimary+1/level воспроизводит прошлые derived incrementsATK2/DEF1/MATK1/MDEF1/SPD1/HP5/MP2. **Этот рост нельзя складывать с прежним legacy growth**, иначе бонусы удвоятся. Следующая интеграция заменяет источник derived growth только для участников с primary profile; остальные остаются на прежних формулах. Ростaccuracy/crit/evasion/MP-efficiency/movement/healing — новые эффекты, их последствия будут проверены отдельно.
+База всех10 даёт нулевые поправки, сохраняет исходный level1 баланс. Growth всехprimary+1/level воспроизводит прошлые derived incrementsATK2/DEF1/MATK1/MDEF1/SPD1/HP5/MP2. **Этот рост нельзя складывать с прежним legacy growth**, иначе бонусы удвоятся. BattleUnit заменяет legacy growth только для участников с primary profile; остальные остаются на прежних формулах. Заlevel+1 новые эффекты:Accuracy+.005/Crit+.003/Evasion+.005/Move+.03/Healing+1/MCR reduction+.02 доcap. Цена округляется вверх, поэтому не каждый уровень сразу меняетцелуюMP-cost. Max world speed12 настраивается в rules.
 
 ## Последовательность и Unity
 
-Сейчас setters/Inspector дают Changed, Calculate получает level/gear и каждый раз считает новый результат без записи бонусов в base. OnValidate ставит dirty; событие отправляется в Update на главном потоке. RestoreBaseValues восстанавливает только base; JsonUtility roundtrip проверяет данные, **не сохранение игры на диск**. В интеграции BattleUnit подписывается, обновляет maxHP/MP без лечения и сообщает UI.
+Сейчас setters/Inspector дают Changed, Calculate получает level/gear и каждый раз считает новый результат без записи бонусов в base. OnValidate ставит dirty; событие отправляется в Update на главном потоке. RestoreBaseValues восстанавливает только base; JsonUtility roundtrip проверяет данные, **не сохранение игры на диск**. BattleUnit подписан на Attributes/Equipment на весь lifetime, включая скрытый мир боя; OnDestroy отписывает. StatsChanged обновляет Inventory. MaxHP получает прежний Health, MP остаётся в Unit. Ростcapacity не лечит; снижение ограничивает текущийресурс.
 
-Профиль создаётся Create → FalseMemory → Character Attribute Rules; coefficients/reference/growth редактируются Inspector. CharacterAttributes затем назначается существующему Player с этим профилем. Распределение очков безопаснее добавить отдельным подэтапом после классов: отдельный unspentPoints и атомарная покупка+1 кbase; сейчас его не реализуем, чтобы не дублировать будущие class/level rules.
+Профиль создаётся Create → FalseMemory → Character Attribute Rules; coefficients/reference/growth редактируются Inspector. CharacterAttributes уже назначен существующему Player в сохранённой SampleScene; Enemy безprimary. Десять строк в Inventory I используют один прежний Tooltip, показывают base/level/equipment/class/temporary раздельно; gear suffix(+3) не записываетбонус вbase. Распределение очков безопаснее добавить отдельным подэтапом после классов: отдельный unspentPoints и атомарная покупка+1 кbase; сейчас его не реализуем, чтобы не дублировать будущие class/level rules.
 
 ## Проверки и ограничения
 
-CharacterAttributeTests проверяет нейтральный баланс, роли/MP-cost, modifiers без накопления и JSON base restore. Сценовые/боевые/UI проверки должны следовать при подключении. Наличие класса modifier не означает готовые Warrior/Mage/Rogue. Stamina, carry limits, dialogue/trade/knowledge/resistance/spell precision scores пока не действуют в геймплее. [Value](../Scripts/Battle/CharacterAttributeValues.md), [Rules](../Scripts/Battle/CharacterAttributeRules.md), [Component](../Scripts/Battle/CharacterAttributes.md), [Tests](../Scripts/Tests/EditMode/CharacterAttributeTests.md).
+CharacterAttributeTests проверяет нейтральный баланс, роли/MP-cost, modifiers без накопления и JSON base restore. CharacterAttributeFlowTests реально проверяет gear/level/resources/rows/tooltip/Fire/Heal;8 случаев UI/tooltip на4 разрешениях проверяют границы/overflow/glyphs. Результаты — PlayerRework.md. Наличие класса modifier не означает готовые Warrior/Mage/Rogue. Stamina, carry limits, dialogue/trade/knowledge/resistance/spell precision scores пока не действуют в геймплее. [Value](../Scripts/Battle/CharacterAttributeValues.md), [Rules](../Scripts/Battle/CharacterAttributeRules.md), [Component](../Scripts/Battle/CharacterAttributes.md), [Tests](../Scripts/Tests/EditMode/CharacterAttributeTests.md).

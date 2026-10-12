@@ -1,5 +1,9 @@
 # Здоровье и HUD
 
+## Дополнение2026-10-12
+
+Player rework4: BattleUnit рассчитывает maxHP через VIT/level/class/temporary/gear и передаёт прежнему SetMaximumHealth. Рост не лечит/не воскрешает; снижение ограничивает currentHP. Отдельного Health/HUD не создано.
+
 5.1: SetMaximumHealth(maximum) нормализует max≥1, сохраняет/ограничивает currentHP и обновляет существующие Slider/TMP. BattleUnit передаёт стартовый maxHP+growth; здоровье/GUI не дублируются. Level Up не является Heal и не воскрешает. [ProgressionSystem](ProgressionSystem.md).
 
 ## 1. Назначение

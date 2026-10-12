@@ -1,5 +1,9 @@
 # Локализация FalseMemory
 
+## Дополнение2026-10-12
+
+Player rework4: английская StringTable179 keys (141+38), включая10 name/abbr/description, equipment suffix, source tooltip иcompact derived summary. Dynamic numbers по-прежнему через GameText. Новые CHA/stamina/resistance descriptions честно указываютplanned mechanics.
+
 ## Назначение и языковые правила
 
 С2026-10-12 весь игровой пользовательский текст — английский en-US. Docs и отчёты владельцу — русские. Правила закреплены в AGENTS.md. Не меняются технические ID/GUID/имена сцен/serialized-поля ради перевода. Подготовлен только English; Ukrainian/Polish/Russian/German/French/Spanish не переведены.

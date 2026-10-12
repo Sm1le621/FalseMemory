@@ -1,5 +1,9 @@
 # CharacterAttributes
 
+## Дополнение2026-10-12
+
+Player rework4: компонент уже назначен существующемуPlayer в SampleScene; DefaultCharacterAttributes. BattleUnit подписан на Changed иобновляет прежниеcapacities без лечения. Фраза «неподключён» вdata-настройке ниже относится к историческому подэтапу3.
+
 **Исходник:** `Assets/Scripts/Battle/CharacterAttributes.cs`.
 
 ## 1. Название и назначение

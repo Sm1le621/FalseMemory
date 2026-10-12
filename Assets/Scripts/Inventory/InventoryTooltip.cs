@@ -14,6 +14,7 @@ public sealed class InventoryTooltip : MonoBehaviour
     public bool IsVisible=>panel!=null && panel.gameObject.activeSelf;
     public void Show(InventorySlotView slot,Vector2 position){source=slot;pointer=position;RefreshContent();}
     public void Show(EquipmentSlotView slot,Vector2 position){source=slot;pointer=position;RefreshContent();}
+    public void Show(AttributeRowView row,Vector2 position){source=row;pointer=position;RefreshContent();}
     public void Hide(Object caller=null){if(caller!=null && caller!=source)return;source=null;if(panel!=null)panel.gameObject.SetActive(false);}
     public void RefreshContent()
     {
@@ -22,8 +23,10 @@ public sealed class InventoryTooltip : MonoBehaviour
         var bag=source as InventorySlotView;
         if(bag!=null){var entry=owner.Inventory.State.GetSlot(bag.Index);item=entry.Item;count=entry.Count;}
         var equipment=source as EquipmentSlotView;if(equipment!=null)item=equipment.Item;
-        if(item==null){Hide();return;}
-        content.text=ItemPresentation.Description(item,count);rarityBorder.effectColor=ItemPresentation.RarityColor(item.rarity);
+        var attribute=source as AttributeRowView;
+        if(item==null && attribute==null){Hide();return;}
+        content.text=attribute!=null?attribute.Description():ItemPresentation.Description(item,count);
+        rarityBorder.effectColor=attribute!=null?new Color32(150,133,101,255):ItemPresentation.RarityColor(item.rarity);
         var parent=panel.parent as RectTransform;
         float width=Mathf.Min(320,parent.rect.width-24);
         float height=Mathf.Min(content.GetPreferredValues(content.text,width-32,0).y+32,parent.rect.height-24);

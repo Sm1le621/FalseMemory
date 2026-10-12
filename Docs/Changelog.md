@@ -1,5 +1,9 @@
 # История значимых изменений FalseMemory
 
+## 2026-10-12 — Player rework4/5.2: игровая интеграция primary
+
+Профиль10 attributes подключён к Player/прежним ресурсам/gear/battle/movement; primary growth заменяет legacy без удвоения. Добавлены StatsChanged,10 UI rows/hover sources, единый MCR-cost и MAG healing;179 English keys. Новые3 Play сценария проверяют ресурсы/level/restore base/UI/Fire/Heal. Исправлены setup новых тестов и переполнение EquipmentStats (два ряда).84 Edit/46 Play passed;8 UI cases/4 resolutions без overflow/outside/glyph/Russian. Итоговая Console:0 ошибок,2 служебных предупреждения Account API/MCP WebSocket; MCP отвечает. [Отчёт](PlayerRework.md). CHA/prepared scores/классы/дисковые сохранения ещё будущие; hero Walk art отсутствует. Off-Hand/drag/силуэты — следующий подэтап. Push не выполнялся.
+
 ## 2026-10-12 — Player rework3: десять primary attributes, данные
 
 Добавлены CharacterAttributeValues/Rules/Attributes, настраиваемый DefaultCharacterAttributes и3 проверки формул/JSON базы/насыщения. Нейтральные10 сохраняют исходные параметры, рост+1 повторяет прежние derived increments.84 Edit Mode passed; игровой компонент намеренно подключается следующим подэтапом вместе с ресурсами/боем/UI, существующие механики пока не менялись. [Система](Systems/CharacterStatsSystem.md), [отчёт](PlayerRework.md). Классы/стамина/диалоги/дисковые сохранения отсутствуют; prepared scores не являются этими механиками. Push не выполнялся.

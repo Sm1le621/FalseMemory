@@ -1,5 +1,9 @@
 # Общий инвентарь и предметы
 
+## Дополнение2026-10-12
+
+Player rework4: прежний Inventory I показывает10 primary rows иобщую hover-панель источников; сумка30 иоперации остались. Derived summary компактно2 строки, UI/tooltip проверены в4 разрешениях. [Система характеристик](CharacterStatsSystem.md).
+
 5.1: Character header дополнительно показывает total EXP/Next или Maximum Level. ProgressChanged обновляет открытое окно и показывает Level Up! Level N. Модель предметов/экипировка/Gold не меняются; новые эффективные характеристики читаются с Unit. [Проверки](../ProgressionStage5.md).
 
 ## 1. Назначение

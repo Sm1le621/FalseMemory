@@ -11,10 +11,15 @@ public enum ItemRarity { Common, Uncommon, Rare, Epic, Legendary, Mythic }
 public struct ItemStatBonus
 {
     [Min(0)] public int attack, defense, magicAttack, magicDefense, speed;
+    public CharacterAttributeValues attributes;
+    [Min(0)] public int maximumHealth, maximumMana;
+    public float movementSpeed, criticalChance, evasion;
     public static ItemStatBonus operator +(ItemStatBonus a, ItemStatBonus b) => new ItemStatBonus
     {
         attack=Sum(a.attack,b.attack), defense=Sum(a.defense,b.defense),
-        magicAttack=Sum(a.magicAttack,b.magicAttack), magicDefense=Sum(a.magicDefense,b.magicDefense), speed=Sum(a.speed,b.speed)
+        magicAttack=Sum(a.magicAttack,b.magicAttack), magicDefense=Sum(a.magicDefense,b.magicDefense), speed=Sum(a.speed,b.speed),
+        attributes=a.attributes+b.attributes,maximumHealth=Sum(a.maximumHealth,b.maximumHealth),maximumMana=Sum(a.maximumMana,b.maximumMana),
+        movementSpeed=a.movementSpeed+b.movementSpeed,criticalChance=a.criticalChance+b.criticalChance,evasion=a.evasion+b.evasion
     };
     public static int Sum(int a,int b) => (int)Math.Min(int.MaxValue,(long)Math.Max(0,a)+Math.Max(0,b));
 }

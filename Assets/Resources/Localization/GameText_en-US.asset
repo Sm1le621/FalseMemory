@@ -632,6 +632,160 @@ MonoBehaviour:
     m_Localized: 'Next: {0} EXP'
     m_Metadata:
       m_Items: []
+  - m_Id: 122650979975168
+    m_Localized: '{0} {1}: {2}{3}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529600
+    m_Localized: ' (+{0})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529601
+    m_Localized: ' ({0})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529602
+    m_Localized: '{0} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529603
+    m_Localized: "{0} \u2014 {1}\n{2}\n\nBase: {3}\nLevel: +{4}\nEquipment: {5}\nClass: {6}\nTemporary: {7}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529604
+    m_Localized: HP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529605
+    m_Localized: MP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529606
+    m_Localized: Strength
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529607
+    m_Localized: STR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529608
+    m_Localized: Increases physical Attack and melee power. Carrying limits are planned.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529609
+    m_Localized: Agility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529610
+    m_Localized: AGI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529611
+    m_Localized: Increases movement speed, turn speed, Evasion and Critical Chance.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529612
+    m_Localized: Dexterity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529613
+    m_Localized: DEX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529614
+    m_Localized: Improves weapon Attack, physical Accuracy and Critical Chance.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529615
+    m_Localized: Endurance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529616
+    m_Localized: END
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529617
+    m_Localized: Increases physical Defense. Stamina and fatigue mechanics are planned.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529618
+    m_Localized: Vitality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529619
+    m_Localized: VIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529620
+    m_Localized: Increases maximum HP. Injury, poison and disease resistance are planned.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529621
+    m_Localized: Intelligence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529622
+    m_Localized: INT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529623
+    m_Localized: Increases maximum MP. Knowledge checks and spell learning are planned.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529624
+    m_Localized: Wisdom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529625
+    m_Localized: WIS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529626
+    m_Localized: Increases maximum MP and Magic Defense. Perception checks are planned.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529627
+    m_Localized: Charisma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529628
+    m_Localized: CHA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529629
+    m_Localized: Prepared for persuasion, trading and dialogue checks. These systems are not available yet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529630
+    m_Localized: Magic Power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529631
+    m_Localized: MAG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529632
+    m_Localized: Increases Magic Attack and spell healing power.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529633
+    m_Localized: Magic Control
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529634
+    m_Localized: MCR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529635
+    m_Localized: Reduces MP consumption, up to the configured limit. Spell precision checks are planned.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 125798326976512
+    m_Localized: 'ATK {0}    DEF {1}    SPD {4}
+
+      MATK {2}    MDEF {3}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

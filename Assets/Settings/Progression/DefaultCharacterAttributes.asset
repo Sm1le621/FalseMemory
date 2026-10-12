@@ -35,6 +35,7 @@ MonoBehaviour:
   wisdomMana: 1
   agilityMovement: 0.03
   dexterityAccuracy: 0.005
+  maximumMovementSpeed: 12
   dexterityCritical: 0.002
   agilityCritical: 0.001
   agilityEvasion: 0.005

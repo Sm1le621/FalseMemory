@@ -1,5 +1,9 @@
 # Магия и MP
 
+## Дополнение2026-10-12
+
+Player rework4: MAG усиливает MagicAttack/Heal, MCR снижает effective MP-cost (ceil/минимум1/cap50%). CanCast, TryCast и Magic-menu читают один SpellCost. Исходный level1 Fire19/8MP/Heal25/6MP сохранён приprimary10; MCR20/MAG14 проверены Fire23/7MP иHeal29/5MP. Магических промахов нет.
+
 ## 1. Назначение
 
 Fire и Heal в пошаговом бою.

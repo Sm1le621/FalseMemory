@@ -128,7 +128,7 @@ public sealed class BattleManager : MonoBehaviour
                 else
                 {
                     var result = BattleCalculator.ResolvePhysical(actor.EffectiveAttack, target.EffectiveDefense, target.IsDefending, rules,
-                        actor.criticalChance, actor.missChance, random);
+                        actor.EffectiveCriticalChance, Mathf.Clamp01(actor.EffectiveMissChance+target.Evasion), random);
                     if (result.Missed)
                     {
                         if (audioController != null) audioController.Play(BattleSound.Miss);
@@ -224,7 +224,7 @@ public sealed class BattleManager : MonoBehaviour
         {
             if (spell == null) continue;
             var entry = spell;
-            names.Add(GameText.Get("battle.spell_entry", entry.LocalizedName, entry.mpCost));
+            names.Add(GameText.Get("battle.spell_entry", entry.LocalizedName, Player.SpellCost(entry)));
             actions.Add(() => TryPlayerSpell(entry));
             enabled.Add(BattleAbilities.CanCast(Player, entry.target == BattleTarget.Self ? Player : Enemy, entry));
         }

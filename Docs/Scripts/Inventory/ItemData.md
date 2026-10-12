@@ -8,15 +8,21 @@
 
 ## 2. Как работает
 
+Актуально Player rework4: ItemStatBonus сохраняет прежние пять derived bonus и добавляет primary attributes/HPMP capacities/float movement/crit/evasion; данные предмета не становятся владельцем текущего ресурса.
+
 ItemData один для мира/боя. BattleConsumable наследует поля. Экипировка всегда по1 в слоте; остальные по StackLimit.
 
 ## 3. Методы и функции
+
+ItemStatBonus.operator+ суммирует primary через CharacterAttributeValues.+, capacities через Sum, float modifiers обычным сложением. BattleUnit отвергает NaN/Infinity результирующих float и ограничивает gameplay chances. Остальные getters/Fits/StackLimit/CanSell не изменены.
 
 2026-10-12 — актуальная локализация: LocalizedName/LocalizedDescription → GameText.Content(id+".name"/".description", исходное английское поле). Существующие id/GUID/поля сохранены; редкость и бонусы не меняются.
 
 `IsEquipment` → bool по категории; `StackLimit` →1 для экипировки/нестакаемых, иначе maxStack≥1; `CanSell` → bool, QuestItem запрещён; `Fits(slot)` → bool: Weapon, Armor Head/Chest/Legs/Boots/Gloves, Accessory1/2. ItemStatBonus `operator +` и `Sum(a,b)` складывают неотрицательные бонусы с насыщением int.MaxValue. Unity callbacks нет.
 
 ## 4. Переменные и Inspector
+
+Новые fields ItemStatBonus: attributes (десять signed int, default0), maximumHealth/maximumMana (Min0/default0), movementSpeed/criticalChance/evasion (float/default0). Предметные primary modifiers могут быть отрицательными. Direct capacities положительные. Исходные предметы не перенастраивались.
 
 LocalizedName/LocalizedDescription — readonly свойства через id+.name/.description; исходные английские поля остаются fallback. В Inspector новый запас не появляется, id/GUID/параметры сохранены.
 
@@ -25,6 +31,8 @@ rarity — ItemRarity: Common (по умолчанию и для прежних 
 id — уникальный стабильный string; displayName/description/icon; category Consumable/Weapon/Armor/Accessory/Material/QuestItem; stackable=true,maxStack99≥1; buyPrice/sellPrice≥0; requiredLevel≥1; useLocations None/Exploration/Battle/Anywhere; equipmentSlot для Armor; bonuses Attack/Defense/MagicAttack/MagicDefense/Speed. Количество не хранится.
 
 ## 5. Связи
+
+EquipmentState.Bonuses возвращает один агрегат; BattleUnit пересчитывает derived и capacities. Не записывать бонус в базовые Player.attack/Health.maxHealth вручную.
 
 GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
@@ -40,9 +48,13 @@ Create → FalseMemory → Item; для расходуемого Battle Consumab
 
 ## 8. Ограничения и расширение
 
+Enum EquipmentSlot пока8 слотов; Off-Hand/двуручное правило — следующий подэтап. Поддержка Serializable bonus не означает рабочий SaveSystem.
+
 Пустой ID разрешён для временных тестовых объектов; проектные данные проверяются отдельно. Конфликтующий ID другой ссылки State отвергает. Нет классов/роста/SaveSystem. Бонусы/ограничения подключены к миру и бою. Редкость пока не влияет на баланс.
 
 ## 9. История изменений
+
+- 2026-10-12 — Player rework4: primary attributes подключены к исходным ресурсам/бою/UI; прежние идентификаторы и игровая сессия сохранены.
 
 2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 

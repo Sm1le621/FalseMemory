@@ -20,6 +20,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
     public InventoryTooltip tooltip;
     public Image characterPortrait;
     public TextMeshProUGUI characterLabel, bagLabel;
+    public AttributeRowView[] attributeRows;
     public event Action<int> UseRequested;
     public Func<int,bool> CanUseSelection;
     public event Action<int,EquipmentSlot?> EquipRequested;
@@ -49,8 +50,8 @@ public sealed partial class InventoryWindow : MonoBehaviour
         }
         Close();
     }
-    private void OnEnable(){if(Application.isPlaying && Inventory!=null)Inventory.State.Changed+=Refresh;if(unit!=null)unit.ProgressChanged+=OnProgressChanged;}
-    private void OnDisable(){if(Inventory!=null)Inventory.State.Changed-=Refresh;if(unit!=null)unit.ProgressChanged-=OnProgressChanged;Close();}
+    private void OnEnable(){if(Application.isPlaying && Inventory!=null)Inventory.State.Changed+=Refresh;if(unit!=null){unit.ProgressChanged+=OnProgressChanged;unit.StatsChanged+=Refresh;}}
+    private void OnDisable(){if(Inventory!=null)Inventory.State.Changed-=Refresh;if(unit!=null){unit.ProgressChanged-=OnProgressChanged;unit.StatsChanged-=Refresh;}Close();}
     private void OnProgressChanged(){if(!IsOpen)return;Refresh();if(unit.LevelsGainedLastAward>0)ShowMessage(GameText.Get("character.level_up",unit.level));}
     private void OnDestroy()
     {
@@ -110,7 +111,8 @@ public sealed partial class InventoryWindow : MonoBehaviour
             else equipmentButtons[i].GetComponentInChildren<TextMeshProUGUI>().text=slot+": "+(worn!=null?worn.LocalizedName:"—");
             equipmentButtons[i].interactable=equipment!=null && (worn!=null || (item!=null && item.Fits(slot) && item.requiredLevel<=unit.level));
         }
-        if(equipmentStats!=null)equipmentStats.text=GameText.Get("character.attributes", unit.EffectiveAttack, unit.EffectiveDefense, unit.EffectiveMagicAttack, unit.EffectiveMagicDefense, unit.Speed);
+        if(equipmentStats!=null)equipmentStats.text=GameText.Get(attributeRows!=null && attributeRows.Length==CharacterAttributeValues.Count?"character.derived_summary":"character.attributes", unit.EffectiveAttack, unit.EffectiveDefense, unit.EffectiveMagicAttack, unit.EffectiveMagicDefense, unit.Speed);
+        if(attributeRows!=null){var values=unit.PrimaryValues;var gear=unit.EquipmentAttributes;foreach(var row in attributeRows)if(row!=null)row.Render(values,gear);}
         if(tooltip!=null)tooltip.RefreshContent();
     }
     private void RefreshResources()

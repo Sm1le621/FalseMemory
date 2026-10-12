@@ -8,9 +8,13 @@
 
 ## 2. Как работает
 
+Актуально Player rework4: прежний Inventory дополнен10 строками primary; Refresh получает один итоговый набор/gear и вызывает AttributeRowView.Render. StatsChanged обновляет открытое окно при modifier/gear/resource-capacity изменении.
+
 Открытие I, закрытие I/Escape; стрелки выбирают. Событие State.Changed обновляет30 views только после изменения/выбора. UI не хранит количества; использование делегируется UseRequested/WorldItemUseController.
 
 ## 3. Методы и функции
+
+OnEnable/OnDisable теперь дополнительно подписываются/отписываются от BattleUnit.StatsChanged→Refresh. Refresh после derived summary обновляет attributeRows; существующие операции/drag/выбор30 ячеек не менялись.
 
 OnEnable/OnDisable дополнительно подписываются/отписываются ProgressChanged. OnProgressChanged при открытом окне вызывает Refresh и показывает character.level_up, если получены уровни. Update использует character.header_progress: имя/уровень/total EXP/Next или Maximum Level; без профиля сохраняет прежний заголовок.
 
@@ -32,6 +36,8 @@ Editor `BuildLayout()` создаёт Canvas/панель/30 views/подпис�
 
 ## 4. Переменные и Inspector
 
+attributeRows — новый массив10 AttributeRowView в Inspector, назначен сохранённой SampleScene; это views, не отдельные характеристики.
+
 Новых Inspector-полей нет. Три строки в прежнем characterLabel, параметры/геометрия не заменены.
 
 tooltip — InventoryTooltip на существующем Canvas; characterPortrait — Image существующего спрайта героя; characterLabel — имя/уровень/EXP; bagLabel — занятость30 ячеек. shownHP/shownMaxHP/shownMP/shownMaxMP — приватный кеш отображения, старт−1. Не владеет ресурсами.
@@ -42,6 +48,8 @@ equipButton/equipmentButtons[8]/equipmentStats — UI-ссылки. EquipRequest
 panel, slots[30], details/goldLabel/message, split/use/close Button, dragIcon обязательны; SelectedIndex/Inventory/IsOpen readonly; dragging приватный transient. UseRequested Action<int> — обработчик применения; без подписчика кнопка disabled; с4.5 подключён WorldItemUseController.
 
 ## 5. Связи
+
+CharacterAttributes/Rules через BattleUnit, AttributeRowView и прежний InventoryTooltip. Старые ресурсы/InventoryState остаются общими.
 
 BattleUnit.ProgressChanged; CharacterGrowthRules косвенно через readonly свойства Unit. Модальное открытие всё ещё запрещено до завершения Transition.
 
@@ -59,9 +67,13 @@ Potion3 → Разделить½ →2/1; drag в пустой/на другой/
 
 ## 8. Ограничения и расширение
 
+Окно показывает primary и equipment suffix отдельно; источники class/temporary/growth в tooltip. Class modifier не означает готовый выбор класса. Дисковых сохранений нет.
+
 Не работает в BattleScene: мир скрыт, Open отвергает активную встречу. Не паузит время/врагов. Callback-подписчик обязан проверять реальные условия использования. Курсор/ощущения окончательно проверить владельцу.
 
 ## 9. История изменений
+
+- 2026-10-12 — Player rework4: primary attributes подключены к исходным ресурсам/бою/UI; прежние идентификаторы и игровая сессия сохранены.
 
 2026-10-12 —5.1: кривая EXP/производный рост/Level Up при прежнем владельце HP. [Проверки](../../ProgressionStage5.md).
 

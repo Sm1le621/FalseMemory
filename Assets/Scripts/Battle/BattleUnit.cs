@@ -35,23 +35,39 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
     public bool flipInBattle;
     public CharacterGrowthRules growthRules;
     public event System.Action ProgressChanged;
+    public event System.Action StatsChanged;
     public int LevelsGainedLastAward {get;private set;}
     private int baseMaximumHealth=-1;
     private bool awardingExperience;
+    private CharacterAttributes boundAttributes;
+    private EquipmentController boundEquipment;
 
     public Health Health => GetComponent<Health>();
     public BattleInventory Inventory => GetComponent<BattleInventory>();
     public EquipmentController Equipment => GetComponent<EquipmentController>();
     private ItemStatBonus EquipmentBonuses => Equipment!=null?Equipment.State.Bonuses:new ItemStatBonus();
-    private ItemStatBonus LevelBonuses => growthRules!=null?growthRules.Bonuses(level):new ItemStatBonus();
-    public int EffectiveAttack => ItemStatBonus.Sum(ItemStatBonus.Sum(attack,LevelBonuses.attack),EquipmentBonuses.attack);
-    public int EffectiveDefense => ItemStatBonus.Sum(ItemStatBonus.Sum(defense,LevelBonuses.defense),EquipmentBonuses.defense);
-    public int EffectiveMagicAttack => ItemStatBonus.Sum(ItemStatBonus.Sum(magicAttack,LevelBonuses.magicAttack),EquipmentBonuses.magicAttack);
-    public int EffectiveMagicDefense => ItemStatBonus.Sum(ItemStatBonus.Sum(magicDefense,LevelBonuses.magicDefense),EquipmentBonuses.magicDefense);
-    public int Speed => ItemStatBonus.Sum(ItemStatBonus.Sum(speed,LevelBonuses.speed),EquipmentBonuses.speed);
+    public CharacterAttributes Attributes => GetComponent<CharacterAttributes>();
+    public bool UsesPrimaryAttributes => Attributes!=null && Attributes.rules!=null;
+    public CharacterAttributeValues EquipmentAttributes => EquipmentBonuses.attributes;
+    public CharacterAttributeValues PrimaryValues => UsesPrimaryAttributes?Attributes.Calculate(growthRules!=null?Mathf.Clamp(level,1,growthRules.MaximumLevel):Mathf.Max(1,level),EquipmentAttributes):new CharacterAttributeValues();
+    private ItemStatBonus LevelBonuses => !UsesPrimaryAttributes && growthRules!=null?growthRules.Bonuses(level):new ItemStatBonus();
+    private int Derived(int baseValue,int growth,int gear,DerivedAttributeStat stat)
+        => (int)System.Math.Max(0,System.Math.Min(int.MaxValue,(long)System.Math.Max(0,baseValue)+growth+gear+(UsesPrimaryAttributes?Attributes.rules.Adjustment(PrimaryValues,stat):0)));
+    public int EffectiveAttack => Derived(attack,LevelBonuses.attack,EquipmentBonuses.attack,DerivedAttributeStat.Attack);
+    public int EffectiveDefense => Derived(defense,LevelBonuses.defense,EquipmentBonuses.defense,DerivedAttributeStat.Defense);
+    public int EffectiveMagicAttack => Derived(magicAttack,LevelBonuses.magicAttack,EquipmentBonuses.magicAttack,DerivedAttributeStat.MagicAttack);
+    public int EffectiveMagicDefense => Derived(magicDefense,LevelBonuses.magicDefense,EquipmentBonuses.magicDefense,DerivedAttributeStat.MagicDefense);
+    public int Speed => Derived(speed,LevelBonuses.speed,EquipmentBonuses.speed,DerivedAttributeStat.Speed);
+    private static float Finite(float value) => float.IsNaN(value)||float.IsInfinity(value)?0:value;
+    public float MovementAdjustment => Finite(EquipmentBonuses.movementSpeed)+(UsesPrimaryAttributes?Attributes.rules.MovementAdjustment(PrimaryValues):0);
+    public float EffectiveCriticalChance => Mathf.Clamp(Finite(criticalChance)+Finite(EquipmentBonuses.criticalChance)+(UsesPrimaryAttributes?Attributes.rules.CriticalBonus(PrimaryValues):0),0,UsesPrimaryAttributes?Mathf.Clamp01(Attributes.rules.maximumCritical):1);
+    public float EffectiveMissChance => Mathf.Clamp01(Finite(missChance)-(UsesPrimaryAttributes?Attributes.rules.AccuracyBonus(PrimaryValues):0));
+    public float Evasion => Mathf.Clamp(Finite(EquipmentBonuses.evasion)+(UsesPrimaryAttributes?Attributes.rules.Evasion(PrimaryValues):0),0,UsesPrimaryAttributes?Mathf.Clamp01(Attributes.rules.maximumEvasion):1);
+    public int SpellCost(BattleSpell spell) => spell==null?-1:UsesPrimaryAttributes?Attributes.rules.ManaCost(spell.mpCost,PrimaryValues):spell.mpCost;
+    public int SpellHealing(BattleSpell spell) => spell==null?0:(int)System.Math.Max(0,System.Math.Min(int.MaxValue,(long)System.Math.Max(0,spell.power)+(UsesPrimaryAttributes?Attributes.rules.HealingBonus(PrimaryValues):0)));
     public bool IsAlive => Health != null && Health.currentHealth > 0;
     public bool IsDefending { get; private set; }
-    public int MaxMP => ItemStatBonus.Sum(maxMP,growthRules!=null?growthRules.Growth(growthRules.manaPerLevel,level):0);
+    public int MaxMP => Derived(maxMP,!UsesPrimaryAttributes && growthRules!=null?growthRules.Growth(growthRules.manaPerLevel,level):0,EquipmentBonuses.maximumMana,DerivedAttributeStat.MaximumMana);
     public int CurrentMP => Mathf.Clamp(currentMP, 0, MaxMP);
     public int CurrentExperience => Mathf.Max(0, currentExperience);
     public int ExperienceToNextLevel => growthRules!=null?growthRules.Remaining(CurrentExperience,level):0;
@@ -68,7 +84,7 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
             EnsureGrowthBaseline();int before=CurrentExperience;
             currentExperience=(int)System.Math.Min(int.MaxValue,(long)before+amount);
             int gained=currentExperience-before;if(gained==0)return 0;
-            if(growthRules!=null){int previous=level;level=growthRules.LevelFor(currentExperience,level);LevelsGainedLastAward=System.Math.Max(0,level-previous);ApplyHealthGrowth();}
+            if(growthRules!=null){int previous=level;level=growthRules.LevelFor(currentExperience,level);LevelsGainedLastAward=System.Math.Max(0,level-previous);RefreshDerivedStats();}
             ProgressChanged?.Invoke();return gained;
         }
         finally{awardingExperience=false;}
@@ -77,9 +93,22 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
     private void EnsureGrowthBaseline(){if(baseMaximumHealth<0 && Health!=null)baseMaximumHealth=System.Math.Max(1,Health.maxHealth);}
     private void ApplyHealthGrowth()
     {
-        if(growthRules!=null && Health!=null)Health.SetMaximumHealth(ItemStatBonus.Sum(baseMaximumHealth,growthRules.Growth(growthRules.healthPerLevel,level)));
+        if(Health!=null)
+            Health.SetMaximumHealth(System.Math.Max(1,Derived(baseMaximumHealth,!UsesPrimaryAttributes && growthRules!=null?growthRules.Growth(growthRules.healthPerLevel,level):0,EquipmentBonuses.maximumHealth,DerivedAttributeStat.MaximumHealth)));
     }
-    private void Awake(){EnsureGrowthBaseline();ApplyHealthGrowth();currentMP=MaxMP;}
+    public void RefreshDerivedStats(){EnsureGrowthBaseline();ApplyHealthGrowth();currentMP=CurrentMP;StatsChanged?.Invoke();}
+    private void Awake()
+    {
+        EnsureGrowthBaseline();ApplyHealthGrowth();currentMP=MaxMP;
+        boundAttributes=Attributes;boundEquipment=Equipment;
+        if(boundAttributes!=null)boundAttributes.Changed+=RefreshDerivedStats;
+        if(boundEquipment!=null)boundEquipment.State.Changed+=RefreshDerivedStats;
+    }
+    private void OnDestroy()
+    {
+        if(boundAttributes!=null)boundAttributes.Changed-=RefreshDerivedStats;
+        if(boundEquipment!=null)boundEquipment.State.Changed-=RefreshDerivedStats;
+    }
 
     public bool TrySpendMP(int cost)
     {

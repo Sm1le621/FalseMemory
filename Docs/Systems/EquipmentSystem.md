@@ -1,5 +1,9 @@
 # Экипировка
 
+## Дополнение2026-10-12
+
+Player rework4: ItemStatBonus теперь содержит primary modifiers/HPMP capacities/float movement/crit/evasion поверх прежних5 derived. State агрегируетодин раз; Unit StatsChanged обновляет UI/ресурсы без лечения. Восемь слотов пока сохранены, Off-Hand и полноценный двусторонний drag — следующийподэтап. Дисковыхсохранений нет.
+
 Восемь слотов: Weapon, Head, Chest, Legs, Boots, Accessory1/2, Gloves. Gloves добавлен в конец enum (7); прежние Accessory1/2 остаются5/6. EquipmentController.State на исходном Player хранит владение, ItemData — определения. Надевание заменяет одну вещь и возвращает предыдущую в исходную ячейку; полная сумка допускает замену. Снятие целиком отменяется при нехватке места. Рекурсивные запросы из Changed отклоняются.
 
 Бонусы вычисляются заново из восьми вещей, не прибавляются в базовые поля. BattleUnit.EffectiveAttack/Defense/MagicAttack/MagicDefense/Speed читают базу+бонус. HP/MP/EXP не меняются. Данные: Sword ATK5, Staff MATK4, Armor DEF4, Helmet DEF2. Ограничения Fits/requiredLevel, предметы по1. С4.5 Manager и Abilities используют итоговые значения: Sword повышает базовый физический урон10→15, Armor+Helmet даютDEF14/ответ1, Staff Fire19→23 при прежней цене8MP. Проверено сценариями без RNG-крита/защиты; штатные шансы могут менять результат.

@@ -579,6 +579,158 @@ MonoBehaviour:
     m_Key: character.next_experience
     m_Metadata:
       m_Items: []
+  - m_Id: 122650979975168
+    m_Key: character.attribute_row
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529600
+    m_Key: character.gear_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529601
+    m_Key: character.gear_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529602
+    m_Key: character.signed_bonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529603
+    m_Key: character.attribute_tooltip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529604
+    m_Key: stat.hp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529605
+    m_Key: stat.mp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529606
+    m_Key: attribute.strength.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529607
+    m_Key: attribute.strength.abbr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529608
+    m_Key: attribute.strength.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529609
+    m_Key: attribute.agility.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529610
+    m_Key: attribute.agility.abbr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529611
+    m_Key: attribute.agility.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529612
+    m_Key: attribute.dexterity.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529613
+    m_Key: attribute.dexterity.abbr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529614
+    m_Key: attribute.dexterity.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529615
+    m_Key: attribute.endurance.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529616
+    m_Key: attribute.endurance.abbr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529617
+    m_Key: attribute.endurance.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529618
+    m_Key: attribute.vitality.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529619
+    m_Key: attribute.vitality.abbr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529620
+    m_Key: attribute.vitality.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529621
+    m_Key: attribute.intelligence.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529622
+    m_Key: attribute.intelligence.abbr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529623
+    m_Key: attribute.intelligence.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529624
+    m_Key: attribute.wisdom.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529625
+    m_Key: attribute.wisdom.abbr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529626
+    m_Key: attribute.wisdom.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529627
+    m_Key: attribute.charisma.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529628
+    m_Key: attribute.charisma.abbr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529629
+    m_Key: attribute.charisma.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529630
+    m_Key: attribute.magicpower.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529631
+    m_Key: attribute.magicpower.abbr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529632
+    m_Key: attribute.magicpower.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529633
+    m_Key: attribute.magiccontrol.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529634
+    m_Key: attribute.magiccontrol.abbr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122651013529635
+    m_Key: attribute.magiccontrol.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 125798326976512
+    m_Key: character.derived_summary
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

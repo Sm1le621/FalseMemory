@@ -45,6 +45,8 @@ public static class ItemPresentation
     {
         var parts=new List<string>();var b=item.bonuses;
         Add(parts,"ATK",b.attack);Add(parts,"DEF",b.defense);Add(parts,"MATK",b.magicAttack);Add(parts,"MDEF",b.magicDefense);Add(parts,"SPD",b.speed);
+        for(int i=0;i<CharacterAttributeValues.Count;i++){var attribute=(CharacterAttribute)i;int value=b.attributes.Get(attribute);if(value!=0)parts.Add(GameText.Get(value>0?"item.bonus":"character.signed_bonus",GameText.Get("attribute."+attribute.ToString().ToLowerInvariant()+".abbr"),value));}
+        Add(parts,"HP",b.maximumHealth);Add(parts,"MP",b.maximumMana);
         var consumable=item as BattleConsumable;
         if(consumable!=null){if(consumable.healing>0)parts.Add(GameText.Get("item.restore_hp", consumable.healing));if(consumable.manaRestoration>0)parts.Add(GameText.Get("item.restore_mp", consumable.manaRestoration));}
         return string.Join("  •  ",parts);

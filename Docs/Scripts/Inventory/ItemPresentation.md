@@ -8,9 +8,13 @@
 
 ## 2. Как работает
 
+Актуально Player rework4: BonusText показывает primary equipment modifiers и прямые HP/MP capacities поверх прежних bonuses, из централизованных keys.
+
 View запрашивает фон/рамку; Tooltip запрашивает описание. Используются реальные ItemData и BattleConsumable. Строки с отсутствующими бонусами/нулевой ценой не добавляются.
 
 ## 3. Методы и функции
+
+BonusText обход Count10: nonzero primary читает attribute.<enum>.abbr и item.bonus/character.signed_bonus; добавляет maximumHealth/maximumMana через stat.hp/stat.mp. Description автоматически включает эти строки в прежний tooltip. Редкость/цены/правила не менялись.
 
 2026-10-12 — актуальная локализация: SlotName/TypeName/BonusText/Description и Add читают GameText по ключам слотов/категорий/редкостей/положительных эффектов/цен/уровня. Name/Description читают локализованные свойства ItemData. Палитра/защита TMP markup/правила пустых полей сохранены.
 
@@ -23,6 +27,8 @@ View запрашивает фон/рамку; Tooltip запрашивает о
 Все параметры — аргументы статических методов. Палитра и насыщенность заданы кодом; состояние не хранится. Редкость по умолчанию Common определена ItemData.
 
 ## 5. Связи
+
+CharacterAttributeValues.Count/Get, ItemStatBonus.attributes/capacities и English StringTable.
 
 GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
@@ -38,9 +44,13 @@ Iron Sword Rare → голубая рамка, ATK +5, реальная цена
 
 ## 8. Ограничения и расширение
 
+Новые float movement/critical/evasion modifiers участвуют в игре, их числовые строки в item tooltip пока не добавлены; primary/HPMP бонусы показаны. Rarity не меняет balance.
+
 Ancient и влияние редкости на награды не добавлены. Названия шести существующих редкостей берутся из английской таблицы. TypeName/BonusText требуют ненулевой ItemData; вызывающий проверяет null. Торговля не реализована, цены информационные.
 
 ## 9. История изменений
+
+- 2026-10-12 — Player rework4: primary attributes подключены к исходным ресурсам/бою/UI; прежние идентификаторы и игровая сессия сохранены.
 
 2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 

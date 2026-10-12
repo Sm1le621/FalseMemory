@@ -7,6 +7,7 @@ public enum DerivedAttributeStat { Attack, Defense, MagicAttack, MagicDefense, S
 [Serializable]
 public struct CharacterAttributeValues
 {
+    public const int Count=10;
     public int strength, agility, dexterity, endurance, vitality, intelligence, wisdom, charisma, magicPower, magicControl;
     public static CharacterAttributeValues Uniform(int value) => new CharacterAttributeValues
     {
@@ -50,20 +51,20 @@ public struct CharacterAttributeValues
     public CharacterAttributeValues NonNegative()
     {
         var result=this;
-        foreach(CharacterAttribute attribute in Enum.GetValues(typeof(CharacterAttribute)))result.Set(attribute,Math.Max(0,Get(attribute)));
+        for(int i=0;i<Count;i++){var attribute=(CharacterAttribute)i;result.Set(attribute,Math.Max(0,Get(attribute)));}
         return result;
     }
     public static int Clamp(long value) => (int)Math.Max(int.MinValue,Math.Min(int.MaxValue,value));
     public static CharacterAttributeValues operator +(CharacterAttributeValues a,CharacterAttributeValues b)
     {
         var result=new CharacterAttributeValues();
-        foreach(CharacterAttribute attribute in Enum.GetValues(typeof(CharacterAttribute)))result.Set(attribute,Clamp((long)a.Get(attribute)+b.Get(attribute)));
+        for(int i=0;i<Count;i++){var attribute=(CharacterAttribute)i;result.Set(attribute,Clamp((long)a.Get(attribute)+b.Get(attribute)));}
         return result;
     }
     public CharacterAttributeValues Scale(int count)
     {
         var result=new CharacterAttributeValues();count=Math.Max(0,count);
-        foreach(CharacterAttribute attribute in Enum.GetValues(typeof(CharacterAttribute)))result.Set(attribute,Clamp((long)Get(attribute)*count));
+        for(int i=0;i<Count;i++){var attribute=(CharacterAttribute)i;result.Set(attribute,Clamp((long)Get(attribute)*count));}
         return result;
     }
 }
