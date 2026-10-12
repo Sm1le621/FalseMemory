@@ -6,6 +6,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 
 ## Общие документы
 
+- [Прокачка5.1](ProgressionStage5.md) — EXP/уровни/рост и текущие проверки.
+
 - [Skeleton64 и pixel VFX](PixelVisuals.md) — реальные64px кадры, подключение, проверки и ограничения.
 
 - [Английская локализация](EnglishLocalization.md) — восстановленная работа, текущие тесты/кадры и ручная приёмка.
@@ -28,6 +30,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [Отчёт этапа 2](BattleStage2.md) — реализация, список файлов, ограничения и подробная инструкция Play Mode.
 
 ## Игровые системы
+
+- [Прокачка](Systems/ProgressionSystem.md) — первые уровни и growth.
 
 - [Визуал врагов](Systems/EnemyVisuals.md) — общий набор кадров мира/боя.
 
@@ -52,9 +56,15 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [Главное меню и настройки](Systems/MenuSystem.md).
 - [Опыт и состояние игровой сессии](Systems/SessionProgressSystem.md).
 
-Полноценного SaveSystem, партийного боя, классов и level-up пока нет; они не документируются как готовые системы. PlayerPrefs уже сохраняет настройки меню, но не RPG-прогресс.
+Полноценного SaveSystem, партийного боя и классов пока нет; level-up подключён в5.1; они не документируются как готовые системы. PlayerPrefs уже сохраняет настройки меню, но не RPG-прогресс.
 
 ## Описания скриптов
+
+- [CharacterGrowthRules](Scripts/Battle/CharacterGrowthRules.md).
+- [CharacterGrowthTests](Scripts/Tests/EditMode/CharacterGrowthTests.md).
+- [CharacterGrowthFlowTests](Scripts/Tests/PlayMode/CharacterGrowthFlowTests.md).
+
+После5.1 —72 собственных C# (49 runtime,20 test,2 Editor,1 Welcome); предыдущие числа ниже исторические.
 
 После native pixel visual подэтапа —69 собственных C# (48 runtime,18 test,2 Editor,1 Welcome); у каждого отдельное описание. Результаты ниже о предыдущих этапах исторические.
 

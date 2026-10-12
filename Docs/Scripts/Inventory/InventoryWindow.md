@@ -12,6 +12,8 @@
 
 ## 3. Методы и функции
 
+OnEnable/OnDisable дополнительно подписываются/отписываются ProgressChanged. OnProgressChanged при открытом окне вызывает Refresh и показывает character.level_up, если получены уровни. Update использует character.header_progress: имя/уровень/total EXP/Next или Maximum Level; без профиля сохраняет прежний заголовок.
+
 2026-10-12 — актуальная локализация: Update/Refresh/RefreshResources формируют подписи имени/уровня/EXP/HPMP/сумки/Gold/выбора/характеристик через GameText.Get с аргументами. SplitSelected/DropOn/первоначальные editor builders читают централизованные ключи. State и события не меняются.
 
 `RefreshResources()` читает HP/maxHP/MP/maxMP и меняет строку только при изменении четырёх чисел. Update вызывает его в открытом окне и показывает имя/уровень/EXP. Refresh дополнительно обновляет занятость сумки, портрет и EquipmentSlotView, затем текущую подсказку. Close/BeginDrag скрывают tooltip. details показывает краткие сведения выбранного предмета; полное описание находится в hover.
@@ -30,6 +32,8 @@ Editor `BuildLayout()` создаёт Canvas/панель/30 views/подпис�
 
 ## 4. Переменные и Inspector
 
+Новых Inspector-полей нет. Три строки в прежнем characterLabel, параметры/геометрия не заменены.
+
 tooltip — InventoryTooltip на существующем Canvas; characterPortrait — Image существующего спрайта героя; characterLabel — имя/уровень/EXP; bagLabel — занятость30 ячеек. shownHP/shownMaxHP/shownMP/shownMaxMP — приватный кеш отображения, старт−1. Не владеет ресурсами.
 resourcesLabel — readonly отображение Health/BattleUnit, modalBackdrop — необязательный полноэкранный Image. Оба назначены MCP, закрытый фон inactive. Не владеют ресурсами.
 CanUseSelection Func<int,bool> — необязательный runtime predicate; Refresh учитывает его для кнопки использования. Статический запас/Inspector-количество не создаются.
@@ -38,6 +42,8 @@ equipButton/equipmentButtons[8]/equipmentStats — UI-ссылки. EquipRequest
 panel, slots[30], details/goldLabel/message, split/use/close Button, dragIcon обязательны; SelectedIndex/Inventory/IsOpen readonly; dragging приватный transient. UseRequested Action<int> — обработчик применения; без подписчика кнопка disabled; с4.5 подключён WorldItemUseController.
 
 ## 5. Связи
+
+BattleUnit.ProgressChanged; CharacterGrowthRules косвенно через readonly свойства Unit. Модальное открытие всё ещё запрещено до завершения Transition.
 
 GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
@@ -56,6 +62,8 @@ Potion3 → Разделить½ →2/1; drag в пустой/на другой/
 Не работает в BattleScene: мир скрыт, Open отвергает активную встречу. Не паузит время/врагов. Callback-подписчик обязан проверять реальные условия использования. Курсор/ощущения окончательно проверить владельцу.
 
 ## 9. История изменений
+
+2026-10-12 —5.1: кривая EXP/производный рост/Level Up при прежнем владельце HP. [Проверки](../../ProgressionStage5.md).
 
 2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 

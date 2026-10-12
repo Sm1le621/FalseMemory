@@ -34,6 +34,12 @@ public class Health : MonoBehaviour
         return System.Math.Max(0, currentHealth - before);
     }
 
+    // Growth changes capacity while preserving the existing resource and HUD owner.
+    public void SetMaximumHealth(int maximum)
+    {
+        maxHealth=System.Math.Max(1,maximum);currentHealth=Mathf.Clamp(currentHealth,0,maxHealth);UpdateUI();
+    }
+
     void UpdateUI()
     {
         if (hpSlider != null)

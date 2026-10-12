@@ -12,6 +12,8 @@ Start заполняет HP. TakeDamage/Heal вызывают UpdateUI. Сам H
 
 ## 3. Методы и функции
 
+SetMaximumHealth(maximum) — void: нормализует maximum≥1, ограничивает текущий HP новым максимумом и вызывает UpdateUI. Не лечит/не воскрешает; вызывается Unit при росте.
+
 - `Start()` — первый запуск перед обновлениями: currentHealth=maxHealth, UpdateUI. Повторное включение не повторяет Start.
 - `TakeDamage(int damage)` — вычитает damage, ограничивает HP 0…maxHealth, UpdateUI; void.
 - `Heal(int amount)` — отвергает amount≤0/мёртвого; ограничивает лечение максимумом, UpdateUI; возвращает фактически восстановленные HP.
@@ -19,9 +21,13 @@ Start заполняет HP. TakeDamage/Heal вызывают UpdateUI. Сам H
 
 ## 4. Переменные и параметры Inspector
 
+Стартовые сценовые maxHP100/60 сохранены; runtime Player после повышения105,110… по профилю. HPSlider.maxValue меняется через прежний UpdateUI.
+
 maxHealth — положительный максимум, код 100; сцена Player 100, Enemy 60. currentHealth — состояние 0…maxHealth, Start его перезаписывает. hpSlider/hpText — необязательные ссылки Slider/TMP_Text.
 
 ## 5. Связи с другими системами
+
+BattleUnit управляет уровнем/ростом и вызывает SetMaximumHealth; единственный актуальный HP/maxHP остаётся в Health.
 
 BattleUnit.Health возвращает тот же компонент. BattleAbilities/BattleManager/EnemyAttack используют его; BattleUI читает HP отсюда.
 
@@ -38,6 +44,8 @@ BattleUnit.Health возвращает тот же компонент. BattleAbi
 Прямая запись currentHealth не обновляет UI. Отрицательный TakeDamage лечит — вызывающий код обязан передавать ≥0. Heal не воскрешает. Health связан с UI напрямую. Лимиты/общая ссылка покрыты тестами; Slider игрока не интерактивен.
 
 ## 9. История изменений
+
+2026-10-12 —5.1: кривая EXP/производный рост/Level Up при прежнем владельце HP. [Проверки](../ProgressionStage5.md).
 
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 

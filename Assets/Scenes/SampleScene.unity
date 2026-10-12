@@ -4785,6 +4785,7 @@ MonoBehaviour:
   visualAnimations: {fileID: 11400000, guid: 9b5604a7fd518bd4cb69e85bbb808acf, type: 2}
   spriteColor: {r: 1, g: 1, b: 1, a: 1}
   flipInBattle: 0
+  growthRules: {fileID: 0}
 --- !u!114 &497416146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5161,6 +5162,7 @@ MonoBehaviour:
   visualAnimations: {fileID: 0}
   spriteColor: {r: 0.6862745, g: 0.6862745, b: 0.6862745, a: 1}
   flipInBattle: 1
+  growthRules: {fileID: 11400000, guid: 5f8c9d4468ef24e46ad5577754648a4a, type: 2}
 --- !u!114 &504028422
 MonoBehaviour:
   m_ObjectHideFlags: 0

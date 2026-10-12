@@ -175,7 +175,9 @@ public sealed class BattleUI : MonoBehaviour
     public void ShowVictoryResults(int gained, BattleUnit player)
     {
         resultPanel.gameObject.SetActive(true);
-        resultText.text = GameText.Get("battle.victory_result", gained, player.CurrentExperience, player.level);
+        resultText.text = GameText.Get(player.LevelsGainedLastAward>0?"battle.victory_level_up_result":"battle.victory_result",
+            gained, player.CurrentExperience, player.level,
+            player.AtMaximumLevel?GameText.Get("character.max_level"):GameText.Get("character.next_experience",player.ExperienceToNextLevel));
         if(hud!=null)hud.RevealResult();
     }
 

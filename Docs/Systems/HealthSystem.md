@@ -1,5 +1,7 @@
 # Здоровье и HUD
 
+5.1: SetMaximumHealth(maximum) нормализует max≥1, сохраняет/ограничивает currentHP и обновляет существующие Slider/TMP. BattleUnit передаёт стартовый maxHP+growth; здоровье/GUI не дублируются. Level Up не является Heal и не воскрешает. [ProgressionSystem](ProgressionSystem.md).
+
 ## 1. Назначение
 
 Один Health хранит HP в мире и бою.

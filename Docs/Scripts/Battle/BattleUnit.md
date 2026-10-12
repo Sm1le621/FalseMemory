@@ -12,6 +12,8 @@ Awake заполняет MP единожды. Менеджер начинает 
 
 ## 3. Методы и функции
 
+AddExperience теперь сохраняет насыщенный cumulative EXP, вычисляет достижимый уровень, LevelsGainedLastAward, ApplyHealthGrowth и событие ProgressChanged. awardingExperience отклоняет рекурсивные награды и сбрасывается finally. EnsureGrowthBaseline запоминает стартовый maxHP; ApplyHealthGrowth передаёт Health вычисленный максимум, сохраняя текущий HP. Awake готовит baseline/максимум/полный стартовый MP. Effective*/Speed = прежняя база + LevelBonuses + EquipmentBonuses; публичные base-поля не увеличиваются.
+
 2026-10-12 — native pixel visuals: EnemySpriteAnimation и BattlePresentation используют одни и те же данные кадров; Unit сам их не проигрывает.
 
 2026-10-12 — актуальная локализация: localizationId — ключ unit.player/unit.skeleton, LocalizedName → GameText.Content(localizationId+".name",displayName). Это только имя; уровни/EXP/характеристики/Health не меняются.
@@ -26,6 +28,8 @@ Awake заполняет MP единожды. Менеджер начинает 
 
 ## 4. Переменные и параметры Inspector
 
+growthRules — необязательный CharacterGrowthRules; на Player назначен DefaultCharacterGrowth, на Enemy null. baseMaximumHealth/awardingExperience внутренние; LevelBonuses getter. ProgressChanged событие; LevelsGainedLastAward/ExperienceToNextLevel/AtMaximumLevel readonly. CurrentExperience по-прежнему общий накопленный EXP, maxMP — база; MaxMP теперь включает рост.
+
 visualAnimations — новый необязательный SpriteAnimationSet; в Enemy назначен Skeleton64, в Player отсутствует. battleSprite остаётся исходным/fallback Sprite; боевые характеристики/идентификаторы не менялись.
 
 localizationId — новое serialized string-поле: spell.fire/spell.heal у заклинаний, unit.player/unit.skeleton у участников сцены. LocalizedName readonly читает таблицу, displayName остаётся английским fallback. Ни ID, ни боевые параметры это поле не меняет.
@@ -33,6 +37,8 @@ localizationId — новое serialized string-поле: spell.fire/spell.heal 
 displayName — подпись; level≥1; attack/defense/speed≥0 (код 15/8/10). maxMP/currentMP/magicAttack/magicDefense≥0; currentMP сериализован, Awake перезаписывает. spells — список BattleSpell. criticalChance/missChance 0…1 (0.1/0.05). currentExperience/experienceReward≥0; battleSprite/spriteColor/flipInBattle — внешний вид. Сцена Player: MP30, MATK12, MDEF8; Enemy: ATK12 DEF5 SPD7 MDEF3 Reward20.
 
 ## 5. Связи с другими системами
+
+Health.SetMaximumHealth обновляет тот же HUD; InventoryWindow подписывается на ProgressChanged, BattleUI показывает Level Up после награды.
 
 GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
@@ -51,6 +57,8 @@ Fire → TrySpendMP(8): 30→22. Возврат в мир не запускае�
 Новый экземпляр/перезагрузка карты сбрасывает MP. Прямая запись сериализованных полей может обойти ограничения; Inspector-атрибуты не полная защита. Нет level-up. MP/EXP/защита и сохранение сессии проверены тестами.
 
 ## 9. История изменений
+
+2026-10-12 —5.1: кривая EXP/производный рост/Level Up при прежнем владельце HP. [Проверки](../../ProgressionStage5.md).
 
 2026-10-12 — кадры Skeleton64/Fire/Heal/Hit подключены к существующему представлению; игровые ресурсы не перенесены в анимации. [Текущие проверки](../../PixelVisuals.md).
 

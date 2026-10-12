@@ -604,6 +604,34 @@ MonoBehaviour:
     m_Localized: SPD
     m_Metadata:
       m_Items: []
+  - m_Id: 83984643506176
+    m_Localized: 'Victory!
+
+      EXP Gained: +{0}
+
+      Total EXP: {1}
+
+      Level Up! Level {2}
+
+      {3}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83984677060608
+    m_Localized: Level Up! Level {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83984677060609
+    m_Localized: "{0}\nLevel {1} \u2022 EXP {2}\n{3}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83984677060610
+    m_Localized: Maximum Level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83984677060611
+    m_Localized: 'Next: {0} EXP'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

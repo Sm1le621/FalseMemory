@@ -1,5 +1,7 @@
 # Настройка существующего проекта в Unity
 
+5.1: Player.BattleUnit.growthRules=Assets/Settings/Progression/DefaultCharacterGrowth.asset; Enemy без профиля. Кривая/рост настраиваются в этом ассете вне Play. Health.maxHealth/Unit.maxMP — стартовая база, CurrentExperience — накопленный EXP. [ProgressionSystem](../Systems/ProgressionSystem.md).
+
 Native pixel art: [EnemyVisuals](../Systems/EnemyVisuals.md). Enemy→BattleUnit.visualAnimations=Skeleton64, SpriteRenderer/battleSprite=Idle-00; EnemySpriteAnimation рядом с существующими AI/Collider/Rigidbody. BattleUI.impactSprite=Hit64/Impact; FireVisual/HealVisual.frames имеют8 кадров. Новые текстуры64×64, Point, Uncompressed, без mipmaps, PPU100. Старый skeleton-topdown-64 сохранён.
 
 Открывай корень FalseMemory, содержащий Assets, Packages и ProjectSettings. Текущая проверенная версия Editor —6000.6.2f1. Новую сцену для проверки боя создавать не нужно.

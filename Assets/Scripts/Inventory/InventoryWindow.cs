@@ -49,8 +49,9 @@ public sealed partial class InventoryWindow : MonoBehaviour
         }
         Close();
     }
-    private void OnEnable(){if(Application.isPlaying && Inventory!=null)Inventory.State.Changed+=Refresh;}
-    private void OnDisable(){if(Inventory!=null)Inventory.State.Changed-=Refresh;Close();}
+    private void OnEnable(){if(Application.isPlaying && Inventory!=null)Inventory.State.Changed+=Refresh;if(unit!=null)unit.ProgressChanged+=OnProgressChanged;}
+    private void OnDisable(){if(Inventory!=null)Inventory.State.Changed-=Refresh;if(unit!=null)unit.ProgressChanged-=OnProgressChanged;Close();}
+    private void OnProgressChanged(){if(!IsOpen)return;Refresh();if(unit.LevelsGainedLastAward>0)ShowMessage(GameText.Get("character.level_up",unit.level));}
     private void OnDestroy()
     {
         if(splitButton!=null)splitButton.onClick.RemoveListener(SplitSelected);
@@ -61,7 +62,8 @@ public sealed partial class InventoryWindow : MonoBehaviour
     }
     private void Update()
     {
-        if(IsOpen && characterLabel!=null)characterLabel.text=GameText.Get("character.header", unit.LocalizedName, unit.level, unit.CurrentExperience);
+        if(IsOpen && characterLabel!=null)characterLabel.text=GameText.Get(unit.growthRules!=null?"character.header_progress":"character.header", unit.LocalizedName, unit.level, unit.CurrentExperience,
+            unit.AtMaximumLevel?GameText.Get("character.max_level"):GameText.Get("character.next_experience",unit.ExperienceToNextLevel));
         if(IsOpen)RefreshResources();
         var keyboard=Keyboard.current;if(keyboard==null)return;
         if(keyboard.iKey.wasPressedThisFrame){if(IsOpen)Close();else Open();return;}

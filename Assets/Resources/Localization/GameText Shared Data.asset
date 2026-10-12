@@ -559,6 +559,26 @@ MonoBehaviour:
     m_Key: stat.spd
     m_Metadata:
       m_Items: []
+  - m_Id: 83984643506176
+    m_Key: battle.victory_level_up_result
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83984677060608
+    m_Key: character.level_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83984677060609
+    m_Key: character.header_progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83984677060610
+    m_Key: character.max_level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83984677060611
+    m_Key: character.next_experience
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

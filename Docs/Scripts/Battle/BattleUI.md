@@ -16,6 +16,8 @@ Awake подключает мышь и отключает дублирующий
 
 ## 3. Методы и функции
 
+ShowVictoryResults выбирает battle.victory_level_up_result при LevelsGainedLastAward>0: EXP/Level Up/Next или Maximum Level. Обычная победа без повышения сохраняет старый ключ; результат после TryGrantVictoryExperience читает актуальный Unit.
+
 2026-10-12 — native pixel visuals: ShowFeedback(onPlayer,text,color,showImpact=true) назначает mask/Point Sprite вместо сплошного прямоугольника. Feedback(color,showImpact) включает glow только при showImpact и тексте кроме MISS. Magic/Items передаютfalse и показывают собственный VFX; числа сохраняются. Крит использует прежний цвет/размер числа/реакцию.
 
 2026-10-12 — актуальная локализация: ShowVictoryResults/ShowDefeatResults/RefreshStats/Stats и editor builders читают ключи battle.*. Статусы/раунд/EXP форматируются аргументами, Player/Enemy/Spell/Item используют LocalizedName. Устройство меню/ввод/анимации/параметры сохранены.
@@ -42,11 +44,15 @@ Awake подключает мышь и отключает дублирующий
 
 ## 4. Переменные и параметры Inspector
 
+Новых Inspector-полей в5.1 нет; resultText/image/layout прежние.
+
 impactSprite — новый необязательный Sprite маски физического попадания; в BattleScene назначен Assets/Art/VFX/Hit64/Impact.png. Размеры/позиции/числа прежние.
 
 Обязательны messageText/playerStats/enemyStats/roundText, playerPortrait/enemyPortrait, равные массивы commandButtons/commandLabels (в сцене 5). feedbackGlow/feedbackText — ссылки эффектов; feedbackDuration≥0.1, в коде и сцене 0.8 сек. resultPanel/resultText — победа. previewPlayerSprite/previewEnemySprite — начальное оформление Editor. hud — необязательный BattleHUD, назначенный в текущей сцене. CommandsEnabled/MenuCount/SelectedIndex — чтение. Canvas ScaleWithScreenSize960×540, match1 (по высоте); содержимое ограничено шириной 960, меню и текст имеют якоря/авторазмер.
 
 ## 5. Связи с другими системами
+
+GameText и5 новых ключей в native таблице; роста ресурсов в UI нет.
 
 GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
 
@@ -65,6 +71,8 @@ Magic → Fire 8 MP и Heal6 MP → Escape возвращает Attack/Magic/Ite
 Отсутствующие основные ссылки/несогласованные массивы дают ошибки. UI listeners button.onClick в тестах проверяют обработку команд, не весь физический путь курсора. Only Enter, не Space. Gamepad нет. Длинные списки прокручиваются, выбор цели партии отсутствует. Меню, сообщения и эффекты проверены Play Mode; на этапе 3.6 через MCP проверены главное меню, Magic, Items, Victory и Game Over в 1280×720, 1920×1080, 2560×1440 и 3440×1440; границы/переполнение проверены автоматически, снимки просмотрены.
 
 ## 9. История изменений
+
+2026-10-12 —5.1: кривая EXP/производный рост/Level Up при прежнем владельце HP. [Проверки](../../ProgressionStage5.md).
 
 2026-10-12 — кадры Skeleton64/Fire/Heal/Hit подключены к существующему представлению; игровые ресурсы не перенесены в анимации. [Текущие проверки](../../PixelVisuals.md).
 

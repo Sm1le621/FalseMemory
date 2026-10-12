@@ -1,5 +1,7 @@
 # Общий инвентарь и предметы
 
+5.1: Character header дополнительно показывает total EXP/Next или Maximum Level. ProgressChanged обновляет открытое окно и показывает Level Up! Level N. Модель предметов/экипировка/Gold не меняются; новые эффективные характеристики читаются с Unit. [Проверки](../ProgressionStage5.md).
+
 ## 1. Назначение
 
 Один InventoryState на исходном Player: 30 слотов, Gold, статические ItemData. Исследование и BattleScene используют тот же запас.

@@ -1,5 +1,7 @@
 # Пошаговые сражения
 
+5.1: прежний TryGrantVictoryExperience вызывает расширенный Unit.AddExperience; Level Up применяется один раз после победы, не во время физических действий. CurrentHP/MP сохраняются при новой вместимости. Следующий бой читает выросшие Effective*/Speed. [ProgressionSystem](ProgressionSystem.md), [проверки](../ProgressionStage5.md).
+
 2026-10-12 — визуальный подэтап: Skeleton64 кадры мира/боя, animated Fire/Heal и физический Hit/Slash. Manager изменён только для showImpact=false в числах Magic/Items; расчёт, MP, урон, gate и однократная награда сохранены. Регрессия78 Edit Mode/40 Play Mode; [PixelVisuals](../PixelVisuals.md). Владелец подтвердил предыдущую ручную приёмку этапа4/инвентаря/локализации; следующий программный шаг5.1 разрешён.
 
 ## 1. Назначение
