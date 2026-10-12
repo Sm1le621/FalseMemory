@@ -15,10 +15,11 @@ public sealed class EquipmentTests
     }
     [TearDown] public void Cleanup(){Object.DestroyImmediate(sword);Object.DestroyImmediate(staff);Object.DestroyImmediate(filler);}
     [TestCase(EquipmentSlot.Weapon)] [TestCase(EquipmentSlot.Head)] [TestCase(EquipmentSlot.Chest)]
-    [TestCase(EquipmentSlot.Legs)] [TestCase(EquipmentSlot.Boots)] [TestCase(EquipmentSlot.Accessory1)] [TestCase(EquipmentSlot.Accessory2)]
+    [TestCase(EquipmentSlot.Legs)] [TestCase(EquipmentSlot.Boots)] [TestCase(EquipmentSlot.Accessory1)] [TestCase(EquipmentSlot.Accessory2)] [TestCase(EquipmentSlot.Gloves)]
     public void EachEquipmentSlotAcceptsOnlyMatchingCategoryAndReturnsItem(EquipmentSlot slot)
     {
-        sword.category=slot==EquipmentSlot.Weapon?ItemCategory.Weapon:slot>=EquipmentSlot.Accessory1?ItemCategory.Accessory:ItemCategory.Armor;
+        sword.category=slot==EquipmentSlot.Weapon?ItemCategory.Weapon:
+            slot==EquipmentSlot.Accessory1 || slot==EquipmentSlot.Accessory2?ItemCategory.Accessory:ItemCategory.Armor;
         sword.equipmentSlot=slot;inventory.TryAdd(sword,1);
         Assert.That(equipment.TryEquip(inventory,0,slot,1),Is.True);Assert.That(inventory.Count(sword),Is.Zero);
         Assert.That(equipment.GetSlot(slot),Is.SameAs(sword));

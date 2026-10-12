@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(BattleInventory),typeof(WorldInputGate))]
-public sealed class InventoryWindow : MonoBehaviour
+public sealed partial class InventoryWindow : MonoBehaviour
 {
     public RectTransform panel;
     public InventorySlotView[] slots;
@@ -17,6 +17,9 @@ public sealed class InventoryWindow : MonoBehaviour
     public TextMeshProUGUI equipmentStats;
     public TextMeshProUGUI resourcesLabel;
     public Image modalBackdrop;
+    public InventoryTooltip tooltip;
+    public Image characterPortrait;
+    public TextMeshProUGUI characterLabel, bagLabel;
     public event Action<int> UseRequested;
     public Func<int,bool> CanUseSelection;
     public event Action<int,EquipmentSlot?> EquipRequested;
@@ -28,6 +31,7 @@ public sealed class InventoryWindow : MonoBehaviour
     private BattleUnit unit;
     private int dragging=-1;
     private UnityEngine.Events.UnityAction[] equipmentClicks;
+    private int shownHP=-1, shownMaxHP=-1, shownMP=-1, shownMaxMP=-1;
 
     private void Awake()
     {
@@ -57,6 +61,8 @@ public sealed class InventoryWindow : MonoBehaviour
     }
     private void Update()
     {
+        if(IsOpen && characterLabel!=null)characterLabel.text=unit.displayName+"\nУровень "+unit.level+"  •  EXP "+unit.CurrentExperience;
+        if(IsOpen)RefreshResources();
         var keyboard=Keyboard.current;if(keyboard==null)return;
         if(keyboard.iKey.wasPressedThisFrame){if(IsOpen)Close();else Open();return;}
         if(!IsOpen)return;
@@ -74,6 +80,7 @@ public sealed class InventoryWindow : MonoBehaviour
     }
     public void Close()
     {
+        if(tooltip!=null)tooltip.Hide();
         EndDrag();if(panel!=null)panel.gameObject.SetActive(false);
         if(modalBackdrop!=null)modalBackdrop.gameObject.SetActive(false);if(gate!=null)gate.Release(this);
     }
@@ -84,9 +91,11 @@ public sealed class InventoryWindow : MonoBehaviour
         for(int i=0;i<(slots?.Length ?? 0);i++)slots[i].Render(Inventory.State.GetSlot(i),i==SelectedIndex);
         var selected=Inventory.State.GetSlot(SelectedIndex);var item=selected.Item;
         goldLabel.text="GOLD "+Inventory.State.Gold;
-        if(resourcesLabel!=null)resourcesLabel.text="HP "+unit.Health.currentHealth+" / "+unit.Health.maxHealth+"    MP "+unit.CurrentMP+" / "+unit.MaxMP;
-        details.text=selected.IsEmpty?"Пустой слот\nВыберите предмет.":item.displayName+"  ×"+selected.Count+"\n"+item.category+
-            "\n\n"+item.description+"\n\nСтопка: "+item.StackLimit+"   Купить: "+item.buyPrice+"   Продать: "+(item.CanSell?item.sellPrice.ToString():"—");
+        RefreshResources();
+        details.text=selected.IsEmpty?"Пустая ячейка\nВыберите предмет. Наведите курсор, чтобы узнать подробности.":
+            item.displayName+"  ×"+selected.Count+"\n"+ItemPresentation.TypeName(item)+"  •  "+item.rarity+"\n"+ItemPresentation.BonusText(item);
+        if(bagLabel!=null){int occupied=0;for(int i=0;i<InventoryState.Capacity;i++)if(!Inventory.State.GetSlot(i).IsEmpty)occupied++;bagLabel.text="СУМКА   "+occupied+" / "+InventoryState.Capacity;}
+        if(characterPortrait!=null){characterPortrait.sprite=unit.battleSprite;characterPortrait.color=unit.spriteColor;characterPortrait.gameObject.SetActive(unit.battleSprite!=null);}
         splitButton.interactable=!selected.IsEmpty && selected.Count>1 && item.stackable && Inventory.State.FirstEmptySlot()>=0;
         useButton.interactable=!selected.IsEmpty && item is BattleConsumable && UseRequested!=null && (CanUseSelection==null || CanUseSelection(SelectedIndex));
         var equipment=GetComponent<EquipmentController>();
@@ -94,10 +103,21 @@ public sealed class InventoryWindow : MonoBehaviour
         for(int i=0;i<(equipmentButtons?.Length ?? 0);i++)
         {
             var slot=(EquipmentSlot)i;var worn=equipment!=null?equipment.State.GetSlot(slot):null;
-            equipmentButtons[i].GetComponentInChildren<TextMeshProUGUI>().text=slot+": "+(worn!=null?worn.displayName:"—");
+            var view=equipmentButtons[i].GetComponent<EquipmentSlotView>();
+            if(view!=null)view.Render(worn);
+            else equipmentButtons[i].GetComponentInChildren<TextMeshProUGUI>().text=slot+": "+(worn!=null?worn.displayName:"—");
             equipmentButtons[i].interactable=equipment!=null && (worn!=null || (item!=null && item.Fits(slot) && item.requiredLevel<=unit.level));
         }
-        if(equipmentStats!=null)equipmentStats.text="ATK "+unit.EffectiveAttack+"  DEF "+unit.EffectiveDefense+"  MATK "+unit.EffectiveMagicAttack+"  MDEF "+unit.EffectiveMagicDefense+"  SPD "+unit.Speed;
+        if(equipmentStats!=null)equipmentStats.text="ATK "+unit.EffectiveAttack+"     DEF "+unit.EffectiveDefense+"\nMATK "+unit.EffectiveMagicAttack+"     MDEF "+unit.EffectiveMagicDefense+"\nSPD "+unit.Speed;
+        if(tooltip!=null)tooltip.RefreshContent();
+    }
+    private void RefreshResources()
+    {
+        if(resourcesLabel==null || unit==null || unit.Health==null)return;
+        int hp=unit.Health.currentHealth,maxHP=unit.Health.maxHealth,mp=unit.CurrentMP,maxMP=unit.MaxMP;
+        if(hp==shownHP && maxHP==shownMaxHP && mp==shownMP && maxMP==shownMaxMP)return;
+        shownHP=hp;shownMaxHP=maxHP;shownMP=mp;shownMaxMP=maxMP;
+        resourcesLabel.text="HP "+hp+" / "+maxHP+"    MP "+mp+" / "+maxMP;
     }
     public void SplitSelected()
     {
@@ -118,6 +138,7 @@ public sealed class InventoryWindow : MonoBehaviour
     public void BeginDrag(int index,Vector2 position)
     {
         if(!IsOpen || Inventory.State.GetSlot(index).IsEmpty)return;
+        if(tooltip!=null)tooltip.Hide();
         Select(index);dragging=index;dragIcon.sprite=Inventory.State.GetSlot(index).Item.icon;
         dragIcon.gameObject.SetActive(true);MoveDrag(position);
     }

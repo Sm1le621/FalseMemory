@@ -2,7 +2,9 @@ using System;
 using UnityEngine;
 
 public enum ItemCategory { Consumable, Weapon, Armor, Accessory, Material, QuestItem }
-public enum EquipmentSlot { Weapon, Head, Chest, Legs, Boots, Accessory1, Accessory2 }
+// Append new slots: existing serialized numeric values must stay unchanged.
+public enum EquipmentSlot { Weapon, Head, Chest, Legs, Boots, Accessory1, Accessory2, Gloves }
+public enum ItemRarity { Common, Uncommon, Rare, Epic, Legendary, Mythic }
 [Flags] public enum ItemUseLocation { None=0, Exploration=1, Battle=2, Anywhere=3 }
 
 [Serializable]
@@ -26,6 +28,7 @@ public class ItemData : ScriptableObject
     [TextArea] public string description;
     public Sprite icon;
     public ItemCategory category=ItemCategory.Consumable;
+    public ItemRarity rarity=ItemRarity.Common;
     public bool stackable=true;
     [Min(1)] public int maxStack=99;
     [Min(0)] public int buyPrice, sellPrice;
@@ -38,5 +41,6 @@ public class ItemData : ScriptableObject
     public bool CanSell => category!=ItemCategory.QuestItem && sellPrice>0;
     public bool Fits(EquipmentSlot slot) => category==ItemCategory.Weapon ? slot==EquipmentSlot.Weapon :
         category==ItemCategory.Accessory ? slot==EquipmentSlot.Accessory1 || slot==EquipmentSlot.Accessory2 :
-        category==ItemCategory.Armor && equipmentSlot==slot && slot>=EquipmentSlot.Head && slot<=EquipmentSlot.Boots;
+        category==ItemCategory.Armor && equipmentSlot==slot &&
+        ((slot>=EquipmentSlot.Head && slot<=EquipmentSlot.Boots) || slot==EquipmentSlot.Gloves);
 }

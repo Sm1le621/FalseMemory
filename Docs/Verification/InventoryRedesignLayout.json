@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-12",
+  "scene": "Assets/Scenes/SampleScene.unity",
+  "checks": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "outside": [],
+      "overflow": [],
+      "tooltip": true,
+      "tooltipText": "<b>Wooden Staff</b>\n<color=#639D6F>Uncommon</color>  •  Оружие\nMATK +4\n\nПосох ученика. Magic Attack +4.\n\nУровень: 1\nПокупка: 100 зол.\nПродажа: 50 зол.",
+      "frame": 5,
+      "state": "partial_equipped"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "outside": [],
+      "overflow": [],
+      "tooltip": true,
+      "tooltipText": "<b>Wooden Staff</b>\n<color=#639D6F>Uncommon</color>  •  Оружие\nMATK +4\n\nПосох ученика. Magic Attack +4.\n\nУровень: 1\nПокупка: 100 зол.\nПродажа: 50 зол.",
+      "frame": 5595,
+      "state": "partial_equipped"
+    },
+    {
+      "width": 3440,
+      "height": 1440,
+      "outside": [],
+      "overflow": [],
+      "tooltip": true,
+      "tooltipText": "<b>Wooden Staff</b>\n<color=#639D6F>Uncommon</color>  •  Оружие\nMATK +4\n\nПосох ученика. Magic Attack +4.\n\nУровень: 1\nПокупка: 100 зол.\nПродажа: 50 зол.",
+      "frame": 14344,
+      "state": "partial_equipped"
+    },
+    {
+      "width": 1600,
+      "height": 1200,
+      "outside": [],
+      "overflow": [],
+      "tooltip": true,
+      "tooltipText": "<b>Wooden Staff</b>\n<color=#639D6F>Uncommon</color>  •  Оружие\nMATK +4\n\nПосох ученика. Magic Attack +4.\n\nУровень: 1\nПокупка: 100 зол.\nПродажа: 50 зол.",
+      "frame": 20908,
+      "state": "partial_equipped"
+    },
+    {
+      "width": 1600,
+      "height": 1200,
+      "outside": [],
+      "overflow": [],
+      "tooltip": true,
+      "tooltipText": "<b>Wooden Staff</b>\n<color=#639D6F>Uncommon</color>  •  Оружие\nMATK +4\n\nПосох ученика. Magic Attack +4.\n\nУровень: 1\nПокупка: 100 зол.\nПродажа: 50 зол.",
+      "frame": 20938,
+      "state": "full_rejected_unequip"
+    },
+    {
+      "width": 3440,
+      "height": 1440,
+      "outside": [],
+      "overflow": [],
+      "tooltip": true,
+      "tooltipText": "<b>Wooden Staff</b>\n<color=#639D6F>Uncommon</color>  •  Оружие\nMATK +4\n\nПосох ученика. Magic Attack +4.\n\nУровень: 1\nПокупка: 100 зол.\nПродажа: 50 зол.",
+      "frame": 44761,
+      "state": "full_rejected_unequip"
+    }
+  ]
+}

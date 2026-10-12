@@ -4,7 +4,8 @@ using UnityEngine;
 [Serializable]
 public sealed class EquipmentState
 {
-    [SerializeField] private ItemData[] slots=new ItemData[7];
+    public const int SlotCount=8;
+    [SerializeField] private ItemData[] slots=new ItemData[SlotCount];
     private bool changing;
     public event Action Changed;
     public ItemData GetSlot(EquipmentSlot slot)
@@ -42,5 +43,5 @@ public sealed class EquipmentState
         }
         finally { changing=false; }
     }
-    private static bool Valid(EquipmentSlot slot) => (int)slot>=0 && (int)slot<7;
+    private static bool Valid(EquipmentSlot slot) => (int)slot>=0 && (int)slot<SlotCount;
 }

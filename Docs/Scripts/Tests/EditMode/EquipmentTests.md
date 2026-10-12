@@ -4,7 +4,7 @@
 
 Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Tests/EditMode/EquipmentTests.cs.
 
-11 EditMode случаев модели экипировки: семь слотов и четыре граничных сценария.
+12 EditMode случаев модели экипировки: восемь слотов и четыре граничных сценария.
 
 ## 2. Как работает
 
@@ -12,7 +12,9 @@ Setup создаёт InventoryState/EquipmentState и три временных 
 
 ## 3. Методы и функции
 
-`Setup`/`Cleanup` NUnit lifecycle. `EachEquipmentSlotAcceptsOnlyMatchingCategoryAndReturnsItem(slot)` семь TestCase: подходящая категория/слот, переход владения и обратный возврат/бонус0. `FullInventorySwapsWeaponButCannotUnequipUntilSpaceIsFree` полная замена/отказ снятия/успех после освобождения. `WrongSlotLevelAndIndicesNeverLoseItemsOrRaiseEvents` неверный уровень/слот/индекс без мутации. `TwoAccessoriesAddOnceAndRepeatedReadsNeverAccumulate` две копии,20 чтений/снятие. `InventoryNotificationCannotReenterEquipmentTransaction` реальный Changed пытается снять во время надевания и получает отказ. Методы void, Unity callbacks нет.
+Gloves проверяется как Armor, а аксессуары определяются явными Accessory1/2, независимо от положения новых значений enum.
+
+`Setup`/`Cleanup` NUnit lifecycle. `EachEquipmentSlotAcceptsOnlyMatchingCategoryAndReturnsItem(slot)` восемь TestCase: подходящая категория/слот, переход владения и обратный возврат/бонус0. `FullInventorySwapsWeaponButCannotUnequipUntilSpaceIsFree` полная замена/отказ снятия/успех после освобождения. `WrongSlotLevelAndIndicesNeverLoseItemsOrRaiseEvents` неверный уровень/слот/индекс без мутации. `TwoAccessoriesAddOnceAndRepeatedReadsNeverAccumulate` две копии,20 чтений/снятие. `InventoryNotificationCannotReenterEquipmentTransaction` реальный Changed пытается снять во время надевания и получает отказ. Методы void, Unity callbacks нет.
 
 ## 4. Переменные и Inspector
 
@@ -35,5 +37,7 @@ FalseMemory.Battle.EditModeTests, NUnit, EquipmentState/InventoryState/ItemData.
 Не проверяет настоящий курсор/боевой урон; UI отдельно PlayMode, формулы4.5.
 
 ## 9. История изменений
+
+2026-10-12 — Gloves и проверка категории при сохранении старых числовых значений.
 
 2026-10-12 — 4.4:11 случаев.

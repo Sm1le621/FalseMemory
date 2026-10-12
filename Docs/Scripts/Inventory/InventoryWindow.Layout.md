@@ -1,0 +1,41 @@
+# InventoryWindow.Layout
+
+## 1. Название и назначение
+
+Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Inventory/InventoryWindow.Layout.cs.
+
+Редакторная часть того же partial InventoryWindow: оформление существующего UI по RPG-референсу, без альтернативной системы/сцены.
+
+## 2. Как работает
+
+BuildFantasyLayout переиспользует сохранённые ячейки, кнопки и подписи; добавляет отсутствующие секции, портрет/hover. Повторный вызов на этой сцене не создаёт дублей. Только редакторный код под UNITY_EDITOR.
+
+## 3. Методы и функции
+
+`BuildFantasyLayout()` void запрещает Play Mode/отсутствующую panel/не30 slots; задаёт размер/Scaler, переставляет старые элементы, добавляет8-й слот Gloves без изменения индексов, назначает views/tooltip/ссылки, закрывает окно и помечает существующую сцену dirty. Сохранение отдельно через Unity MCP.
+
+`Section(name,x,y,w,h)` → RectTransform найденной/новой панели с рамкой, raycast=false. `EnsureLabel(name,text,size,x,y,w,h)` → найденный/новый TMP и позиция. `EnsureImage(parent,name)` → найденный/новый Image без raycast. `MoveButton(button,x,y,width)` void переставляет существующую кнопку/подпись и задаёт тёмный фон. Общие helpers Panel/Place/Label/Button остаются в InventoryWindow.cs. Unity callbacks нет.
+
+## 4. Переменные и Inspector
+
+Ссылки хранятся в основной части InventoryWindow. Panel1140×720; Canvas reference1200×780, Expand — равномерное масштабирование по доступному экрану; PixelPerfect/sorting60 сохранены. Сумка6×5, ячейка68/шаг96 поX76 поY. Две колонки экипировки вокруг исходного Point-спрайта. Спрайт/импорт не меняются.
+
+## 5. Связи
+
+Существующий InventoryCanvas SampleScene, InventoryWindow на Player, ItemPresentation/EquipmentSlotView/InventoryTooltip, UnityEditor сохранение сцены.
+
+## 6. Пример
+
+Выполненный MCP вызов Player.GetComponent<InventoryWindow>().BuildFantasyLayout() преобразует старое окно, сохраняя ссылки/кнопки Use, Equip, Split, Close и30 slots.
+
+## 7. Настройка в Unity
+
+Не отдельный MonoBehaviour для добавления в Inspector. Вызывать на существующем InventoryWindow вне Play Mode; затем сохранить ту же SampleScene. Второго Canvas или менеджера не создаёт.
+
+## 8. Ограничения и расширение
+
+Предполагает существующий этап4 с Resources/Title/EquipmentTitle/Controls. Не является универсальным автоматическим мигратором произвольных сцен. Позиции — единый дизайн окна, масштабирование обеспечивает Scaler; ориентировано на ПК, не мобильную навигацию.
+
+## 9. История изменений
+
+2026-10-12 — повторяемая перестройка старого UI без удаления объектов, центрированный портрет/характеристики/сумка/hover.

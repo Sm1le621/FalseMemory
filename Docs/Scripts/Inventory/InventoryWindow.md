@@ -11,8 +11,12 @@
 Открытие I, закрытие I/Escape; стрелки выбирают. Событие State.Changed обновляет30 views только после изменения/выбора. UI не хранит количества; использование делегируется UseRequested/WorldItemUseController.
 
 ## 3. Методы и функции
+
+`RefreshResources()` читает HP/maxHP/MP/maxMP и меняет строку только при изменении четырёх чисел. Update вызывает его в открытом окне и показывает имя/уровень/EXP. Refresh дополнительно обновляет занятость сумки, портрет и EquipmentSlotView, затем текущую подсказку. Close/BeginDrag скрывают tooltip. details показывает краткие сведения выбранного предмета; полное описание находится в hover.
+
+`BuildFantasyLayout()` — повторяемая редакторная перестройка существующих объектов без удаления, реализована в [InventoryWindow.Layout](InventoryWindow.Layout.md). Старые первоначальные Build* сохранены; в уже оформленной сцене их повторять не нужно.
 4.6: Refresh также читает реальные HP/MP в resourcesLabel. Open/Close показывают/скрывают собственный modalBackdrop; настройки мирового HUD не меняются. Editor `BuildResourceHeader()` создаёт/находит Resources и сужает Title; `BuildModalBackdrop()` создаёт/находит Image под панелью, растягивает по всему Canvas, помещает первым sibling и сохраняет ссылку. Повторное применение не создаёт дублей.
-4.4: `RequestEquip()` вызывает EquipRequested(index,null); `ClickEquipmentSlot(slot)` вызывает EquipRequested при выбранной совместимой вещи, иначе UnequipRequested для снятия. `Refresh` также читает семь надетых вещей/итоговые характеристики/доступность. `BuildEquipmentLayout()` Editor добавляет только недостающую панель7 кнопок/Stats/Equip, перенастраивает три существующие кнопки/message; повторный вызов запрещён. Awake связывает7 сохранённых UnityAction, OnDestroy снимает те же listeners.
+`RequestEquip()` вызывает EquipRequested(index,null); `ClickEquipmentSlot(slot)` вызывает EquipRequested при выбранной совместимой вещи, иначе UnequipRequested для снятия. `Refresh` читает восемь надетых вещей/итоговые характеристики/доступность. Исторический `BuildEquipmentLayout()` Editor создаёт первоначальные7 кнопок/Stats/Equip и перенастраивает три существующие кнопки/message; повторный вызов запрещён. Awake связывает столько сохранённых UnityAction, сколько назначено кнопок (сейчас8); OnDestroy снимает те же listeners.
 
 Unity `Awake` получает Inventory/gate/unit, Bind30 ячеек и button listeners, закрывает окно. `OnEnable` подписывает Refresh, `OnDisable` отписывает и закрывает/освобождает ввод, `OnDestroy` удаляет listeners. `Update` читает I/Escape/стрелки без изменения Input Actions.
 
@@ -23,15 +27,17 @@ Unity `Awake` получает Inventory/gate/unit, Bind30 ячеек и button 
 Editor `BuildLayout()` создаёт Canvas/панель/30 views/подписи/кнопки/ghost и ссылки, существующая panel запрещает повторную перестройку. Helpers `Panel(parent,name,color)` RectTransform с Image/Outline; `Place(rect,x,y,w,h)` устанавливает позицию/размер; `Label(...)` TMP с fallback/авторазмером; `Button(...)` Button без keyboard navigation. Сохранение сцены выполняет MCP.
 
 ## 4. Переменные и Inspector
+
+tooltip — InventoryTooltip на существующем Canvas; characterPortrait — Image существующего спрайта героя; characterLabel — имя/уровень/EXP; bagLabel — занятость30 ячеек. shownHP/shownMaxHP/shownMP/shownMaxMP — приватный кеш отображения, старт−1. Не владеет ресурсами.
 resourcesLabel — readonly отображение Health/BattleUnit, modalBackdrop — необязательный полноэкранный Image. Оба назначены MCP, закрытый фон inactive. Не владеют ресурсами.
 CanUseSelection Func<int,bool> — необязательный runtime predicate; Refresh учитывает его для кнопки использования. Статический запас/Inspector-количество не создаются.
-equipButton/equipmentButtons[7]/equipmentStats — UI-ссылки. EquipRequested Action<int,EquipmentSlot?> и UnequipRequested Action<EquipmentSlot> — команды без владения. equipmentClicks — private runtime массив callback для правильной отписки.
+equipButton/equipmentButtons[8]/equipmentStats — UI-ссылки. EquipRequested Action<int,EquipmentSlot?> и UnequipRequested Action<EquipmentSlot> — команды без владения. equipmentClicks — private runtime массив callback для правильной отписки.
 
 panel, slots[30], details/goldLabel/message, split/use/close Button, dragIcon обязательны; SelectedIndex/Inventory/IsOpen readonly; dragging приватный transient. UseRequested Action<int> — обработчик применения; без подписчика кнопка disabled; с4.5 подключён WorldItemUseController.
 
 ## 5. Связи
 
-BattleInventory.State, BattleUnit, WorldInputGate, InventorySlotView, существующий EventSystem. Canvas Scale With Screen Size960×540/MatchHeight1, PixelPerfect, sorting60.
+BattleInventory.State, BattleUnit, WorldInputGate, InventorySlotView, существующий EventSystem. Canvas Scale With Screen Size1200×780/Expand, PixelPerfect, sorting60.
 
 ## 6. Пример
 
@@ -46,6 +52,8 @@ Potion3 → Разделить½ →2/1; drag в пустой/на другой/
 Не работает в BattleScene: мир скрыт, Open отвергает активную встречу. Не паузит время/врагов. Callback-подписчик обязан проверять реальные условия использования. Курсор/ощущения окончательно проверить владельцу.
 
 ## 9. История изменений
+
+2026-10-12 — RPG-панель персонажа, восемь слотов, сумка и hover; живое чтение HP/MP, прежние события/модель сохранены.
 2026-10-12 — 4.6: HPMP шапка/фон открытого окна, сохранённые ссылки/доступность.
 2026-10-12 — 4.5: predicate использования для разрешённого контекста/уровня.
 2026-10-12 — 4.4: семь слотов/Stats/Equip/Unequip и корректные listeners.

@@ -5,6 +5,8 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 Начните с [архитектуры](Architecture.md), затем откройте нужную систему или скрипт. Постоянные правила находятся в [AGENTS.md](../AGENTS.md); их нужно читать перед каждой новой задачей.
 
 ## Общие документы
+
+- [Переработка инвентаря](InventoryRedesign.md) — персонаж/экипировка/сумка, редкости, hover, результаты и ручная проверка.
 - [Roadmap](Roadmap.md) — статусы этапов4–10 и ручные границы.
 - [MasterDevelopmentPlan](MasterDevelopmentPlan.md) — полный план владельца.
 - [Этап4](InventoryStage4.md) — интеграция/результаты.
@@ -22,7 +24,7 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [Отчёт этапа 2](BattleStage2.md) — реализация, список файлов, ограничения и подробная инструкция Play Mode.
 
 ## Игровые системы
-- [Экипировка](Systems/EquipmentSystem.md) — семь слотов/бонусы/безопасный обмен.
+- [Экипировка](Systems/EquipmentSystem.md) — восемь слотов/бонусы/безопасный обмен.
 - [Взаимодействие E](Systems/InteractionSystem.md) — общий контракт и подбор.
 
 - [Звук боя](Systems/AudioSystem.md).
@@ -45,6 +47,13 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 Полноценного SaveSystem, партийного боя, классов и level-up пока нет; они не документируются как готовые системы. PlayerPrefs уже сохраняет настройки меню, но не RPG-прогресс.
 
 ## Описания скриптов
+
+- [InventoryWindow.Layout](Scripts/Inventory/InventoryWindow.Layout.md) — оформление существующей сцены.
+- [InventoryTooltip](Scripts/Inventory/InventoryTooltip.md) — одна ограниченная экраном hover-панель.
+- [EquipmentSlotView](Scripts/Inventory/EquipmentSlotView.md) — надетые предметы/цвета/hover.
+- [ItemPresentation](Scripts/Inventory/ItemPresentation.md) — текст/палитра редкостей.
+- [ItemPresentationTests](Scripts/Tests/EditMode/ItemPresentationTests.md) — редкости/совместимость/текст.
+- [InventoryPresentationFlowTests](Scripts/Tests/PlayMode/InventoryPresentationFlowTests.md) — реальная мышь/hover/границы.
 - [WorldItemUseController](Scripts/Inventory/WorldItemUseController.md) — общий эффект/предикат и защита кадра.
 - [EquipmentState](Scripts/Inventory/EquipmentState.md) — владение/обмен/бонусы.
 - [EquipmentController](Scripts/Inventory/EquipmentController.md) — связка Player/UI.

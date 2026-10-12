@@ -12,9 +12,11 @@ ItemData один для мира/боя. BattleConsumable наследует п
 
 ## 3. Методы и функции
 
-`IsEquipment` → bool по категории; `StackLimit` →1 для экипировки/нестакаемых, иначе maxStack≥1; `CanSell` → bool, QuestItem запрещён; `Fits(slot)` → bool: Weapon, Armor Head/Chest/Legs/Boots, Accessory1/2. ItemStatBonus `operator +` и `Sum(a,b)` складывают неотрицательные бонусы с насыщением int.MaxValue. Unity callbacks нет.
+`IsEquipment` → bool по категории; `StackLimit` →1 для экипировки/нестакаемых, иначе maxStack≥1; `CanSell` → bool, QuestItem запрещён; `Fits(slot)` → bool: Weapon, Armor Head/Chest/Legs/Boots/Gloves, Accessory1/2. ItemStatBonus `operator +` и `Sum(a,b)` складывают неотрицательные бонусы с насыщением int.MaxValue. Unity callbacks нет.
 
 ## 4. Переменные и Inspector
+
+rarity — ItemRarity: Common (по умолчанию и для прежних ассетов без поля), Uncommon, Rare, Epic, Legendary, Mythic. Меняет только представление. Sword/Ether назначены Rare, Staff/LeatherArmor Uncommon, Helmet/Bone/Potion Common. EquipmentSlot.Gloves добавлен со значением7; Accessory1/2 сохраняют5/6.
 
 id — уникальный стабильный string; displayName/description/icon; category Consumable/Weapon/Armor/Accessory/Material/QuestItem; stackable=true,maxStack99≥1; buyPrice/sellPrice≥0; requiredLevel≥1; useLocations None/Exploration/Battle/Anywhere; equipmentSlot для Armor; bonuses Attack/Defense/MagicAttack/MagicDefense/Speed. Количество не хранится.
 
@@ -32,8 +34,10 @@ Create → FalseMemory → Item; для расходуемого Battle Consumab
 
 ## 8. Ограничения и расширение
 
-Пустой ID разрешён для временных тестовых объектов; проектные данные проверяются отдельно. Конфликтующий ID другой ссылки State отвергает. Нет классов/роста/SaveSystem. Бонусы/ограничения подключаются следующими подэтапами.
+Пустой ID разрешён для временных тестовых объектов; проектные данные проверяются отдельно. Конфликтующий ID другой ссылки State отвергает. Нет классов/роста/SaveSystem. Бонусы/ограничения подключены к миру и бою. Редкость пока не влияет на баланс.
 
 ## 9. История изменений
+
+2026-10-12 — переработка UI: шесть редкостей и Gloves без перенумерации прежних слотов и изменения баланса.
 
 2026-10-12 — 4.1: общие определения и совместимость Potion.

@@ -44,3 +44,9 @@ Create → FalseMemory → Battle Spell создаёт заклинание с �
 Выбирай открытый FalseMemory по списку instances, читай editor/state и Console. Если Editor компилирует, дождись завершения перед назначением новых компонентов. Ошибка соединения означает недоступность инструмента, а не успешное выполнение команды. При нескольких Editor явно выбирай экземпляр. Сцены после необходимых изменений сохраняются через MCP; чтение сцены не равно сохранению.
 
 Подробнее: [архитектура](../Architecture.md), [документация компонентов](../README.md#описания-скриптов), [тесты](TestingGuide.md).
+
+## Переработанный инвентарь
+
+InventoryWindow.BuildFantasyLayout через Unity MCP переиспользует сохранённые объекты SampleScene. InventoryCanvas: reference1200×780/Expand/PixelPerfect/sorting60; InventoryPanel1140×720; слева CharacterPanel/PortraitFrame/CharacterPortrait/CharacterName, вокруг восемь Equipment-кнопок с EquipmentSlotView; справа BagPanel/BagTitle/прежние30 Slot. Tooltip-компонент на том же Canvas, отдельный child InventoryTooltip с TMP Content (raycast=false). Все ссылки сохранены, окно и tooltip закрыты вне игры. Исходный герой/импорт не менялись.
+
+ItemData → rarity определяет только цвет; Gloves=Armor с equipmentSlot Gloves, maxStack автоматически1. В наборе пока нет такой вещи, слот пустой. Не менять enum-индексы прежних аксессуаров. Настройки/ручная проверка в [InventoryRedesign](../InventoryRedesign.md).

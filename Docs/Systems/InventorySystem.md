@@ -10,7 +10,7 @@ BattleInventory переносит начальные items/startingItems оди
 
 ## 3. Основные компоненты
 
-InventoryState/InventorySlot, BattleInventory, ItemData/Consumable, InventoryWindow/SlotView, WorldInputGate, PlayerInteractor/WorldItemPickup, WorldItemUseController/Abilities и EquipmentState/Controller. Подробности [скриптов](../README.md).
+InventoryState/InventorySlot, BattleInventory, ItemData/Consumable, InventoryWindow/SlotView/EquipmentSlotView/InventoryTooltip/ItemPresentation, WorldInputGate, PlayerInteractor/WorldItemPickup, WorldItemUseController/Abilities и EquipmentState/Controller. Подробности [скриптов](../README.md).
 
 ## 4. Взаимодействие
 
@@ -22,7 +22,7 @@ E → ближайший pickup → резерв → весь TryAdd либо о
 
 ## 6. Параметры
 
-30 слотов6×5, stackLimit99 для Potion/Ether/Bone, экипировка по1. Семь данных со стабильными id/ценами/иконками/категориями/useLocations/requiredLevel. Gold отдельно, монет-предметов нет. Sword ATK5, Staff MATK4, Armor DEF4, Helmet DEF2. Старт только Potion3, остальные подбираются.
+30 слотов6×5, stackLimit99 для Potion/Ether/Bone, экипировка по1. Семь определений данных со стабильными id/ценами/иконками/категориями/useLocations/requiredLevel. Gold отдельно, монет-предметов нет. Sword ATK5, Staff MATK4, Armor DEF4, Helmet DEF2. Старт только Potion3, остальные подбираются.
 
 ## 7. Использование в Unity
 
@@ -41,3 +41,11 @@ Create FalseMemory/Item либо Battle Consumable, уникальный ID/да
 2026-10-11 — существующие изменения этапа 2 сохранены вместе с этим документом в локальном Git. Повторно прошли 40 тестов Edit Mode и 17 тестов Play Mode; Console до и после — без ошибок и предупреждений. Это проверка существующих сценариев редактора; ручная оценка удобства/баланса и сборка вне Editor остаются отдельными проверками. Новые игровые системы в задаче главного промпта повторно не создавались, push не выполнялся. Подробности и точные job ID: [Testing](../Testing.md#повторная-проверка-по-главному-промпту).
 
 Этап4.5: WorldItemUseController и BattleAbilities используют общий State, один HP или MP эффект. Ограничения уровня/контекста, категория Consumable; zero/negative/hybrid отказ. Potion до30HP, Ether до20MP, общий расход1; полный ресурс допускает amount0. Callback повторного использования кадра в окне отклоняется. Экипировка меняет физический/магический расчёт через Effective*. Проверен полный возврат без копии/автовосстановления.
+
+## Новый интерфейс по RPG-референсу — 2026-10-12
+
+Существующий InventoryCanvas перестроен без удаления объектов: слева персонаж/восемь слотов/итоговые характеристики, справа сумка6×5, ниже действия и краткая информация выбора. Общие State/Use/Equip/drag/Gold и бой сохранены. Canvas1200×780 Expand равномерно вписывает панель1140×720 в экран, полноэкранный тёмный фон сохранён.
+
+ItemData.rarity Common/Uncommon/Rare/Epic/Legendary/Mythic задаёт серую/зелёную/голубую/фиолетовую/оранжевую/красную рамку и приглушённый фон, без изменения силы/цены/награды. Sword/Ether Rare, Staff/Armor Uncommon, остальные Common. Выбранная ячейка имеет более толстую рамку; hover усиливает фон.
+
+Одна InventoryTooltip на Canvas читает реальный предмет под курсором, включая надетый. Показывает имя/редкость/тип/положительные бонусы/HP или MP эффект/описание/уровень/ненулевые цены. Пустые поля не выводятся. Нет raycast на подсказке; она следует за курсором, ограничена Canvas, скрывается при уходе, drag, закрытии или исчезновении предмета. Очень длинные тексты ограничиваются размером экрана и многоточием. Подробнее: [отчёт переработки](../InventoryRedesign.md).

@@ -4,7 +4,7 @@
 
 Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Inventory/EquipmentState.cs.
 
-Сериализуемое владение семью надетыми предметами отдельно от статических определений.
+Сериализуемое владение восемью надетыми предметами отдельно от статических определений.
 
 ## 2. Как работает
 
@@ -12,11 +12,13 @@
 
 ## 3. Методы и функции
 
-`GetSlot(slot)` → ItemData/null, неверный enum бросает исключение. `Bonuses` → новая сумма ItemStatBonus всех7, не накапливает историю. `TryEquip(inventory,index,slot,level)` bool проверяет индекс/содержимое1/Fits/уровень; выставляет надетый предмет перед Inventory notification, вызывает TryExchangeSingle, при отказе восстанавливает прежнее и не даёт Changed. `TryUnequip(inventory,slot)` bool проверяет CanAdd, снимает/добавляет предмет целиком, откатывает отказ. `Valid(slot)` private bool0..6. changing снимается finally, Changed после успеха. Unity callbacks нет.
+`GetSlot(slot)` → ItemData/null, неверный enum бросает исключение. `Bonuses` → новая сумма ItemStatBonus всех8, не накапливает историю. `TryEquip(inventory,index,slot,level)` bool проверяет индекс/содержимое1/Fits/уровень; выставляет надетый предмет перед Inventory notification, вызывает TryExchangeSingle, при отказе восстанавливает прежнее и не даёт Changed. `TryUnequip(inventory,slot)` bool проверяет CanAdd, снимает/добавляет предмет целиком, откатывает отказ. `Valid(slot)` private bool0..7. changing снимается finally, Changed после успеха. Unity callbacks нет.
 
 ## 4. Переменные и Inspector
 
-slots ItemData[7] private сериализуемые, пусты сначала; changing private transient; Changed Action. Предмет в equipped больше не лежит в inventory, старый при замене возвращается ровно1.
+SlotCount=8 — постоянный размер массива: прежние семь и Gloves7. EquipmentController создаёт модель в текущей сессии. Старых дисковых сохранений с массивом7 нет.
+
+slots ItemData[8] private сериализуемые, пусты сначала; changing private transient; Changed Action. Предмет в equipped больше не лежит в inventory, старый при замене возвращается ровно1.
 
 ## 5. Связи
 
@@ -35,5 +37,7 @@ ItemData.Fits/bonuses/requiredLevel, InventoryState.TryExchangeSingle/CanAdd/Try
 SaveSystem ещё не подключён. Нельзя править private slots или общий SO вместо операции. Подписчики должны быть корректными; модель запрещает рекурсивные Equip/Unequip во время уведомления.
 
 ## 9. История изменений
+
+2026-10-12 — добавлен восьмой слот Gloves; протокол атомарных операций сохранён.
 
 2026-10-12 — 4.4: семь слотов, атомарный обмен/снятие/бонусы/защита событий.
