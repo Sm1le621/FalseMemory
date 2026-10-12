@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Vector2 moveInput;
     private WorldInputGate inputGate;
+    private bool directionalAnimator;
+    private Vector2 lastDirection = Vector2.down;
+    public Vector2 MovementInput => moveInput;
+    public Vector2 LastDirection => lastDirection;
 
     private void Start()
     {
@@ -22,6 +26,9 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         inputGate = GetComponent<WorldInputGate>();
+        directionalAnimator = animator != null &&
+            HasFloat("MoveX") && HasFloat("MoveY") && HasFloat("LastMoveX") && HasFloat("LastMoveY");
+        UpdateAnimation();
     }
 
     private void Update()
@@ -29,7 +36,7 @@ public class PlayerController : MonoBehaviour
         if (inputGate != null && inputGate.IsBlocked)
         {
             moveInput = Vector2.zero;
-            if (animator != null) animator.SetBool("isMoving", false);
+            UpdateAnimation();
             return;
         }
         // 1. Считываем ввод WASD / Стрелки
@@ -45,16 +52,40 @@ public class PlayerController : MonoBehaviour
         }
 
         moveInput = new Vector2(moveX, moveY).normalized;
+        if (moveInput.sqrMagnitude > 0f) lastDirection = moveInput;
 
         // 2. Управление анимацией
-        bool isMoving = moveInput.magnitude > 0.1f;
-        if (animator != null)
-        {
-            animator.SetBool("isMoving", isMoving);
-        }
+        UpdateAnimation();
 
         // 3. Зеркалирование по A/D (влево/вправо)
-        HandleSpriteFlipping();
+        if (!directionalAnimator) HandleSpriteFlipping();
+    }
+
+    private bool HasFloat(string parameter)
+    {
+        foreach (var entry in animator.parameters)
+            if (entry.name == parameter && entry.type == AnimatorControllerParameterType.Float) return true;
+        return false;
+    }
+
+    private void UpdateAnimation()
+    {
+        if (animator == null) return;
+        animator.SetBool("isMoving", moveInput.sqrMagnitude > 0f);
+        if (!directionalAnimator) return;
+        animator.SetFloat("MoveX", moveInput.x);
+        animator.SetFloat("MoveY", moveInput.y);
+        animator.SetFloat("LastMoveX", lastDirection.x);
+        animator.SetFloat("LastMoveY", lastDirection.y);
+        // Directional clips own the facing; horizontal flipping would corrupt real diagonal art.
+        spriteRenderer.flipX = false;
+    }
+
+    private void OnDisable()
+    {
+        moveInput = Vector2.zero;
+        if (rb != null) rb.linearVelocity = Vector2.zero;
+        UpdateAnimation();
     }
 
     private void FixedUpdate()

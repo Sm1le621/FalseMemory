@@ -8,6 +8,8 @@
 
 Input System даёт WASD/стрелки; Update нормализует ввод и поворачивает спрайт, FixedUpdate двигает тело. Камера следует в LateUpdate.
 
+Актуальное дополнение2026-10-12: PlayerController передаёт нормализованный Move и последний ненулевой LastMove в directional Animator; Idle/Walk выбирают8 направлений. Действующий fallback имеет только один ракурс, поэтому визуального разворота во все стороны пока нет. Legacy-отражение используется только для контроллеров без directional-параметров. [AnimationSystem](AnimationSystem.md).
+
 ## 3. Основные компоненты
 
 PlayerController, CameraFollow, Player Rigidbody2D/Collider2D/SpriteRenderer/Animator, Tilemap/Grid/Borders и EnemyAI.

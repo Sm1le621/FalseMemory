@@ -24,6 +24,8 @@
 Актуальные результаты в [InventoryStage4](../InventoryStage4.md). На4.1 модель30 слотов проверяют InventoryTests. MCP всегда указывать assembly_names и проверять total>0: успешный пустой запуск не засчитывается. UI/подбор/экипировка будут проверяться отдельными подэтапами.
 ## Автоматические проверки
 
+2026-10-12, Player rework2:81 Edit/43 Play passed. PlayerDirectionFlowTests проверяет реальные события Input System для8 направлений/Idle/LastMove/gate. Изображения пока single-angle fallback: эти проверки не подтверждают восемь художественных циклов. Точные jobs/кадры и требования ручной проверки — [PlayerRework](../PlayerRework.md).
+
 Открой Window → General → Test Runner.
 
 - EditMode: выбери FalseMemory.Battle.EditModeTests или Run All. Текущие62 случая проверяют урон/защиту/очередь, gate, MP/Fire/Heal, Potion, EXP, RNG и формулу Flee.
