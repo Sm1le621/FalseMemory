@@ -1,5 +1,9 @@
 # Направления и Animator игрока
 
+## Отдельный Idle_Down30 —2026-10-13
+
+Тот же Idle Blend Tree теперь использует30 новых Down Sprite при15FPS/2с. Все8 Walk прежние8 кадров/12FPS/⅔с, другие7 Idle пока статические. PlayerController уже переключает по фактическому движению и сохраняет lastDirection; WalkSpeed применяется только к Walk, поэтому при остановке дыхание не замораживается. Импортёр выбирает IdleFrames отдельно от Walk, требует ровно30 подготовленных Sprite и не подключает отклонённые sheets. PNG320×320/pivot160,16/PPU477/Point/no mipmaps/compression; root/physics/scale/Health/MP прежние. [Кадры/процедура/проверки](../PlayerAnimation30.md). Художественная оценка и полная480-frame задача не завершены; ниже история.
+
 ## Актуальная переработка2026-10-13
 
 Существующие8 Walk-кадров героя на ракурс теперь12FPS/⅔с при скорости4. Animator WalkSpeed=actual/reference(4), диапазон0…3; state.speedParameterActive включён только для Player_DirectionalWalk. Повороты меняют Blend Tree vector без рестарта состояния, отпускание тормозит по последнему вектору; Idle сохраняет взгляд и первый Sprite. Player acceleration48/deceleration80, модальное окно останавливает сразу. Rigidbody Player/Enemy Interpolate/Continuous, Gravity0/FreezeRotation и коллайдеры прежние; fixedDeltaTime.02 не менялся. CameraFollow читает интерполированный Transform с экспоненциальным сглаживанием. Ноги/плащ старого рисунка этим исправлением не перерисованы. [Результаты и образцы8/10/12/15FPS](../AnimationRework.md). Ниже прежние состояния16FPS/4-кадровой подготовки сохранены как история.

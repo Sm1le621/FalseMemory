@@ -12,12 +12,15 @@ public sealed partial class BattleFlowTests
     private BattleRules rules;
     private float previousDelay, previousFade, previousDefendChance;
     private InputSettings.BackgroundBehavior savedBackgroundBehavior;
+    private bool savedRunInBackground;
 #if UNITY_EDITOR
     private InputSettings.EditorInputBehaviorInPlayMode savedEditorInputBehavior;
 #endif
 
     [UnitySetUp] public IEnumerator Setup()
     {
+        savedRunInBackground = Application.runInBackground;
+        Application.runInBackground = true;
         // Synthetic keyboard input must work without Game View focus.
         // Restore these transient values after each test; never save the asset.
         savedBackgroundBehavior = InputSystem.settings.backgroundBehavior;
@@ -51,6 +54,7 @@ public sealed partial class BattleFlowTests
         var world = SceneManager.GetSceneByName("SampleScene");
         if (world.IsValid() && world.isLoaded) yield return SceneManager.UnloadSceneAsync(world);
         InputSystem.settings.backgroundBehavior = savedBackgroundBehavior;
+        Application.runInBackground = savedRunInBackground;
 #if UNITY_EDITOR
         InputSystem.settings.editorInputBehaviorInPlayMode = savedEditorInputBehavior;
 #endif

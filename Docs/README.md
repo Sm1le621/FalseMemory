@@ -1,5 +1,7 @@
 # Документация FalseMemory
 
+Текущее задание Idle/Walk по30 кадров: [PlayerAnimation30](PlayerAnimation30.md). Подключён только кандидат Idle_Down30/15FPS/2с; Walk30 пока не получился, другие направления прежние. [Новая Play-проверка](Scripts/Tests/PlayMode/PlayerIdle30FlowTests.md). Полные480 кадров не готовы; ниже история предыдущих задач.
+
 Текущая переработка анимаций/движения: [AnimationRework](AnimationRework.md). Исправлены физические шаги/интерполяция, разгон/торможение, actual-speed WalkSpeed и пауза тел на время боя. Новые листы — только художественные кандидаты, не игровые ссылки. [Сценарии физики и FPS](Scripts/Tests/PlayMode/MovementSmoothingFlowTests.md). Полная художественная переработка остаётся In Progress; более ранние абзацы ниже — история.
 
 Текущие новые анимации героя/скелета: [CharacterAnimationUpgrade](CharacterAnimationUpgrade.md). [Импортёр](Scripts/Editor/DetailedAnimationImporter.md), [Edit-тесты](Scripts/Tests/EditMode/DetailedAnimationTests.md), [Play-сценарии](Scripts/Tests/PlayMode/DetailedAnimationFlowTests.md). Существующие системы расширены, источник HP/MP и все ранее принятые механики сохраняются. Художественная оценка новых поз остаётся ручной.

@@ -8,6 +8,8 @@
 
 ## 2. Как работает
 
+Setup временно сохраняет Application.runInBackground и включает его только на время сценария, чтобы потеря фокуса редактора не останавливала обработку физики/UI. Cleanup восстанавливает исходный bool вместе с Input System. Runtime проект/Player Settings этим тестовым решением не сохраняются.
+
 Test Runner загружает SampleScene дополнительно, ускоряет паузы и делает исходы детерминированными. Cleanup выгружает сцены и восстанавливает Input System/правила. Partial-класс содержит ещё 13 тестов в BattleStage2FlowTests.
 
 ## 3. Методы и функции
@@ -24,6 +26,8 @@ Test Runner загружает SampleScene дополнительно, уско�
 - `DefeatCanReturnToMainMenuAndStartNewGame()` — поражение→меню→OnStart и свежие HP. Тестовые методы возвращают IEnumerator, а не игровое значение.
 
 ## 4. Переменные и параметры Inspector
+
+savedRunInBackground — private bool test fixture, исходный runtime background flag, не Inspector. Нужен только для воспроизводимого запуска без активного Game View.
 
 Inspector нет; previousScene/rules/previousDelay/previousFade/previousDefendChance и сохранённые режимы InputSettings — состояние fixture. Штатные ассеты не сохраняются тестом.
 
@@ -44,6 +48,8 @@ Collider2D контакт → ожидается EncounterActive → Attack → 
 Запуск в Editor, не отдельной сборке. Временные настройки восстанавливаются; таймаут может означать сломанные ссылки/сцену или проблемы ввода. Все 17 Play Mode текущего запуска прошли. Запуск: Test Runner → PlayMode → Run All.
 
 ## 9. История изменений
+
+- 2026-10-13 — background execution включается временно внутри test fixture и восстанавливается; устранение зависимости сценариев UI от фокуса, gameplay код не менялся.
 
 2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 

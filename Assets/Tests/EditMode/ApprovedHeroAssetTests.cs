@@ -9,6 +9,34 @@ public sealed class ApprovedHeroAssetTests
     private static readonly string[] Directions = { "Up", "Down", "Right", "Left", "UpRight", "UpLeft", "DownRight", "DownLeft" };
 
     [Test]
+    public void IdleDownHasThirtyNativeDistinctFramesAndSeparateTwoSecondLoop()
+    {
+        var clip=AssetDatabase.LoadAssetAtPath<AnimationClip>("Assets/Animations/Player64/Idle_Down.anim");
+        var binding=AnimationUtility.GetObjectReferenceCurveBindings(clip).Single();
+        var keys=AnimationUtility.GetObjectReferenceCurve(clip,binding);
+        Assert.That(keys.Length,Is.EqualTo(31));Assert.That(keys.Take(30).Select(k=>k.value).Distinct().Count(),Is.EqualTo(30));
+        Assert.That(clip.frameRate,Is.EqualTo(15f));Assert.That(keys[30].time,Is.EqualTo(2f).Within(.0001f));
+        Assert.That(keys[30].value,Is.SameAs(keys[0].value));
+        Assert.That(AnimationUtility.GetAnimationClipSettings(clip).stopTime,Is.EqualTo(2f).Within(.0001f));
+        var hashes=new System.Collections.Generic.HashSet<string>();
+        using(var sha=System.Security.Cryptography.SHA256.Create())foreach(var key in keys.Take(30))
+        {
+            var sprite=(Sprite)key.value;string path=AssetDatabase.GetAssetPath(sprite);
+            Assert.That(path,Does.StartWith("Assets/Art/Characters/Player/Animation30/Idle/Down/"));
+            Assert.That(sprite.rect.size,Is.EqualTo(new Vector2(320,320)));Assert.That(sprite.pivot,Is.EqualTo(new Vector2(160,16)));
+            Assert.That(sprite.pixelsPerUnit,Is.EqualTo(477));
+            var importer=(TextureImporter)AssetImporter.GetAtPath(path);
+            Assert.That(importer.filterMode,Is.EqualTo(FilterMode.Point));Assert.That(importer.mipmapEnabled,Is.False);
+            Assert.That(importer.textureCompression,Is.EqualTo(TextureImporterCompression.Uncompressed));
+            hashes.Add(System.Convert.ToBase64String(sha.ComputeHash(System.IO.File.ReadAllBytes(path))));
+        }
+        Assert.That(hashes.Count,Is.EqualTo(30),"Distinct references alone must not hide identical PNG copies.");
+        var walk=AssetDatabase.LoadAssetAtPath<AnimationClip>("Assets/Animations/Player64/Walk_Down.anim");
+        var walkKeys=AnimationUtility.GetObjectReferenceCurve(walk,AnimationUtility.GetObjectReferenceCurveBindings(walk).Single());
+        Assert.That(keys.Take(30).Select(k=>k.value).Intersect(walkKeys.Select(k=>k.value)),Is.Empty,"Idle must be distinct from walking poses.");
+    }
+
+    [Test]
     public void SheetsKeepNativeResolutionAndConsistentGroundPivots()
     {
         foreach (string direction in Directions)

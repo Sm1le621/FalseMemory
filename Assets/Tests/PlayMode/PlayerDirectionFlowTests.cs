@@ -35,7 +35,9 @@ public sealed partial class BattleFlowTests
                 Assert.That(animator.GetFloat("LastMoveY"),Is.EqualTo(directions[i].y).Within(.0001f));
                 Assert.That(animator.GetCurrentAnimatorStateInfo(0).IsName("Player_DirectionalIdle"),Is.True);
                 var names=new[]{"Up","Down","Right","Left","UpRight","UpLeft","DownRight","DownLeft"};
-                Assert.That(player.GetComponent<SpriteRenderer>().sprite.name,Is.EqualTo("ApprovedHero_"+names[i]+"_00"),"Idle must use the actual direction's approved hero frame.");
+                string idle=player.GetComponent<SpriteRenderer>().sprite.name;
+                if(names[i]=="Down")Assert.That(idle,Does.StartWith("ApprovedHero_Idle_Down_"));
+                else Assert.That(idle,Is.EqualTo("ApprovedHero_"+names[i]+"_00"),"Idle must use the actual direction's approved hero frame.");
             }
             player.GetComponent<InventoryWindow>().Open();
             InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.W,Key.A));yield return null;yield return null;
@@ -54,16 +56,18 @@ public sealed partial class BattleFlowTests
         try
         {
             InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.S));
+            yield return WaitUntil(()=>player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Player_DirectionalWalk"));
             float until=Time.time+.85f;
             while(Time.time<until)
             {
                 yield return null;
+                Assert.That(player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Player_DirectionalWalk"),Is.True,"Walking must not flicker into Idle.");
                 shown.Add(player.GetComponent<SpriteRenderer>().sprite.name);
             }
             Assert.That(shown.Count,Is.EqualTo(8),"Walk must actually advance through all eight source poses.");
             Assert.That(shown,Is.All.StartsWith("ApprovedHero_Down_"));
             InputSystem.QueueStateEvent(keyboard,new KeyboardState());yield return new WaitForSeconds(.12f);
-            Assert.That(player.GetComponent<SpriteRenderer>().sprite.name,Is.EqualTo("ApprovedHero_Down_00"));
+            Assert.That(player.GetComponent<SpriteRenderer>().sprite.name,Does.StartWith("ApprovedHero_Idle_Down_"));
             Assert.That(player.GetComponent<PlayerController>().MovementSpeed,Is.EqualTo(4f).Within(.001f),"Artwork resolution must not change gameplay speed.");
         }
         finally{InputSystem.RemoveDevice(keyboard);}

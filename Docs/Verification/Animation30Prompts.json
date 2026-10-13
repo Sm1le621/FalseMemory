@@ -1,0 +1,38 @@
+[
+  {
+    "name": "IdleDown30",
+    "prompt": "Production 2D top-down RPG SPRITE SHEET. Use the attached approved hero strictly as character-design reference: same face and dark hair, same detailed black plate/leather armor and gold fasteners, same burgundy cape, same sword/sheath ALWAYS on the same anatomical hip (viewer RIGHT in frontal view). Detailed dark-fantasy PIXEL ART with deliberate crisp pixel clusters, muted palette, not a painting or 3D render. Front/down view in EVERY frame, fixed camera and scale. Output EXACTLY THIRTY full-body sprites arranged in FIVE columns and SIX rows in row-major temporal order. Large portrait sheet, ideally 1920 by 3072, empty transparent gutters between cells. Each cell identical canvas, head centered and ground baseline fixed. Real transparency, no background, ground shadow, text, numbers, grid or borders. No cropped cape/hair/weapon. Never mirror rows; preserve clothing asymmetries and same sword hip. Every sprite must be a separately drawn chronological phase, not arbitrary design variations. Body height and anatomical proportions constant. Last pose connects smoothly to first, but do not duplicate first as frame29.\nAnimation: IDLE_Down, thirty successive drawings spanning ONE calm breathing period. Legs and BOTH boots planted in exactly the SAME stable stance and screen coordinates throughout ALL thirty cells: no walking, stepping, bouncing or alternating knees. Start with a relaxed neutral exhale. Frames0..7: gently increasing inhalation in chest/shoulders by tiny amounts;8..14 slowly reach the inhale peak;15..22 ease into exhale;23..29 return toward initial relaxed exhale. Stable head/face/hips; subtle sleeve/hand relaxation. Cape hem and a few hair strands follow a smooth tiny delayed breeze, maintaining their shape. Animate breathing with real changed armor articulation, not shifting/scaling the entire static body. Quiet restrained changes, coherent matching facial identity, no morphing plates or random posing. All30 phases distinct and temporally coherent. Feet never move.",
+    "status": "Integrated candidate — visual acceptance pending",
+    "path": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+    "size": [
+      992,
+      1586
+    ],
+    "sha256": "466138037570081de04d5d2c450c4066701c91d58d081b2e1830b68962cb0b46",
+    "mode": "built-in imagegen"
+  },
+  {
+    "name": "WalkDown30",
+    "prompt": "Production 2D top-down RPG SPRITE SHEET. Use the attached approved hero strictly as character-design reference: same face and dark hair, same detailed black plate/leather armor and gold fasteners, same burgundy cape, same sword/sheath ALWAYS on the same anatomical hip (viewer RIGHT in frontal view). Detailed dark-fantasy PIXEL ART with deliberate crisp pixel clusters, muted palette, not a painting or 3D render. Front/down view in EVERY frame, fixed camera and scale. Output EXACTLY THIRTY full-body sprites arranged in FIVE columns and SIX rows in row-major temporal order. Large portrait sheet, ideally 1920 by 3072, empty transparent gutters between cells. Each cell identical canvas, head centered and ground baseline fixed. Real transparency, no background, ground shadow, text, numbers, grid or borders. No cropped cape/hair/weapon. Never mirror rows; preserve clothing asymmetries and same sword hip. Every sprite must be a separately drawn chronological phase, not arbitrary design variations. Body height and anatomical proportions constant. Last pose connects smoothly to first, but do not duplicate first as frame29.\nAnimation: WALK_Down, thirty successive drawings of ONE complete LEFT AND RIGHT foot walking cycle in place, not a lineup of the same leading leg. Anatomical LEFT leg is viewer RIGHT; anatomical RIGHT leg is viewer LEFT. Fixed torso/hip center, minimal natural bob, actual joint articulation. Frames0..3 LEFT heel contact ahead (viewer right boot forward), RIGHT back;4..7 left-foot support/down, right lifts behind;8..11 RIGHT knee passes left with boot in air;12..14 right reaches forward, left heel lifts;15..18 RIGHT heel contact ahead (viewer LEFT boot forward), LEFT back;19..22 right-foot support/down, left lifts behind;23..26 LEFT knee passes right in air;27..29 left reaches toward the opening contact. Frame15 has the OPPOSITE FOOT forward to frame0, while sword/face/armor remain UNMIRRORED. Counter-swing arms and slight shoulder twist, subtle weight transfer and cape trailing one phase late. Both legs must pass through the intermediate airborne poses; no thirty front portraits with just changing cape. Natural moderate stride, stable identity/scale, seamless last→first. No duplicated phases, speed lines or synthetic interpolation.",
+    "status": "Rejected — incoherent alternating gait; not integrated",
+    "path": "Docs/Images/Animation30Rejected/WalkDown30.png",
+    "size": [
+      992,
+      1586
+    ],
+    "sha256": "120f6dffa2e016cc83d51799941151a9f768397f6276e1e5d99bc0a33fa9d85a",
+    "mode": "built-in imagegen"
+  },
+  {
+    "name": "30WalkRevision",
+    "prompt": "Edit this exact 5-column x 6-row / 30-cell FRONT-facing walk sprite sheet. Keep the face, dark hair, torso armor, cape palette, sword on viewer RIGHT hip and proportions UNCHANGED. Correct ONLY the legs and coordinated small arm articulation into ONE coherent 30-frame alternating gait in row-major order. There must be exactly30 separately drawn chronological poses, same translucent background and gutters. Important defect: the present leading foot switches randomly and most images repeat a contact instead of showing the passing leg. Make rows0..2 the FIRST HALF-cycle with LEFT leg initially forward (viewer RIGHT), rows3..5 the SECOND HALF-cycle with RIGHT leg initially forward (viewer LEFT). At cell0: left forward/right back; cell5: left boot supported, right foot lifted behind; cell10: right knee passing through, lifted boot near the support leg; cell14: right leg extends forward. At cell15 (row3,col0): RIGHT leg forward/viewer LEFT, left leg back — opposite to cell0, without mirroring upper body/equipment. Cell20: right support/left foot lifted behind; cell25: left knee passing forward in air;cell29 left reaching toward cell0. Fill each span with smoothly incrementing real joint bends, boot lifts and contact, not new random outfits, not copies. Distinguish near/front vs planted/back boots using foreshortening. The sword must stay on viewer RIGHT in every cell. No duplicate phases, no labels, no interpolation blur or whole-body translations. True articulated drawing changes; cape may lightly lag, head stays stable.",
+    "status": "Rejected — incoherent alternating gait; not integrated",
+    "path": "Docs/Images/Animation30Rejected/30WalkRevision.png",
+    "size": [
+      993,
+      1584
+    ],
+    "sha256": "74b989c0cadbdde5c12f9ba6631d6dbece8c0dcf8ff43197bb35a49aa0a6e198",
+    "mode": "built-in imagegen"
+  }
+]

@@ -1,0 +1,548 @@
+{
+  "motion": "Idle",
+  "direction": "Down",
+  "framesPerSecond": 15,
+  "cycleSeconds": 2,
+  "frames": [
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_00.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        17,
+        21,
+        203,
+        271
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "ce95a5e7d1ec00056e073371246b953475801ed5a1ff6a730889ad148095d43e",
+      "visibleHeight": 250
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_01.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        213,
+        21,
+        398,
+        271
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "2b3c016e6d49710406c1214f23e510e105c730441515ba8a5c0aa3d02833d947",
+      "visibleHeight": 250
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_02.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        406,
+        21,
+        590,
+        271
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "9f2703bed38d5a34f7a6f06c76930078b5df94772f390baa0136f84c143ea637",
+      "visibleHeight": 250
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_03.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        599,
+        21,
+        783,
+        271
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "38f46ca15aaa624c9bcfafe32c3eac6036fc43b801880fceefca963c3f451922",
+      "visibleHeight": 250
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_04.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        791,
+        21,
+        976,
+        271
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "96a747bd69ca63b9597426952bceaad974efce22de548d01b496a33ab0a79a59",
+      "visibleHeight": 250
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_05.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        18,
+        285,
+        204,
+        534
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "190db29b17854e25a7c4d5defa11c5326ae2821eac22a2298a11dad41f0ba1bb",
+      "visibleHeight": 249
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_06.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        211,
+        285,
+        398,
+        534
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "c170acf45c6b964c5a38cd8cab8c11fb9e617bfc8694455e023bcf55710d1659",
+      "visibleHeight": 249
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_07.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        406,
+        285,
+        590,
+        534
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "37bc1e056f6292027f49ea1cb2dfb39bfa12207e857bdf33a11ce90646257420",
+      "visibleHeight": 249
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_08.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        599,
+        285,
+        783,
+        534
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "0e50404912fd2407ad4083396dd43cf659bdc0b1a0c256c2c6a9a3d24cb57ed9",
+      "visibleHeight": 249
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_09.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        791,
+        284,
+        976,
+        534
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "8af4b2e17e98a6cb85f3f86364227a126321307f6d63919075e9477a326937b3",
+      "visibleHeight": 250
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_10.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        18,
+        547,
+        203,
+        798
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "68727b3e282ed3ecc737a1f0e9be8c2c449c51c8628cb77bfda990facaea7184",
+      "visibleHeight": 251
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_11.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        213,
+        547,
+        398,
+        798
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "94a89720eea2a133b8247cef13b7ca55b5637f4d587bc566520466deb08b0f20",
+      "visibleHeight": 251
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_12.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        407,
+        547,
+        590,
+        798
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "a1d431ddbf6c90fa6572739e9f8acc5e2fb4371f16888f5708036c15568a51ab",
+      "visibleHeight": 251
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_13.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        599,
+        547,
+        782,
+        798
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "b19f6696ae9b048894d3da54dcc5bd8ae818e2faf4a38008a0f6ae2ab59477bf",
+      "visibleHeight": 251
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_14.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        792,
+        547,
+        976,
+        798
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "4f615997da78ab84ee776a035bae4709218ba7529fb26df2ddcf262e1b55ccfd",
+      "visibleHeight": 251
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_15.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        19,
+        812,
+        204,
+        1061
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "53970bc777dcc4c04b00309d5e9b686f474007cf77230e1f0e3106d64385f579",
+      "visibleHeight": 249
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_16.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        214,
+        812,
+        398,
+        1061
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "7def6eaeaabdb611d81e5fef26c5a2f0887b116f5c4a07cb94997b849b471a14",
+      "visibleHeight": 249
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_17.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        406,
+        812,
+        590,
+        1060
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "dc72f52cd16d213042465396408ac230d0f69f7f4f426e0153cff52c8e8abda6",
+      "visibleHeight": 248
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_18.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        599,
+        812,
+        782,
+        1061
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "a1347db0075ef599c79cfaee635ea2661e280632f289135a9e2e68e31ddf8abb",
+      "visibleHeight": 249
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_19.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        791,
+        812,
+        975,
+        1061
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "5c6c2300a19903fb0af20bbcca6bf58ec37fb6dfe3d3e7b7a696047e7b2ba9d2",
+      "visibleHeight": 249
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_20.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        19,
+        1075,
+        204,
+        1320
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "c037ff22a405217e08a21d32905ccbf4b16999e9aa2c51cc984779dac6bc25f6",
+      "visibleHeight": 245
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_21.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        214,
+        1075,
+        398,
+        1320
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "ce9dc857137c42984cc7d5dd3da00b6766f409bd197fbf6f796d57e1c7950f65",
+      "visibleHeight": 245
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_22.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        406,
+        1075,
+        591,
+        1320
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "2115e8e16077986ce03e8484fb72c264a7129fa34fde9494f9e1dc7a1e7ccf63",
+      "visibleHeight": 245
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_23.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        599,
+        1075,
+        784,
+        1320
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "2463feaf6c0014a2aa3f8571eac6f02e643df3e45d04b2c6b3547fd0be9da86c",
+      "visibleHeight": 245
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_24.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        791,
+        1075,
+        976,
+        1321
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "36f8fd81fb171d1206967a45134d3f5e11ef5e285480f8abdee266448e2fd2a5",
+      "visibleHeight": 246
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_25.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        18,
+        1336,
+        205,
+        1583
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "d5adb6fa267a23716acb9d177144b5ec1a3a039158fba88bed338ed49be28b7e",
+      "visibleHeight": 247
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_26.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        213,
+        1336,
+        399,
+        1583
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "419aa2d88f2d20035b6e72b247ff215c26d76de1f157989643fa51512edfb7f2",
+      "visibleHeight": 247
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_27.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        406,
+        1336,
+        592,
+        1583
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "5db2cd46c226392d929dd8df995bc8b4860d0675d955f122ec3d99a94cf7e5d3",
+      "visibleHeight": 247
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_28.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        599,
+        1336,
+        784,
+        1583
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "c9bdd5cc9bce2d6b4ffdd73163e145cf695e53d90f83dda6f174c8b8747465e4",
+      "visibleHeight": 247
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_29.png",
+      "source": "Assets/Art/Characters/Player/Animation30/Source/IdleDown30Source.png",
+      "sourceBox": [
+        791,
+        1336,
+        976,
+        1583
+      ],
+      "canvasWidth": 320,
+      "canvasHeight": 320,
+      "pivotX": 160,
+      "pivotY": 16,
+      "ppu": 477,
+      "resampled": false,
+      "pixelHash": "738274a15ad471f33d89ed9d4af9ac0de466fee6dbbd2ad10308357c3977edb2",
+      "visibleHeight": 247
+    }
+  ]
+}

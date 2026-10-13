@@ -1,5 +1,9 @@
 # Настройка существующего проекта в Unity
 
+## Idle_Down30 —2026-10-13
+
+Существующий Player SampleScene/Player.controller/Idle_Down подключён к Animation30/Idle/Down; SpriteRenderer preview использует первый Idle. Импорт: подготовить ровно30 PNG и PlayerAnimation30Manifest, вызвать ApprovedHeroImporter.ImportAnimations вне Play. Canvas/pivot/PPU берутся из manifest; source PNG Default. Неполный набор вызывает исключение, отклонённые Walk sheets из Docs не назначать. Runtime/коллайдеры/камера/скорость4 не изменялись. [Ручной сценарий](../PlayerAnimation30.md). Ниже прежняя настройка.
+
 ## Animation Rework2026-10-13
 
 В сохранённой SampleScene Player/Enemy Rigidbody2D: Interpolate/Continuous, gravity0 и FreezeRotation. Player Move Speed4/Acceleration48/Deceleration80/Animation Reference Speed4; Enemy Move Speed3/Acceleration48 и EnemySpriteAnimation reference3. Player.controller дополнен только float WalkSpeed(default1) на существующем Walk-состоянии. ApprovedHeroImporter обновляет12FPS-клипы/этот параметр без нового controller; DetailedAnimationImporter согласован с12FPS. BattleTransition сам приостанавливает simulation; вручную выключать его навсегда не нужно. Новые Draft в Docs не назначать вместо Sprite. [Инструкция проверки](../AnimationRework.md). Ниже более ранняя настройка.

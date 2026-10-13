@@ -1,0 +1,27 @@
+{
+  "sourceSize": [
+    992,
+    1586
+  ],
+  "frames": 30,
+  "uniquePixelHashes": 30,
+  "canvas": [
+    320,
+    320
+  ],
+  "pivot": [
+    160,
+    16
+  ],
+  "ppu": 477,
+  "visibleHeightMin": 245,
+  "visibleHeightMax": 251,
+  "targetWorldHeight": 1.044186046511628,
+  "worldHeightMin": 1.0272536687631026,
+  "worldHeightMax": 1.0524109014675052,
+  "resampled": false,
+  "syntheticFrames": 0,
+  "edgeClipping": 0,
+  "rejectedWalkAttempts": 2,
+  "poseQualityVerifiedByHashes": false
+}

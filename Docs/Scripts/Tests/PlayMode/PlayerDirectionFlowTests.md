@@ -10,9 +10,11 @@
 
 ## 3. Методы и функции
 
-`EightDirectionsNormalizeInputSelectMotionAndRetainLastFacing()` — UnityTest/IEnumerator: W,S,D,A,WD,WA,SD,SA; проверяет норму1, MoveX/Y, состояние Walk и отсутствие flipX. Отпускание проверяет нулевой ввод, сохранённый LastMoveX/Y и Idle. Проверяет кадр ApprovedHero выбранного направления. Открытый Inventory блокирует новый ввод без изменения предыдущего направления. Finally удаляет только синтетическую клавиатуру и закрывает окно; игровой контент не удаляется. Unity Awake/Update у самого теста отсутствуют; общие callbacks описаны в [BattleFlowTests](BattleFlowTests.md).
+ApprovedWalkChangesFramesAndStoppingKeepsDirectionalIdle сначала ждёт реальное состояние Walk, затем собирает ровно8 Sprite в течение.85с и проверяет, что состояние не мерцает в Idle. При отдельном новом Idle прежний счётчик ошибочно включал стартовый idle-кадр в число walk-поз; количество8/все префиксы остаются строгими.
 
-`ApprovedWalkChangesFramesAndStoppingKeepsDirectionalIdle()` — второй UnityTest: синтетическая S на .85 секунды, реальные SpriteRenderer-кадры должны показать все восемь Down-поз; отпускание оставляет Idle_Down_00. Проверяется сохранение MovementSpeed=4 на стартовых характеристиках. Finally удаляет тестовую клавиатуру. Это проверка исполнения, не художественной естественности.
+`EightDirectionsNormalizeInputSelectMotionAndRetainLastFacing()` — UnityTest/IEnumerator: W,S,D,A,WD,WA,SD,SA; проверяет норму1, MoveX/Y, состояние Walk и отсутствие flipX. Отпускание проверяет нулевой ввод, сохранённый LastMoveX/Y и Idle. Проверяет кадр ApprovedHero выбранного направления; Down теперь отдельный анимированный Idle. Открытый Inventory блокирует новый ввод без изменения предыдущего направления. Finally удаляет только синтетическую клавиатуру и закрывает окно; игровой контент не удаляется. Unity Awake/Update у самого теста отсутствуют; общие callbacks описаны в [BattleFlowTests](BattleFlowTests.md).
+
+`ApprovedWalkChangesFramesAndStoppingKeepsDirectionalIdle()` — второй UnityTest: синтетическая S на .85 секунды, реальные SpriteRenderer-кадры должны показать все восемь Down-поз; отпускание оставляет отдельный Idle_Down. Проверяется сохранение MovementSpeed=4 на стартовых характеристиках. Finally удаляет тестовую клавиатуру. Это проверка исполнения, не художественной естественности.
 
 ApprovedWalkChangesFramesAndStoppingKeepsDirectionalIdle теперь должен увидеть ровно8 разных Down Sprite за.85 секунды; имена прежнего ApprovedHero направления сохранены. 12FPS/⅔s цикл проверяется поведением, отпускание оставляет правильный directional Idle, MovementSpeed остаётся4.
 
@@ -38,6 +40,8 @@ W+A устанавливает MoveX≈−0.707/MoveY≈0.707, выбирает�
 
 Два сценария сохраняют прежние assertions нормализации/ракурсов/gate/8 кадров/MovementSpeed4; обновлены только ожидания времени начала и остановки. Новые измерения реальной физики находятся в MovementSmoothingFlowTests.
 
+После остановки Down проверяет префикс ApprovedHero_Idle_Down_, поскольку кадр дыхания меняется; для остальных семи направлений сохраняется точный старый static Sprite. Walk по-прежнему должен реально показать8 Down-кадров, скорость4/нормализация/gate сохранены. Все30 Idle и неподвижность физического тела проверяет PlayerIdle30FlowTests.
+
 ## 9. История изменений
 
 - 2026-10-12 — добавлена автоматическая проверка восьми направлений и последнего взгляда; статический fallback явно отделён от полноценной анимации.
@@ -47,3 +51,5 @@ W+A устанавливает MoveX≈−0.707/MoveY≈0.707, выбирает�
 - 2026-10-13 — актуальная проверка восьми walk-кадров вместо четырёх.
 
 - 2026-10-13 — актуализированы темп/физическое воспроизведение и проверки в задаче Animation Rework.
+
+- 2026-10-13 — проверка нового30-frame Idle_Down без ослабления прежних направлений/движения.

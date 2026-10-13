@@ -53,7 +53,10 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.TryPlayerItem(Potion(player)), Is.False);
         yield return WaitUntil(() => !transition.EncounterActive);
         Assert.That(enemy.gameObject.activeSelf, Is.True); Assert.That(enemy.Health.currentHealth, Is.EqualTo(50));
-        Assert.That(enemy.transform.position, Is.EqualTo(enemyPosition));
+        Assert.That(enemy.transform.position, Is.EqualTo(enemyPosition),
+            "Enemy position before="+enemyPosition.ToString("R")+" after="+enemy.transform.position.ToString("R")+
+            " physics="+enemy.GetComponent<Rigidbody2D>().position.ToString("R")+
+            " distance="+Vector3.Distance(enemy.transform.position,enemyPosition).ToString("R"));
         Assert.That(player.Health.currentHealth, Is.EqualTo(80)); Assert.That(player.CurrentMP, Is.EqualTo(22));
         Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(2));
         Assert.That(player.CurrentExperience, Is.EqualTo(5));

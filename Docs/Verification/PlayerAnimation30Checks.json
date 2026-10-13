@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-13",
+  "taskStatus": "In Progress — only Idle_Down candidate integrated",
+  "scope": {
+    "requestedFrames": 480,
+    "integratedNewFrames": 30,
+    "integratedDirections": [
+      "Idle_Down"
+    ],
+    "readyWalk30Directions": [],
+    "otherIdleDirections": "Existing static fallback",
+    "walkDirections": "Existing eight-frame fallback"
+  },
+  "compilation": {
+    "completed": true,
+    "errors": 0
+  },
+  "console": {
+    "baselineErrors": 0,
+    "baselineWarnings": 0,
+    "intermediateWarnings": [
+      "Unity Account API did not become accessible within 30 seconds"
+    ],
+    "finalErrors": 0,
+    "finalWarnings": 0
+  },
+  "tests": {
+    "edit": {
+      "job": "241ff3cd1ffa474c86b8abfd63649094",
+      "total": 96,
+      "passed": 96,
+      "failed": 0,
+      "skipped": 0
+    },
+    "play": {
+      "job": "b80351488bbd4da8a9828d09301c074c",
+      "total": 57,
+      "passed": 57,
+      "failed": 0,
+      "skipped": 0
+    },
+    "earlierRuns": [
+      {
+        "job": "25a64e4b6d3e4003bf749aefb7de7ef1",
+        "passed": 56,
+        "total": 57,
+        "failures": [
+          "Walk counter included the distinct initial Idle frame"
+        ]
+      },
+      {
+        "job": "e0049210dc8944b3bbb758e79df25621",
+        "passed": 54,
+        "total": 57,
+        "failures": [
+          "Existing mouse equipment drag",
+          "Existing mouse inventory drag",
+          "Existing exact enemy position after Flee"
+        ]
+      }
+    ],
+    "emptyFilteredRuns": [
+      "f879a31630644427b02aa686fef2b675",
+      "647fea341921449dbdd4a7a28c474a69"
+    ],
+    "emptyRunsCountedAsPassedTests": false,
+    "fixtureBackgroundOnlyDuringTests": true,
+    "positionAssertionsUnchanged": true
+  },
+  "art": {
+    "frames": 30,
+    "uniquePixelHashes": 30,
+    "canvas": [
+      320,
+      320
+    ],
+    "pivot": [
+      160,
+      16
+    ],
+    "ppu": 477,
+    "source": [
+      992,
+      1586
+    ],
+    "resampled": false,
+    "edgeClipping": 0,
+    "rejectedWalkAttempts": 2,
+    "anatomicalSequenceValidatedByHashes": false,
+    "ownerVisualAcceptance": false
+  },
+  "unity": {
+    "sampleSceneSavedViaMcp": true,
+    "sampleValidationIssues": 0,
+    "sampleObjects": 981,
+    "battleObjects": 230,
+    "newGameObjects": 0,
+    "deletedGameObjects": 0,
+    "playerControllerChanged": false,
+    "playerControllerAssetChanged": false,
+    "battleSceneModified": false,
+    "projectSettingsModified": false,
+    "physicsAndSpeedModified": false,
+    "ordinaryPlayScreenshotResolution": [
+      1920,
+      1080
+    ],
+    "ordinaryPlayPosition": [
+      0,
+      0,
+      0
+    ],
+    "ordinaryPlayMoving": false,
+    "ordinaryPlayWalkSpeed": 0,
+    "uiOutside": 0,
+    "textOverflow": 0,
+    "cyrillicText": 0,
+    "missingGlyphs": 0
+  },
+  "editorLeft": {
+    "scene": "SampleScene",
+    "playing": false,
+    "compiling": false,
+    "dirty": false,
+    "gameViewIndex": 0,
+    "gameViewPresetCount": 7,
+    "runInBackground": false,
+    "playerSettingsBackground": false
+  },
+  "ownScriptCount": 89,
+  "changedScriptCount": 6,
+  "push": false
+}
