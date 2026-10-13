@@ -1,5 +1,9 @@
 # Как проверять FalseMemory
 
+## Animation Rework2026-10-13
+
+MovementSmoothingFlowTests проверяет фактическую скорость/диагонали/gate, тонкую стену/тормозной путь, преследование/выход из trigger и8/10/12/15FPS на реальном Animator/сохранение фазы поворота. PlayerDirectionFlowTests ждёт.12с начала/остановки, не пару render frames. Старый точный assert позиции после победы сохранён; BattleTransition исправлен для Interpolate. Художественная естественность тестами не доказывается. [Свежие результаты и ручной сценарий](../AnimationRework.md). Ниже исторические проверки.
+
 ## Анимации героя и скелета
 
 [CharacterAnimationUpgrade](../CharacterAnimationUpgrade.md) содержит новые job IDs/реальные кадры/ручные пункты. Edit: DetailedAnimationTests и Updated ApprovedHeroAssetTests. Play: DetailedAnimationFlowTests, PlayerDirectionFlowTests, PixelVisualFlowTests и полная регрессия. Разные Sprite/смена кадров/однократный урон проверяются автоматически; естественность шага/удара оценивается вручную.

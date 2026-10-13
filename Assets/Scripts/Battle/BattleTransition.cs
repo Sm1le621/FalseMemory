@@ -20,6 +20,7 @@ public sealed class BattleTransition : MonoBehaviour
     private Scene worldScene;
     private readonly List<GameObject> hiddenRoots = new List<GameObject>();
     private readonly Dictionary<Behaviour, bool> pausedBehaviours = new Dictionary<Behaviour, bool>();
+    private readonly Dictionary<Rigidbody2D, RigidbodyInterpolation2D> pausedBodies = new Dictionary<Rigidbody2D, RigidbodyInterpolation2D>();
     private Image fade;
     private float protectedUntil;
     private EnemyAI protectedEnemyAI;
@@ -68,7 +69,7 @@ public sealed class BattleTransition : MonoBehaviour
         Pause(player.GetComponent<PlayerController>());
         Pause(enemy.GetComponent<EnemyAI>());
         Pause(enemy.GetComponent<EnemyAttack>());
-        StopBody(player); StopBody(enemy);
+        PauseBody(player); PauseBody(enemy);
         StartCoroutine(EnterBattle());
         return true;
     }
@@ -84,6 +85,20 @@ public sealed class BattleTransition : MonoBehaviour
     {
         var body = unit.GetComponent<Rigidbody2D>();
         if (body != null) { body.linearVelocity = Vector2.zero; body.angularVelocity = 0f; }
+    }
+
+    private void PauseBody(BattleUnit unit)
+    {
+        StopBody(unit);
+        var body = unit.GetComponent<Rigidbody2D>();
+        if (body == null || !body.simulated) return;
+        pausedBodies[body] = body.interpolation;
+        // Freeze the actual physics pose, not the one-step-old interpolated Transform.
+        Vector2 position = body.position;
+        body.interpolation = RigidbodyInterpolation2D.None;
+        body.transform.position = new Vector3(position.x, position.y, body.transform.position.z);
+        body.simulated = false;
+        body.position = position;
     }
 
     private IEnumerator EnterBattle()
@@ -211,6 +226,17 @@ public sealed class BattleTransition : MonoBehaviour
         foreach (var root in hiddenRoots)
             if (root != null && !(victory && Enemy != null && root == Enemy.gameObject)) root.SetActive(true);
         hiddenRoots.Clear();
+        foreach (var entry in pausedBodies)
+        {
+            if (entry.Key == null) continue;
+            Vector2 position = entry.Key.position;
+            entry.Key.interpolation = entry.Value;
+            entry.Key.simulated = true;
+            // Reset interpolation history after re-enabling the body.
+            entry.Key.position = position;
+            entry.Key.transform.position = new Vector3(position.x, position.y, entry.Key.transform.position.z);
+        }
+        pausedBodies.Clear();
         foreach (var entry in pausedBehaviours)
             if (entry.Key != null) entry.Key.enabled = entry.Value;
         pausedBehaviours.Clear();

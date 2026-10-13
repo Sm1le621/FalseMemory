@@ -64,7 +64,7 @@ public static class DetailedAnimationImporter
         if(set==null){set=ScriptableObject.CreateInstance<SpriteAnimationSet>();AssetDatabase.CreateAsset(set,path);}
         set.idle=Frames(root+"/Battle",name+"-Idle-");set.attack=Frames(root+"/Battle",name+"-Attack-");
         set.hurt=Frames(root+"/Battle",name+"-Hurt-");set.death=Frames(root+"/Battle",name+"-Death-");
-        set.framesPerSecond=16;set.idleFramesPerSecond=4;set.attackContactProgress=.5f;
+        set.framesPerSecond=ApprovedHeroImporter.WalkFramesPerSecond;set.idleFramesPerSecond=4;set.attackContactProgress=.5f;
         set.move=Frames(root+"/World",hasDirections?"Skeleton-Move-Right-":"ApprovedHero_Right_");
         if(hasDirections)
         {

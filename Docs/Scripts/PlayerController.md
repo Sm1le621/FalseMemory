@@ -2,56 +2,44 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/PlayerController.cs.
-
-Движение Player по карте, анимация ходьбы и направление спрайта.
+`Assets/Scripts/PlayerController.cs` — единственный существующий контроллер движения героя на карте, ввода и directional Animator.
 
 ## 2. Как работает
 
-Актуально Player rework4: FixedUpdate использует MovementSpeed — прежний moveSpeed плюс BattleUnit.MovementAdjustment, без смены Rigidbody2D/диагональной нормализации.
-
-Start получает компоненты, включая необязательный WorldInputGate, и распознаёт directional Animator по четырём float-параметрам. Update читает WASD/стрелки, нормализует направление и сохраняет последнее ненулевое направление. При блокировке окна ввод/анимация движения обнуляются без изменения последнего направления; FixedUpdate останавливает скорость. Закрытие окна не меняет enabled контроллера. Диагональ не ускоряет героя. Directional Animator выбирает Idle/Walk через isMoving и два2D Blend Tree. Сейчас все клипы используют один исходный ракурс как временную позу — уникальной восьминаправленной графики ещё нет.
+Start получает компоненты. Update читает WASD/стрелки и нормализует диагонали. FixedUpdate измеряет завершённое физическое перемещение, плавно меняет модуль скорости и вызывает MovePosition. Направление меняется сразу, поэтому боковой инерции нет. LateUpdate передаёт фактическую скорость в Animator; Walk продолжает общую фазу при повороте. Inventory/gate и отключение компонента останавливают движение немедленно. Health/MP/баланс характеристик прежние.
 
 ## 3. Методы и функции
 
-Start дополнительно получает BattleUnit того же Player. MovementSpeed readonly float ограничивает base+AGI/gear modifier минимумом0 и максимумомrules.maximumMovementSpeed для primary actor, без primary — float.MaxValue. FixedUpdate умножает прежний normalized input на MovementSpeed, gate/Animator прежние.
+- `Start()` — Unity перед первым Update кеширует Rigidbody2D, Animator, SpriteRenderer, WorldInputGate, BattleUnit, начальную физическую позицию; определяет directional/WalkSpeed параметры и обновляет позу.
+- `Update()` — каждый render-кадр читает Keyboard.current; сохраняет moveInput и последний ненулевой lastDirection. Gate вызывает StopMovement и UpdateAnimation. Legacy Animator получает HandleSpriteFlipping.
+- `FixedUpdate()` — каждый шаг физики измеряет ActualMovementSpeed по rb.position предыдущего шага и fixedDeltaTime; currentSpeed приближается к MovementSpeed либо0 через acceleration/deceleration; MovePosition двигает вдоль lastDirection. При gate/несимулируемом теле StopMovement.
+- `LateUpdate()` — после Update вызывает UpdateAnimation с результатами физики.
+- `UpdateAnimation()` — isMoving включён при actual/current speed выше.03; WalkSpeed=actual/reference, ограничено0…3. Четыре directional float получают последнее направление; flipX=false. Без Animator безопасный выход.
+- `StopMovement()` — из gate/OnDisable/FixedUpdate; обнуляет модуль скорости, измеренную скорость и rb.linearVelocity, обновляет previousPhysicsPosition; позицию не переносит.
+- `OnDisable()` — очищает ввод, вызывает StopMovement и UpdateAnimation, сохраняет взгляд.
+- `HasFloat(parameter)` — ищет float-параметр Animator, возвращает bool, ничего не создаёт.
+- `HandleSpriteFlipping()`/`SetFacingDirection(lookRight)` — legacy-ветка отражает SpriteRenderer по горизонтальному вводу с учётом defaultFacingRight.
+- Readonly `MovementInput`, `LastDirection`, `MovementSpeed`, `ActualMovementSpeed`, `CurrentMovementSpeed` — нормализованный ввод, взгляд, целевая скорость с атрибутами/gear, измеренная скорость и внутренний модуль разгона. Это диагностика, не Inspector.
 
-- `Start()` — Unity до первого Update получает rb/animator/spriteRenderer/inputGate; через HasFloat определяет поддержку направления и вызывает UpdateAnimation; void.
-- `Update()` — каждый кадр читает Keyboard.current, записывает moveInput/lastDirection; вызывает UpdateAnimation. При WorldInputGate оставляет последнее направление и обнуляет движение. HandleSpriteFlipping вызывается только для прежнего Animator без directional-параметров.
-- `HasFloat(string parameter)` — при Start ищет параметр Animator указанного имени и типа Float; возвращает bool, параметры не создаёт.
-- `UpdateAnimation()` — из Start/Update/OnDisable; устанавливает isMoving и, при directional Animator, MoveX/MoveY/LastMoveX/LastMoveY. Отключает flipX, чтобы будущие отдельные ракурсы не отражались повторно. Без Animator безопасно возвращает управление; void.
-- `OnDisable()` — Unity при скрытии/выключении Player сбрасывает moveInput/linearVelocity и состояние движения Animator; lastDirection сохраняется. Не восстанавливает HP/MP и не меняет позицию.
-- `MovementInput`, `LastDirection` — публичные readonly getters внутреннего нормализованного ввода/последнего направления; используются проверками, не параметры Inspector.
-- `FixedUpdate()` — шаг физики: MovePosition по moveInput × moveSpeed × fixedDeltaTime.
-- `HandleSpriteFlipping()` — из Update; горизонтальный ввод определяет аргумент SetFacingDirection.
-- `SetFacingDirection(bool lookRight)` — меняет flipX с учётом defaultFacingRight; void.
+## 4. Переменные и Inspector
 
-inputGate — private cached WorldInputGate, без нового регулятора движения; изменение относится только к модальному вводу. Start/Update/FixedUpdate учитывают этот компонент.
-## 4. Переменные и параметры Inspector
+moveSpeed: код/сцена4, ≥0; acceleration:48 world units/s², deceleration:80, оба≥.01; animationReferenceSpeed:4 world units/s, ≥.01; defaultFacingRight=true только legacy. До4 разгон≈.083с, остановка≈.05с, дискретизированы физическим шагом. MovementSpeed добавляет BattleUnit.MovementAdjustment и ограничивает максимумом CharacterAttributeRules (назначено12). Кеши, previousPhysicsPosition/currentSpeed/ActualMovementSpeed и lastDirection — внутреннее состояние. Inspector не хранит отдельные HP/MP.
 
-unit — cached private BattleUnit; MovementSpeed readonly, не Inspector. maximumMovementSpeed находится в CharacterAttributeRules, назначено12. Сценовый base moveSpeed4 сохранён.
+## 5. Связи
 
-moveSpeed — сериализованная скорость, код4, использовать≥0 (Min нет). defaultFacingRight — bool исходного взгляда, кодtrue, действует только в legacy-ветке. rb/animator/spriteRenderer/moveInput/inputGate/directionalAnimator/lastDirection — внутреннее состояние, не Inspector. Начальное последнее направление Vector2.down. Новых serialized-полей и изменения сценовых скорости/физики нет.
+Rigidbody2D/SpriteRenderer/Collider2D исходного Player; WorldInputGate и BattleTransition блокируют карту; BattleUnit даёт бонус скорости. Player.controller содержит isMoving, MoveX/Y, LastMoveX/Y и новый WalkSpeed только для Walk-состояния. World Idle остаётся статическим отдельным ракурсом.
 
-## 5. Связи с другими системами
+## 6. Пример
 
-BattleUnit.MovementAdjustment объединяет AGI/reference coefficient и gear movementSpeed. Directional Animator не меняет игровую скорость.
-
-Player требует Rigidbody2D, Collider2D для столкновений и SpriteRenderer (только последний гарантирует RequireComponent). Animator необязателен; при наличии нужен bool isMoving. Directional-вариант дополнительно содержит четыре Float: MoveX, MoveY, LastMoveX, LastMoveY. BattleTransition выключает компонент в бою и восстанавливает после. [Схема анимаций](../Systems/AnimationSystem.md).
-
-## 6. Пример работы
-
-W+A → нормализованный ввод(−0.707,0.707) → Walk_UpLeft. После отпускания MoveX/MoveY=0, LastMoveX/LastMoveY сохраняются и выбирается Idle_UpLeft. Пока художественных кадров нет, обе позы показывают оригинальный myproject1idle. Касание скелета останавливает движение до окончания боя.
+W+D → нормализованное направление, за короткий разгон скорость достигает4 без диагонального ускорения; WalkSpeed≈1. У стены фактическая скорость падает, анимация переходит Idle. Отпускание тормозит вдоль последнего направления, I останавливает сразу.
 
 ## 7. Настройка в Unity
 
-На существующем Player в SampleScene, Animator использует прежний Assets/Player.controller. Проверь Rigidbody2D, Collider2D, SpriteRenderer и перечисленные параметры Animator. В Inspector настраивай Move Speed; Default Facing Right нужен только legacy-контроллерам. Добавлять второй контроллер движения не нужно. Проверка: Play → фокус Game View → WASD/стрелки, диагонали и отпускание клавиш. Кадры подключаются в существующие Assets/Animations/Player64/*.anim; скрипт менять не требуется.
+На существующем Player SampleScene. Rigidbody2D: Dynamic, Gravity0, FreezeRotation, Interpolate, Continuous. Коллайдер/scale не менялись. Настраивать базовую скорость/ускорение/торможение/reference; reference соответствует темпу готового клипа. Не ставить второй контроллер и не двигать Transform параллельно MovePosition.
 
 ## 8. Возможные проблемы и проверки
 
-Без primary/gear прежнее движение. Artist кадры всё ещё нужны; повышение уровня даёт+0.03 world speed по текущему профилю.
-
-Без Rigidbody2D ошибка. Нужен фокус Game View; Gamepad/переназначения нет. Смена runtimeAnimatorController после Start не перенастраивает кеш — контроллер назначается до запуска. Наличие параметров не означает наличие качественных кадров; оригинальный single-angle fallback не может визуально смотреть во все восемь сторон. Физический контакт/возврат проверяют существующие сценарии, направление/смену Idle-Walk проверяет PlayerDirectionFlowTests. Художественную плавность/ракурсы нужно проверить после предоставления настоящих кадров.
+Первое измерение после внешней телепортации может дать краткий завышенный WalkSpeed (ограничено3); штатный переход боя сохраняет позицию. Переназначение Animator после Start не обновляет кеш. Gamepad/настройка клавиш отсутствуют. Interpolate добавляет примерно один шаг визуальной задержки. Естественность ног/плаща и выбранные12FPS требуют ручного просмотра; тесты проверяют физику/кадры, а не художественное качество.
 
 ## 9. История изменений
 
@@ -62,3 +50,5 @@ W+A → нормализованный ввод(−0.707,0.707) → Walk_UpLeft.
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 
 - 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
+
+- 2026-10-13 — короткий разгон/торможение, мгновенная модальная остановка, actual-speed WalkSpeed и безопасный сброс; базовая скорость4 сохранена.

@@ -2,43 +2,44 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/EnemyAI.cs.
-
-Преследование Player скелетом на карте.
+`Assets/Scripts/EnemyAI.cs` — существующее преследование Player при входе в радиус обнаружения.
 
 ## 2. Как работает
 
-Start получает тело. Вход Player в триггер включает агрессию, Update двигает к цели, выход прекращает движение.
+Триггер сохраняет цель/агрессию. Вместо Update движение выполняется в FixedUpdate. Скорость кратко разгоняется, направление к цели вычисляется от физической rb.position; шаг ограничен расстоянием до цели, чтобы её не перескакивать. Выход из триггера останавливает сразу. Новая навигация/патруль/тип AI не добавлены.
 
 ## 3. Методы и функции
 
-- `Start()` — Unity получает Rigidbody2D; void.
-- `Update()` — при isAggro и цели вызывает MovePosition по направлению, moveSpeed и deltaTime.
-- `OnTriggerEnter2D(Collider2D collision)` — callback входа: тег Player → сохраняет Transform, isAggro=true.
-- `OnTriggerExit2D(Collider2D collision)` — выход Player → isAggro=false, linearVelocity=0.
+- `Start()` — кеширует Rigidbody2D.
+- `FixedUpdate()` — при существующем/симулируемом теле, isAggro и цели приближает currentSpeed к max(0,moveSpeed), вызывает MovePosition с ClampMagnitude(delta, speed×fixedDeltaTime); иначе сбрасывает currentSpeed.
+- `OnTriggerEnter2D(collision)` — Player tag → сохраняет Transform, включает isAggro.
+- `OnTriggerExit2D(collision)` — Player tag → снимает агрессию, сбрасывает currentSpeed/linearVelocity.
+- `OnDisable()` — сбрасывает currentSpeed и linearVelocity; не удаляет цель/объект. Все методы void; Update теперь отсутствует.
 
-## 4. Переменные и параметры Inspector
+## 4. Переменные и Inspector
 
-moveSpeed — код 3, задавать ≥0; Min нет. playerTransform/isAggro/rb — внутренние ссылки и состояние.
+moveSpeed — код3, раньше SampleScene10, теперь назначено3 world units/s; acceleration — код/сцена48, ≥.01. Разгон до3≈.063с. playerTransform/isAggro/rb/currentSpeed — внутреннее состояние, не Inspector.
 
-## 5. Связи с другими системами
+## 5. Связи
 
-Enemy требует Rigidbody2D и триггер; Player — тег Player. BattleEncounter отвечает за касание; BattleTransition приостанавливает AI в бою и после побега.
+Enemy Rigidbody2D и прежние два CircleCollider2D: радиус обнаружения2 при scale2, тело.32. BattleEncounter запускает контактный бой, Transition приостанавливает AI. EnemySpriteAnimation отдельно читает реальное перемещение, здоровье/урон не принадлежат AI.
 
-## 6. Пример работы
+## 6. Пример
 
-Player входит в радиус → скелет подходит → касание начинает бой.
+Player входит в прежний радиус → скелет подходит со скоростью3 → касание начинает бой. При выходе Player из радиуса скелет перестаёт перемещаться.
 
 ## 7. Настройка в Unity
 
-На Enemy в SampleScene с Rigidbody2D и Collider2D-триггером обнаружения. Player имеет тег Player. Отдельный нетриггерный коллайдер тела запускает Encounter. Настрой Move Speed, не добавляй второй AI; движение должно быть выключено Transition во время боя.
+Существующий Enemy SampleScene. Dynamic/Gravity0/FreezeRotation сохранены; Interpolate и Continuous включены. Настраивать Move Speed/Acceleration; animationReferenceSpeed визуального компонента должен соответствовать выбранному темпу. Отдельный Animator отсутствует и не нужен.
 
 ## 8. Возможные проблемы и проверки
 
-Rigidbody2D не гарантирован. MovePosition в Update, не FixedUpdate; нет пути вокруг стен. Несколько коллайдеров игрока могут преждевременно сбрасывать агрессию. Повторный бой проверен тестом; преследование на всей карте не проверено.
+Нет обхода стен/патруля. Несколько Player-коллайдеров могут преждевременно сбросить агрессию — прежнее ограничение. Новый тест проверяет настоящее преследование и выход из триггера; субъективный темп3 против прежних10 требует владельца. Изменение скорости не меняет радиус, правила встречи и боевую Speed.
 
 ## 9. История изменений
 
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 
 - 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
+
+- 2026-10-13 — MovePosition перенесён в FixedUpdate, ограничен расстоянием; добавлены короткий разгон и OnDisable; сценовая скорость10→3.

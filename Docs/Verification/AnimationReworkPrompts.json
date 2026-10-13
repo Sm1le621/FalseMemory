@@ -1,0 +1,50 @@
+[
+  {
+    "name": "HeroWalkRight",
+    "prompt": "Edit target: existing right-facing walk sheet. Reference2: approved front hero design. Redraw the walk into a REAL coherent 8-frame WALK-IN-PLACE cycle, exactly 4 columns x 2 rows, reading row-major. Detailed Dark Fantasy pixel art, transparent background. Same black armor, dark hair, burgundy cape, sheathed weapon, same lighting and proportions across ALL frames. Critical correction: the old sheet incorrectly puts the same near leg forward in every contact pose. New frame0: near leg forward and far leg back, heel contact. Frame1: near-leg weight/down pose, far foot lifts behind. Frame2: near leg planted back, far knee passes forward. Frame3: far leg reaches forward, near heel lifts. Frame4: FAR LEG FORWARD and NEAR LEG BACK, opposite contact to frame0, clear wide reversed leg silhouette. Frame5: far-leg weight/down, near foot lifts behind. Frame6: far leg planted back, near knee passes forward. Frame7: near leg reaches forward leading smoothly into frame0. Arms counter-swing with legs; cape follows a quarter cycle late with small stable folds. Keep torso/head centered identically, only 2-pixel-equivalent natural bob. Same anatomical near/far legs remain identifiable via shading. True joint articulation and alternating foot contacts, never eight variations of the same leading leg. Feet ground line identical in each cell, generous empty gutters and margins; no shadow, grid, labels, text, motion blur, duplicate contact frames or cropping. Draw all eight distinct temporal poses, not a character lineup.",
+    "path": "Docs/Images/AnimationReworkDrafts/HeroWalkRight.png",
+    "size": [
+      1585,
+      992
+    ],
+    "sha256": "a4d91ca18a6224723c337feefc84588df957fe963fe7491d827e2a4c7b9d515f",
+    "status": "Draft — not integrated",
+    "mode": "built-in imagegen"
+  },
+  {
+    "name": "HeroWalkDown",
+    "prompt": "Production game sprite sheet, detailed DARK FANTASY PIXEL ART on a transparent background. Redraw the SAME approved young dark-haired hero in black layered armor and burgundy cape, sheathed sword, unchanged proportions/equipment/lighting. Exactly eight distinct temporal frames in 4 columns x 2 rows, no text/grid/shadow. Walk IN PLACE, head/hips centered per cell and feet ground line aligned. Full loop: 0 LEFT leg forward/right back contact;1 left support down, right lifts;2 right passing knee forward;3 right extension;4 RIGHT forward/LEFT back opposite contact;5 right support down, left lifts;6 left passing knee;7 left extends leading seamlessly to0. Clear opposite legs at0 vs4, opposite arm swing, small delayed cape ripple. Do not just redraw the same leading leg. Maintain character size, armor plates/face/weapon fixed across frames; no morphing, no exaggerated bounce, no sliding pose. Generous clear gutters.\nCamera heading: Frontal walking toward camera / DOWN. Face visible. Left and right feet alternate foreshortened forward/back extension; left arm back when left foot forward.",
+    "path": "Docs/Images/AnimationReworkDrafts/HeroWalkDown.png",
+    "size": [
+      1586,
+      992
+    ],
+    "sha256": "e3f21617078bd0a125a25b13c9914a166ee71250d302fb6faf55a00b0cb7155e",
+    "status": "Draft — not integrated",
+    "mode": "built-in imagegen"
+  },
+  {
+    "name": "HeroWalkUp",
+    "prompt": "Production game sprite sheet, detailed DARK FANTASY PIXEL ART on a transparent background. Redraw the SAME approved young dark-haired hero in black layered armor and burgundy cape, sheathed sword, unchanged proportions/equipment/lighting. Exactly eight distinct temporal frames in 4 columns x 2 rows, no text/grid/shadow. Walk IN PLACE, head/hips centered per cell and feet ground line aligned. Full loop: 0 LEFT leg forward/right back contact;1 left support down, right lifts;2 right passing knee forward;3 right extension;4 RIGHT forward/LEFT back opposite contact;5 right support down, left lifts;6 left passing knee;7 left extends leading seamlessly to0. Clear opposite legs at0 vs4, opposite arm swing, small delayed cape ripple. Do not just redraw the same leading leg. Maintain character size, armor plates/face/weapon fixed across frames; no morphing, no exaggerated bounce, no sliding pose. Generous clear gutters.\nCamera heading: True REAR view walking away / UP. Face invisible, back of hair, cape over back armor; legs alternate beneath cape, visible knees/calves/feet. Not a frontal image mirrored.",
+    "path": "Docs/Images/AnimationReworkDrafts/HeroWalkUp.png",
+    "size": [
+      1586,
+      992
+    ],
+    "sha256": "6ca7ad8599487beab09792784059741cabe097a3248cc475714c8b446a3c759a",
+    "status": "Draft — not integrated",
+    "mode": "built-in imagegen"
+  },
+  {
+    "name": "HeroWalkUpRight",
+    "prompt": "Production game sprite sheet, detailed DARK FANTASY PIXEL ART on a transparent background. Redraw the SAME approved young dark-haired hero in black layered armor and burgundy cape, sheathed sword, unchanged proportions/equipment/lighting. Exactly eight distinct temporal frames in 4 columns x 2 rows, no text/grid/shadow. Walk IN PLACE, head/hips centered per cell and feet ground line aligned. Full loop: 0 LEFT leg forward/right back contact;1 left support down, right lifts;2 right passing knee forward;3 right extension;4 RIGHT forward/LEFT back opposite contact;5 right support down, left lifts;6 left passing knee;7 left extends leading seamlessly to0. Clear opposite legs at0 vs4, opposite arm swing, small delayed cape ripple. Do not just redraw the same leading leg. Maintain character size, armor plates/face/weapon fixed across frames; no morphing, no exaggerated bounce, no sliding pose. Generous clear gutters.\nCamera heading: True REAR three-quarter view walking away diagonally to UPPER RIGHT. Back of head and cape dominant; face mostly invisible. All frames same diagonal heading. Not frontal mirrored.",
+    "path": "Docs/Images/AnimationReworkDrafts/HeroWalkUpRight.png",
+    "size": [
+      1586,
+      992
+    ],
+    "sha256": "063b5910f227c3b04792bb8fee22be03fc67a6e8d4e264cdc7278c1a3c3110e0",
+    "status": "Draft — not integrated",
+    "mode": "built-in imagegen"
+  }
+]

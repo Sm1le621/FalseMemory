@@ -37,7 +37,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7ade90c6b8a0dd74691e7ea1ea1264d5, type: 3}
   hurt: []
   death: []
-  framesPerSecond: 16
+  framesPerSecond: 12
   idleFramesPerSecond: 4
   attackContactProgress: 0.5
   worldDirections: []

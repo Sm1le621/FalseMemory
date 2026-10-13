@@ -10,14 +10,15 @@ public sealed class EnemySpriteAnimation : MonoBehaviour
     [Range(0.1f,1f)] public float deathDuration=0.4f;
     public bool faceMovement=true;
     [Range(0.01f,0.2f)] public float movementHoldDuration=0.08f;
+    [Min(.01f)] public float animationReferenceSpeed=3f;
     private SpriteRenderer visual;
     private BattleUnit unit;
     private Vector3 previousPosition;
     private Vector2 lastDirection=Vector2.down;
     private int previousHP;
-    private float clock,hurtUntil,movingUntil,deathStarted=-1f;
+    private float clock,walkClock,hurtUntil,movingUntil,deathStarted=-1f;
     private void Awake(){visual=GetComponent<SpriteRenderer>();unit=GetComponent<BattleUnit>();}
-    private void OnEnable(){previousPosition=transform.position;previousHP=unit!=null?unit.Health.currentHealth:0;clock=0;hurtUntil=0;movingUntil=0;deathStarted=-1;}
+    private void OnEnable(){previousPosition=transform.position;previousHP=unit!=null?unit.Health.currentHealth:0;clock=0;walkClock=0;hurtUntil=0;movingUntil=0;deathStarted=-1;}
     private void LateUpdate()
     {
         if(unit==null || visual==null || unit.visualAnimations==null)return;
@@ -25,6 +26,8 @@ public sealed class EnemySpriteAnimation : MonoBehaviour
         bool displaced=displacement.sqrMagnitude>movementThreshold*movementThreshold;
         if(displaced)
         {
+            // Distance advances the gait; standing still never advances a walking phase.
+            walkClock+=Mathf.Min(displacement.magnitude/Mathf.Max(.01f,animationReferenceSpeed),Time.deltaTime*3f);
             movingUntil=clock+Mathf.Clamp(movementHoldDuration,0.01f,0.2f);
             if(faceMovement)lastDirection=new Vector2(displacement.x,displacement.y).normalized;
         }
@@ -39,12 +42,12 @@ public sealed class EnemySpriteAnimation : MonoBehaviour
         if(set.HasWorldDirections)
         {
             visual.flipX=false;
-            visual.sprite=set.LoopWorld(lastDirection,moving,clock,unit.battleSprite);
+            visual.sprite=set.LoopWorld(lastDirection,moving,moving?walkClock:clock,unit.battleSprite);
         }
         else
         {
             if(faceMovement && moving && Mathf.Abs(displacement.x)>movementThreshold)visual.flipX=displacement.x<0;
-            visual.sprite=set.Loop(moving?SpritePose.Move:SpritePose.Idle,clock,unit.battleSprite);
+            visual.sprite=set.Loop(moving?SpritePose.Move:SpritePose.Idle,moving?walkClock:clock,unit.battleSprite);
         }
     }
 }

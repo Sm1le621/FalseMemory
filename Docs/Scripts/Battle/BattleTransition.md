@@ -8,11 +8,17 @@
 
 ## 2. Как работает
 
+Актуально2026-10-13: PauseBody временно выключает simulation у изначально симулируемых тел участников, сохранив режим interpolation. Transform фиксируется в текущей физической позиции вместо старой интерполированной. Это исключает смещение при скрытии/возврате мира; восстановление идёт после активации roots и до контроллеров. Исходно несмоделированные тела не включаются автоматически.
+
 Этап 3.5: FadeTo создаёт прежний overlay, затем делегирует SmoothStep-анимацию BattleScreenFade.Fade. LoadFresh после затемнения добавляет BattleScreenFade к временному Canvas: LoadAndReveal сохраняет только экран на время Single-загрузки, проявляет новую сцену и удаляет overlay. Координатор/ресурсы старой сессии по-прежнему выгружаются. Rules.fadeDuration в текущем ассете 0.5 секунды.
 
 TryBegin синхронно блокирует повторную встречу, выключает движение/AI и загружает BattleScene дополнительно. Мир скрывается, но не выгружается. После победы враг выключается; после побега остаётся жив и включается временная защита. Поражение может полностью загрузить новую игру/меню.
 
 ## 3. Методы и функции
+
+RestoreWorld после включения simulation повторно назначает текущую rb.position и согласует Transform, сбрасывая прежнюю историю interpolation. Это предотвращает небольшой видимый/измеримый сдвиг неподвижного врага после побега.
+
+- `PauseBody(BattleUnit unit)` — из TryBegin; StopBody, кеш режима interpolation в pausedBodies только при simulated=true; ставит interpolation=None, согласует Transform с rb.position, simulated=false. Возврата нет. RestoreWorld восстанавливает interpolation/simulated и очищает кеш после активации roots; победный Enemy к этому моменту выключен.
 
 - `ResetStatics()` — RuntimeInitializeOnLoadMethod SubsystemRegistration очищает Instance при запуске; void.
 - `Awake()` — Unity назначает Instance; лишний экземпляр выключает себя. `OnDestroy()` очищает Instance, если это он.
@@ -33,6 +39,8 @@ TryBegin синхронно блокирует повторную встречу
 
 ## 4. Переменные и параметры Inspector
 
+pausedBodies — private readonly Dictionary<Rigidbody2D,RigidbodyInterpolation2D>, временный кеш только изначально simulated-тел, не Inspector и не копия ресурсов/HP. При Single-загрузке исчезает вместе с координатором.
+
 rules — обязательный BattleRules; battleSceneName/mainMenuSceneName — строки BattleScene/MainMenu, сцены должны быть в сборке. Player/Enemy/EncounterActive/IsTransitioning/IsEncounterProtected — читаемое состояние. hiddenRoots/pausedBehaviours/worldScene/protectedUntil/protectedEnemyAI/victoryRewardClaimed/fade — внутренние.
 
 ## 5. Связи с другими системами
@@ -52,6 +60,8 @@ Flee успешен → BattleScene выгружена → Player отнесён
 Защита блокирует все встречи этого координатора, не только прежнего врага. Без свободного места оставляет Player на месте с таймером. Сохранения на диск нет, Single/перезагрузка мира сбрасывает сессию. Один координатор на сцену; дубликат не удаляется, только выключается. Победа/побег/повторный бой и сохранение покрыты Play Mode.
 
 ## 9. История изменений
+
+- 2026-10-13 — фиксация физической позиции и пауза simulation при переходе; исправлен дрейф после победы при включённой Interpolate. Прежний точный assert позиции сохранён.
 
 - 2026-10-11 — 3.5: SmoothStep-затемнение и проявление Restart/Main Menu без сохранения игрового состояния.
 

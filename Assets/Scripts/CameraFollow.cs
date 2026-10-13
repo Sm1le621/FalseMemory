@@ -17,7 +17,8 @@ public class CameraFollow : MonoBehaviour
         Vector3 desiredPosition = target.position + offset;
 
         // Плавно перемещаем камеру из текущей позиции в желаемую
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition,
+            1f - Mathf.Exp(-Mathf.Max(0f, smoothSpeed) * Time.deltaTime));
 
         transform.position = smoothedPosition;
     }

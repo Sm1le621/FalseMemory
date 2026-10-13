@@ -4,6 +4,8 @@ public class EnemyAI : MonoBehaviour
 {
     [Header("Настройки движения")]
     public float moveSpeed = 3f;
+    [Min(0.01f)] public float acceleration = 48f;
+    private float currentSpeed;
 
     private Transform playerTransform;
     private bool isAggro = false;
@@ -15,14 +17,23 @@ public class EnemyAI : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Если игрок в радиусе агра — двигаемся к нему
-        if (isAggro && playerTransform != null)
+        if (rb != null && rb.simulated && isAggro && playerTransform != null)
         {
-            Vector2 direction = (playerTransform.position - transform.position).normalized;
-            rb.MovePosition(rb.position + direction * moveSpeed * Time.deltaTime);
+            Vector2 delta = (Vector2)playerTransform.position - rb.position;
+            currentSpeed = Mathf.MoveTowards(currentSpeed, Mathf.Max(0f, moveSpeed),
+                Mathf.Max(.01f, acceleration) * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + Vector2.ClampMagnitude(delta, currentSpeed * Time.fixedDeltaTime));
         }
+        else currentSpeed = 0f;
+    }
+
+    private void OnDisable()
+    {
+        currentSpeed = 0f;
+        if (rb != null) rb.linearVelocity = Vector2.zero;
     }
 
     // Срабатывает, когда объект входит в радиус триггера
@@ -41,7 +52,8 @@ public class EnemyAI : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isAggro = false;
-            rb.linearVelocity = Vector2.zero; // Остановка (или rb.velocity для старых версий Unity)
+            currentSpeed = 0f;
+            if (rb != null) rb.linearVelocity = Vector2.zero;
         }
     }
 }

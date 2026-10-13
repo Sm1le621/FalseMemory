@@ -1,5 +1,9 @@
 # Настройка существующего проекта в Unity
 
+## Animation Rework2026-10-13
+
+В сохранённой SampleScene Player/Enemy Rigidbody2D: Interpolate/Continuous, gravity0 и FreezeRotation. Player Move Speed4/Acceleration48/Deceleration80/Animation Reference Speed4; Enemy Move Speed3/Acceleration48 и EnemySpriteAnimation reference3. Player.controller дополнен только float WalkSpeed(default1) на существующем Walk-состоянии. ApprovedHeroImporter обновляет12FPS-клипы/этот параметр без нового controller; DetailedAnimationImporter согласован с12FPS. BattleTransition сам приостанавливает simulation; вручную выключать его навсегда не нужно. Новые Draft в Docs не назначать вместо Sprite. [Инструкция проверки](../AnimationRework.md). Ниже более ранняя настройка.
+
 ## Подключение CharacterAnimationUpgrade
 
 Использовать существующие SampleScene/BattleScene и[DetailedAnimationImporter](../Scripts/Editor/DetailedAnimationImporter.md). Player/Enemy→BattleUnit.visualAnimations назначены HeroDetailed/SkeletonDetailed. EnemySpriteAnimation уже присутствовал; нового Animator врага не требуется. InventoryWindow.portraitSprite сохраняет прежний утверждённый фронтальный портрет. Не менять moveSpeed/Collider/Scale ради текстур.

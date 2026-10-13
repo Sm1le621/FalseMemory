@@ -9,6 +9,7 @@ using UnityEngine;
 public static class ApprovedHeroImporter
 {
     public const string Root = "Assets/Art/Characters/Player/ApprovedHero";
+    public const float WalkFramesPerSecond = 12f;
     public static readonly string[] Directions = { "Up", "Down", "Right", "Left", "UpRight", "UpLeft", "DownRight", "DownLeft" };
 
     [MenuItem("FalseMemory/Art/Import approved hero animation sheets")]
@@ -29,6 +30,21 @@ public static class ApprovedHeroImporter
             ConfigureTexture(importer);
             importer.SaveAndReimport();
         }
+        ConfigureController();
+    }
+
+    private static void ConfigureController()
+    {
+        var controller = AssetDatabase.LoadAssetAtPath<UnityEditor.Animations.AnimatorController>("Assets/Player.controller");
+        if (controller == null) throw new InvalidOperationException("Missing existing player controller.");
+        if (!controller.parameters.Any(p => p.name == "WalkSpeed"))
+            controller.AddParameter(new AnimatorControllerParameter { name = "WalkSpeed", type = AnimatorControllerParameterType.Float, defaultFloat = 1f });
+        var walk = controller.layers[0].stateMachine.states.First(s => s.state.name == "Player_DirectionalWalk").state;
+        walk.speedParameter = "WalkSpeed";
+        walk.speedParameterActive = true;
+        EditorUtility.SetDirty(walk);
+        EditorUtility.SetDirty(controller);
+        AssetDatabase.SaveAssetIfDirty(controller);
     }
 
     private static void ImportSheet(string direction)
@@ -96,7 +112,7 @@ public static class ApprovedHeroImporter
         string path = "Assets/Animations/Player64/" + motion + "_" + direction + ".anim";
         var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
         if (clip == null) throw new InvalidOperationException("Missing existing clip: " + path);
-        clip.frameRate = motion=="Walk" && frames.Length>=8?16f:8f;
+        clip.frameRate = motion=="Walk" ? WalkFramesPerSecond : 8f;
         var binding = EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite");
         var keys = new ObjectReferenceKeyframe[frames.Length + 1];
         for (int i = 0; i < frames.Length; i++)
@@ -104,6 +120,8 @@ public static class ApprovedHeroImporter
         keys[frames.Length] = new ObjectReferenceKeyframe { time = frames.Length / clip.frameRate, value = frames[0] };
         AnimationUtility.SetObjectReferenceCurve(clip, binding, keys);
         var settings = AnimationUtility.GetAnimationClipSettings(clip);
+        settings.startTime = 0f;
+        settings.stopTime = frames.Length / clip.frameRate;
         settings.loopTime = true;
         AnimationUtility.SetAnimationClipSettings(clip, settings);
         EditorUtility.SetDirty(clip);

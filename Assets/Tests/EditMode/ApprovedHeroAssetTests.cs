@@ -48,9 +48,11 @@ public sealed class ApprovedHeroAssetTests
             Assert.That(keys.Take(8).Select(k => k.value).Distinct().Count(), Is.EqualTo(8));
             Assert.That(keys.Take(8).All(k => k.value.name.StartsWith("ApprovedHero_" + direction + "_")), Is.True);
             Assert.That(keys[8].value, Is.SameAs(keys[0].value));
-            Assert.That(keys[8].time, Is.EqualTo(.5f).Within(.0001f));
+            Assert.That(clip.frameRate, Is.EqualTo(12f));
+            Assert.That(keys[8].time, Is.EqualTo(2f/3f).Within(.0001f));
             Assert.That(AnimationUtility.GetCurveBindings(clip), Is.Empty);
             Assert.That(AnimationUtility.GetAnimationClipSettings(clip).loopTime, Is.True);
+            Assert.That(AnimationUtility.GetAnimationClipSettings(clip).stopTime, Is.EqualTo(2f/3f).Within(.0001f), "No extra first-frame dwell at the cycle seam.");
         }
     }
 }

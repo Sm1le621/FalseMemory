@@ -13,7 +13,7 @@
 - `ImportAll()` — MenuItem/MCP вне Play Mode; читает DTO Manifest/Frame через JsonUtility, настраивает Single Sprite и сохраняет каждый importer, вызывает SaveProfile и ApprovedHeroImporter.ImportAnimations. Возврат void, существующие клипы/GUID сохраняются.
 - `Configure(importer)` — Point, no mipmaps/compression, Max Size4096, NPOT None, alpha из PNG, Clamp; изменяет только переданный importer.
 - `Frames(folder,prefix)` — сортирует подходящие PNG и возвращает массив Sprite; используются устойчивые имена с индексом00…07.
-- `SaveProfile(path,root,name,hasDirections)` — сохраняет конкретный SpriteAnimationSet. Idle4/Attack8,16FPS/Idle4FPS/contact.5; Skeleton дополнительно Hurt2/Death4 и четыре worldDirections с8 Walk/одним Idle. Hero использует прежнюю flash/fade реакцию без новых Hurt/Death кадров.
+- `SaveProfile(path,root,name,hasDirections)` — сохраняет конкретный SpriteAnimationSet. Idle4/Attack8,12FPS/Idle4FPS/contact.5; Skeleton дополнительно Hurt2/Death4 и четыре worldDirections с8 Walk/одним Idle. Hero использует прежнюю flash/fade реакцию без новых Hurt/Death кадров.
 - `WireWorld()` — требует активную SampleScene; ApprovedHeroImporter подключает Player, затем существующий Enemy получает профиль/спрайт/white tint и movementHoldDuration.08. SaveScene проверяется.
 - `WireBattlePreview()` — требует BattleScene, получает единственный BattleUI через FindAnyObjectByType, задаёт preview Sprite/white tint и расширяет только RectTransform портретов внутри прежнего battlefield; проверяет SaveScene.
 
@@ -39,6 +39,10 @@ AssetDatabase/TextureImporterSettings/EditorSceneManager/JsonUtility, ApprovedHe
 
 Нет источников/кадров — импорт не считается готовым; проверить Console и manifest. Повторный импорт сохраняет существующие профили/PNG .meta. Высокое разрешение увеличивает память; потенциальная оптимизация SpriteAtlas выполняется отдельной задачей, без уменьшения утверждённого дизайна. Художественную естественность не доказывает число кадров.
 
+SaveProfile использует ApprovedHeroImporter.WalkFramesPerSecond=12, idleFramesPerSecond4 и прежний attackContactProgress.5. Существующий BattleManager по-прежнему владеет уроном, а длительность BattlePresentation не вычисляется из world FPS. Пробные листы текущей переработки не подменяют126 рабочих кадров.
+
 ## 9. История изменений
 
 - 2026-10-13 — добавлен адресный импорт подробных battle/world кадров и профилей; используется FindAnyObjectByType для Unity6 без нового предупреждения об устаревшем API.
+
+- 2026-10-13 — актуализированы темп/физическое воспроизведение и проверки в задаче Animation Rework.

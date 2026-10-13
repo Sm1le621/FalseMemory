@@ -1,5 +1,9 @@
 # Визуал врагов FalseMemory
 
+## Актуальное движение2026-10-13
+
+EnemyAI вызывает MovePosition в FixedUpdate, разгоняется до сценовых3 (раньше10), без изменения trigger radius/правил встречи. Rigidbody Interpolate/Continuous; gravity/constraints/body collider сохранены. EnemySpriteAnimation использует distance-driven walkClock с reference3, но обычный clock для Idle/Hurt/Death. Поворот сохраняет фазу, hold.08 не двигает тело и не ускоряет неподвижные ноги. Рабочие SkeletonDetailed Walk4×8/12FPS (⅔с при3), Battle Idle4/4FPS и Attack8/contact.5 прежние. Новые skeleton изображения в этом техническом подэтапе не созданы. [Статус/проверки](../AnimationRework.md); ниже прежние контрольные точки.
+
 ## SkeletonDetailed —2026-10-13
 
 Существующий Enemy в SampleScene теперь использует Assets/Art/Enemies/SkeletonDetailed:18 Battle-кадров (Idle4/Attack8/Hurt2/Death4) и32 World-кадра (Walk Down/Up/Right/Left по8). Left зеркален Right, поэтому стороны меча/щита отражаются. Встроенный imagegen создал подробную нежить с ржавой бронёй/бордовой тканью, по прежнему дизайну и стилю утверждённого героя; исходные четыре листа сохранены в Source. Резервные Skeleton64/skeleton-topdown-64 и профиль не изменены.

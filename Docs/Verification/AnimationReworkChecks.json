@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-13",
+  "scope": "Animation Rework — technical movement/cadence substage",
+  "compilation": {
+    "completed": true,
+    "errors": 0
+  },
+  "console": {
+    "baselineErrors": 0,
+    "baselineWarnings": 0,
+    "intermediateWarnings": [
+      "Account API did not become accessible within 30 seconds"
+    ],
+    "finalErrors": 0,
+    "finalWarnings": 0
+  },
+  "editMode": {
+    "job": "dec3e6a45ba04ea1b1335073cc18c70d",
+    "total": 95,
+    "passed": 95,
+    "failed": 0,
+    "skipped": 0
+  },
+  "playMode": {
+    "job": "8fc5f8989e0245529afc259fabf2aa96",
+    "total": 56,
+    "passed": 56,
+    "failed": 0,
+    "skipped": 0
+  },
+  "intermediateFailures": [
+    "Interpolated player position after victory",
+    "Interpolated enemy position after flee",
+    "Extra cycle-end frame interval"
+  ],
+  "fixedWithoutWeakeningPositionAssertions": true,
+  "scenes": {
+    "sample": {
+      "validationIssues": 0,
+      "missingScripts": 0,
+      "brokenPrefabs": 0,
+      "objects": 981,
+      "new": 0,
+      "deleted": 0,
+      "savedViaMcp": true
+    },
+    "battle": {
+      "validationIssues": 0,
+      "missingScripts": 0,
+      "brokenPrefabs": 0,
+      "objects": 230,
+      "new": 0,
+      "deleted": 0,
+      "modified": false
+    }
+  },
+  "art": {
+    "originalsUnchanged": true,
+    "newDraftSheets": 4,
+    "draftsIntegrated": false,
+    "renderedGaitVisuallyApproved": false,
+    "fullArtReworkComplete": false
+  },
+  "scripts": {
+    "own": 88,
+    "changed": 10,
+    "individualDocsComplete": true
+  },
+  "runtime": {
+    "playerSpeed": 4,
+    "enemySpeedBefore": 10,
+    "enemySpeedAfter": 3,
+    "walkFrames": 8,
+    "walkFps": 12,
+    "walkCycleSeconds": 0.6666666666666666,
+    "comparisonFpsExecuted": [
+      8,
+      10,
+      12,
+      15
+    ],
+    "interpolation": "Interpolate",
+    "collisionDetection": "Continuous",
+    "fixedDeltaTimeChanged": false
+  },
+  "editorLeft": {
+    "scene": "SampleScene",
+    "dirty": false,
+    "playing": false,
+    "compiling": false
+  },
+  "push": false
+}

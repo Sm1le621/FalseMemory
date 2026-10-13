@@ -5,7 +5,10 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed = 4f;
+    [SerializeField, Min(0f)] private float moveSpeed = 4f;
+    [SerializeField, Min(0.01f)] private float acceleration = 48f;
+    [SerializeField, Min(0.01f)] private float deceleration = 80f;
+    [SerializeField, Min(0.01f)] private float animationReferenceSpeed = 4f;
 
     [Header("Visual Settings")]
     [SerializeField] private bool defaultFacingRight = true; // Спрайт по умолчанию смотрит вправо?
@@ -18,8 +21,13 @@ public class PlayerController : MonoBehaviour
     private bool directionalAnimator;
     private BattleUnit unit;
     private Vector2 lastDirection = Vector2.down;
+    private float currentSpeed;
+    private Vector2 previousPhysicsPosition;
+    private bool hasWalkSpeedParameter;
     public Vector2 MovementInput => moveInput;
     public Vector2 LastDirection => lastDirection;
+    public float ActualMovementSpeed { get; private set; }
+    public float CurrentMovementSpeed => currentSpeed;
     public float MovementSpeed => Mathf.Clamp(moveSpeed+(unit!=null?unit.MovementAdjustment:0),0,
         unit!=null && unit.UsesPrimaryAttributes?Mathf.Max(0,unit.Attributes.rules.maximumMovementSpeed):float.MaxValue);
 
@@ -30,8 +38,10 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         inputGate = GetComponent<WorldInputGate>();
         unit = GetComponent<BattleUnit>();
+        if (rb != null) previousPhysicsPosition = rb.position;
         directionalAnimator = animator != null &&
             HasFloat("MoveX") && HasFloat("MoveY") && HasFloat("LastMoveX") && HasFloat("LastMoveY");
+        hasWalkSpeedParameter = animator != null && HasFloat("WalkSpeed");
         UpdateAnimation();
     }
 
@@ -40,6 +50,7 @@ public class PlayerController : MonoBehaviour
         if (inputGate != null && inputGate.IsBlocked)
         {
             moveInput = Vector2.zero;
+            StopMovement();
             UpdateAnimation();
             return;
         }
@@ -75,10 +86,13 @@ public class PlayerController : MonoBehaviour
     private void UpdateAnimation()
     {
         if (animator == null) return;
-        animator.SetBool("isMoving", moveInput.sqrMagnitude > 0f);
+        bool walking = ActualMovementSpeed > 0.03f && currentSpeed > 0.03f;
+        animator.SetBool("isMoving", walking);
+        if (hasWalkSpeedParameter)
+            animator.SetFloat("WalkSpeed", Mathf.Clamp(ActualMovementSpeed / Mathf.Max(.01f, animationReferenceSpeed), 0f, 3f));
         if (!directionalAnimator) return;
-        animator.SetFloat("MoveX", moveInput.x);
-        animator.SetFloat("MoveY", moveInput.y);
+        animator.SetFloat("MoveX", lastDirection.x);
+        animator.SetFloat("MoveY", lastDirection.y);
         animator.SetFloat("LastMoveX", lastDirection.x);
         animator.SetFloat("LastMoveY", lastDirection.y);
         // Directional clips own the facing; horizontal flipping would corrupt real diagonal art.
@@ -88,15 +102,32 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         moveInput = Vector2.zero;
-        if (rb != null) rb.linearVelocity = Vector2.zero;
+        StopMovement();
         UpdateAnimation();
     }
 
+    private void StopMovement()
+    {
+        currentSpeed = ActualMovementSpeed = 0f;
+        if (rb == null) return;
+        rb.linearVelocity = Vector2.zero;
+        previousPhysicsPosition = rb.position;
+    }
+
+    private void LateUpdate() => UpdateAnimation();
+
     private void FixedUpdate()
     {
-        if (inputGate != null && inputGate.IsBlocked) { rb.linearVelocity = Vector2.zero; return; }
-        // Физическое перемещение
-        rb.MovePosition(rb.position + moveInput * MovementSpeed * Time.fixedDeltaTime);
+        if (rb == null) return;
+        if (!rb.simulated || (inputGate != null && inputGate.IsBlocked)) { StopMovement(); return; }
+        // Measure the completed physics step, including collision constraints.
+        ActualMovementSpeed = Vector2.Distance(rb.position, previousPhysicsPosition) / Time.fixedDeltaTime;
+        previousPhysicsPosition = rb.position;
+        bool requested = moveInput.sqrMagnitude > 0f;
+        currentSpeed = Mathf.MoveTowards(currentSpeed, requested ? MovementSpeed : 0f,
+            Mathf.Max(.01f, requested ? acceleration : deceleration) * Time.fixedDeltaTime);
+        // Steering changes immediately; only speed ramps, so turns do not drift sideways.
+        rb.MovePosition(rb.position + lastDirection * currentSpeed * Time.fixedDeltaTime);
     }
 
     private void HandleSpriteFlipping()

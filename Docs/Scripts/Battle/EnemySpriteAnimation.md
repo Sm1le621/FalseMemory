@@ -38,8 +38,12 @@ EnemyAI переместил скелета влево → SkeletonDetailed вы
 
 У SkeletonDetailed есть четыре направления; отдельный Animator Controller не требуется. Движение определяется displacement, краткие паузы между физическими шагами могут переключать pose; художественную плавность принимает владелец. Скрипт не возрождает и не удаляет объект.
 
+Новая актуальная логика: walkClock продвигается только по реальному displacement/referenceSpeed, максимум3×deltaTime против телепортаций. LoopWorld/Loop получает walkClock для Move и обычный clock для Idle. OnEnable обнуляет оба clock; повороты не сбрасывают фазу. animationReferenceSpeed — Inspector, код/сцена3 world units/s, минимум.01. При остановке hold удерживает кадр, но не продвигает walkClock. Hurt/Death/HP-приоритеты прежние.
+
 ## 9. История изменений
 
 2026-10-12 — создан в задаче native 64px Skeleton/Fire/Heal/Hit и интеграции кадров; текущие проверки — [PixelVisuals](../../PixelVisuals.md).
 
 - 2026-10-13 — направления Down/Up/Right/Left и удержание Walk между физическими шагами; AI/Rigidbody/Collider/ресурсы не изменены.
+
+- 2026-10-13 — актуализированы темп/физическое воспроизведение и проверки в задаче Animation Rework.

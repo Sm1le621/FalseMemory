@@ -43,7 +43,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 92cb360a5a2a8064dab8d5660c1d0aaf, type: 3}
   - {fileID: 21300000, guid: bab908fa3c2afc44497ba0c4379b4ca6, type: 3}
   - {fileID: 21300000, guid: 053fedfa4c27cea4c9e27070eff7cfdf, type: 3}
-  framesPerSecond: 16
+  framesPerSecond: 12
   idleFramesPerSecond: 4
   attackContactProgress: 0.5
   worldDirections:

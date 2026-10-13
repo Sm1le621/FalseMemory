@@ -1,5 +1,7 @@
 # Документация FalseMemory
 
+Текущая переработка анимаций/движения: [AnimationRework](AnimationRework.md). Исправлены физические шаги/интерполяция, разгон/торможение, actual-speed WalkSpeed и пауза тел на время боя. Новые листы — только художественные кандидаты, не игровые ссылки. [Сценарии физики и FPS](Scripts/Tests/PlayMode/MovementSmoothingFlowTests.md). Полная художественная переработка остаётся In Progress; более ранние абзацы ниже — история.
+
 Текущие новые анимации героя/скелета: [CharacterAnimationUpgrade](CharacterAnimationUpgrade.md). [Импортёр](Scripts/Editor/DetailedAnimationImporter.md), [Edit-тесты](Scripts/Tests/EditMode/DetailedAnimationTests.md), [Play-сценарии](Scripts/Tests/PlayMode/DetailedAnimationFlowTests.md). Существующие системы расширены, источник HP/MP и все ранее принятые механики сохраняются. Художественная оценка новых поз остаётся ручной.
 
 Актуально2026-10-13: утверждённый герой большого разрешения подключён без уменьшения. [Отчёт/ручная проверка](ApprovedHeroIntegration.md), [правила pixel art](Guides/PixelArtStyleGuide.md), [импортёр](Scripts/Editor/ApprovedHeroImporter.md), [тесты импорта](Scripts/Tests/EditMode/ApprovedHeroAssetTests.md). Ниже сохранены прежние контрольные точки; ограничение64×64 для будущей графики отменено.
