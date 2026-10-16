@@ -9,9 +9,9 @@ using UnityEngine;
 public static class ApprovedHeroImporter
 {
     public const string Root = "Assets/Art/Characters/Player/ApprovedHero";
-    public const float WalkFramesPerSecond = 12f;
+    public const float WalkFramesPerSecond = 16f;
     public const string ThirtyFrameRoot = "Assets/Art/Characters/Player/Animation30";
-    public const float ThirtyFrameIdleFramesPerSecond = 15f;
+    public const float ThirtyFrameIdleFramesPerSecond = 16f;
     [Serializable] private sealed class PreparedManifest { public PreparedFrame[] frames = Array.Empty<PreparedFrame>(); }
     [Serializable] private sealed class PreparedFrame
     {
@@ -39,7 +39,37 @@ public static class ApprovedHeroImporter
             ConfigureTexture(importer);
             importer.SaveAndReimport();
         }
+        RetimeLegacyClips();
         ConfigureController();
+    }
+
+    // Preserve backup clips and GUIDs, but use the same 1/16 second frame grid.
+    private static void RetimeLegacyClips()
+    {
+        foreach (string path in new[] { "Assets/Player_Walk.anim", "Assets/Player_Run.anim", "Assets/Player_Idle.anim", "Assets/PlayerMyproject_Idle.anim" })
+        {
+            var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
+            if (clip == null || clip.frameRate <= 0f) throw new InvalidOperationException("Invalid existing hero clip: " + path);
+            if (Mathf.Approximately(clip.frameRate, WalkFramesPerSecond)) continue;
+            if (AnimationUtility.GetCurveBindings(clip).Length != 0)
+                throw new InvalidOperationException("Review transform curves before retiming backup clip: " + path);
+            float scale = clip.frameRate / WalkFramesPerSecond;
+            var settings = AnimationUtility.GetAnimationClipSettings(clip);
+            foreach (var binding in AnimationUtility.GetObjectReferenceCurveBindings(clip))
+            {
+                var keys = AnimationUtility.GetObjectReferenceCurve(clip, binding);
+                for (int i = 0; i < keys.Length; i++) keys[i].time *= scale;
+                AnimationUtility.SetObjectReferenceCurve(clip, binding, keys);
+            }
+            var events = AnimationUtility.GetAnimationEvents(clip);
+            foreach (var entry in events) entry.time *= scale;
+            AnimationUtility.SetAnimationEvents(clip, events);
+            clip.frameRate = WalkFramesPerSecond;
+            settings.startTime *= scale; settings.stopTime *= scale;
+            AnimationUtility.SetAnimationClipSettings(clip, settings);
+            EditorUtility.SetDirty(clip);
+            AssetDatabase.SaveAssetIfDirty(clip);
+        }
     }
 
     private static void ConfigureController()
@@ -172,8 +202,7 @@ public static class ApprovedHeroImporter
         string path = "Assets/Animations/Player64/" + motion + "_" + direction + ".anim";
         var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
         if (clip == null) throw new InvalidOperationException("Missing existing clip: " + path);
-        clip.frameRate = motion == "Walk" ? (frames.Length == 30 ? 45f : WalkFramesPerSecond) :
-            (frames.Length == 30 ? ThirtyFrameIdleFramesPerSecond : 8f);
+        clip.frameRate = WalkFramesPerSecond;
         var binding = EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite");
         var keys = new ObjectReferenceKeyframe[frames.Length + 1];
         for (int i = 0; i < frames.Length; i++)

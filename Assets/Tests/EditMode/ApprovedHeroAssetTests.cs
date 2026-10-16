@@ -9,15 +9,33 @@ public sealed class ApprovedHeroAssetTests
     private static readonly string[] Directions = { "Up", "Down", "Right", "Left", "UpRight", "UpLeft", "DownRight", "DownLeft" };
 
     [Test]
-    public void IdleDownHasThirtyNativeDistinctFramesAndSeparateTwoSecondLoop()
+    public void AllHeroClipsIncludingBackupsUseTheSixteenFpsTimeGrid()
+    {
+        var paths=Directions.SelectMany(d=>new[]{"Assets/Animations/Player64/Walk_"+d+".anim","Assets/Animations/Player64/Idle_"+d+".anim"})
+            .Concat(new[]{"Assets/Player_Walk.anim","Assets/Player_Run.anim","Assets/Player_Idle.anim","Assets/PlayerMyproject_Idle.anim"}).ToArray();
+        Assert.That(paths.Length,Is.EqualTo(20));
+        foreach(string path in paths)
+        {
+            var clip=AssetDatabase.LoadAssetAtPath<AnimationClip>(path);Assert.That(clip,Is.Not.Null,path);
+            Assert.That(clip.frameRate,Is.EqualTo(16f),path);
+            foreach(var binding in AnimationUtility.GetObjectReferenceCurveBindings(clip))
+            foreach(var key in AnimationUtility.GetObjectReferenceCurve(clip,binding))
+                Assert.That(key.time*16f,Is.EqualTo(Mathf.Round(key.time*16f)).Within(.0001f),path+" must retime keys, not only metadata.");
+            float ticks=AnimationUtility.GetAnimationClipSettings(clip).stopTime*16f;
+            Assert.That(ticks,Is.EqualTo(Mathf.Round(ticks)).Within(.0001f),path);
+        }
+    }
+
+    [Test]
+    public void IdleDownHasThirtyNativeDistinctFramesAtSixteenFramesPerSecond()
     {
         var clip=AssetDatabase.LoadAssetAtPath<AnimationClip>("Assets/Animations/Player64/Idle_Down.anim");
         var binding=AnimationUtility.GetObjectReferenceCurveBindings(clip).Single();
         var keys=AnimationUtility.GetObjectReferenceCurve(clip,binding);
         Assert.That(keys.Length,Is.EqualTo(31));Assert.That(keys.Take(30).Select(k=>k.value).Distinct().Count(),Is.EqualTo(30));
-        Assert.That(clip.frameRate,Is.EqualTo(15f));Assert.That(keys[30].time,Is.EqualTo(2f).Within(.0001f));
+        Assert.That(clip.frameRate,Is.EqualTo(16f));Assert.That(keys[30].time,Is.EqualTo(1.875f).Within(.0001f));
         Assert.That(keys[30].value,Is.SameAs(keys[0].value));
-        Assert.That(AnimationUtility.GetAnimationClipSettings(clip).stopTime,Is.EqualTo(2f).Within(.0001f));
+        Assert.That(AnimationUtility.GetAnimationClipSettings(clip).stopTime,Is.EqualTo(1.875f).Within(.0001f));
         var hashes=new System.Collections.Generic.HashSet<string>();
         using(var sha=System.Security.Cryptography.SHA256.Create())foreach(var key in keys.Take(30))
         {
@@ -76,11 +94,11 @@ public sealed class ApprovedHeroAssetTests
             Assert.That(keys.Take(8).Select(k => k.value).Distinct().Count(), Is.EqualTo(8));
             Assert.That(keys.Take(8).All(k => k.value.name.StartsWith("ApprovedHero_" + direction + "_")), Is.True);
             Assert.That(keys[8].value, Is.SameAs(keys[0].value));
-            Assert.That(clip.frameRate, Is.EqualTo(12f));
-            Assert.That(keys[8].time, Is.EqualTo(2f/3f).Within(.0001f));
+            Assert.That(clip.frameRate, Is.EqualTo(16f));
+            Assert.That(keys[8].time, Is.EqualTo(.5f).Within(.0001f));
             Assert.That(AnimationUtility.GetCurveBindings(clip), Is.Empty);
             Assert.That(AnimationUtility.GetAnimationClipSettings(clip).loopTime, Is.True);
-            Assert.That(AnimationUtility.GetAnimationClipSettings(clip).stopTime, Is.EqualTo(2f/3f).Within(.0001f), "No extra first-frame dwell at the cycle seam.");
+            Assert.That(AnimationUtility.GetAnimationClipSettings(clip).stopTime, Is.EqualTo(.5f).Within(.0001f), "No extra first-frame dwell at the cycle seam.");
         }
     }
 }

@@ -15,7 +15,8 @@ public sealed class SpriteAnimationSet : ScriptableObject
     public Sprite[] idle=System.Array.Empty<Sprite>(), move=System.Array.Empty<Sprite>(),
         attack=System.Array.Empty<Sprite>(), hurt=System.Array.Empty<Sprite>(), death=System.Array.Empty<Sprite>();
     [Range(1f,24f)] public float framesPerSecond=8f;
-    [Range(1f,8f)] public float idleFramesPerSecond=2f;
+    [Range(1f,24f)] public float idleFramesPerSecond=2f;
+    public bool useFrameTiming;
     [Range(0f,1f)] public float attackContactProgress=1f;
     public DirectionalSpriteFrames[] worldDirections=System.Array.Empty<DirectionalSpriteFrames>();
     public bool HasWorldDirections
@@ -25,8 +26,21 @@ public sealed class SpriteAnimationSet : ScriptableObject
     }
     public Sprite AttackAt(float progress,bool recovering,Sprite fallback=null)
     {
-        float contact=Mathf.Clamp01(attackContactProgress);
+        float contact=useFrameTiming && attack!=null && attack.Length>0
+            ? AttackContactFrame/(float)attack.Length : Mathf.Clamp01(attackContactProgress);
         return At(SpritePose.Attack,recovering?Mathf.Lerp(contact,1f,Mathf.Clamp01(progress)):Mathf.Lerp(0f,contact,Mathf.Clamp01(progress)),fallback);
+    }
+    public int AttackContactFrame => attack==null || attack.Length==0 ? 0 :
+        Mathf.Min(attack.Length-1,Mathf.FloorToInt(Mathf.Clamp01(attackContactProgress)*attack.Length));
+    public float Duration(SpritePose pose)
+    {
+        var frames=Frames(pose);
+        return frames==null ? 0f : frames.Length/Mathf.Clamp(pose==SpritePose.Idle?idleFramesPerSecond:framesPerSecond,1f,24f);
+    }
+    public float AttackPhaseDuration(bool recovering)
+    {
+        if(attack==null || attack.Length==0)return 0f;
+        return (recovering?attack.Length-AttackContactFrame:AttackContactFrame)/Mathf.Clamp(framesPerSecond,1f,24f);
     }
     public Sprite LoopWorld(Vector2 direction,bool moving,float seconds,Sprite fallback=null)
     {

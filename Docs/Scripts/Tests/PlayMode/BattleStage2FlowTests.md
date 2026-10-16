@@ -18,7 +18,7 @@
 - `ConstantBattleRandom(float value)` сохраняет выборку, `Next01()` возвращает её.
 - `BeginBattle(BattleUnit player,BattleUnit enemy)` → IEnumerator старта и ожидания готового UI.
 - `FailedFleeConsumesOneTurnAndDoesNotSpendResources()` — неудача, враг действует, ресурсов не списывает.
-- `SuccessfulFleePreservesResourcesAndEnemyThenProtectsAndAllowsAnotherBattle()` — побег, прежние HP/MP/Items/EXP, живой враг, свободная позиция, защита/повторный бой.
+- `SuccessfulFleePreservesResourcesAndEnemyThenProtectsAndAllowsAnotherBattle()` — побег, прежние HP/MP/Items/EXP, живой враг, свободная позиция, защита/повторный бой. Сохраняет Rigidbody2D.position в приостановленном мире и требует точного равенства после возврата; отдельно проверяет расстояние отображаемого Transform от прежнего не более0,00001 единицы (округление float при Interpolate). Сообщение R содержит обе координаты/расстояние. Реальное перемещение физического тела этим допуском не скрывается.
 - `VictoryAwardsExperienceOnceAndPreservesAllSessionState()` — полный Fire/Potion/Attack, итог 88 HP/6 MP/2 Potion/25 EXP/level1, результаты, HUD, выключенный враг, защита награды.
 - `TargetDeathBeforeQueuedSpellCancelsManaSpendAndFurtherActions()` — погибшая до применения цель отменяет расход MP.
 - `HoldingEnterAcrossMagicMenuDoesNotCastUntilASeparatePress()` — вход в Magic удержанием не кастует Fire.
@@ -52,6 +52,8 @@ Inspector нет; value фиксированного источника 0/0.5/1,
 Прямой onClick проверяет обработчик, не raycast реального курсора. Частичные тесты могут уменьшать HP врага ради короткого завершения, полный сценарий отдельно проходит весь бой. Все 13 входят в 17 успешно выполненных Play Mode; новых тестов в задаче документации не добавлялось.
 
 ## 9. История изменений
+
+- 2026-10-16 — при текущем прогоне найдено отличие Transform на1,90734863E-06 world units. Разделены строгая проверка физической позиции и допуск отображения1e-5; игровой BattleTransition не изменён. Остальные проверки ресурсов/защиты/повторного боя сохранены.
 
 - 2026-10-13 — добавлена точная R-диагностика transform/physics позиции и расстояния при провале старого assert сохранения Enemy после Flee; ожидание пока не изменено.
 

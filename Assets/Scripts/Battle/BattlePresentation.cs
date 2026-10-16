@@ -81,7 +81,7 @@ public sealed class BattlePresentation : MonoBehaviour
         IsAnimating = true;
         holdPlayerPose=onPlayer;holdEnemyPose=!onPlayer;
         if(onPlayer)playerAttacking=action==BattleAction.Attack;else enemyAttacking=action==BattleAction.Attack;
-        float duration = Mathf.Clamp(attackDuration, 0f, 1f) * 0.5f * Pace(pace);
+        float duration = (action==BattleAction.Attack ? AttackPhaseDuration(onPlayer,false) : Mathf.Clamp(attackDuration,0f,1f)*0.5f) * Pace(pace);
         Vector2 home = onPlayer ? playerHome : enemyHome;
         float direction = onPlayer ? -1f : 1f;
         Vector2 destination = home + Vector2.right * direction * (action == BattleAction.Attack ? Mathf.Clamp(lungeDistance,0,100) : 0f);
@@ -110,12 +110,13 @@ public sealed class BattlePresentation : MonoBehaviour
         Color targetColor = attackerIsPlayer ? enemy.spriteColor : player.spriteColor;
         holdPlayerPose=attackerIsPlayer || successfulHit;holdEnemyPose=!attackerIsPlayer || successfulHit;
         if(successfulHit) HitEffectsPlayed++;
-        float duration = Mathf.Max(Mathf.Clamp(attackDuration,0,1)*0.5f,Mathf.Clamp(hitDuration,0,1)) * Pace(pace);
+        bool physicalAttack=attackerIsPlayer?playerAttacking:enemyAttacking;
+        float duration = (physicalAttack ? AttackPhaseDuration(attackerIsPlayer,true) : Mathf.Max(Mathf.Clamp(attackDuration,0,1)*0.5f,Mathf.Clamp(hitDuration,0,1))) * Pace(pace);
         for(float t=0;t<duration;t+=VisualDelta)
         {
             if(attacker == null || target == null) yield break;
             float progress=t/duration;
-            if(attackerIsPlayer?playerAttacking:enemyAttacking)AttackFrame(attackerIsPlayer,progress,true);
+            if(physicalAttack)AttackFrame(attackerIsPlayer,progress,true);
             attacker.rectTransform.anchoredPosition=Vector2.Lerp(attackerStart,attackerHome,progress);
             if(successfulHit)
             {
@@ -129,6 +130,15 @@ public sealed class BattlePresentation : MonoBehaviour
         ResetPoses();
     }
 
+    private float AttackPhaseDuration(bool onPlayer,bool recovering)
+    {
+        var unit=onPlayer?player:enemy;
+        var set=unit!=null?unit.visualAnimations:null;
+        if(set!=null && set.useFrameTiming && set.attack!=null && set.attack.Length>0)
+            return set.AttackPhaseDuration(recovering);
+        return recovering ? Mathf.Max(Mathf.Clamp(attackDuration,0,1)*0.5f,Mathf.Clamp(hitDuration,0,1)) : Mathf.Clamp(attackDuration,0,1)*0.5f;
+    }
+
     // Finite presentation timings also scale with the existing test/action pace.
     private static float Pace(float delay) => Mathf.Clamp(delay/0.8f,0.05f,3f);
     public IEnumerator Finish(BattleState outcome,float pace)
@@ -139,7 +149,11 @@ public sealed class BattlePresentation : MonoBehaviour
         IsAnimating=true;
         holdPlayerPose=outcome!=BattleState.Victory;holdEnemyPose=outcome==BattleState.Victory;
         Color color=portrait.color;float initialAlpha=color.a;Vector3 scale=portrait.rectTransform.localScale;Vector2 home=portrait.rectTransform.anchoredPosition;
-        float duration=Mathf.Clamp(outcomeDuration,0,1)*Pace(pace);
+        var unit=outcome==BattleState.Victory?enemy:player;
+        var pose=outcome==BattleState.Escaped?SpritePose.Move:SpritePose.Death;
+        var set=unit!=null?unit.visualAnimations:null;
+        float baseDuration=set!=null && set.useFrameTiming && set.Duration(pose)>0f ? set.Duration(pose) : Mathf.Clamp(outcomeDuration,0,1);
+        float duration=baseDuration*Pace(pace);
         for(float t=0;t<duration;t+=VisualDelta)
         {
             float progress=t/duration;color.a=initialAlpha*(1f-progress);portrait.color=color;

@@ -2,36 +2,43 @@
 
 ## 1. Название и назначение
 
-`Assets/Tests/PlayMode/DetailedAnimationFlowTests.cs` — дополнительная часть BattleFlowTests, проверяет реальное воспроизведение в существующих сценах.
+Исходник: `Assets/Tests/PlayMode/DetailedAnimationFlowTests.cs`. Часть partial BattleFlowTests: реальное воспроизведение боевых Image, урон/ресурсы и направление скелета.
 
 ## 2. Как работает
 
-Общий Setup загружает SampleScene; первый сценарий запускает BattleScene и наблюдает UI Sprite, второй перемещает существующего врага в тестовой копии сцены. Общий Cleanup восстанавливает временные настройки и выгружает тестовый мир.
+Общая fixture загружает SampleScene/BattleScene, включает разрешённый синтетический ввод и восстанавливает временные значения/сцены в Cleanup. Три сценария наблюдают настоящие Sprite/HP.
 
 ## 3. Методы и функции
 
-`WaitingActorsAnimateIdleAndBothAttacksReturnToIdleWithSingleDamage()` — UnityTest/IEnumerator: сначала открывает Inventory и проверяет отдельный portraitSprite/высокий rect, затем запускает бой; при ожидании за1.1 секунды собирает4 Idle героя/врага; принимает одну Attack/отклоняет повтор, наблюдает минимум6 attack-кадров каждого за5 секунд, ждёт новый ход игрока и проверяет HP50/96, MP30, возврат обоих в Idle и завершение IsAnimating. Ускоренные правила временно заменены штатным темпом. `SkeletonSelectsCardinalViewsRetainsFacingAndBridgesPhysicsGaps()` — UnityTest/IEnumerator: выключает AI/симуляцию Rigidbody только в fixture, перемещает по четырём направлениям, проверяет Walk/no double flip/удержание Walk между кадрами, затем Idle последнего направления и наличие двух коллайдеров. Unity Awake/Update у тестов отсутствуют; callbacks Setup/Cleanup описаны в BattleFlowTests.
+- `HeroAttackUsesSixteenFpsAndAppliesDamageAtContactOnce()` → IEnumerator/UnityTest: запускает бой при actionDelay.8/crit/miss0, отключает Space и временно задаёт старый attackDuration.9. Проверяет useFrameTiming/16 FPS, наблюдает все8 Sprite в конце кадров, измеряет интервалы1/16 с и весь цикл.5 с с допуском рендер-шага, проверяет единственное изменение HP, контактный индекс4, HP50/MP30. Доказывает, что legacy duration не растягивает новую атаку. Изменяется только тестовый компонент сцены.
+- `WaitingActorsAnimateIdleAndBothAttacksReturnToIdleWithSingleDamage()` → IEnumerator/UnityTest: проверяет сохранённый высокий портрет Inventory,4 Idle героя/врага за1.1 с; одну принятую Attack/отклонение повторной; минимум6 видимых Attack-кадров каждого, следующий ход, HP50/96, MP30, оба Idle/IsAnimatingfalse.
+- `SkeletonSelectsCardinalViewsRetainsFacingAndBridgesPhysicsGaps()` → IEnumerator/UnityTest: временно отключает AI/simulation, перемещает Enemy по четырём направлениям, проверяет Walk/no flip/отсутствие flicker между физическими шагами, затем Idle последнего взгляда и два коллайдера.
+
+Awake/Update отсутствуют; shared UnitySetUp/TearDown — в BattleFlowTests.
 
 ## 4. Переменные и Inspector
 
-Локальные HashSet Sprite, ссылки manager/player/enemy, timeout5 секунд и временные actionDelay.8/шанс защиты0/crit/miss0. Не параметры Inspector. Арт/скорость/коллайдеры сохранённой сцены тест не переписывает.
+Локальные HashSet/Dictionary Sprite→время, текущий/предыдущий HP, счётчик изменений, deadline3/5 с. Допуск нового теста max(.035, renderDelta+.01) для интервалов, вдвое для цикла. Не Inspector; сохранённый профиль/сцена тестами не перезаписываются.
 
 ## 5. Связи
 
-BattleFlowTests fixture/BeginBattle, BattleManager/Presentation/UI, SpriteAnimationSet, EnemySpriteAnimation/EnemyAI/Rigidbody2D/Health.
+Общая BattleFlowTests fixture/BeginBattle, BattleManager/Presentation/UI, SpriteAnimationSet, Health/MP, EnemySpriteAnimation/EnemyAI/Rigidbody2D.
 
 ## 6. Пример
 
-Attack → hero frames → единственный урон10 → Skeleton Attack → единственный урон4 → оба Idle и следующий ход. Блокировка повторной команды исключает дублирование урона независимо от кадров.
+При legacy attackDuration.9 герой всё равно показывает8 кадров за.5 с и наносит10 HP ровно на кадре4. Ответ скелета и возврат проверяются отдельным полным сценарием.
 
 ## 7. Настройка в Unity
 
-Не компонент. Test Runner → PlayMode → FalseMemory.Battle.PlayModeTests → BattleFlowTests. Требуются сохранённые SampleScene/BattleScene с новыми профилями.
+Не компонент. Test Runner → PlayMode → FalseMemory.Battle.PlayModeTests → BattleFlowTests; сохранённые SampleScene/BattleScene обязательны.
 
 ## 8. Возможные проблемы
 
-Слишком низкая частота кадров может пропустить промежуточные позы; timeout/минимум6 отделяет исполнение от художественного качества. Визуальная естественность, standalone и дисковые сохранения этим тестом не подтверждаются.
+RenderFPS ниже16 может не показать все8 кадров и привести к честному провалу проверки. Интервалы включают дискретность рендера; это не тест естественности поз, standalone или сохранений на диск.
 
 ## 9. История изменений
 
+
 - 2026-10-13 — два сценария battle idle/attack/возврата/ресурсов и четырёх направлений/физических интервалов.
+
+- 2026-10-16 — актуализированы реальная сетка16 FPS, opt-in тайминг/проверки и ограничения текущего технического подэтапа.

@@ -45,6 +45,7 @@ public sealed partial class BattleFlowTests
         enemy.Health.TakeDamage(10); player.AddExperience(5);
         player.GetComponent<Rigidbody2D>().position = enemy.transform.position; Physics2D.SyncTransforms();
         yield return BeginBattle(player, enemy); var manager = Manager(); var enemyPosition = enemy.transform.position;
+        var enemyBody=enemy.GetComponent<Rigidbody2D>();var enemyPhysicsPosition=enemyBody.position;
         manager.SetRandomSource(new ConstantBattleRandom(0f));
         Assert.That(manager.TryPlayerAction(BattleAction.Flee), Is.True);
         yield return WaitUntil(() => manager.State == BattleState.Escaped);
@@ -53,7 +54,9 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.TryPlayerItem(Potion(player)), Is.False);
         yield return WaitUntil(() => !transition.EncounterActive);
         Assert.That(enemy.gameObject.activeSelf, Is.True); Assert.That(enemy.Health.currentHealth, Is.EqualTo(50));
-        Assert.That(enemy.transform.position, Is.EqualTo(enemyPosition),
+        Assert.That(enemyBody.position,Is.EqualTo(enemyPhysicsPosition),"Flee must preserve the exact physics position.");
+        // Interpolated Transform values can differ by one float ULP at coordinates around 21.
+        Assert.That(Vector3.Distance(enemy.transform.position,enemyPosition), Is.LessThanOrEqualTo(.00001f),
             "Enemy position before="+enemyPosition.ToString("R")+" after="+enemy.transform.position.ToString("R")+
             " physics="+enemy.GetComponent<Rigidbody2D>().position.ToString("R")+
             " distance="+Vector3.Distance(enemy.transform.position,enemyPosition).ToString("R"));

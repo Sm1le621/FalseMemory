@@ -17,9 +17,9 @@ public sealed partial class BattleFlowTests
         try
         {
             InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.D));yield return new WaitForSeconds(.15f);
-            foreach(float fps in new[]{8f,10f,12f,15f})
+            foreach(float fps in new[]{8f,10f,12f,15f,16f})
             {
-                reference.SetValue(controller,48f/fps);yield return new WaitForSeconds(.08f);
+                reference.SetValue(controller,64f/fps);yield return new WaitForSeconds(.08f);
                 float phase=animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
                 var shown=new System.Collections.Generic.HashSet<Sprite>();
                 float start=Time.time,end=start+16f/fps;

@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-16",
+  "scope": "Проверенный технический подэтап 16 FPS; художественная переработка не завершена",
+  "editMode": {
+    "job": "505b79cd4b5a4264a117c0fb484ed971",
+    "total": 97,
+    "passed": 97
+  },
+  "playMode": {
+    "job": "c0930bb97a874b3fb4e21a74499f829f",
+    "total": 58,
+    "passed": 58
+  },
+  "initialPlayFailure": {
+    "job": "3d10cdfcd8fe494790ba1ff11038eef2",
+    "passed": 57,
+    "total": 58,
+    "reason": "Transform после Flee отличался на1.90734863E-06; тест теперь точно сравнивает физическую позицию и отдельно ограничивает погрешность отображения1e-5. Игровой код побега не менялся."
+  },
+  "ordinaryPlay": {
+    "result": "sprites=8;sampleTime=1,24679947;cycles=2,49359846;state=True;position=(0, -5.93599463, 0)",
+    "log": "41,5431938 ApprovedHero_Down_02 speed=1,00000024\n41,55045 ApprovedHero_Down_03 speed=1,00000024\n41,614418 ApprovedHero_Down_04 speed=0,999999464\n41,67682 ApprovedHero_Down_05 speed=0,999999464\n41,7383766 ApprovedHero_Down_06 speed=0,999999464\n41,8017921 ApprovedHero_Down_07 speed=0,999999464\n41,8627548 ApprovedHero_Down_00 speed=0,999999464\n41,9268456 ApprovedHero_Down_01 speed=0,999999464\n42,0141525 ApprovedHero_Down_02 speed=0,999999464\n42,05083 ApprovedHero_Down_03 speed=0,999999464\n42,113163 ApprovedHero_Down_04 speed=0,999999464\n42,1766052 ApprovedHero_Down_05 speed=0,999999464\n42,23939 ApprovedHero_Down_06 speed=0,999999464\n42,30011 ApprovedHero_Down_07 speed=0,999999464\n42,36305 ApprovedHero_Down_00 speed=0,999999464\n42,42565 ApprovedHero_Down_01 speed=0,999999464\n42,4891777 ApprovedHero_Down_02 speed=0,999999464\n42,5512238 ApprovedHero_Down_03 speed=0,999999464\n42,612812 ApprovedHero_Down_04 speed=0,999999464\n42,6762238 ApprovedHero_Down_05 speed=0,999999464\n42,7413635 ApprovedHero_Down_06 speed=0,999999464"
+  },
+  "battle": {
+    "capturedContact": "Hero-Attack-04",
+    "enemyHealthAtContact": 50,
+    "healthAfterRound": {
+      "player": 96,
+      "enemy": 50
+    },
+    "manaAfterRound": 30,
+    "screen": [
+      1920,
+      1080
+    ],
+    "graphicsOutside": 0,
+    "textOverflow": 0,
+    "cyrillic": 0
+  },
+  "screenshots": [
+    "Temp/Animation16_Idle.png",
+    "Temp/Animation16_Walk.png",
+    "Temp/Animation16_BattleIdle.png",
+    "Temp/Animation16_BattleContact.png"
+  ],
+  "console": {
+    "beforeErrors": 0,
+    "beforeWarnings": [
+      "Account API did not become accessible within 30 seconds"
+    ],
+    "finalErrors": 0,
+    "finalWarnings": 0
+  },
+  "editorRestored": {
+    "play": false,
+    "compiling": false,
+    "scene": "Assets/Scenes/SampleScene.unity",
+    "dirty": false,
+    "gameViewIndex": 0,
+    "runInBackground": false,
+    "playerSettingsRunInBackground": false
+  },
+  "artisticAcceptance": false
+}

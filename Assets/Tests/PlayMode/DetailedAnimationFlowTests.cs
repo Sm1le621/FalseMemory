@@ -7,6 +7,42 @@ using UnityEngine.TestTools;
 public sealed partial class BattleFlowTests
 {
     [UnityTest]
+    public IEnumerator HeroAttackUsesSixteenFpsAndAppliesDamageAtContactOnce()
+    {
+        var player=Player();var enemy=Enemy();yield return BeginBattle(player,enemy);
+        rules.actionDelay=.8f;rules.enemyDefendChance=0;player.criticalChance=player.missChance=0;
+        var manager=Manager();var set=player.visualAnimations;
+        Assert.That(set.useFrameTiming,Is.True);Assert.That(set.framesPerSecond,Is.EqualTo(16f));
+        // A legacy presentation duration must not silently stretch the frame-timed hero attack.
+        manager.presentation.attackDuration=.9f;manager.presentation.allowFastForward=false;
+        var observed=new Dictionary<int,float>();float first=-1f,finished=-1f,maxRenderDelta=0f;
+        int previousHP=enemy.Health.currentHealth,changes=0,contact=-1;
+        Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.True);
+        float deadline=Time.unscaledTime+3f;
+        while(Time.unscaledTime<deadline)
+        {
+            yield return new WaitForEndOfFrame();maxRenderDelta=Mathf.Max(maxRenderDelta,Time.unscaledDeltaTime);
+            int index=System.Array.IndexOf(set.attack,manager.ui.playerPortrait.sprite);
+            if(index>=0)
+            {
+                if(first<0f)first=Time.unscaledTime;
+                if(!observed.ContainsKey(index))observed.Add(index,Time.unscaledTime);
+            }
+            if(enemy.Health.currentHealth!=previousHP)
+            {
+                previousHP=enemy.Health.currentHealth;changes++;contact=index;
+            }
+            if(first>=0f && index<0){finished=Time.unscaledTime;break;}
+        }
+        Assert.That(observed.Count,Is.EqualTo(8),"All eight real attack sprites must appear.");
+        float tolerance=Mathf.Max(.035f,maxRenderDelta+.01f);
+        for(int i=1;i<8;i++)Assert.That(observed[i]-observed[i-1],Is.EqualTo(1f/16f).Within(tolerance),"Sprite interval "+i);
+        Assert.That(finished-first,Is.EqualTo(.5f).Within(tolerance*2f));
+        Assert.That(changes,Is.EqualTo(1));Assert.That(contact,Is.EqualTo(4));
+        Assert.That(enemy.Health.currentHealth,Is.EqualTo(50));Assert.That(player.CurrentMP,Is.EqualTo(30));
+    }
+
+    [UnityTest]
     public IEnumerator WaitingActorsAnimateIdleAndBothAttacksReturnToIdleWithSingleDamage()
     {
         var player=Player();var enemy=Enemy();var inventory=player.GetComponent<InventoryWindow>();

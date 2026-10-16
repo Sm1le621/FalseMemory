@@ -2,55 +2,51 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattlePresentation.cs. Боевые кадры и движения существующих портретов; HP/MP не принадлежат этому компоненту.
+Исходник: `Assets/Scripts/Battle/BattlePresentation.cs`. Воспроизводит кадры и движения существующих боевых uGUI-портретов; не владеет HP/MP/очередью.
 
 ## 2. Как работает
 
-Bind запоминает исходные позиции и отражение. Manager вызывает Windup перед единственным применением эффекта и Recover после него. Защита отображается, пока установлен настоящий флаг Unit.
+Bind запоминает позиции/масштабы. Manager вызывает Windup, однократно применяет эффект, затем Recover. LateUpdate проигрывает Idle только незанятым живым участникам. HeroDetailed получает время конечной атаки из кадров/FPS; остальные профили сохраняют прежнюю длительность.
 
 ## 3. Методы и функции
 
-2026-10-12 — native pixel visuals: LateUpdate дополнительно проигрывает Idle живых участников, для участников, чья поза сейчас не удерживается действием. IdleFrame(onPlayer) выбирает циклический Sprite. PoseFrame(onPlayer,pose,progress) выбирает конечный кадр. Windup показывает Attack до контакта; Recover возвращает кадры Attack только для физической атаки и Hurt только для попадания; Finish показывает Death/Move и завершает IsAnimating. ResetPoses возвращает Idle и сбрасывает флаги; игровые события остаются в Manager.
+- `Bind(hero,foe)` — void, сохраняет участников и исходные Image RectTransform; отсутствующие UI-ссылки оставляют bound=false.
+- `LateUpdate()` — прибавляет unscaledDeltaTime к idleClock, вызывает IdleFrame для не удерживаемых поз, обновляет Guard по IsAlive/IsDefending.
+- `IdleFrame(onPlayer)` — void, выбирает Loop Idle живого участника; `PoseFrame(onPlayer,pose,progress)` — конечный Sprite через At; `AttackFrame(onPlayer,progress,recovering)` — фаза через AttackAt. Ресурсов не изменяют.
+- `Windup(onPlayer,action,pace)` → IEnumerator: блокирует позу действующего участника, Attack проигрывает подготовку/выпад до контакта; Defend/Magic сохраняют squash/tint и прежнее время. На выходе Attack стоит на контакте.
+- `Recover(attackerIsPlayer,successfulHit,critical,pace)` → IEnumerator: продолжает Attack вперёд, возвращает Image домой, при попадании показывает Hurt/flash/recoil и увеличивает HitEffectsPlayed. Затем ResetPoses.
+- Приватный `AttackPhaseDuration(onPlayer,recovering)` → float: для непустого Attack профиля useFrameTiming берёт длительность соответствующей фазы; иначе прежнюю половину attackDuration (Recover минимум hitDuration). Это сохраняет тайминг скелета.
+- `Finish(outcome,pace)` → IEnumerator: Victory скрывает Enemy, Defeat/побег — Player. Для непустой позы useFrameTiming длительность из массива/FPS; иначе outcomeDuration. Death/Move, fade/scale/смещение, затем IsAnimating=false.
+- `VisualDelta` → float: unscaledDeltaTime, при Space и allowFastForward умноженный на fastForwardMultiplier. `ReadPause(enemyThinking,pace)` → IEnumerator паузы чтения/ИИ; `Pace(delay)` → float clamp(delay/.8,.05,3).
+- `ResetPoses()` — void, сбрасывает флаги/IsAnimating, восстанавливает Idle/позиции/масштабы/цвета; `OnDisable()` вызывает его.
+- Editor-only `BuildGuards()` — находит/создаёт существующие ромбы через `Guard(portrait,name)` → Image; помечает компонент dirty, сохранение — у вызывающего.
 
-- `Finish(outcome,pace)` → IEnumerator: при Victory исчезает Enemy, Defeat — Player, Escaped — Player смещается наружу и исчезает. Длительность outcomeDuration (0.35, 0..1) и Pace; не удаляет мировой объект и не выдаёт награды.
-
-- `VisualDelta` → float: unscaledDeltaTime, при разрешённом удержании Space умноженный на fastForwardMultiplier (1..6). Не меняет Time.timeScale. `ReadPause(enemyThinking,pace)` → IEnumerator: конечная пауза 0.5/0.75 секунды по VisualDelta и Pace; вызывается Manager между действиями.
-- `Bind(hero,foe)` — ссылки участников и исходные позиции/масштабы Image; void.
-- `LateUpdate()` — показывает/скрывает playerGuard/enemyGuard по IsAlive/IsDefending.
-- `Windup(onPlayer,action,pace)` → IEnumerator: при Attack перемещает Image на lungeDistance к противнику, при Defend слегка меняет силуэт. Отсутствующий/выключенный компонент безопасно пропускается.
-- `Recover(attackerIsPlayer,successfulHit,critical,pace)` → IEnumerator: возвращает атакующего, мигает и отодвигает цель только при успешном попадании; крит усиливает реакцию. HitEffectsPlayed увеличивается только для попаданий.
-- `Pace(delay)` → float: масштаб задержек относительно прежних 0.8 секунды, ограничен 0.05..3.
-- `ResetPoses()` — возвращает исходные позиции/масштаб и цвета живых/погибших; сбрасывает IsAnimating. `OnDisable()` вызывает восстановление.
-- Editor: `BuildGuards()` создаёт/находит два символа через `Guard(portrait,name)` → Image и назначает ссылки; помечает dirty, сцена сохраняется вызывающим MCP.
-
-`AttackFrame(onPlayer,progress,recovering)` выбирает кадр через SpriteAnimationSet.AttackAt: до контакта первая половина, затем продолжение вперёд до возврата. Windup удерживает позу действующего участника; ожидающий продолжает breathing Idle. Recover удерживает атакующего и при попадании Hurt цели; без попадания цель продолжает Idle. Finish удерживает исчезающего участника. LateUpdate всегда обновляет idleClock, но не затирает held Attack/Hurt/Death. ResetPoses/OnDisable сбрасывают обе блокировки и возвращают исходные RectTransform/цвета. Урон остаётся между Windup/Recover в BattleManager.
+Awake/Start/Update/коллизий нет. Отсутствующие/выключенные визуальные ссылки безопасно пропускаются; Manager остаётся единственным местом применения эффекта.
 
 ## 4. Переменные и Inspector
 
-idleClock и playerAttacking/enemyAttacking — внутреннее визуальное состояние, не Inspector. Профиль берётся из BattleUnit.visualAnimations; существующие длительности/позы сохранены.
+ui/playerGuard/enemyGuard — ссылки. Значения по умолчанию и BattleScene: attackDuration.4, hitDuration.18, outcomeDuration.35, lungeDistance42, reactionDistance8, messageDuration.75, enemyThinkDuration.5, allowFastForwardtrue, multiplier3. Для физической атаки HeroDetailed длительность теперь8/16=.5 с (подготовка.25/возврат.25); attackDuration/hitDuration её не растягивают. Skeleton использует прежние.4 с. Для непустого Hero Move при побеге8/16=.5 с. Defend/Magic/Items и пустой Death сохраняют прежний fallback.
 
-messageDuration=0.75, enemyThinkDuration=0.5 (0..2 секунды) и allowFastForward=true/fastForwardMultiplier=3 (1..6) в коде и сцене. При rules.actionDelay=0.8 паузы штатные; ускоренные тесты масштабируют их через Pace. Space ускоряет только Windup/Recover/Finish/ReadPause, не самостоятельные VFX, полосы, всплывающий текст и затемнение сцен.
-ui, playerGuard/enemyGuard — ссылки. attackDuration=0.4, hitDuration=0.18 секунды (0..1); lungeDistance=42, reactionDistance=8 условных UI-пикселей. HitEffectsPlayed/IsAnimating — диагностическое чтение. Внутренние home/scale/player/enemy/bound не являются игровым состоянием.
-
-holdPlayerPose/holdEnemyPose — внутренние флаги защиты конечных поз от LateUpdate, не Inspector. Профили HeroDetailed/SkeletonDetailed contact.5/4 Idle/8 Attack, idle4FPS. Штатные attackDuration.4/сообщение.75/think.5/Space×3 сохраняются; кадры конечной атаки выбираются по progress, не по framesPerSecond.
+bound, home/scale, player/enemy, idleClock, holdPlayerPose/holdEnemyPose, playerAttacking/enemyAttacking — внутреннее состояние, не Inspector. HitEffectsPlayed/IsAnimating доступны только для чтения.
 
 ## 5. Связи
 
-BattleManager вызывает контроллер; BattleUI показывает числа/сообщения, Health и Calculator определяют урон. Изображения уже представлены uGUI Image, поэтому мировые SpriteRenderer/Animator не меняются.
+BattleManager вызывает фазы и применяет урон между ними. BattleUI отвечает за сообщения/числа, SpriteAnimationSet — изображения/тайминг, Health/Calculator — реальные HP/урон. Мировой Animator не используется для боевых Image.
 
 ## 6. Пример
 
-Attack → выпад → Manager наносит 10 HP один раз → вспышка/число → возврат → ход врага.
+Обычная Attack героя: кадры0…3 по1/16 с → на.25 с контакт4 и один урон10 → кадры4…7 → на.5 с Idle. Изменение Inspector attackDuration не растягивает этот opt-in профиль.
 
 ## 7. Настройка в Unity
 
-Уже назначен на BattleManager в BattleScene. ui ссылается на прежний UI, Manager.presentation — на этот компонент. Символы сохранены через MCP. Длительности можно менять; отсутствие Animator поддерживается.
+Уже назначен на BattleManager в BattleScene; ui и manager.presentation связаны. Включение useFrameTiming в HeroDetailed выполнено через MCP, сцена не изменялась. Для старых профилей сохраняется настройка длительностей Inspector.
 
-## 8. Ошибки, ограничения и расширение
+## 8. Возможные проблемы
 
-Расчёты не зависят от Animator/events. Все циклы ограничены временем; отсутствие визуала не останавливает ход. При смерти во время Windup Manager повторно проверяет обоих участников и не списывает ресурсы. Для будущих Aseprite-кадров расширять визуальный контроллер, сохранив единственное применение в Manager.
+Базовые16 FPS действуют при actionDelay.8 без Space. Существующие Pace/Space намеренно ускоряют конечные позы; самостоятельный Idle использует реальное unscaled-время. При недостаточном renderFPS кадры могут пропускаться. Нет новых Hero Hurt/Death/Cast рисунков: прежние flash/fade/tint сохранены. Художественная плавность не следует из успешного теста урона.
 
 ## 9. История изменений
+
 
 2026-10-12 — кадры Skeleton64/Fire/Heal/Hit подключены к существующему представлению; игровые ресурсы не перенесены в анимации. [Текущие проверки](../../PixelVisuals.md).
 
@@ -65,3 +61,5 @@ Attack → выпад → Manager наносит 10 HP один раз → вс�
 - 2026-10-11 — 3.2 — выпад, реакция/крит, защита, восстановление поз и безопасная интеграция.
 
 - 2026-10-13 — Attack больше не проигрывается назад при Recover; ожидающий участник продолжает Idle; ресурсы и порядок ходов прежние.
+
+- 2026-10-16 — актуализированы реальная сетка16 FPS, opt-in тайминг/проверки и ограничения текущего технического подэтапа.

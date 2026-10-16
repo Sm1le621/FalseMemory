@@ -2,45 +2,43 @@
 
 ## 1. Название и назначение
 
-`Assets/Tests/EditMode/ApprovedHeroAssetTests.cs` — проверяет импорт кадров и ссылки существующих Walk-клипов.
+Исходник: `Assets/Tests/EditMode/ApprovedHeroAssetTests.cs`. Проверяет реальные ассеты героя, Sprite-ссылки, импорт и сетку времени 16 FPS.
 
 ## 2. Как работает
 
-Три NUnit-теста читают ассеты через AssetDatabase; сцены/настройки не меняются. Проверяются восемь направлений отдельно.
+Четыре NUnit-теста читают AssetDatabase/AnimationUtility; не меняют сцены и настройки. Ссылки, времена и параметры импорта проверяются отдельно от художественного качества.
 
 ## 3. Методы и функции
 
-WalkClipsUseEightFramesForTheirDirectionWithoutTransformAnimation также проверяет AnimationClipSettings.stopTime=⅔с, чтобы конечный повтор первого Sprite не создавал дополнительную задержку петли.
+- `AllHeroClipsIncludingBackupsUseTheSixteenFpsTimeGrid()` — Test/void: все20 существующих клипов (16 directional и4 явно перечисленных резервных), Samples16, каждый Sprite-key.time×16 и stopTime×16 целые. Ловит изменение только метаданных без ретайминга ключей.
+- `IdleDownHasThirtyNativeDistinctFramesAtSixteenFramesPerSecond()` — Test/void:31 ключ/30 уникальных ссылок и SHA256 PNG, FPS16/1,875 с, последний повторяет первый, stopTime1,875; каждый Sprite320×320/pivot160,16/PPU477/Point/no mipmaps/Uncompressed, набор отдельно от Walk.
+- `SheetsKeepNativeResolutionAndConsistentGroundPivots()` — Test/void: резервные Multiple-листы каждого направления имеют4 Sprite/ожидаемые нативные размеры/PPU/pivot/Point/NPOT/no mipmaps/compression.
+- `WalkClipsUseEightFramesForTheirDirectionWithoutTransformAnimation()` — Test/void: каждый текущий Walk имеет9 ключей,8 разных Sprite правильного направления, замыкание.5 с,16 FPS/Loop/stopTime.5, нет Transform-кривых.
 
-`SheetsKeepNativeResolutionAndConsistentGroundPivots()` проверяет четыре Sprite, реальные размеры texture/rect, PPU/pivot, Point, mipmaps/compression/NPOT. `WalkClipsUseEightFramesForTheirDirectionWithoutTransformAnimation()` проверяет девять ключей, восемь разных Sprite правильного направления, замыкание⅔с, Loop и отсутствие Transform-кривых. Возврат void; ошибки — NUnit assertions. Unity callbacks отсутствуют.
-
-SheetsKeepNativeResolutionAndConsistentGroundPivots сохраняет проверку прежних резервных Multiple-листов. Тест Walk-клипов теперь проверяет текущие8 Single PNG/направление, замыкание на⅔с и отсутствие Transform-кривых. Резервные4-кадровые ресурсы не выдаются за актуальную ходьбу.
+Unity callbacks отсутствуют; результаты — NUnit assertions.
 
 ## 4. Переменные и Inspector
 
-Root/Directions — пути/ожидаемые направления теста, не Inspector. Down512×640/1100PPU, прочие384×384/640PPU — контракт этого набора, не универсальное ограничение графики.
+Root/Directions/paths/hash-наборы — тестовые данные, не Inspector. Размеры старых листов и Idle относятся к текущим ассетам, не универсальному ограничению графики.
 
 ## 5. Связи
 
-PNG ApprovedHero, Player64-клипы, SpriteRenderer, TextureImporter/AnimationUtility. Тест не ссылается на Editor-only ApprovedHeroImporter.
+AssetDatabase/TextureImporter/AnimationUtility, Player64 и четыре резервных clip, подготовленные PNG. Тест не зависит от Editor-класса импортёра напрямую.
 
 ## 6. Пример
 
-Max Size1024 уменьшит Down-лист2048×640 и нарушит контракт ширины. Назначение Down-кадров в Up-клип выявляется проверкой имён.
+Samples16 с ключами по1/12 с не пройдёт проверку целых ticks и длительности. Назначение Down-кадров в Up нарушит проверку направления.
 
 ## 7. Настройка в Unity
 
-К объекту не прикреплять. Test Runner → EditMode → FalseMemory.Battle.EditModeTests → ApprovedHeroAssetTests после завершённого импорта.
+Не прикреплять к GameObject. Test Runner → EditMode → FalseMemory.Battle.EditModeTests после завершения импорта.
 
 ## 8. Возможные проблемы
 
-Ссылки/настройки не доказывают естественность походки и идентичность деталей дизайна. Смену кадров проверяет PlayerDirectionFlowTests в Play Mode; художественную оценку — владелец.
-
-WalkClipsUseEightFramesForTheirDirectionWithoutTransformAnimation теперь отдельно проверяет frameRate12 и завершающий ключ8/12=⅔с; проверки восьми уникальных ссылок, направления, loop и отсутствия Transform-кривых сохранены.
-
-IdleDownHasThirtyNativeDistinctFramesAndSeparateTwoSecondLoop(): новый NUnit/Test void; читает Idle_Down Sprite-кривую,31 ключ/30 разных ссылок/30 разных SHA256 PNG,15FPS/2с и отдельность от Walk. Для каждого Single Sprite проверяет320×320/pivot160,16/PPU477/Point/no mipmaps/Uncompressed; последний ключ повторяет первый, stopTime2. Учитывает новый набор, не доказывая художественную уникальность каждой фазы.
+Разные ссылки/хеши не доказывают последовательное движение. Частоту фактического воспроизведения/ввод проверяют Play Mode сценарии, художественное качество — просмотр кадров и владельцем.
 
 ## 9. История изменений
+
 
 - 2026-10-13 — две проверки переменного разрешения и Sprite-ключей.
 
@@ -49,3 +47,5 @@ IdleDownHasThirtyNativeDistinctFramesAndSeparateTwoSecondLoop(): новый NUni
 - 2026-10-13 — актуализированы темп/физическое воспроизведение и проверки в задаче Animation Rework.
 
 - 2026-10-13 — проверка нового30-frame Idle_Down без ослабления прежних направлений/движения.
+
+- 2026-10-16 — актуализированы реальная сетка16 FPS, opt-in тайминг/проверки и ограничения текущего технического подэтапа.

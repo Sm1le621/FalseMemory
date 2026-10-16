@@ -2,43 +2,46 @@
 
 ## 1. Название и назначение
 
-`Assets/Tests/PlayMode/MovementSmoothingFlowTests.cs` — сценарии реальной физики/ввода внутри существующего partial BattleFlowTests, не компонент.
+Исходник: `Assets/Tests/PlayMode/MovementSmoothingFlowTests.cs`. Часть BattleFlowTests: реальное перемещение, столкновения, сохранение фазы и связь скорости с Animator.
 
 ## 2. Как работает
 
-Общий Setup загружает исходную SampleScene и временно разрешает синтетическую клавиатуру без фокуса. Тесты используют реальные Rigidbody2D, Collider2D, Input System и Animator; общий Cleanup восстанавливает сцены/настройки.
+Общий Setup загружает SampleScene и разрешает синтетическую клавиатуру без фокуса; Cleanup восстанавливает сцены/настройки. Используются настоящие Rigidbody2D/Collider2D/Input System/Animator.
 
 ## 3. Методы и функции
 
-- `WalkRateCandidatesAdvanceAndTurningKeepsCyclePhase()` — UnityTest/IEnumerator: временно изменяет только runtime animationReferenceSpeed через reflection, чтобы проверить8/10/12/15FPS на том же клипе12FPS; измеряет нормализованную фазу за два цикла, проверяет все8 Sprite и продолжение фазы при D→W. Finally восстанавливает поле и удаляет синтетический Keyboard. Не выбирает художественно лучший FPS и не сохраняет тестовые значения.
+- `WalkRateCandidatesAdvanceAndTurningKeepsCyclePhase()` → IEnumerator/UnityTest: временно меняет runtime animationReferenceSpeed через reflection (64/fps для исходных16 FPS при скорости4), последовательно проверяет8/10/12/15/16 эффективных FPS. За два цикла измеряет normalizedTime и наличие8 Sprite; D→W сохраняет фазу. Finally восстанавливает поле/удаляет тестовый Keyboard. Обычная сцена использует reference4 и базовые16, тестовые темпы не сохраняются.
+- `MovementRampsMaintainsDiagonalSpeedAndModalStopsImmediately()` → IEnumerator/UnityTest: D, расстояние/ActualSpeed4/WalkSpeed1, WD с той же длиной пути, Inventory полностью останавливает тело. Finally удаляет тестовую клавиатуру/закрывает окно.
+- `CollisionStopsActualGaitAndBrakingKeepsFacing()` → IEnumerator/UnityTest: временная стена.1 в тестовой сцене, проверка непреодоления/Idle у стены/ухода влево/тормозного пути до.16 и последнего взгляда; finally уничтожает только тестовую стену/Keyboard.
+- `SkeletonChasesWithPhysicsAndStopsAfterTriggerExit()` → IEnumerator/UnityTest: ставит тела в радиус, измеряет подход/смену Sprite/скорость3, переносит Player наружу, проверяет остановку и Up Idle.
 
-- `MovementRampsMaintainsDiagonalSpeedAndModalStopsImmediately()` — IEnumerator/UnityTest: движение D, измерение расстояния/скорости/WalkSpeed, диагональ WD, открытие Inventory, проверка полной остановки. Finally удаляет только тестовый Keyboard/закрывает окно.
-- `CollisionStopsActualGaitAndBrakingKeepsFacing()` — создаёт временную тонкую стену только в тестовой сцене, проверяет непреодоление, Idle у стены, уход влево и ограниченный тормозной путь/сохранённый взгляд; finally убирает стену/Keyboard.
-- `SkeletonChasesWithPhysicsAndStopsAfterTriggerExit()` — ставит реальные тела в радиус, измеряет подход и смену Sprite, переносит Player за радиус, проверяет остановку и Up Idle.
-У тестового файла нет Awake/Start/Update; shared UnitySetUp/TearDown описаны в BattleFlowTests. Методы возвращают IEnumerator, результаты — assertions, а не игровые данные.
+Собственных Awake/Start/Update нет; shared UnitySetUp/TearDown описаны в BattleFlowTests. Результаты — assertions.
 
 ## 4. Переменные и Inspector
 
-Локальные body/control/keyboard/wall/start/frames и временные позиции вне карты. Ожидания.1/.12/.4/.5с и допуски расстояния учитывают дискретный fixed step. Настройки Inspector отсутствуют.
+body/control/keyboard/wall/start/frames, временные позиции вне карты, интервалы ожидания и допуски — локальные тестовые значения, не Inspector.
 
 ## 5. Связи
 
-PlayerController/EnemyAI/EnemySpriteAnimation, реальные тела/коллайдеры, InventoryWindow, WorldInputGate, Animator, Input System/Test Framework; общая fixture BattleFlowTests.
+PlayerController/EnemyAI/EnemySpriteAnimation, реальные тела/коллайдеры, InventoryWindow, WorldInputGate, Animator, Input System/Test Framework и общая fixture.
 
 ## 6. Пример
 
-Герой упирается в стену толщиной.1: не проходит её и прекращает перебирать ноги. Открытие Inventory посреди диагональной ходьбы полностью останавливает тело.
+Клавиша D при обычной скорости4 → WalkSpeed1 →8 кадров за.5 с. Поворот W не начинает цикл с нуля; стена прекращает перебор ног, Inventory останавливает тело.
 
 ## 7. Настройка в Unity
 
-Не прикреплять к GameObject. Test Runner → PlayMode → FalseMemory.Battle.PlayModeTests → BattleFlowTests; требуются сохранённые SampleScene/Player.controller. Временные объекты теста не сохраняются в проект.
+Не прикреплять к объекту. Test Runner → PlayMode → FalseMemory.Battle.PlayModeTests → BattleFlowTests; требуются исходные сцены/контроллер. Временные объекты не сохраняются.
 
-## 8. Возможные проблемы и проверки
+## 8. Возможные проблемы
 
-Тесты не доказывают художественную естественность, оптимальность12FPS, все возможные препятствия или standalone. Изменение стартового баланса скорости требует осмысленного обновления ожиданий, а не удаления проверок.
+Тесты не подтверждают художественную естественность, все типы препятствий или standalone. Базовые16 могут масштабироваться фактической скоростью экипировки/разгона — это намеренная синхронизация дистанции, а не FPS в метаданных.
 
 ## 9. История изменений
 
 
 
+
 - 2026-10-13 — добавлены три проверки перемещения, коллизии/торможения/gate и физического преследования.
+
+- 2026-10-16 — актуализированы реальная сетка16 FPS, opt-in тайминг/проверки и ограничения текущего технического подэтапа.

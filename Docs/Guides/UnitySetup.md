@@ -1,5 +1,11 @@
 # Настройка существующего проекта в Unity
 
+## Действующие настройки героя2026-10-16
+
+Использовать те же SampleScene/Player/Player.controller и16 Player64 Idle/Walk клипов. ApprovedHeroImporter.ImportAnimations вне Play воспроизводит16 FPS/ключи; DetailedAnimationImporter.ImportAll сохраняет HeroDetailed16/Idle16/useFrameTiming=true и отдельные SkeletonDetailed12/Idle4/useFrameTiming=false. Никаких новых сцен/контроллеров. World PNG/PPU/pivot/scale2/скорость4/Interpolate/камера5 сохранены. Отклонённые sheets из Docs не назначать Sprite-клипам.
+
+В BattleScene прежний BattlePresentation читает длительности opt-in HeroDetailed:8 Attack=.5 с, контакт4=.25 с; прежний attackDuration остаётся для остальных действий/профилей. Глобальный Animator.speed и timeScale детей1. Обычный WalkSpeed масштабируется фактической скоростью/reference4. [Проверки/ручная граница](../PlayerAnimation16.md). Ниже прежние настройки для истории.
+
 ## Idle_Down30 —2026-10-13
 
 Существующий Player SampleScene/Player.controller/Idle_Down подключён к Animation30/Idle/Down; SpriteRenderer preview использует первый Idle. Импорт: подготовить ровно30 PNG и PlayerAnimation30Manifest, вызвать ApprovedHeroImporter.ImportAnimations вне Play. Canvas/pivot/PPU берутся из manifest; source PNG Default. Неполный набор вызывает исключение, отклонённые Walk sheets из Docs не назначать. Runtime/коллайдеры/камера/скорость4 не изменялись. [Ручной сценарий](../PlayerAnimation30.md). Ниже прежняя настройка.

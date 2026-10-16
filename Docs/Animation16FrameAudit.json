@@ -1,0 +1,1311 @@
+{
+  "date": "2026-10-16",
+  "fps": 16,
+  "method": "Средняя абсолютная разница RGBA с premultiplied alpha на объединении видимых пикселей, включая последний/первый кадры. Значение меньше0.01 — только флаг просмотра; различия пикселей не доказывают правильное движение.",
+  "drafts": [
+    {
+      "path": "Docs/Images/Animation16Rejected/WalkDownAttempt1.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 847997,
+      "totalPixels": 1572864,
+      "sha256": "b65314b0319ccba4843cf070d971bdb3f2f3615229bba46ab3df6b40092b096d",
+      "accepted": false
+    },
+    {
+      "path": "Docs/Images/Animation16Rejected/WalkDownAttempt2.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 831890,
+      "totalPixels": 1572864,
+      "sha256": "410073c82d664d6f9503175b29ea0dfbd49e96e60f2919bd8d061ca10d5a6d39",
+      "accepted": false
+    },
+    {
+      "path": "Docs/Images/Animation16Rejected/WalkDownAttempt3.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 867613,
+      "totalPixels": 1572864,
+      "sha256": "f6d7dc6b07f03bb36373a62b069e5b38c76808870eaf173bc2df3eb80031345b",
+      "accepted": false
+    }
+  ],
+  "animations": {
+    "Walk_Down": {
+      "frameCount": 8,
+      "pixelUnique": 8,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_00.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_01.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_02.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_03.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_04.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_05.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_06.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Down_07.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 1,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.105978,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 1,
+          "b": 2,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.060108,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 2,
+          "b": 3,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.085052,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 3,
+          "b": 4,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.111505,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 4,
+          "b": 5,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.113771,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 5,
+          "b": 6,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.105521,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 6,
+          "b": 7,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.093428,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 7,
+          "b": 0,
+          "wrap": true,
+          "identical": false,
+          "visibleMeanDifference": 0.096535,
+          "nearDifferenceFlag": false
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": false
+    },
+    "Idle_Down": {
+      "frameCount": 30,
+      "pixelUnique": 30,
+      "canvas": [
+        320,
+        320
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_00.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_01.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_02.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_03.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_04.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_05.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_06.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_07.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_08.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_09.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_10.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_11.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_12.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_13.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_14.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_15.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_16.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_17.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_18.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_19.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_20.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_21.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_22.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_23.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_24.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_25.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_26.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_27.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_28.png",
+        "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_29.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 1,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.039263,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 1,
+          "b": 2,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.0272,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 2,
+          "b": 3,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.030491,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 3,
+          "b": 4,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.023554,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 4,
+          "b": 5,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.042005,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 5,
+          "b": 6,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.03693,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 6,
+          "b": 7,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.026146,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 7,
+          "b": 8,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.033723,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 8,
+          "b": 9,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.041136,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 9,
+          "b": 10,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.045145,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 10,
+          "b": 11,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.034014,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 11,
+          "b": 12,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.025387,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 12,
+          "b": 13,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.037436,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 13,
+          "b": 14,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.036979,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 14,
+          "b": 15,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.04187,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 15,
+          "b": 16,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.041121,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 16,
+          "b": 17,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.041226,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 17,
+          "b": 18,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.041003,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 18,
+          "b": 19,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.024919,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 19,
+          "b": 20,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.06122,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 20,
+          "b": 21,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.034229,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 21,
+          "b": 22,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.026432,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 22,
+          "b": 23,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.038732,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 23,
+          "b": 24,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.038313,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 24,
+          "b": 25,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.050053,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 25,
+          "b": 26,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.046195,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 26,
+          "b": 27,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.031126,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 27,
+          "b": 28,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.029396,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 28,
+          "b": 29,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.026792,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 29,
+          "b": 0,
+          "wrap": true,
+          "identical": false,
+          "visibleMeanDifference": 0.062306,
+          "nearDifferenceFlag": false
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": false
+    },
+    "Walk_Up": {
+      "frameCount": 8,
+      "pixelUnique": 8,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_00.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_01.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_02.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_03.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_04.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_05.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_06.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_07.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 1,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.108023,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 1,
+          "b": 2,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.083487,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 2,
+          "b": 3,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.112158,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 3,
+          "b": 4,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.132023,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 4,
+          "b": 5,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.078737,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 5,
+          "b": 6,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.122081,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 6,
+          "b": 7,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.115223,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 7,
+          "b": 0,
+          "wrap": true,
+          "identical": false,
+          "visibleMeanDifference": 0.086526,
+          "nearDifferenceFlag": false
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": false
+    },
+    "Idle_Up": {
+      "frameCount": 1,
+      "pixelUnique": 1,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Up_00.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 0,
+          "wrap": true,
+          "identical": true,
+          "visibleMeanDifference": 0.0,
+          "nearDifferenceFlag": true
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": true
+    },
+    "Walk_Right": {
+      "frameCount": 8,
+      "pixelUnique": 8,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_00.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_01.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_02.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_03.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_04.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_05.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_06.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_07.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 1,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.114486,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 1,
+          "b": 2,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.083506,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 2,
+          "b": 3,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.104431,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 3,
+          "b": 4,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.158351,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 4,
+          "b": 5,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.125432,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 5,
+          "b": 6,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.11857,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 6,
+          "b": 7,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.097435,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 7,
+          "b": 0,
+          "wrap": true,
+          "identical": false,
+          "visibleMeanDifference": 0.158005,
+          "nearDifferenceFlag": false
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": false
+    },
+    "Idle_Right": {
+      "frameCount": 1,
+      "pixelUnique": 1,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Right_00.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 0,
+          "wrap": true,
+          "identical": true,
+          "visibleMeanDifference": 0.0,
+          "nearDifferenceFlag": true
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": true
+    },
+    "Walk_Left": {
+      "frameCount": 8,
+      "pixelUnique": 8,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_00.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_01.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_02.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_03.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_04.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_05.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_06.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_07.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 1,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.114486,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 1,
+          "b": 2,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.083506,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 2,
+          "b": 3,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.104431,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 3,
+          "b": 4,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.158351,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 4,
+          "b": 5,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.125432,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 5,
+          "b": 6,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.11857,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 6,
+          "b": 7,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.097435,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 7,
+          "b": 0,
+          "wrap": true,
+          "identical": false,
+          "visibleMeanDifference": 0.158005,
+          "nearDifferenceFlag": false
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": false
+    },
+    "Idle_Left": {
+      "frameCount": 1,
+      "pixelUnique": 1,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_Left_00.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 0,
+          "wrap": true,
+          "identical": true,
+          "visibleMeanDifference": 0.0,
+          "nearDifferenceFlag": true
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": true
+    },
+    "Walk_UpRight": {
+      "frameCount": 8,
+      "pixelUnique": 8,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_00.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_01.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_02.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_03.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_04.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_05.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_06.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_07.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 1,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.058017,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 1,
+          "b": 2,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.077859,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 2,
+          "b": 3,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.091991,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 3,
+          "b": 4,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.090054,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 4,
+          "b": 5,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.082804,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 5,
+          "b": 6,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.071483,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 6,
+          "b": 7,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.090101,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 7,
+          "b": 0,
+          "wrap": true,
+          "identical": false,
+          "visibleMeanDifference": 0.105978,
+          "nearDifferenceFlag": false
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": false
+    },
+    "Idle_UpRight": {
+      "frameCount": 1,
+      "pixelUnique": 1,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpRight_00.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 0,
+          "wrap": true,
+          "identical": true,
+          "visibleMeanDifference": 0.0,
+          "nearDifferenceFlag": true
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": true
+    },
+    "Walk_UpLeft": {
+      "frameCount": 8,
+      "pixelUnique": 8,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_00.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_01.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_02.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_03.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_04.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_05.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_06.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_07.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 1,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.058017,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 1,
+          "b": 2,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.077859,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 2,
+          "b": 3,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.091991,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 3,
+          "b": 4,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.090054,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 4,
+          "b": 5,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.082804,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 5,
+          "b": 6,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.071483,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 6,
+          "b": 7,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.090101,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 7,
+          "b": 0,
+          "wrap": true,
+          "identical": false,
+          "visibleMeanDifference": 0.105978,
+          "nearDifferenceFlag": false
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": false
+    },
+    "Idle_UpLeft": {
+      "frameCount": 1,
+      "pixelUnique": 1,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_UpLeft_00.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 0,
+          "wrap": true,
+          "identical": true,
+          "visibleMeanDifference": 0.0,
+          "nearDifferenceFlag": true
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": true
+    },
+    "Walk_DownRight": {
+      "frameCount": 8,
+      "pixelUnique": 8,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_00.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_01.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_02.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_03.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_04.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_05.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_06.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_07.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 1,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.095236,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 1,
+          "b": 2,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.085805,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 2,
+          "b": 3,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.07641,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 3,
+          "b": 4,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.113345,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 4,
+          "b": 5,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.09289,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 5,
+          "b": 6,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.090139,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 6,
+          "b": 7,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.082282,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 7,
+          "b": 0,
+          "wrap": true,
+          "identical": false,
+          "visibleMeanDifference": 0.116067,
+          "nearDifferenceFlag": false
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": false
+    },
+    "Idle_DownRight": {
+      "frameCount": 1,
+      "pixelUnique": 1,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownRight_00.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 0,
+          "wrap": true,
+          "identical": true,
+          "visibleMeanDifference": 0.0,
+          "nearDifferenceFlag": true
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": true
+    },
+    "Walk_DownLeft": {
+      "frameCount": 8,
+      "pixelUnique": 8,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_00.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_01.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_02.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_03.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_04.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_05.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_06.png",
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_07.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 1,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.095236,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 1,
+          "b": 2,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.085805,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 2,
+          "b": 3,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.07641,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 3,
+          "b": 4,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.113345,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 4,
+          "b": 5,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.09289,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 5,
+          "b": 6,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.090139,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 6,
+          "b": 7,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.082282,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 7,
+          "b": 0,
+          "wrap": true,
+          "identical": false,
+          "visibleMeanDifference": 0.116067,
+          "nearDifferenceFlag": false
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": false
+    },
+    "Idle_DownLeft": {
+      "frameCount": 1,
+      "pixelUnique": 1,
+      "canvas": [
+        640,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/World/ApprovedHero_DownLeft_00.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 0,
+          "wrap": true,
+          "identical": true,
+          "visibleMeanDifference": 0.0,
+          "nearDifferenceFlag": true
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": true
+    },
+    "Battle_Idle": {
+      "frameCount": 4,
+      "pixelUnique": 4,
+      "canvas": [
+        512,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Idle-00.png",
+        "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Idle-01.png",
+        "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Idle-02.png",
+        "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Idle-03.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 1,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.102195,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 1,
+          "b": 2,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.094933,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 2,
+          "b": 3,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.111593,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 3,
+          "b": 0,
+          "wrap": true,
+          "identical": false,
+          "visibleMeanDifference": 0.101291,
+          "nearDifferenceFlag": false
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": false
+    },
+    "Battle_Attack": {
+      "frameCount": 8,
+      "pixelUnique": 8,
+      "canvas": [
+        512,
+        512
+      ],
+      "paths": [
+        "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-00.png",
+        "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-01.png",
+        "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-02.png",
+        "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-03.png",
+        "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-04.png",
+        "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-05.png",
+        "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-06.png",
+        "Assets/Art/Characters/Player/AnimationV2/Battle/Hero-Attack-07.png"
+      ],
+      "pairs": [
+        {
+          "a": 0,
+          "b": 1,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.183307,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 1,
+          "b": 2,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.164141,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 2,
+          "b": 3,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.166639,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 3,
+          "b": 4,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.195369,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 4,
+          "b": 5,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.193209,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 5,
+          "b": 6,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.15732,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 6,
+          "b": 7,
+          "wrap": false,
+          "identical": false,
+          "visibleMeanDifference": 0.109593,
+          "nearDifferenceFlag": false
+        },
+        {
+          "a": 7,
+          "b": 0,
+          "wrap": true,
+          "identical": false,
+          "visibleMeanDifference": 0.129191,
+          "nearDifferenceFlag": false
+        }
+      ],
+      "semanticQualityVerified": false,
+      "staticFallback": false
+    }
+  }
+}

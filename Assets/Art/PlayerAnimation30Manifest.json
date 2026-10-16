@@ -1,8 +1,8 @@
 {
   "motion": "Idle",
   "direction": "Down",
-  "framesPerSecond": 15,
-  "cycleSeconds": 2,
+  "framesPerSecond": 16,
+  "cycleSeconds": 1.875,
   "frames": [
     {
       "path": "Assets/Art/Characters/Player/Animation30/Idle/Down/ApprovedHero_Idle_Down_00.png",

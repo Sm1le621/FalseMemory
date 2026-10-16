@@ -45,6 +45,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 053fedfa4c27cea4c9e27070eff7cfdf, type: 3}
   framesPerSecond: 12
   idleFramesPerSecond: 4
+  useFrameTiming: 0
   attackContactProgress: 0.5
   worldDirections:
   - direction: {x: 0, y: -1}
