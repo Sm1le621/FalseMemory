@@ -137,7 +137,7 @@ public sealed class BattleUI : MonoBehaviour
     {
         playerStats.text = Stats(player);
         enemyStats.text = Stats(enemy);
-        roundText.text = "РАУНД " + round;
+        roundText.text = "ROUND " + round;
         enemyPortrait.color = enemy.IsAlive ? enemy.spriteColor : new Color(0.35f, 0.35f, 0.35f, 0.35f);
     }
 
@@ -160,14 +160,14 @@ public sealed class BattleUI : MonoBehaviour
         var root = canvasObject.transform;
         Panel(root, "Backdrop", new Color32(18, 14, 24, 255), Vector2.zero, Vector2.one);
         Panel(root, "Battlefield", new Color32(31, 27, 37, 255), new Vector2(0.02f, 0.32f), new Vector2(0.98f, 0.82f));
-        messageText = Label(root, "BattleMessage", "Скелет преграждает путь.", 23, new Vector2(0.04f, 0.84f), new Vector2(0.96f, 0.98f));
+        messageText = Label(root, "BattleMessage", "Skeleton blocks the way.", 23, new Vector2(0.04f, 0.84f), new Vector2(0.96f, 0.98f));
         playerPortrait = Portrait(root, "PlayerBattleSprite", previewPlayerSprite, new Vector2(0.70f, 0.42f), new Vector2(0.84f, 0.76f));
         playerPortrait.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
         enemyPortrait = Portrait(root, "SkeletonBattleSprite", previewEnemySprite, new Vector2(0.19f, 0.42f), new Vector2(0.33f, 0.76f));
         Panel(root, "StatusPanel", new Color32(26, 22, 34, 255), new Vector2(0.02f, 0.02f), new Vector2(0.65f, 0.30f));
         playerStats = Label(root, "PlayerStatus", "Player   LV 1\nHP 100 / 100\nATK 15   DEF 8   SPD 10", 19, new Vector2(0.04f, 0.07f), new Vector2(0.34f, 0.27f));
         enemyStats = Label(root, "EnemyStatus", "Skeleton   LV 1\nHP 60 / 60\nATK 12   DEF 5   SPD 7", 19, new Vector2(0.35f, 0.07f), new Vector2(0.63f, 0.27f));
-        roundText = Label(root, "Round", "РАУНД 1", 13, new Vector2(0.04f, 0.025f), new Vector2(0.30f, 0.065f));
+        roundText = Label(root, "Round", "ROUND 1", 13, new Vector2(0.04f, 0.025f), new Vector2(0.30f, 0.065f));
         Panel(root, "CommandPanel", new Color32(26, 22, 34, 255), new Vector2(0.67f, 0.02f), new Vector2(0.98f, 0.30f));
         commandButtons = new Button[2]; commandLabels = new TextMeshProUGUI[2];
         for (int i = 0; i < 2; i++)
@@ -182,7 +182,7 @@ public sealed class BattleUI : MonoBehaviour
             commandButtons[i] = button;
             commandLabels[i] = Label(image.transform, "Label", i == 0 ? "> Attack" : "  Defend", 18, new Vector2(0.05f, 0f), new Vector2(0.95f, 1f));
         }
-        Label(root, "Controls", "WASD / стрелки • Enter — выбор", 12, new Vector2(0.69f, 0.025f), new Vector2(0.96f, 0.075f));
+        Label(root, "Controls", "WASD / Arrows • Enter — choice", 12, new Vector2(0.69f, 0.025f), new Vector2(0.96f, 0.075f));
         UnityEditor.EditorUtility.SetDirty(this);
     }
 

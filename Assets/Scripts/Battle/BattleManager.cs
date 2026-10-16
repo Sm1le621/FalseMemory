@@ -21,15 +21,15 @@ public sealed class BattleManager : MonoBehaviour
         transition = BattleTransition.Instance;
         if (transition == null || !transition.EncounterActive)
         {
-            ui.ShowMessage("Для боя запустите SampleScene и коснитесь скелета.");
-            ui.ShowMenu(new[] { "Исследовать", "Главное меню" }, new System.Action[] {
+            ui.ShowMessage("For battle, run SampleScene and touch the skeleton.");
+            ui.ShowMenu(new[] { "Investigate", "Main Menu" }, new System.Action[] {
                 () => UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene"),
                 () => UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu") });
             yield break;
         }
         Player = transition.Player; Enemy = transition.Enemy; rules = transition.rules;
         ui.ShowUnits(Player, Enemy);
-        ui.ShowMessage("Скелет преграждает путь.");
+        ui.ShowMessage("Skeleton blocks the way.");
         ui.SetCommandsEnabled(false);
         while (transition.IsTransitioning) yield return null;
         yield return new WaitForSecondsRealtime(rules.actionDelay);
@@ -47,7 +47,7 @@ public sealed class BattleManager : MonoBehaviour
                 {
                     State = BattleState.AwaitingPlayer;
                     pendingAction = null;
-                    ui.ShowMessage("Ваш ход. Выберите действие.");
+                    ui.ShowMessage("Your turn. Choose an action.");
                     ui.ShowMenu(new[] { "Attack", "Defend" }, new System.Action[] {
                         () => TryPlayerAction(BattleAction.Attack), () => TryPlayerAction(BattleAction.Defend) });
                     gate.Open();
@@ -56,7 +56,7 @@ public sealed class BattleManager : MonoBehaviour
                 else
                 {
                     State = BattleState.Resolving;
-                    ui.ShowMessage(Enemy.displayName + " выбирает действие...");
+                    ui.ShowMessage(Enemy.displayName + " is choosing an action...");
                     yield return new WaitForSecondsRealtime(rules.actionDelay);
                     pendingAction = EnemyBattleAI.Choose(rules);
                 }
@@ -69,13 +69,13 @@ public sealed class BattleManager : MonoBehaviour
                 {
                     actor.Defend();
                     int reduction = Mathf.RoundToInt((1f - Mathf.Clamp01(rules.defendMultiplier)) * 100f);
-                    ui.ShowMessage(actor.displayName + " защищается. Физический урон снижен на " + reduction + "%.");
+                    ui.ShowMessage(actor.displayName + " Defends. Physical damage reduced by " + reduction + "%.");
                 }
                 else
                 {
                     int damage = BattleCalculator.PhysicalDamage(actor.attack, target.defense, target.IsDefending, rules);
                     target.Health.TakeDamage(damage);
-                    ui.ShowMessage(actor.displayName + " атакует " + target.displayName + ": " + damage + " урона.");
+                    ui.ShowMessage(actor.displayName + " attacked " + target.displayName + ": " + damage + " damage.");
                 }
                 ui.RefreshStats(Player, Enemy, Round);
                 yield return new WaitForSecondsRealtime(rules.actionDelay);
@@ -87,15 +87,15 @@ public sealed class BattleManager : MonoBehaviour
         if (Player.IsAlive)
         {
             State = BattleState.Victory;
-            ui.ShowMessage("Victory — скелет побеждён!\nОставшиеся HP сохранятся при возвращении.");
-            ui.ShowMenu(new[] { "Вернуться на карту" }, new System.Action[] {
+            ui.ShowMessage("Victory!");
+            ui.ShowMenu(new[] { "Back to Map" }, new System.Action[] {
                 () => { if (transition.ReturnAfterVictory()) ui.SetCommandsEnabled(false); } });
         }
         else
         {
             State = BattleState.Defeat;
-            ui.ShowMessage("Game Over — герой пал.");
-            ui.ShowMenu(new[] { "Начать заново", "Главное меню" }, new System.Action[] {
+            ui.ShowMessage("Game Over");
+            ui.ShowMenu(new[] { "Try Again", "Main Menu" }, new System.Action[] {
                 () => { ui.SetCommandsEnabled(false); transition.RestartGame(); },
                 () => { ui.SetCommandsEnabled(false); transition.ReturnToMainMenu(); } });
         }
