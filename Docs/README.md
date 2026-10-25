@@ -1,6 +1,6 @@
 # Документация FalseMemory
 
-FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Документы написаны для владельца без опыта C# и описывают текущую рабочую копию на **2026-10-12**.
+FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Документы написаны для владельца без опыта C# и описывают текущую рабочую копию на **2026-10-25**.
 
 Начните с [архитектуры](Architecture.md), затем откройте нужную систему или скрипт. Постоянные правила находятся в [AGENTS.md](../AGENTS.md); их нужно читать перед каждой новой задачей.
 
@@ -30,6 +30,9 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [Отчёт этапа 2](BattleStage2.md) — реализация, список файлов, ограничения и подробная инструкция Play Mode.
 
 ## Игровые системы
+
+- [Состав сцен](Systems/SceneComposition.md) — объекты, компоненты и связи MainMenu/SampleScene/BattleScene.
+- [Недостающие спрайты](Art/RequiredSprites.md) — список графики, которой пока нет (игрок, частицы, иконки, рамки).
 
 - [Прокачка](Systems/ProgressionSystem.md) — первые уровни и growth.
 
@@ -80,7 +83,6 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [LocalizationTests](Scripts/Tests/EditMode/LocalizationTests.md) — таблица/ключи/форматы.
 - [LocalizationFlowTests](Scripts/Tests/PlayMode/LocalizationFlowTests.md) — английские меню/бой/подсказки.
 
-- [InventoryWindow.Layout](Scripts/Inventory/InventoryWindow.Layout.md) — оформление существующей сцены.
 - [InventoryTooltip](Scripts/Inventory/InventoryTooltip.md) — одна ограниченная экраном hover-панель.
 - [EquipmentSlotView](Scripts/Inventory/EquipmentSlotView.md) — надетые предметы/цвета/hover.
 - [ItemPresentation](Scripts/Inventory/ItemPresentation.md) — текст/палитра редкостей.
@@ -114,7 +116,7 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [BattleHUD](Scripts/Battle/BattleHUD.md) — оформление, полосы и предупреждение HP.
 - [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md) — проверки представления боя.
 
-Историческая статистика после подэтапа4.6 — **53 C#-файла в Assets**:40 игровых,12 тестовых и1 служебный. Частичные тестовые классы объединяют несколько файлов, но каждый исходный файл имеет отдельное описание. Скрипты внешних пакетов и Library сюда не входят.
+Историческая статистика после подэтапа4.6 — **53 C#-файла в Assets**:40 игровых,12 тестовых и1 служебный. После рефакторинга 2026-10-25 — **69 C#-файлов**:46 в `Assets/Scripts`, 20 тестовых, 2 Editor-инструмента и 1 Welcome; у каждого есть отдельное описание в `Docs/Scripts`. Частичные тестовые классы объединяют несколько файлов. Скрипты внешних пакетов и Library сюда не входят.
 
 - [BattleAbilities](Scripts/Battle/BattleAbilities.md) — `Assets/Scripts/Battle/BattleAbilities.cs`.
 - [BattleCalculator](Scripts/Battle/BattleCalculator.md) — `Assets/Scripts/Battle/BattleCalculator.cs`.
@@ -135,9 +137,7 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 - [EnemyAttack](Scripts/EnemyAttack.md) — `Assets/Scripts/EnemyAttack.cs`.
 - [Health](Scripts/Health.md) — `Assets/Scripts/Health.cs`.
 - [PlayerController](Scripts/PlayerController.md) — `Assets/Scripts/PlayerController.cs`.
-- [MainMenuBootstrap](Scripts/UI/MainMenuBootstrap.md) — `Assets/Scripts/UI/MainMenuBootstrap.cs`.
 - [MainMenuController](Scripts/UI/MainMenuController.md) — `Assets/Scripts/UI/MainMenuController.cs`.
-- [PixelUi](Scripts/UI/PixelUi.md) — `Assets/Scripts/UI/PixelUi.cs`.
 - [SettingsMenu](Scripts/UI/SettingsMenu.md) — `Assets/Scripts/UI/SettingsMenu.cs`.
 - [BattleAbilityTests](Scripts/Tests/EditMode/BattleAbilityTests.md) — `Assets/Tests/EditMode/BattleAbilityTests.cs`.
 - [BattleCoreTests](Scripts/Tests/EditMode/BattleCoreTests.md) — `Assets/Tests/EditMode/BattleCoreTests.cs`.
@@ -159,7 +159,7 @@ FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Док
 
 Первоначальная документация сохранена коммитом `bd17fa0`, дополнения постоянных правил и руководства — `0f609a1`. Реализация этапа 2 сохранена коммитом 07a1a34; этап 3 развивается семью локальными коммитами. Актуальные результаты и изменения приведены в BattleStage3.md, исторические проверки этапа2 — 40 Edit Mode и 17 Play Mode. Новые игровые системы в задаче главного промпта повторно не создавались. Push не выполнялся.
 
-Локальные коммиты обязательны после успешно проверенных задач; push выполняется исключительно по явной команде владельца. Если перед задачей есть сторонние изменения, добавляются только относящиеся к текущей задаче пути.
+Рефакторинг сценовой композиции задокументирован в [Changelog](Changelog.md) и [SceneComposition](Systems/SceneComposition.md). Локальные коммиты обязательны после успешно проверенных задач; push выполняется исключительно по явной команде владельца. Если перед задачей есть сторонние изменения, добавляются только относящиеся к текущей задаче пути.
 
 
-Актуально после локализации:64 собственных C#-файла и64 отдельных описания (46 runtime,16 тестовых,1 Editor-инструмент,1 Welcome). Игровой язык English en-US; Docs/отчёты русские. Предыдущие отчёты и кадры сохраняются как история, не подтверждение текущего интерфейса.
+Актуально на 2026-10-25: 69 собственных C#-файлов и 69 отдельных описаний (46 runtime, 20 тестовых, 2 Editor-инструмента, 1 Welcome). Меню, инвентарь, боевой UI и VFX сохранены объектами сцен; `MainMenuBootstrap`, `PixelUi`, `InventoryWindow.Layout` и Editor-методы `Build*` удалены. Игровой язык English en-US; Docs/отчёты русские. Предыдущие отчёты и кадры сохраняются как история, не подтверждение текущего интерфейса.

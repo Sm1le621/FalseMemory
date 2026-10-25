@@ -18,9 +18,9 @@ OnEnable/OnDisable дополнительно подписываются/отп�
 
 `RefreshResources()` читает HP/maxHP/MP/maxMP и меняет строку только при изменении четырёх чисел. Update вызывает его в открытом окне и показывает имя/уровень/EXP. Refresh дополнительно обновляет занятость сумки, портрет и EquipmentSlotView, затем текущую подсказку. Close/BeginDrag скрывают tooltip. details показывает краткие сведения выбранного предмета; полное описание находится в hover.
 
-`BuildFantasyLayout()` — повторяемая редакторная перестройка существующих объектов без удаления, реализована в [InventoryWindow.Layout](InventoryWindow.Layout.md). Старые первоначальные Build* сохранены; в уже оформленной сцене их повторять не нужно.
-4.6: Refresh также читает реальные HP/MP в resourcesLabel. Open/Close показывают/скрывают собственный modalBackdrop; настройки мирового HUD не меняются. Editor `BuildResourceHeader()` создаёт/находит Resources и сужает Title; `BuildModalBackdrop()` создаёт/находит Image под панелью, растягивает по всему Canvas, помещает первым sibling и сохраняет ссылку. Повторное применение не создаёт дублей.
-`RequestEquip()` вызывает EquipRequested(index,null); `ClickEquipmentSlot(slot)` вызывает EquipRequested при выбранной совместимой вещи, иначе UnequipRequested для снятия. `Refresh` читает восемь надетых вещей/итоговые характеристики/доступность. Исторический `BuildEquipmentLayout()` Editor создаёт первоначальные7 кнопок/Stats/Equip и перенастраивает три существующие кнопки/message; повторный вызов запрещён. Awake связывает столько сохранённых UnityAction, сколько назначено кнопок (сейчас8); OnDestroy снимает те же listeners.
+Редакторные методы `Build*` и файл `InventoryWindow.Layout.cs` удалены: все объекты инвентаря сохранены в `SampleScene/InventoryCanvas`, повторная перестройка кодом не требуется.
+4.6: Refresh также читает реальные HP/MP в resourcesLabel. Open/Close показывают/скрывают собственный `modalBackdrop`; настройки мирового HUD не меняются. `Resources` и `InventoryBackdrop` — сохранённые объекты сцены, ссылки назначены в Inspector.
+`RequestEquip()` вызывает EquipRequested(index,null); `ClickEquipmentSlot(slot)` вызывает EquipRequested при выбранной совместимой вещи, иначе UnequipRequested для снятия. `Refresh` читает восемь надетых вещей/итоговые характеристики/доступность. Семь кнопок экипировки, `EquipmentStats`, `Equip` и `message` сохранены в сцене. Awake связывает столько сохранённых UnityAction, сколько назначено кнопок (сейчас 8); OnDestroy снимает те же listeners.
 
 Unity `Awake` получает Inventory/gate/unit, Bind30 ячеек и button listeners, закрывает окно. `OnEnable` подписывает Refresh, `OnDisable` отписывает и закрывает/освобождает ввод, `OnDestroy` удаляет listeners. `Update` читает I/Escape/стрелки без изменения Input Actions.
 
@@ -28,7 +28,7 @@ Unity `Awake` получает Inventory/gate/unit, Bind30 ячеек и button 
 
 `BeginDrag(index,position)` запоминает только индекс/ghost, `MoveDrag(screenPosition)` переводит координаты в Canvas; `DropOn(destination)` bool вызывает TryMoveOrMerge ровно раз/EndDrag/Select; `EndDrag()` очищает ghost, не мутирует модель.
 
-Editor `BuildLayout()` создаёт Canvas/панель/30 views/подписи/кнопки/ghost и ссылки, существующая panel запрещает повторную перестройку. Helpers `Panel(parent,name,color)` RectTransform с Image/Outline; `Place(rect,x,y,w,h)` устанавливает позицию/размер; `Label(...)` TMP с fallback/авторазмером; `Button(...)` Button без keyboard navigation. Сохранение сцены выполняет MCP.
+Canvas, панель, 30 `InventorySlotView`, подписи, кнопки, `DragIcon` и все ссылки сохранены в `SampleScene`; код построения удалён вместе с `InventoryWindow.Layout.cs`.
 
 ## 4. Переменные и Inspector
 
@@ -55,7 +55,7 @@ Potion3 → Разделить½ →2/1; drag в пустой/на другой/
 
 ## 7. Настройка в Unity
 
-Уже добавлен на Player; InventoryCanvas отдельный root SampleScene. Не BuildLayout повторно. Ссылки созданы/сохранены MCP. Экипировка подключена4.4; использование расходуемых подключено4.5 через общую Abilities.
+Уже добавлен на Player; `InventoryCanvas` — отдельный root `SampleScene`. Все ссылки сохранены в сцене. Экипировка подключена 4.4; использование расходуемых подключено 4.5 через общую Abilities.
 
 ## 8. Ограничения и расширение
 
@@ -73,3 +73,5 @@ Potion3 → Разделить½ →2/1; drag в пустой/на другой/
 2026-10-12 — 4.4: семь слотов/Stats/Equip/Unequip и корректные listeners.
 
 2026-10-12 — 4.2: окно, ввод, drag-and-drop и события.
+
+- 2026-10-25 — удалены Editor-методы `Build*` и файл `InventoryWindow.Layout.cs`; инвентарь остаётся объектами `SampleScene`.

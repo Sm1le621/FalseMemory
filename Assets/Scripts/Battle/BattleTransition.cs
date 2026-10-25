@@ -20,7 +20,7 @@ public sealed class BattleTransition : MonoBehaviour
     private Scene worldScene;
     private readonly List<GameObject> hiddenRoots = new List<GameObject>();
     private readonly Dictionary<Behaviour, bool> pausedBehaviours = new Dictionary<Behaviour, bool>();
-    private Image fade;
+    [SerializeField] private Image fade;
     private float protectedUntil;
     private EnemyAI protectedEnemyAI;
     private bool protectedEnemyAIWasEnabled;
@@ -233,7 +233,12 @@ public sealed class BattleTransition : MonoBehaviour
         yield return FadeTo(1f);
         // Single mode intentionally discards this session only for restart/menu.
         var overlay = fade.transform.parent.gameObject;
-        var reveal = overlay.AddComponent<BattleScreenFade>();
+        var reveal = overlay.GetComponent<BattleScreenFade>();
+        if (reveal == null)
+        {
+            Debug.LogError("BattleTransition: BattleScreenFade отсутствует на объекте fade overlay.", this);
+            yield break;
+        }
         reveal.panel = fade;
         reveal.LoadAndReveal(scene, rules.fadeDuration);
     }
@@ -242,18 +247,8 @@ public sealed class BattleTransition : MonoBehaviour
     {
         if (fade == null)
         {
-            var overlay = new GameObject("BattleFade", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler));
-            overlay.transform.SetParent(transform, false);
-            var canvas = overlay.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = 1000;
-            var panel = new GameObject("Fade", typeof(RectTransform), typeof(Image));
-            panel.transform.SetParent(overlay.transform, false);
-            fade = panel.GetComponent<Image>(); fade.raycastTarget = false;
-            var rect = panel.GetComponent<RectTransform>();
-            rect.anchorMin = Vector2.zero; rect.anchorMax = Vector2.one;
-            rect.offsetMin = rect.offsetMax = Vector2.zero;
-            fade.color = new Color(0f, 0f, 0f, 0f);
+            Debug.LogError("BattleTransition: fade overlay не назначен в сцене.", this);
+            yield break;
         }
         yield return BattleScreenFade.Fade(fade, alpha, rules.fadeDuration);
     }

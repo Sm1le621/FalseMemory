@@ -1,5 +1,15 @@
 # История значимых изменений FalseMemory
 
+## 2026-10-25 — сценовая композиция: меньше кода, больше объектов
+
+Главное меню, настройки, инвентарь, боевой UI, VFX и затемнение перехода перенесены из рантайм-построения в сохранённые объекты сцен. В `MainMenu` созданы Canvas/фон/MenuRoot/три кнопки/SettingsDim/панель/слайдер/EventSystem и объект `Menu` с `MainMenuController`/`SettingsMenu`; подписи получили `LocalizedLabel`, кнопки — persistent-события. В `SampleScene` сохранены `BattleFadeCanvas/Fade` + `BattleScreenFade`. В `BattleScene` добавлен `BattleContent/VFXLayer` с `PixelSpellFrame` и 24 `BattleParticle*`.
+
+Удалены `MainMenuBootstrap.cs`, `PixelUi.cs`, `InventoryWindow.Layout.cs` и все `#if UNITY_EDITOR` методы `Build*`/`UpgradeLayout` в `BattleUI`, `BattleHUD`, `InventoryWindow`, `BattlePresentation` (около 327 строк). `BattleVFXController` больше не создаёт пул и не удаляет объекты; `BattleTransition` использует сериализованный `fade` и готовый `BattleScreenFade`; у `LocalizedLabel` удалён `Bind`, у `MainMenuController` — `Initialize`, у `SettingsMenu` — `Bind` (добавлен `Start`).
+
+Добавлены шрифт `Assets/Settings/UI/PixelFont.asset` (PressStart2P, dynamic, Point) и белый спрайт `Assets/Art/UI/WhitePixel.png`. Документация: [SceneComposition](Systems/SceneComposition.md), [RequiredSprites](Art/RequiredSprites.md), обновлены скриптовые и системные документы, README, Architecture, UnitySetup.
+
+Проверки: EditMode 82/82, PlayMode 42/42, Console без ошибок и предупреждений; YAML сцен проверен на ссылки, persistent-события, 24 частицы и `LocalizedLabel`. Ручная визуальная оценка меню/эффектов остаётся за владельцем. Push не выполнялся.
+
 ## 2026-10-12 —5.1: EXP, уровни и рост
 
 После технического завершения Skeleton64/VFX продолжен первый незавершённый программный подэтап. Добавлен DefaultCharacterGrowth: пороги100/250/450…, cap99, HP5/MP2/ATK2/DEF1/MATK1/MDEF1/SPD1 за уровень. Growth вычисляется от level, база/экипировка не переписываются. Награда поддерживает несколько уровней, reentry отклоняется; HP/MP сохраняются при росте вместимости, Health обновляет прежний HUD. Добавлены5 English ключей (141 всего), Level Up/Victory и Next в Inventory.81 Edit/42 Play passed; [ProgressionStage5](ProgressionStage5.md). Классы/primary attributes/способности/Character C относятся к последующим подэтапам; новая графика/баланс требуют ручной оценки, standalone/дисковые сохранения отсутствуют. Push не выполнялся.

@@ -22,7 +22,7 @@ MenuAndSettingsUseEnglishAndTheirButtonsStillWork также проверяет 
 
 ## 5. Связи
 
-BattleFlowTests lifecycle, GameText/LocalizedLabel, MainMenuBootstrap, Unity SceneManager/UI/TMP и боевые компоненты.
+BattleFlowTests lifecycle, GameText/LocalizedLabel, сохранённые объекты сцен MainMenu/SampleScene/BattleScene, Unity SceneManager/UI/TMP и боевые компоненты.
 
 ## 6. Пример
 
@@ -43,3 +43,5 @@ MainMenu → Settings → Back → New Game оставляет игроку на
 2026-10-12 — поиск TMP использует актуальный FindObjectsByType без устаревшего SortMode; проверки не зависят от порядка объектов.
 
 2026-10-12 — английские меню/подсказки/бой и новая игра.
+
+2026-10-25 — меню больше не строит UI кодом (`MainMenuBootstrap`/`PixelUi` удалены); тест проверяет те же объекты и подписи, сохранённые в `MainMenu`. Результат: PlayMode 42/42.

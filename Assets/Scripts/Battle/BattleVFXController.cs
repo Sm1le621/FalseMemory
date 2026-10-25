@@ -2,14 +2,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Plays an effect through scene-authored images; nothing is created or destroyed here.
 [DisallowMultipleComponent]
 public sealed class BattleVFXController : MonoBehaviour
 {
     public BattleUI ui;
     public BattleVFXProfile fireProfile, healProfile;
-    private readonly System.Collections.Generic.List<Image> particles=new System.Collections.Generic.List<Image>();
+    [SerializeField] private Image frameImage;
+    [SerializeField] private Image[] particles = System.Array.Empty<Image>();
     private Coroutine effect;
-    private Image frameImage;
     public int CurrentFrame {get;private set;}=-1;
     public bool HasAnimatedFrame => frameImage!=null && frameImage.isActiveAndEnabled && frameImage.sprite!=null;
     public int EffectsPlayed { get; private set; }
@@ -25,22 +26,16 @@ public sealed class BattleVFXController : MonoBehaviour
     }
     private IEnumerator Animate(Image portrait,BattleVFXProfile profile,Color fallback,bool healing)
     {
-        int count=profile!=null?Mathf.Clamp(profile.particleCount,4,24):12;
+        int available=particles!=null?particles.Length:0;
+        int count=Mathf.Min(profile!=null?Mathf.Clamp(profile.particleCount,4,24):12,available);
         float duration=profile!=null?Mathf.Clamp(profile.duration,0,2):0.45f;
         float radius=profile!=null?Mathf.Clamp(profile.radius,0,100):42f;
         float size=profile!=null?Mathf.Clamp(profile.particleSize,1,24):8f;
         Color color=profile!=null?profile.color:fallback;
         var shape=profile!=null?profile.shape:(healing?BattleVFXShape.Orbit:BattleVFXShape.Rising);
-        EnsurePool(portrait.transform.parent,count);
-        bool animated=profile!=null && profile.frames!=null && profile.frames.Length>0;
+        bool animated=profile!=null && profile.frames!=null && profile.frames.Length>0 && frameImage!=null;
         if(animated)
         {
-            if(frameImage==null)
-            {
-                var obj=new GameObject("PixelSpellFrame",typeof(RectTransform),typeof(Image));obj.transform.SetParent(portrait.transform.parent,false);
-                frameImage=obj.GetComponent<Image>();frameImage.raycastTarget=false;frameImage.preserveAspect=true;
-                frameImage.rectTransform.anchorMin=frameImage.rectTransform.anchorMax=Vector2.zero;
-            }
             frameImage.color=Color.white;frameImage.rectTransform.sizeDelta=Vector2.one*Mathf.Clamp(profile.frameSize,32,256);
             frameImage.transform.SetAsLastSibling();frameImage.gameObject.SetActive(true);
         }
@@ -72,17 +67,11 @@ public sealed class BattleVFXController : MonoBehaviour
         }
         Clear();effect=null;
     }
-    private void EnsurePool(Transform parent,int count)
+    private void Clear()
     {
-        while(particles.Count<count)
-        {
-            var obj=new GameObject("BattleParticle"+particles.Count,typeof(RectTransform),typeof(Image));obj.transform.SetParent(parent,false);
-            var image=obj.GetComponent<Image>();image.raycastTarget=false;image.preserveAspect=true;
-            image.rectTransform.anchorMin=image.rectTransform.anchorMax=Vector2.zero;image.rectTransform.pivot=new Vector2(0.5f,0.5f);
-            particles.Add(image);
-        }
+        if(particles!=null)foreach(var p in particles)if(p!=null)p.gameObject.SetActive(false);
+        if(frameImage!=null)frameImage.gameObject.SetActive(false);
+        ActiveParticles=0;CurrentFrame=-1;
     }
-    private void Clear(){foreach(var p in particles)if(p!=null)p.gameObject.SetActive(false);if(frameImage!=null)frameImage.gameObject.SetActive(false);ActiveParticles=0;CurrentFrame=-1;}
     private void OnDisable(){if(effect!=null)StopCoroutine(effect);effect=null;Clear();}
-    private void OnDestroy(){foreach(var p in particles)if(p!=null)Destroy(p.gameObject);particles.Clear();if(frameImage!=null)Destroy(frameImage.gameObject);}
 }

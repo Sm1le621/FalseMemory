@@ -39,7 +39,7 @@ ShowVictoryResults выбирает battle.victory_level_up_result при Levels
 - `ApplyPortrait(Image image,BattleUnit unit)` — sprite/color/flip. `PointSprite(Sprite source)` → исходный или временный Point-спрайт, копируя непрочитанную текстуру через GPU.
 - `OnDestroy()` — Unity: освобождает временные текстуры/спрайты pointSprites.
 - `RefreshStats(BattleUnit player,BattleUnit enemy,int round)` — тексты/раунд/тусклый портрет погибшего; `Stats(BattleUnit unit)` → строка HP/MP/характеристик/инвентаря/EXP/Defend.
-- Только Editor: `BuildLayout()` создаёт базовое оформление один раз (при messageText!=null исключение); `UpgradeLayout()` расширяет сохранённые объекты/ссылки для этапа 2, помечает компонент dirty, но не сохраняет сцену.
+- Editor-методы `BuildLayout()`/`UpgradeLayout()` удалены: все объекты и ссылки боевого UI сохранены в `BattleScene`.
 - Editor-помощники: `Fit(RectTransform rect,Vector2 min,Vector2 max)` задаёт якоря; `Panel(Transform parent,string name,Color color,Vector2 min,Vector2 max)` → Image; `Portrait(...,Sprite sprite,...)` → Image; `Label(Transform parent,string name,string value,int size,Vector2 min,Vector2 max)` → TMP. Только создание в Editor, не игровой цикл.
 
 ## 4. Переменные и параметры Inspector
@@ -64,7 +64,7 @@ Magic → Fire 8 MP и Heal6 MP → Escape возвращает Attack/Magic/Ite
 
 ## 7. Настройка в Unity
 
-На BattleManager BattleScene. Назначь TMP-поля сообщений/характеристик/раунда, Image-портреты, пять Button и соответствующие пять Label, AbilityGlow/AbilityAmount и окно BattleResults/VictoryResultText. Canvas Scale With Screen Size960×540. Сохранённое оформление уже существует: BuildLayout повторно не вызывай. UpgradeLayout — только осознанная Editor-операция с последующим сохранением сцены.
+На BattleManager BattleScene. Назначь TMP-поля сообщений/характеристик/раунда, Image-портреты, пять Button и соответствующие пять Label, AbilityGlow/AbilityAmount и окно BattleResults/VictoryResultText. Canvas Scale With Screen Size 960×540. Всё оформление сохранено в сцене; перестраивать его кодом не нужно.
 
 ## 8. Возможные проблемы и проверки
 
@@ -94,3 +94,5 @@ Magic → Fire 8 MP и Heal6 MP → Escape возвращает Attack/Magic/Ite
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 
 - 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
+
+- 2026-10-25 — удалены Editor-методы `BuildLayout`/`UpgradeLayout`; UI остаётся объектами `BattleScene`.

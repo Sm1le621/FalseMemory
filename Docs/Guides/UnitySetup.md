@@ -27,7 +27,7 @@ Enemy содержит Rigidbody2D, триггер обнаружения для
 
 ## Боевой UI
 
-BattleManager.ui ссылается на BattleUI. В UI назначены сообщения, характеристики, раунд, портреты, пять кнопок/пять подписей, AbilityGlow/AbilityAmount и BattleResults/VictoryResultText. BattleHUD, BattlePresentation, BattleVFXController и BattleAudioController подключены к прежнему BattleManager. HUD содержит три неинтерактивные полосы, группы проявления и пять commandIcons. Портреты имеют pivot=(0.5,0.5), масштаб отражает спрайт без перемещения. Canvas Scale With Screen Size960×540, Match Height=1, Pixel Perfect=true; центральный BattleContent шириной960. Команды используют BattlePixelFont с fallback для кириллицы. Сохранённое оформление уже построено: не вызывай BuildLayout повторно.
+BattleManager.ui ссылается на BattleUI. В UI назначены сообщения, характеристики, раунд, портреты, пять кнопок/пять подписей, AbilityGlow/AbilityAmount и BattleResults/VictoryResultText. BattleHUD, BattlePresentation, BattleVFXController и BattleAudioController подключены к прежнему BattleManager. HUD содержит три неинтерактивные полосы, группы проявления и пять commandIcons. Портреты имеют pivot=(0.5,0.5), масштаб отражает спрайт без перемещения. Canvas Scale With Screen Size960×540, Match Height=1, Pixel Perfect=true; центральный BattleContent шириной960. Команды используют BattlePixelFont с fallback для кириллицы. Сохранённое оформление уже построено объектами сцены: Editor-методов BuildLayout/BuildCommandIcons больше нет, панели и полосы правятся вручную в `BattleContent`.
 
 Для Fire/Heal назначены FireVisual/HealVisual в поле visualEffect заклинаний; длительность0.45, частицы12. В AudioController назначен DefaultBattleAudio и существующий AudioSource: Spatial Blend0, Ignore Listener Volume=false. BattleMixer/Master подключён, все AudioClip пока пусты — назначайте подходящие звуки в профиль. Общая громкость меню сохраняет прежнее управление AudioListener.volume.
 Presentation: Attack0.4, Hit0.18, Outcome0.35, Message0.75, Enemy Think0.5, Allow Fast Forward=true, множитель3. Space ускоряет движения/паузы, не игровой урон; отключить можно в Inspector. DefaultBattleRules.actionDelay остаётся0.8, fadeDuration назначено0.5; стоимость заклинаний и параметры участников сохраняются.
@@ -51,11 +51,15 @@ Create → FalseMemory → Battle Spell создаёт заклинание с �
 
 ## Переработанный инвентарь
 
-InventoryWindow.BuildFantasyLayout через Unity MCP переиспользует сохранённые объекты SampleScene. InventoryCanvas: reference1200×780/Expand/PixelPerfect/sorting60; InventoryPanel1140×720; слева CharacterPanel/PortraitFrame/CharacterPortrait/CharacterName, вокруг восемь Equipment-кнопок с EquipmentSlotView; справа BagPanel/BagTitle/прежние30 Slot. Tooltip-компонент на том же Canvas, отдельный child InventoryTooltip с TMP Content (raycast=false). Все ссылки сохранены, окно и tooltip закрыты вне игры. Исходный герой/импорт не менялись.
+Оформление инвентаря уже сохранено объектами SampleScene (редакторный BuildFantasyLayout удалён). InventoryCanvas: reference1200×780/Expand/PixelPerfect/sorting60; InventoryPanel1140×720; слева CharacterPanel/PortraitFrame/CharacterPortrait/CharacterName, вокруг восемь Equipment-кнопок с EquipmentSlotView; справа BagPanel/BagTitle/прежние30 Slot. Tooltip-компонент на том же Canvas, отдельный child InventoryTooltip с TMP Content (raycast=false). Все ссылки сохранены, окно и tooltip закрыты вне игры. Исходный герой/импорт не менялись.
 
 ItemData → rarity определяет только цвет; Gloves=Armor с equipmentSlot Gloves, maxStack автоматически1. В наборе пока нет такой вещи, слот пустой. Не менять enum-индексы прежних аксессуаров. Настройки/ручная проверка в [InventoryRedesign](../InventoryRedesign.md).
 
 
 ## English и редактирование текста
 
-Игровой интерфейс English en-US. Unity → FalseMemory → Localization → English Text: поиск ключа, правка Value, Save table; новый ключ через Add entry. Таблица Resources/Localization/GameText_en-US и SharedData рядом,136 записей. Static TMP получает LocalizedLabel/key; динамические поля управляются прежними контроллерами через GameText. ItemData id+.name/.description; Unit/Spell localizationId назначены в сцене/ассетах. PixelUi.extraPadding=false для bitmap-атласа, исходный PressStart2P не меняется. Полная инструкция [LocalizationSystem](../Systems/LocalizationSystem.md).
+Игровой интерфейс English en-US. Unity → FalseMemory → Localization → English Text: поиск ключа, правка Value, Save table; новый ключ через Add entry. Таблица Resources/Localization/GameText_en-US и SharedData рядом,136 записей. Static TMP получает LocalizedLabel/key; динамические поля управляются прежними контроллерами через GameText. ItemData id+.name/.description; Unit/Spell localizationId назначены в сцене/ассетах. Меню использует `Assets/Settings/UI/PixelFont.asset` (PressStart2P, dynamic, Point); исходный PressStart2P не меняется. Полная инструкция [LocalizationSystem](../Systems/LocalizationSystem.md).
+
+2026-10-25 — раздел боевого UI обновлён под сценовое оформление; ссылки на удалённые `BuildLayout`/`PixelUi` убраны. Полная схема сцен: [SceneComposition](../Systems/SceneComposition.md).
+
+2026-10-25 — инвентарь открывается без построения кодом; все объекты и ссылки сохранены в сцене.

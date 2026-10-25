@@ -8,3 +8,5 @@ Manager закрывает gate до Windup, повторно проверяет
 
 Темп: attackDuration0.4 (подготовка0.2 и возврат0.2), hitDuration0.18, outcome0.35, сообщение0.75, выбор врага0.5 секунды при actionDelay0.8. Для ускорения удерживать Space: визуальные движения/эти паузы×3, без выбора команды, повторного урона/расхода и изменения Time.timeScale. allowFastForward можно выключить на Presentation; отдельные VFX/числа/затемнения завершаются в своём темпе. Финальный Play Mode проверяет ветки MISS и ускорение.
 Расширение: назначить новые согласованные PNG/Aseprite-кадры через SpriteAnimationSet, оставив игровое применение в Manager. [BattlePresentation](../Scripts/Battle/BattlePresentation.md), [BattleUI](../Scripts/Battle/BattleUI.md). Проверки смерти во время windup и отсутствующего визуала добавлены в PlayMode; художественное качество оценивается вручную.
+
+2026-10-25 — символы защиты `PlayerGuard`/`EnemyGuard` сохранены в `BattleScene`; Editor-метод `BuildGuards` удалён. Анимации по-прежнему управляются `SpriteAnimationSet` + `EnemySpriteAnimation`/`BattlePresentation`, Animator не вводился. Схема объектов: [SceneComposition](SceneComposition.md).

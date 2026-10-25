@@ -8,7 +8,7 @@
 
 ## 2. Как работает
 
-Этап 3.5: FadeTo создаёт прежний overlay, затем делегирует SmoothStep-анимацию BattleScreenFade.Fade. LoadFresh после затемнения добавляет BattleScreenFade к временному Canvas: LoadAndReveal сохраняет только экран на время Single-загрузки, проявляет новую сцену и удаляет overlay. Координатор/ресурсы старой сессии по-прежнему выгружаются. Rules.fadeDuration в текущем ассете 0.5 секунды.
+FadeTo использует сохранённый в `SampleScene` overlay `BattleTransition/BattleFadeCanvas/Fade` и делегирует SmoothStep-анимацию `BattleScreenFade.Fade`. LoadFresh больше не добавляет компонент: готовый `BattleScreenFade` на `BattleFadeCanvas` получает панель и выполняет Single-загрузку, сохраняет только экран, проявляет новую сцену и удаляет overlay. Координатор/ресурсы старой сессии по-прежнему выгружаются. `Rules.fadeDuration` в текущем ассете 0.5 секунды.
 
 TryBegin синхронно блокирует повторную встречу, выключает движение/AI и загружает BattleScene дополнительно. Мир скрывается, но не выгружается. После победы враг выключается; после побега остаётся жив и включается временная защита. Поражение может полностью загрузить новую игру/меню.
 
@@ -29,7 +29,7 @@ TryBegin синхронно блокирует повторную встречу
 - `RestoreWorld(bool victory)` — активирует сохранённые roots, возвращает enabled Behaviour, снимает Defend; победный враг остаётся отключённым.
 - `RestartGame()` / `ReturnToMainMenu()` — вызывают LeaveFor с миром/меню; void.
 - `LeaveFor(string scene)` — проверяет доступность/переход, запускает LoadFresh; `LoadFresh(string scene)` — coroutine FadeTo и загрузки Single новой сессии.
-- `FadeTo(float alpha)` — coroutine: создаёт экран BattleFade при необходимости и меняет прозрачность за fadeDuration; alpha использовать 0…1.
+- `FadeTo(float alpha)` — coroutine: использует сериализованное поле `fade`; при отсутствии ссылки пишет Error и завершается, иначе меняет прозрачность за `fadeDuration`; alpha 0…1.
 
 ## 4. Переменные и параметры Inspector
 
@@ -60,3 +60,5 @@ Flee успешен → BattleScene выгружена → Player отнесён
 - 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
 
 - 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
+
+- 2026-10-25 — overlay `BattleFadeCanvas/Fade` и `BattleScreenFade` перенесены в `SampleScene`; рантайм-создание Canvas удалено.

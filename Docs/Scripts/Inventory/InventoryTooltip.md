@@ -30,7 +30,7 @@ ItemPresentation, InventoryWindow, InventoryState, EquipmentController, Mouse In
 
 ## 7. Настройка в Unity
 
-Создаётся/подключается BuildFantasyLayout; panel anchor(.5,.5), pivot(0,1), дочерний text растянут с16 отступами. Все tooltip Graphics имеют raycastTarget=false.
+Сохранён в `SampleScene/InventoryCanvas` (создавался один раз через удалённый ныне `BuildFantasyLayout`); panel anchor(.5,.5), pivot(0,1), дочерний text растянут с16 отступами. Все tooltip Graphics имеют raycastTarget=false.
 
 ## 8. Ограничения и расширение
 
@@ -39,3 +39,5 @@ ItemPresentation, InventoryWindow, InventoryState, EquipmentController, Mouse In
 ## 9. История изменений
 
 2026-10-12 — hover сумки/экипировки, живое обновление и ограничение экраном; реальная мышь проверена Play Mode тестом.
+
+2026-10-25 — уточнено: объект уже сохранён в сцене, редакторный `BuildFantasyLayout` удалён.

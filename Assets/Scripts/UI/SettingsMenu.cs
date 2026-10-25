@@ -13,11 +13,8 @@ public class SettingsMenu : MonoBehaviour
 
     private bool fullscreen;
 
-    public void Bind(GameObject panelRoot, Slider slider, TextMeshProUGUI fullscreenValueLabel)
+    private void Start()
     {
-        root = panelRoot;
-        volumeSlider = slider;
-        fullscreenLabel = fullscreenValueLabel;
         Hide();
         LoadAndApply();
     }

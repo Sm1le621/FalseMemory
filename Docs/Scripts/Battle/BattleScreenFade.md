@@ -6,7 +6,7 @@
 
 ## 2. Как работает
 
-Обычный Transition использует статический Fade. При Single-загрузке только временный Canvas затемнения отделяется от мира, переживает загрузку и удаляется после проявления новой сцены. Player/Enemy не переносятся в DontDestroyOnLoad.
+Обычный Transition использует `Image` затемнения, сохранённый в `SampleScene`. При Single-загрузке только временный Canvas затемнения отделяется от мира, переживает загрузку и удаляется после проявления новой сцены. Player/Enemy не переносятся в DontDestroyOnLoad.
 
 ## 3. Методы и функции
 
@@ -18,7 +18,7 @@ panel — существующий Image чёрного overlay; отдельн�
 
 ## 5. Связи
 
-BattleTransition.FadeTo делегирует Fade; LoadFresh добавляет компонент только временному экрану. Это не второй координатор боя.
+BattleTransition.FadeTo делегирует `Fade`; LoadFresh передаёт панель уже существующему `BattleScreenFade` на `BattleFadeCanvas`, который отделяется от мира на время Single-загрузки. Это не второй координатор боя.
 
 ## 6. Пример
 
@@ -26,7 +26,7 @@ Game Over → Restart → экран темнеет → новая SampleScene �
 
 ## 7. Настройка в Unity
 
-Вручную не добавлять на Player/Enemy. Transition создаёт/настраивает на своём runtime BattleFade. При Single компонент оказывается на корневом Canvas, не на объекте состояния.
+Вручную не добавлять на Player/Enemy. Компонент уже стоит на `SampleScene/BattleTransition/BattleFadeCanvas`; поле `panel` указывает на `Fade`. Transition только передаёт панель и вызывает `LoadAndReveal`; при Single компонент оказывается на корневом Canvas, не на объекте состояния.
 
 ## 8. Ошибки, ограничения и расширение
 
@@ -35,3 +35,7 @@ Game Over → Restart → экран темнеет → новая SampleScene �
 ## 9. История изменений
 
 - 2026-10-11 — 3.5 — общая SmoothStep-функция и проявление после Single-переходов.
+
+- 2026-10-25 — `BattleScreenFade` и затемняющий Canvas сохранены в `SampleScene`; AddComponent в рантайме удалён.
+
+2026-10-25 — уточнено, что `Fade` и `BattleScreenFade` сохранены в `SampleScene`; рантайм-создание Canvas/компонента удалено.

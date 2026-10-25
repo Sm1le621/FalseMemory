@@ -24,7 +24,7 @@
 
 ## Сцены и ответственность
 
-**MainMenu:** MainMenuBootstrap создаёт UI во время Awake; MainMenuController запускает SampleScene, открывает SettingsMenu или завершает приложение. PixelUi создаёт элементы. SettingsMenu хранит громкость/fullscreen в PlayerPrefs.
+**MainMenu:** весь UI сохранён объектами сцены (Canvas, кнопки, панель настроек, EventSystem). MainMenuController запускает SampleScene, открывает SettingsMenu или завершает приложение. SettingsMenu хранит громкость/fullscreen в PlayerPrefs. Кода, создающего UI, больше нет.
 
 **SampleScene:** Player имеет PlayerController, Health, BattleUnit, BattleInventory и физические/визуальные компоненты. Enemy имеет EnemyAI, Health, BattleUnit, BattleEncounter; старый EnemyAttack выключен и дополнительно защищён от контактного урона наличием Encounter. Main Camera использует CameraFollow. Grid/Borders/Bushs — окружение. Мировой HUD находится под root `Health` в текущем прочитанном Hierarchy; его ссылки HP Slider/HPText назначены Player.Health. BattleTransition — отдельный координатор.
 
@@ -92,11 +92,15 @@
 
 ## Представление инвентаря по RPG-референсу
 
-InventoryWindow сохранён на Player; редакторная partial-часть InventoryWindow.Layout переиспользует старый Canvas/30 ячеек/кнопки, добавляет портрет и Gloves. InventorySlotView/EquipmentSlotView читают ItemPresentation, а одна InventoryTooltip на Canvas читает текущий предмет при hover. Редкость хранится только в ItemData, цвета/описания не изменяют расчёты и количество. HPMP/EXP читаются с исходного Unit/Health; окно не создаёт отдельного персонажа/уровней. Canvas Expand вписывает1140×720 в доступное разрешение. Реальные проверки описаны в [InventoryRedesign](InventoryRedesign.md).
+InventoryWindow сохранён на Player; Canvas/панель/30 ячеек/кнопки/портрет/Gloves — сохранённые объекты SampleScene (partial-файл InventoryWindow.Layout удалён). InventorySlotView/EquipmentSlotView читают ItemPresentation, а одна InventoryTooltip на Canvas читает текущий предмет при hover. Редкость хранится только в ItemData, цвета/описания не изменяют расчёты и количество. HPMP/EXP читаются с исходного Unit/Health; окно не создаёт отдельного персонажа/уровней. Canvas Expand вписывает1140×720 в доступное разрешение. Реальные проверки описаны в [InventoryRedesign](InventoryRedesign.md).
 
 
 ## Английский контент и локализация
 
 GameText читает одну native Unity StringTable Resources/Localization/GameText_en-US и SharedData (136 ключей), форматирует HPMP/EXP/количество. LocalizedLabel обновляет статические TMP; прежние контроллеры формируют динамический текст. ItemData/Unit/Spell имеют локализованные getters без изменения ID/GUID/баланса. Editor GameTextEditor позволяет менять/добавлять English-значения. Unity Localization1.5.13 установлен; автоматически создана конфигурация Addressables/Locale, порядок сцен сохранён. Runtime читает таблицу через Resources, Unity LocalizationSettings не является вторым владельцем выбора языка. Других переводов нет; полная горячая смена языка/Smart Strings не подключены.
 
-PixelUi сохраняет PressStart2P/пиксельный стиль: extraPadding=false устраняет захват соседних glyphs bitmap-атласа. Общая игровая логика не переписана. Новые правила/инструкции — [LocalizationSystem](Systems/LocalizationSystem.md), текущая проверка — [EnglishLocalization](EnglishLocalization.md).
+Шрифт меню — `Assets/Settings/UI/PixelFont.asset` на основе PressStart2P (dynamic, Point filter); фон панелей — `Assets/Art/UI/WhitePixel.png`. Общая игровая логика не переписана. Новые правила/инструкции — [LocalizationSystem](Systems/LocalizationSystem.md), текущая проверка — [EnglishLocalization](EnglishLocalization.md).
+
+## Композиция сцен (2026-10-25)
+
+Направление «меньше скриптов, больше объектов»: UI, текст, эффекты и затемнение заранее сохранены в `MainMenu`, `SampleScene` и `BattleScene`. Скрипты читают сериализованные ссылки и меняют состояние, но не создают GameObject в рантайме. Удалены `MainMenuBootstrap`, `PixelUi`, `InventoryWindow.Layout` и все Editor-методы `Build*` построения UI. Подробная схема объектов, связей и persistent-событий — [SceneComposition](Systems/SceneComposition.md); недостающая графика — [RequiredSprites](Art/RequiredSprites.md).

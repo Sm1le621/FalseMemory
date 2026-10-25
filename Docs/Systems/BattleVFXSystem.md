@@ -2,8 +2,10 @@
 
 2026-10-12 — FireVisual/HealVisual имеют по8 native PNG64×64, duration0.6 и frameSize128; Controller переиспользует один PixelSpellFrame поверх прежних частиц. Кадр следует портрету и очищается при завершении/disable/unload; пустые массивы сохраняют fallback. Magic/Items не включают старый сплошной glow, физическое попадание использует64px Hit/Slash-маску BattleUI. [Проверки и исходники](../PixelVisuals.md).
 
-BattleVFXController использует до 24 простых Image в повторно используемом пуле. FireVisual показывает кадры пламени и оранжевые частицы, HealVisual — кадры кольца/искр и зелёные ромбы; Potion использует лечебный вариант. Play запускается после успешного применения ресурса в Manager, в тот же кадр, и не пишет HP/MP/предметы.
+BattleVFXController использует 24 заранее сохранённых `Image` (`BattleParticle0…23`) и один `PixelSpellFrame` в `BattleScene/BattleCanvas/BattleContent/VFXLayer`; контроллер только включает, двигает и выключает их, ничего не создавая в рантайме. FireVisual показывает кадры пламени и оранжевые частицы, HealVisual — кадры кольца/искр и зелёные ромбы; Potion использует лечебный вариант. Play запускается после успешного применения ресурса в Manager, в тот же кадр, и не пишет HP/MP/предметы.
 
 BattleSpell.visualEffect ссылается на BattleVFXProfile. Создать новый профиль через Create → FalseMemory → Battle VFX Profile: цвет, форма Rising/Orbit/Burst, duration, размер/радиус/количество и необязательный Sprite. Можно подготовить оформление Ice/Thunder/Holy/Dark, но сами новые заклинания сейчас не реализованы. Отсутствующие профили имеют fallback, отключение/выгрузка очищает пул. Эффекты не блокируют ход и не требуют Animator/частиц 3D/новых пакетов.
 
 Детали: [профиль](../Scripts/Battle/BattleVFXProfile.md), [контроллер](../Scripts/Battle/BattleVFXController.md). Проверка Play Mode подтверждает один запуск, завершение и сохранение правил при отсутствии VFX; внешний вид оценивать в Game View.
+
+2026-10-25 — пул частиц и кадр перенесены из кода в `BattleScene`; `VFXLayer` — последний sibling `BattleContent` с anchor (0,0), pivot (0.5,0.5) и size 0, чтобы координаты совпадали с портретами. Список недостающих спрайтов частиц: [RequiredSprites](../Art/RequiredSprites.md).

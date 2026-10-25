@@ -21,8 +21,7 @@ BattleUI передаёт участников через Bind. Каждый к�
 - `MenuChanged(submenu)` — заголовок и перезапуск RevealMenu. Отсутствие CanvasGroup не мешает выбору.
 - `RevealMenu()` — короткое проявление панели от alpha 0.55 до 1; игровое действие не ожидает анимацию.
 - `StyleCommand(button, label, selected, enabled)` — цвета выделения, наведения, нажатия и недоступности.
-- Editor: `BuildCommandIcons(ui)` создаёт или находит CommandIcon, назначает размер 16×16 и отступ подписи; void. Не изменяет игровые значения. `commandIcons` содержит пять необязательных Sprite: Attack/Magic/Items/Defend/Flee; StyleCommand подбирает значок по команде, отсутствующий значок скрыт.
-- Editor: `BuildLayout(ui)` — переносит существующие элементы в BattleContent, назначает размер/позиции/ссылки и создаёт только недостающие панели/полосы. Вызывает Place, Frame, GetPanel, GetLabel, Format и GetBar. Помечает компоненты изменёнными; сцену сохраняет вызывающий MCP.
+- Editor-методы `BuildCommandIcons`/`BuildLayout` удалены; `CommandIcon`, панели, полосы и все ссылки сохранены в `BattleScene`. `commandIcons` содержит пять необязательных Sprite: Attack/Magic/Items/Defend/Flee; StyleCommand подбирает значок по команде, отсутствующий значок скрыт.
 - Editor: `Place(rect,x,y,width,height)` — положение от нижнего левого угла; `Frame(image,color)` — фон и тонкая рамка; `GetPanel(parent,name)`/`GetLabel(parent,name)` — существующий либо новый Image/TMP; `Format(label,size)` — авторазмер и отсутствие перехвата мыши; `GetBar(parent,name,color)` — Slider без управления/ручки и с заполнением.
 
 ## 4. Переменные и Inspector
@@ -44,7 +43,7 @@ BattleManager в BattleScene содержит BattleUI и BattleHUD. UI вызы
 
 ## 7. Настройка в Unity
 
-Компонент уже подключён к BattleManager, ссылки назначены и сохранены через MCP. Canvas: Scale With Screen Size 960×540, Match Height=1. Все три полосы не интерактивны. BuildLayout — инструмент Editor для осознанной перестройки; не вызывается в игровом цикле. Новые панели добавлять внутри BattleContent с учётом его размеров.
+Компонент уже подключён к BattleManager, ссылки назначены и сохранены в сцене. Canvas: Scale With Screen Size 960×540, Match Height=1. Все три полосы не интерактивны. Новые панели добавляйте вручную внутри `BattleContent` с учётом его размеров.
 
 ## 8. Ошибки и ограничения
 
@@ -61,3 +60,5 @@ BattleManager в BattleScene содержит BattleUI и BattleHUD. UI вызы
 - 2026-10-11 — 3.5: проявление экрана и результатов.
 
 - 2026-10-11 — подэтап 3.1: макет, выделение команд, плавные полосы и LOW HP.
+
+- 2026-10-25 — удалены Editor-методы `BuildCommandIcons`/`BuildLayout`; HUD полностью собран в сцене.

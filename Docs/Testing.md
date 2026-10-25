@@ -1,5 +1,7 @@
 # Проверки документации и текущего проекта
 
+2026-10-25 — рефакторинг сценовой композиции: **82/82 Edit Mode + 42/42 Play Mode**, 0 failed/skipped, Console без ошибок и предупреждений после удаления временных Editor-утилит. Дополнительно проверены YAML трёх сцен: все локальные `fileID` ссылки существуют, у удалённых скриптов (`MainMenuBootstrap`, `PixelUi`, `InventoryWindow.Layout`) нет ссылок в сценах/Prefabs, `BattleVFXController` получает 24 частицы и `PixelSpellFrame`, `BattleTransition.fade`/`BattleScreenFade.panel` назначены, persistent-события меню и 7 `LocalizedLabel` сохранены. Ручная визуальная оценка меню и эффектов остаётся за владельцем. Подробности: [Changelog](Changelog.md), [SceneComposition](Systems/SceneComposition.md).
+
 5.1:81/81 Edit Mode и42/42 Play Mode,8 сочетаний Inventory/Victory×разрешения в текущем Game View. [ProgressionStage5](ProgressionStage5.md) отделяет подготовку EXP от настоящей боевой награды и прежних результатов. Классы/новые способности/primary attributes ещё не проверялись как реализованные.
 
 2026-10-12 — новая регрессия визуала:78 Edit Mode/40 Play Mode,32 native PNG и кадры настоящих Fire/Heal. [PixelVisuals](PixelVisuals.md) содержит свежие job IDs и ограничения. Предыдущая ручная приёмка подтверждена владельцем; это не автоматическая художественная приёмка новой графики.

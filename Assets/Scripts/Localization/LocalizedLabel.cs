@@ -10,9 +10,4 @@ public sealed class LocalizedLabel : MonoBehaviour
     private void OnEnable(){GameText.LanguageChanged+=Refresh;Refresh();}
     private void OnDisable(){GameText.LanguageChanged-=Refresh;}
     public void Refresh(){if(label==null)label=GetComponent<TMP_Text>();if(!string.IsNullOrEmpty(key))label.text=GameText.Get(key);}
-    public static void Bind(TMP_Text text,string localizationKey)
-    {
-        var binding=text.GetComponent<LocalizedLabel>();if(binding==null)binding=text.gameObject.AddComponent<LocalizedLabel>();
-        binding.key=localizationKey;binding.Refresh();
-    }
 }

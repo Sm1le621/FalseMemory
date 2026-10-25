@@ -6,12 +6,6 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private string gameSceneName = "SampleScene";
     [SerializeField] private SettingsMenu settingsMenu;
 
-    public void Initialize(string sceneName, SettingsMenu menu)
-    {
-        gameSceneName = sceneName;
-        settingsMenu = menu;
-    }
-
     public void OnStart()
     {
         if (string.IsNullOrWhiteSpace(gameSceneName))

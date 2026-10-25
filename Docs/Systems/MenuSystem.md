@@ -2,40 +2,50 @@
 
 ## 1. Назначение
 
-MainMenu с английскими New Game/Settings/Exit и настройками громкости/fullscreen.
+Сцена `MainMenu` с английскими New Game/Settings/Exit и панелью настроек громкости/fullscreen. С 2026-10-25 весь UI и текст меню — сохранённые объекты сцены; код UI не строит.
 
 ## 2. Общая логика
 
-Bootstrap во время Awake создаёт UI через PixelUi. Controller реагирует на кнопки; SettingsMenu читает/сохраняет PlayerPrefs.
+При загрузке сцены `LocalizedLabel` применяет английские ключи StringTable. Кнопки вызывают `MainMenuController` через persistent-события. `SettingsMenu.Start` скрывает `SettingsDim` и применяет `PlayerPrefs`. New Game грузит `SampleScene` в Single-режиме; Settings открывает панель; Exit останавливает Play Mode или завершает приложение.
 
 ## 3. Основные компоненты
 
-MainMenuBootstrap, MainMenuController, SettingsMenu, PixelUi, EventSystem и InputSystemUIInputModule.
+- `MainMenuCanvas` — Canvas (Screen Space Overlay), CanvasScaler (Scale With Screen Size 640×360, Match Height), GraphicRaycaster.
+- `MenuRoot` — VerticalLayoutGroup с `Title`, `StartButton`, `SettingsButton`, `ExitButton`.
+- `SettingsDim` — скрытая панель с `SettingsTitle`, `VolumeLabel`, `VolumeSlider`, `FullscreenButton`, `BackButton`.
+- `Menu` — объект с `MainMenuController` и `SettingsMenu`.
+- `EventSystem` — EventSystem + InputSystemUIInputModule.
+- `MainMenuController`, `SettingsMenu`, `LocalizedLabel`, `GameText` — логика и текст.
+- Шрифт `Assets/Settings/UI/PixelFont.asset`; белый спрайт `Assets/Art/UI/WhitePixel.png`.
 
 ## 4. Взаимодействие скриптов
 
-Bootstrap назначает Controller.Initialize, Settings.Bind и события. Start полностью загружает SampleScene; не восстанавливает RPG-прогресс.
+`MainMenuController.OnStart` проверяет `gameSceneName` и вызывает `SceneManager.LoadScene`. `OnSettings` вызывает `SettingsMenu.Show`. `OnExit` завершает приложение. `SettingsMenu` читает/пишет `PlayerPrefs` и обновляет подпись через `GameText`. `LocalizedLabel` обновляет статические подписи при смене языка. `BattleTransition.ReturnToMainMenu` просто загружает эту сцену; меню не восстанавливает прогресс.
 
 ## 5. Последовательность событий
 
-MainMenu → создание Canvas/кнопок → New Game: свежая игра; Settings: панель/настройки; Exit: остановка Play или Quit.
+MainMenu → LocalizedLabel применяет ключи → SettingsMenu.Start скрывает панель → New Game: Single-загрузка `SampleScene`; Settings: `SettingsDim.SetActive(true)` + перечитывание настроек; Back: скрытие; Exit: остановка/Quit.
 
 ## 6. Настраиваемые параметры
 
-gameTitle, gameSceneName; громкость 0…1, fullscreen bool. PlayerPrefs ключи FalseMemory.Volume/Fullscreen. PixelUi масштаб max(1,floor(Screen.height/360)).
+- `MainMenuController.Game Scene Name` = `SampleScene`; `Settings Menu` = компонент на `Menu`.
+- `SettingsMenu.Root` = `SettingsDim`; `Volume Slider`; `Fullscreen Label`.
+- Громкость 0…1 (`FalseMemory.Volume`), fullscreen bool (`FalseMemory.Fullscreen`).
+- Цвета/размеры — в компонентах сцены; текст — в StringTable.
 
 ## 7. Использование в Unity
 
-Запускать MainMenu. UI появляется в Play, не нужно вручную создавать вторую копию. Нужен Bootstrap, доступная SampleScene, TMP/Input System и шрифт Resources.
+Откройте `Assets/Scenes/MainMenu.unity` и запустите Play. Ничего создавать вручную не нужно: Canvas, кнопки, панель и EventSystem уже в сцене. Для новой кнопки добавьте объект в `MenuRoot`, назначьте `Button.onClick` на метод контроллера и добавьте `LocalizedLabel` с ключом. Не добавляйте второй Canvas/EventSystem.
 
 ## 8. Расширение
 
-Новые команды назначать контроллеру и Bootstrap. Их подписи добавлять в английскую StringTable и получать через GameText; статические TMP-подписи связывать LocalizedLabel. Изменение палитры/строительных функций — PixelUi. Систему сохранений прогресса проектировать отдельно.
+Новые команды — методы `MainMenuController` + persistent-событие кнопки. Новые подписи — запись в StringTable и ключ в `LocalizedLabel`. Новые настройки — поля `SettingsMenu` + элементы панели. Палитра/шрифт меняются в компонентах сцены, а не в удалённой `PixelUi`.
 
 ## 9. Ограничения и проверки
 
-Настройки — существующее локальное сохранение предпочтений, не HP/MP/EXP. Меню не пересчитывает масштаб при resize. Start из поражения покрыт тестом; звук/fullscreen/Exit в сборке не проверены.
+- Настройки — локальные `PlayerPrefs`, не сохранение HP/MP/EXP.
+- Смена громкости/fullscreen и Exit в standalone-сборке вручную не проверялись.
+- PlayMode `LocalizationFlowTests` проверяет английские подписи, открытие/закрытие Settings, Back/New Game; EditMode 82/82 и PlayMode 42/42 пройдены 2026-10-25.
+- `MainMenuBootstrap` и `PixelUi` удалены; история остаётся в Git.
 
-Первичная документация — 2026-10-11, актуализация — 2026-10-12. Отдельные методы и поля см. в [указателе скриптов](../README.md#описания-скриптов).
-
-2026-10-12 — меню и Settings читают GameText/LocalizedLabel; Fullscreen: On/Off берутся из таблицы. В PixelUi отключён extraPadding bitmap-шрифта, чтобы не появлялись фрагменты соседних букв. Проверены открытие Settings/Back/New Game и геометрия/символы в четырёх разрешениях. Переключение fullscreen, изменение громкости и Exit в standalone не проверялись заново. Результаты и снимки: [EnglishLocalization](../EnglishLocalization.md), устройство текста: [LocalizationSystem](LocalizationSystem.md).
+См. также [SceneComposition](SceneComposition.md), [MainMenuController](../Scripts/UI/MainMenuController.md), [SettingsMenu](../Scripts/UI/SettingsMenu.md), [LocalizationSystem](LocalizationSystem.md).

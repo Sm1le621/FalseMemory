@@ -54,3 +54,5 @@ SampleScene → Play → I. Наведите Potion, пустую ячейку �
 ## Git
 
 Начало на чистой `stas_megamosk_build`, HEAD `8ac8856`. В коммит входят только реализация, SampleScene, редкости6 прежних ассетов, тесты/.meta, документация и доказательства. Кеш шрифта/Temp/Library/посторонние файлы исключены. Сообщение `feat: redesign inventory with character equipment and rarity tooltips`; hash/количество файлов сообщаются в итоговом ответе после коммита. **Not pushed — waiting for user command.**
+
+2026-10-25 — редакторная перестройка `BuildFantasyLayout`/`InventoryWindow.Layout.cs` удалена; текущее окно и все ссылки сохранены объектами `SampleScene`. Схема: [SceneComposition](Systems/SceneComposition.md).

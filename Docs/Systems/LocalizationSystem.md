@@ -34,7 +34,7 @@ GameText.Get("inventory.use") возвращает Use. GameText.Get("resources.
 
 ## UI, предметы и будущие диалоги
 
-Статический TMP объект: LocalizedLabel с key, либо LocalizedLabel.Bind(text,key) при создании. Он обновляется OnEnable/LanguageChanged и правильно отписывается. Существующие шрифты/размеры/цвета сохранены. Динамические строки HPMP/EXP/бой/количество создают прежние игровые контроллеры через GameText; не ставить статический binding на такое поле.
+Статический TMP объект: компонент `LocalizedLabel` с полем `key` в сцене (статический `Bind` удалён вместе с `MainMenuBootstrap`). Он обновляется OnEnable/LanguageChanged и правильно отписывается. Существующие шрифты/размеры/цвета сохранены. Динамические строки HPMP/EXP/бой/количество создают прежние игровые контроллеры через GameText; не ставить статический binding на такое поле.
 
 ItemData.LocalizedName/LocalizedDescription используют id+.name/.description, например item.iron_sword.name. Старые английские displayName/description сохранены как fallback; таблица — перевод. BattleUnit/BattleSpell имеют localizationId (unit.player/unit.skeleton, spell.fire/spell.heal) и LocalizedName. Эти новые ключи не заменяют прежние ID/serialized-поля. Spell description подготовлены как текстовые записи; отдельного окна описания магии пока нет.
 
@@ -55,3 +55,5 @@ NPC/диалогов/квестов/торговли/дисковых сохра
 2026-10-12 —5.1 добавил5 устойчивых ключей: battle.victory_level_up_result, character.level_up/header_progress/max_level/next_experience. Значения English, параметры через GameText; старые ключи/ID сохранены. [Текущие проверки](../ProgressionStage5.md).
 
 Свежие результаты, промежуточные падения старых русских ожиданий, визуальные размеры и ручная приёмка — [EnglishLocalization](../EnglishLocalization.md). Исторические результаты инвентаря остаются в InventoryRedesign.md. После перевода требуется ручная визуальная проверка владельцем; этап4/переход к5 не объявляются Completed автоматически.
+
+2026-10-25 — статические подписи меню назначены `LocalizedLabel` в `MainMenu`; `Bind` больше не существует.
