@@ -1,0 +1,19 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "servers": {
+      "unity": {
+        "type": "local",
+        "command": [
+          "/home/sm1le/.unity/relay/relay_linux",
+          "--mcp",
+          "--project-path",
+          "/home/sm1le/Unity/FM2/FalseMemory"
+        ],
+        "timeout": {
+          "startup": 60000
+        }
+      }
+    }
+  }
+}
