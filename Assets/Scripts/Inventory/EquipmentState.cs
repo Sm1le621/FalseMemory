@@ -31,6 +31,16 @@ public sealed class EquipmentState
     {
         get {EnsureSize();var total=new ItemStatBonus();foreach(var item in slots)if(item!=null)total+=item.bonuses;return total;}
     }
+    public ItemStatBonus ScaledBonuses(CharacterAttributeValues values,CharacterAttributeRules rules)
+    {
+        var total=Bonuses;
+        for(int i=0;i<slots.Length;i++)
+        {
+            var item=slots[i];
+            if(item!=null && item.HasArmorScaling && RequirementsAllow(item,(EquipmentSlot)i))total+=item.armor.Bonuses(values,rules);
+        }
+        return total;
+    }
     private void EnsureSize(){if(slots==null || slots.Length<SlotCount)Array.Resize(ref slots,SlotCount);}
     private bool HandsAllow(EquipmentSlot target,ItemData incoming,EquipmentSlot? emptied=null)
     {

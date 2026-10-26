@@ -90,6 +90,13 @@ MonoBehaviour:
     - 1
     - 0.5
     - 0.2
+  holyBonusCurve:
+    attribute: 6
+    thresholds: 1e0000003c000000i
+    gains:
+    - 0.005
+    - 0.0025
+    - 0.001
   referenceValue: 10
   growthPerLevel:
     strength: 0

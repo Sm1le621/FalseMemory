@@ -25,7 +25,7 @@ public sealed partial class BattleFlowTests
             Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.False);
             yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
             yield return new WaitForSecondsRealtime(0.2f);
-            Assert.That(enemy.Health.currentHealth,Is.EqualTo(50));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
+            Assert.That(enemy.Health.currentHealth,Is.EqualTo(48));Assert.That(player.Health.currentHealth,Is.EqualTo(91));
             Assert.That(player.CurrentMP,Is.EqualTo(40));Assert.That(player.CurrentExperience,Is.Zero);
             Assert.That(player.Inventory.Summary,Does.Contain("3"));Assert.That(manager.Round,Is.EqualTo(2));
             Assert.That(portrait.anchoredPosition,Is.EqualTo(home));Assert.That(Time.timeScale,Is.EqualTo(timeScale));
@@ -44,7 +44,7 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.presentation.HitEffectsPlayed,Is.Zero);
         yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
         Assert.That(manager.presentation.HitEffectsPlayed,Is.EqualTo(1),"Only the enemy's successful answer has a hit effect");
-        Assert.That(player.Health.currentHealth,Is.EqualTo(96));Assert.That(enemy.Health.currentHealth,Is.EqualTo(60));
+        Assert.That(player.Health.currentHealth,Is.EqualTo(91));Assert.That(enemy.Health.currentHealth,Is.EqualTo(60));
     }
 
     [UnityTest] public IEnumerator AssignedClipUsesMixerAndRespectsExistingVolume()
@@ -89,7 +89,7 @@ public sealed partial class BattleFlowTests
         Assert.That(audio.GetComponent<AudioSource>().ignoreListenerVolume,Is.False);
         Assert.That(audio.GetComponent<AudioSource>().spatialBlend,Is.Zero);
         manager.TryPlayerAction(BattleAction.Attack);yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(manager.Enemy.Health.currentHealth,Is.EqualTo(50));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
+        Assert.That(manager.Enemy.Health.currentHealth,Is.EqualTo(48));Assert.That(player.Health.currentHealth,Is.EqualTo(91));
     }
 
     [UnityTest] public IEnumerator MagicVFXFinishesAndMissingVFXNeverBlocksResourceRules()
@@ -99,10 +99,10 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.vfx.EffectsPlayed,Is.EqualTo(1));Assert.That(manager.vfx.ActiveParticles,Is.GreaterThan(0));
         yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
         yield return new WaitForSecondsRealtime(0.5f);
-        Assert.That(manager.vfx.ActiveParticles,Is.Zero);Assert.That(enemy.Health.currentHealth,Is.EqualTo(41));
+        Assert.That(manager.vfx.ActiveParticles,Is.Zero);Assert.That(enemy.Health.currentHealth,Is.EqualTo(40));
         manager.vfx=null;manager.TryPlayerSpell(Heal(player));
         yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(player.CurrentMP,Is.EqualTo(26));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
+        Assert.That(player.CurrentMP,Is.EqualTo(26));Assert.That(player.Health.currentHealth,Is.EqualTo(91));
     }
 
     [UnityTest] public IEnumerator TargetDeathDuringWindupCancelsDamageAndManaSpend()
@@ -125,7 +125,7 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.True);
         Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.False);
         yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(enemy.Health.currentHealth,Is.EqualTo(50));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
+        Assert.That(enemy.Health.currentHealth,Is.EqualTo(48));Assert.That(player.Health.currentHealth,Is.EqualTo(91));
         Assert.That(manager.Round,Is.EqualTo(2));
     }
 

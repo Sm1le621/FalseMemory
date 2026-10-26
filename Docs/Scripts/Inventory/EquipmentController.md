@@ -1,5 +1,9 @@
 # EquipmentController
 
+## Изменение5.4 —2026-10-26
+
+BindRequirements проверяет и weapon, и armor через Calculate со статами остальных вещей. Кандидат и заменяемая вещь не оплачивают собственные требования. HandleEquip показывает локализованные требования и текущие значения для обоих типов. Исторические результаты ниже не являются результатами текущего запуска; см. [ClasslessStage54](../../ClasslessStage54.md).
+
 ## Текущее изменение5.3 —2026-10-26
 
 Awake дополнительно привязывает State.BindRequirements: для HasWeaponScaling проверяет weapon.MeetsRequirements(Attributes.Calculate(level,gearБезПроверяемогоПредмета)). Все Can/Try drag/bag-swap используют этот контракт State. HandleEquip при отказе показывает конкретные requirements/current через RequirementsText; предмет не расходуется. Старое ItemData без явного useWeaponScaling не получает нового Scaling.
@@ -65,3 +69,5 @@ BattleUnit читает новые EffectiveAttack/Defense/MagicAttack/MagicDefe
 2026-10-12 — 4.4: интеграция компонентов/ограничение фазы/команды окна.
 
 - 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.
+
+- 2026-10-26 — броня/Holy/рейтинговая защита подэтапа5.4; описание изменений приведено в начале документа.

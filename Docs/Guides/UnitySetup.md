@@ -1,5 +1,9 @@
 # Настройка существующего проекта в Unity
 
+## Подэтап5.4 —2026-10-26
+
+SampleScene содержит6 новыхPickup_Scaling_*Armor подTestLoot, Enemy категорииUndead, PlayerHuman. DefaultBattleRules useDiminishingDefense/K20; DefaultCharacterAttributesholycurve. Настройкаипримеры —[ClasslessStage54](../ClasslessStage54.md). НезапускатьEditorsetupвPlay; старыйконтентнезаменён.
+
 ## Подэтап5.3 —бесклассовая прокачка
 
 Существующий Player.CharacterAttributes использует обновлённый DefaultCharacterAttributes: classless=true, points1/level, MP40, soft caps, без AGI movement/автороста10 stats. Новые6 weapon assets/pickups созданы адресно через MCP/ClasslessProgressionSetup.ApplyStage53 вне Play на SampleScene; прежние ItemData и объекты сохранены. Для нового оружия обязателен useWeaponScaling=true, одного вложенного поля weapon недостаточно. Команда настройки повторно применяет баланс своих тестовых предметов; не запускать автоматически при каждом Refresh. [Подключение/ограничения](../ClasslessStage53.md).

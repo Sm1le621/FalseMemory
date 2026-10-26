@@ -50,9 +50,9 @@ public sealed partial class BattleFlowTests
         Assert.That(player.SpellCost(player.spells[0]),Is.EqualTo(7));Assert.That(manager.OpenMagicMenu(),Is.True);
         Assert.That(manager.ui.commandButtons[0].GetComponentInChildren<TextMeshProUGUI>().text,Does.Contain("7 MP"));
         Assert.That(manager.TryPlayerSpell(player.spells[0]),Is.True);yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(player.CurrentMP,Is.Zero);Assert.That(enemy.Health.currentHealth,Is.EqualTo(37));Assert.That(player.Health.currentHealth,Is.EqualTo(66));
+        Assert.That(player.CurrentMP,Is.Zero);Assert.That(enemy.Health.currentHealth,Is.EqualTo(37));Assert.That(player.Health.currentHealth,Is.EqualTo(61));
         player.RestoreMP(6);Assert.That(player.SpellCost(player.spells[1]),Is.EqualTo(5));
         Assert.That(manager.TryPlayerSpell(player.spells[1]),Is.True);yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(player.Health.currentHealth,Is.EqualTo(91));Assert.That(player.CurrentMP,Is.EqualTo(1));Assert.That(enemy.Health.currentHealth,Is.EqualTo(37));
+        Assert.That(player.Health.currentHealth,Is.EqualTo(81));Assert.That(player.CurrentMP,Is.EqualTo(1));Assert.That(enemy.Health.currentHealth,Is.EqualTo(37));
     }
 }

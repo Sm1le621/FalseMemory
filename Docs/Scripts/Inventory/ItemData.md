@@ -1,5 +1,9 @@
 # ItemData
 
+## Изменение5.4 —2026-10-26
+
+useArmorScaling=false/armor:ArmorScalingData и HasArmorScaling обеспечивают явный opt-in только для ItemCategory.Armor. Unity может материализовать вложенный класс старого ассета, поэтому одного armor!=null недостаточно. Прежние LeatherArmor/IronHelmet используют flat bonuses. Исторические результаты ниже не являются результатами текущего запуска; см. [ClasslessStage54](../../ClasslessStage54.md).
+
 ## Текущее изменение5.3 —2026-10-26
 
 Добавлены optional WeaponScalingData weapon и явный serialized bool useWeaponScaling=false. HasWeaponScaling требует флаг, category Weapon и непустые данные. Явный флаг обязателен: Unity может материализовать вложенное поле у старого ассета. Поэтому прежние IronSword/WoodenStaff сохраняют старые flat bonuses и ID. Новые6 weapon assets имеют флаг true и стабильные weapon.* ID.
@@ -79,3 +83,5 @@ Enum EquipmentSlot пока8 слотов; Off-Hand/двуручное прав�
 2026-10-12 — 4.1: общие определения и совместимость Potion.
 
 - 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.
+
+- 2026-10-26 — броня/Holy/рейтинговая защита подэтапа5.4; описание изменений приведено в начале документа.

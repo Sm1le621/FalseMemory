@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96fca164be50d2b4ba2d372df8f1fc64, type: 3}
   m_Name: DefaultBattleRules
   m_EditorClassIdentifier: FalseMemory.Runtime::BattleRules
+  useDiminishingDefense: 1
+  defenseRatingConstant: 20
   attackMultiplier: 1
   defenseMultiplier: 1
   minimumDamage: 1

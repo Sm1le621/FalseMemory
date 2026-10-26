@@ -879,6 +879,66 @@ MonoBehaviour:
     m_Key: weapon.sacredblade.description
     m_Metadata:
       m_Items: []
+  - m_Id: 5120827680342016
+    m_Key: armor.defense
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120827718090752
+    m_Key: battle.holy_component
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120827718090753
+    m_Key: scaling.type.holy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120828108161024
+    m_Key: armor.heavyplatearmor.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120828108161025
+    m_Key: armor.heavyplatearmor.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120828762472448
+    m_Key: armor.knightarmor.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120828762472449
+    m_Key: armor.knightarmor.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120829634887680
+    m_Key: armor.assassinarmor.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120829634887681
+    m_Key: armor.assassinarmor.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120830540857344
+    m_Key: armor.magerobes.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120830540857345
+    m_Key: armor.magerobes.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120831895617536
+    m_Key: armor.holyarmor.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120831895617537
+    m_Key: armor.holyarmor.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120832495403008
+    m_Key: armor.battlemagearmor.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120832495403009
+    m_Key: armor.battlemagearmor.description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -1,5 +1,9 @@
 # CharacterAttributeRules
 
+## Изменение5.4 —2026-10-26
+
+holyBonusCurve — отдельная настраиваемая WIS-кривая: до30 .005/point,30…60 .0025,после60 .001; HolyBonus вычитает значение reference10 и ограничивает минимумом0. WIS10/20/30/40/50/60/80/99 дают0/5/10/12.5/15/17.5/19.5/21.4%. WIS не даёт MP. Это коэффициент дополнительного канала только против отмеченных целей. Исторические результаты ниже не являются результатами текущего запуска; см. [ClasslessStage54](../../ClasslessStage54.md).
+
 ## Текущее изменение5.3 —2026-10-26
 
 Новый classlessProgression по умолчанию false для совместимости, в DefaultCharacterAttributes true. attributePointsPerLevel1/referenceMana40/scalingReferencePoints50/maximumWeaponScalingBonus1.5; scalingGrades None/E/D/C/B/A/S =0/.1/.2/.4/.6/.8/1. SoftCaps содержит10 AttributeSoftCapCurve. Curve возвращает профиль/безопасный default, GradeCoefficient проверяет enum/NaN, ScalingScore нормирует интеграл/первую marginal gain/50. Delta при classless использует интеграл относительно reference10. HP — VIT-кривая8/4/1, MP — только INT4/2/.5, одно AwayFromZero округление; legacy-линейные HP5/MP INT+WIS сохранены только при false. MovementAdjustment всегда0, default максимум экономииMP=.3. В назначенном профиле growthPerLevel0/agilityMovement0: автоматических primary-бонусов за уровень больше нет. Все приведённые ниже старые линейные примеры относятся к legacy-режиму.
@@ -55,3 +59,5 @@ Create → FalseMemory → Character Attribute Rules. Созданный чер�
 - 2026-10-12 — добавлены десять primary attributes, настраиваемые формулы и проверки данных; игровая интеграция — отдельный следующий подэтап.
 
 - 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.
+
+- 2026-10-26 — броня/Holy/рейтинговая защита подэтапа5.4; описание изменений приведено в начале документа.

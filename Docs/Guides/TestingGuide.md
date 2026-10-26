@@ -1,5 +1,9 @@
 # Как проверять FalseMemory
 
+## Подэтап5.4 —2026-10-26
+
+Запуститьполные Edit/Playassemblies, отдельноArmorHolyTests/ArmorHolyFlowTests. Вручную проверитьArmorTooltip/equipприrequirements, базовыйAttack12/ответ9/Defend5, HolyнаUndeadприWIS30иотсутствиеHolyнаHeal. Новаяформуладелаетисторическиечисла10/4/19неактуальными. [Результаты](../ClasslessStage54.md).
+
 ## Подэтап5.3 —актуальные проверки2026-10-26
 
 Edit: ClasslessScalingTests проверяет все soft caps до/на/после порога, заданныеHP/MP, max99/points/reentry, ранги и requirements без самофинансирования/потерь, явное opt-in старых предметов. Play: ClasslessScalingFlowTests проверяет реальный уровень/распределение/оружие/бой/возврат/Tooltip; остальные сценарии адаптированы к стартовым40MP и росту через свободные очки. Финальные114 Edit/59 Play прошли; не считать этим проверенными будущиеArmor/Holy/learning/Character. [Job IDs, первый неуспешный прогон и обычный Play](../ClasslessStage53.md).

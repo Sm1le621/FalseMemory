@@ -10,7 +10,13 @@ public sealed class EquipmentController : MonoBehaviour
     private void Awake()
     {
         unit=GetComponent<BattleUnit>();inventory=GetComponent<BattleInventory>();window=GetComponent<InventoryWindow>();
-        State.BindRequirements((item,gear)=>!item.HasWeaponScaling || (unit.Attributes!=null && item.weapon.MeetsRequirements(unit.Attributes.Calculate(unit.level,gear))));
+        State.BindRequirements((item,gear)=>
+        {
+            if(!item.HasWeaponScaling && !item.HasArmorScaling)return true;
+            if(unit.Attributes==null)return false;
+            var values=unit.Attributes.Calculate(unit.level,gear);
+            return item.HasWeaponScaling?item.weapon.MeetsRequirements(values):item.armor.MeetsRequirements(values);
+        });
     }
     private void OnEnable()
     {
@@ -40,7 +46,7 @@ public sealed class EquipmentController : MonoBehaviour
     private void HandleEquip(int index,EquipmentSlot? target)
     {
         bool ok=TryEquip(index,target);var item=index>=0 && index<InventoryState.Capacity?inventory.State.GetSlot(index).Item:null;
-        window.ShowMessage(ok?GameText.Get("equipment.equipped"):item!=null && item.HasWeaponScaling?
+        window.ShowMessage(ok?GameText.Get("equipment.equipped"):item!=null && (item.HasWeaponScaling || item.HasArmorScaling)?
             GameText.Get("scaling.requirements_failed",ItemPresentation.RequirementsText(item,unit)):GameText.Get("equipment.equip_failed"));window.Refresh();
     }
     private void HandleUnequip(EquipmentSlot slot)

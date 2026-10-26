@@ -1,5 +1,9 @@
 # BattleCalculator
 
+## Изменение5.4 —2026-10-26
+
+PhysicalDamage/MagicalDamage при rules.useDiminishingDefense используют Mitigate(power, defense, rules): power × K / (K + defense × соответствующий defenseMultiplier), K=20 в DefaultBattleRules. Для physical power=ATK×attackMultiplier, для magic power=spell.power+MATK×magicAttackMultiplier. Затем минимум, crit/Defend и одно округление вверх. Mitigate защищает отрицательные/NaN параметры. Legacy-флаг false оставляет вычитание для старых независимых профилей. Новые примеры: ATK15/DEF5=12; ATK12/DEF8=9, с Defend=5; Fire10+MATK12/MDEF3=20. Следующие старые примеры относятся только к legacy-профилю. Исторические результаты ниже не являются результатами текущего запуска; см. [ClasslessStage54](../../ClasslessStage54.md).
+
 ## 1. Название и назначение
 
 **Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleCalculator.cs.
@@ -45,3 +49,5 @@ rules/random null вызывают ArgumentNullException в расчётах, п
 - 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
 
 - 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
+
+- 2026-10-26 — броня/Holy/рейтинговая защита подэтапа5.4; описание изменений приведено в начале документа.

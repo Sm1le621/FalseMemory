@@ -45,6 +45,9 @@ public class ItemData : ScriptableObject
     public WeaponScalingData weapon;
     public bool useWeaponScaling;
     public bool HasWeaponScaling => useWeaponScaling && category==ItemCategory.Weapon && weapon!=null;
+    public bool useArmorScaling;
+    public ArmorScalingData armor;
+    public bool HasArmorScaling => useArmorScaling && category==ItemCategory.Armor && armor!=null;
     public string LocalizedName=>GameText.Content(id+".name",displayName);
     public string LocalizedDescription=>GameText.Content(id+".description",description);
     public bool IsEquipment => category==ItemCategory.Weapon || category==ItemCategory.Armor || category==ItemCategory.Accessory;

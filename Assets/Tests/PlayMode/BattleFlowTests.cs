@@ -91,11 +91,11 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.TryPlayerAction(BattleAction.Attack), Is.True);
         Assert.That(manager.TryPlayerAction(BattleAction.Attack), Is.False);
         yield return WaitUntil(() => manager.State == BattleState.AwaitingPlayer);
-        Assert.That(enemy.Health.currentHealth, Is.EqualTo(50));
-        Assert.That(health.currentHealth, Is.EqualTo(96));
+        Assert.That(enemy.Health.currentHealth, Is.EqualTo(48));
+        Assert.That(health.currentHealth, Is.EqualTo(91));
         Assert.That(manager.TryPlayerAction(BattleAction.Defend), Is.True);
         yield return WaitUntil(() => manager.State == BattleState.AwaitingPlayer);
-        Assert.That(health.currentHealth, Is.EqualTo(94), "Defend halves the enemy's physical attack");
+        Assert.That(health.currentHealth, Is.EqualTo(86), "Defend halves the enemy's physical attack");
         Assert.That(player.IsDefending, Is.False, "Defend expires at next player turn");
         float deadline = Time.realtimeSinceStartup + 15f;
         while (manager.State != BattleState.Victory)
@@ -166,9 +166,9 @@ public sealed partial class BattleFlowTests
             InputSystem.QueueStateEvent(keyboard, new KeyboardState(Key.Enter));
             yield return WaitUntil(() => enemy.Health.currentHealth < 60);
             yield return WaitUntil(() => manager.State == BattleState.AwaitingPlayer);
-            Assert.That(enemy.Health.currentHealth, Is.EqualTo(50));
+            Assert.That(enemy.Health.currentHealth, Is.EqualTo(48));
             yield return new WaitForSecondsRealtime(0.4f);
-            Assert.That(enemy.Health.currentHealth, Is.EqualTo(50), "Holding Enter must not submit a second turn");
+            Assert.That(enemy.Health.currentHealth, Is.EqualTo(48), "Holding Enter must not submit a second turn");
         }
         finally { InputSystem.RemoveDevice(keyboard); }
     }

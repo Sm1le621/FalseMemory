@@ -944,6 +944,70 @@ MonoBehaviour:
     m_Localized: Scales with its listed attributes.
     m_Metadata:
       m_Items: []
+  - m_Id: 5120827680342016
+    m_Localized: 'Physical Defense: {0} -> {1}
+
+      Magic Defense: {2} -> {3}
+
+      Evasion: {4:0.#}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120827718090752
+    m_Localized: ' (+{0} Holy)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120827718090753
+    m_Localized: Holy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120828108161024
+    m_Localized: Heavy Plate Armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120828108161025
+    m_Localized: Defensive equipment shaped by your attributes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120828762472448
+    m_Localized: Knight Armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120828762472449
+    m_Localized: Defensive equipment shaped by your attributes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120829634887680
+    m_Localized: Assassin Armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120829634887681
+    m_Localized: Defensive equipment shaped by your attributes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120830540857344
+    m_Localized: Mage Robes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120830540857345
+    m_Localized: Defensive equipment shaped by your attributes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120831895617536
+    m_Localized: Holy Armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120831895617537
+    m_Localized: Defensive equipment shaped by your attributes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120832495403008
+    m_Localized: Battlemage Armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5120832495403009
+    m_Localized: Defensive equipment shaped by your attributes.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

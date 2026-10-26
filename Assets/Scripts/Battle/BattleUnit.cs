@@ -33,6 +33,9 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
     public SpriteAnimationSet visualAnimations;
     public Color spriteColor = Color.white;
     public bool flipInBattle;
+    public CreatureCategory creatureCategories;
+    [Range(0,1)] public float holyResistance;
+    public BattleDamageResult LastDamageDealt {get;private set;}
     public CharacterGrowthRules growthRules;
     public event System.Action ProgressChanged;
     public event System.Action StatsChanged;
@@ -45,10 +48,10 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
     public Health Health => GetComponent<Health>();
     public BattleInventory Inventory => GetComponent<BattleInventory>();
     public EquipmentController Equipment => GetComponent<EquipmentController>();
-    private ItemStatBonus EquipmentBonuses => Equipment!=null?Equipment.State.Bonuses:new ItemStatBonus();
+    private ItemStatBonus EquipmentBonuses => Equipment!=null?Equipment.State.ScaledBonuses(PrimaryValues,UsesPrimaryAttributes?Attributes.rules:null):new ItemStatBonus();
     public CharacterAttributes Attributes => GetComponent<CharacterAttributes>();
     public bool UsesPrimaryAttributes => Attributes!=null && Attributes.rules!=null;
-    public CharacterAttributeValues EquipmentAttributes => EquipmentBonuses.attributes;
+    public CharacterAttributeValues EquipmentAttributes => Equipment!=null?Equipment.State.Bonuses.attributes:new CharacterAttributeValues();
     public CharacterAttributeValues PrimaryValues => UsesPrimaryAttributes?Attributes.Calculate(growthRules!=null?Mathf.Clamp(level,1,growthRules.MaximumLevel):Mathf.Max(1,level),EquipmentAttributes):new CharacterAttributeValues();
     private ItemStatBonus LevelBonuses => !UsesPrimaryAttributes && growthRules!=null?growthRules.Bonuses(level):new ItemStatBonus();
     private int Derived(int baseValue,int growth,int gear,DerivedAttributeStat stat)
@@ -61,6 +64,16 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
         EquippedWeapon.MeetsRequirements(Attributes.Calculate(level,Equipment.State.AttributesExcluding(EquipmentSlot.Weapon)));
     private int WeaponDamage => EquippedWeapon.Damage(PrimaryValues, Attributes.rules);
     public bool MagicalWeaponAttack => UsesWeaponScaling && EquippedWeapon.damageType==WeaponDamageType.Magic;
+    public bool HolyWeaponAttack => UsesWeaponScaling && EquippedWeapon.damageType==WeaponDamageType.Holy;
+    public int IntrinsicWeaponHoly => UsesWeaponScaling?EquippedWeapon.HolyDamage(PrimaryValues,Attributes.rules):0;
+    public double HolyBonus => UsesPrimaryAttributes && Attributes.rules.classlessProgression?Attributes.rules.HolyBonus(PrimaryValues):0;
+    public BattleDamageResult DealDamage(BattleUnit target,int basis,int intrinsicHoly=0,bool pureHoly=false)
+    {
+        if(target==null || !target.IsAlive || !IsAlive)return default;
+        LastDamageDealt=BattleDamage.Compose(basis,HolyBonus,target.creatureCategories,target.holyResistance,intrinsicHoly,pureHoly);
+        if(LastDamageDealt.Total>0)target.Health.TakeDamage(LastDamageDealt.Total);
+        return LastDamageDealt;
+    }
     public int BasicAttackPower => MagicalWeaponAttack?EffectiveMagicAttack:EffectiveAttack;
     public int EffectiveAttack => UsesWeaponScaling && !MagicalWeaponAttack
         ? ItemStatBonus.Sum(WeaponDamage,EquipmentBonuses.attack)

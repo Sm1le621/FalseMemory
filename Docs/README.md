@@ -1,5 +1,9 @@
 # Документация FalseMemory
 
+## Броня и Holy5.4 —2026-10-26
+
+[Результаты5.4](ClasslessStage54.md), [ArmorScalingSystem](Systems/ArmorScalingSystem.md), [HolyDamageSystem](Systems/HolyDamageSystem.md). Новые документы скриптов: [ArmorScalingData](Scripts/Inventory/ArmorScalingData.md), [BattleDamage](Scripts/Battle/BattleDamage.md), [ArmorHolySetup](Scripts/Editor/ArmorHolySetup.md), [Edittests](Scripts/Tests/EditMode/ArmorHolyTests.md), [Playtests](Scripts/Tests/PlayMode/ArmorHolyFlowTests.md).
+
 ## Бесклассовая прогрессия5.3 —2026-10-26
 
 [ClasslessStage53](ClasslessStage53.md), [AttributeScalingSystem](Systems/AttributeScalingSystem.md), [WeaponScalingSystem](Systems/WeaponScalingSystem.md). Классов нет;10 stats/soft caps/свободные points/новое оружие расширяют прежние системы. Последующие Armor/Holy/learning/Character — по актуальной верхней части Roadmap.

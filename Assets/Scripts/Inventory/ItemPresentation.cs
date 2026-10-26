@@ -66,7 +66,7 @@ public static class ItemPresentation
         var lines=new List<string>{"<b>"+Escape(item.LocalizedName)+"</b>"+(count>1?"  ×"+count:""),
             "<color=#"+ColorUtility.ToHtmlStringRGB(RarityColor(item.rarity))+">"+GameText.Get("rarity."+item.rarity.ToString().ToLowerInvariant())+"</color>  •  "+TypeName(item)};
         string bonuses=BonusText(item);if(bonuses.Length>0)lines.Add(bonuses);
-        if(item.HasWeaponScaling)lines.Add(ScalingText(item,viewer));
+        if(item.HasWeaponScaling || item.HasArmorScaling)lines.Add(ScalingText(item,viewer));
         if(!string.IsNullOrWhiteSpace(item.LocalizedDescription))lines.Add("\n"+Escape(item.LocalizedDescription));
         if(item.category==ItemCategory.Weapon && item.twoHanded)lines.Add(GameText.Get("equipment.two_handed"));
         lines.Add("\n"+GameText.Get("item.level", Mathf.Max(1,item.requiredLevel)));
@@ -76,7 +76,8 @@ public static class ItemPresentation
     }
     public static string ScalingText(ItemData item,BattleUnit viewer)
     {
-        if(item==null || !item.HasWeaponScaling)return "";
+        if(item==null || (!item.HasWeaponScaling && !item.HasArmorScaling))return "";
+        if(item.HasArmorScaling)return ArmorText(item,viewer);
         var weapon=item.weapon;var lines=new List<string>();
         var values=viewer!=null && viewer.UsesPrimaryAttributes?
             viewer.Attributes.Calculate(viewer.level,(viewer.Equipment!=null?viewer.Equipment.State.AttributesExcluding(EquipmentSlot.Weapon):new CharacterAttributeValues())+item.bonuses.attributes):new CharacterAttributeValues();
@@ -92,16 +93,32 @@ public static class ItemPresentation
     }
     public static string RequirementsText(ItemData item,BattleUnit viewer)
     {
-        if(item==null || !item.HasWeaponScaling)return GameText.Get("scaling.none");
-        var weapon=item.weapon;
-        var available=viewer!=null && viewer.Attributes!=null?viewer.Attributes.Calculate(viewer.level,viewer.Equipment!=null?viewer.Equipment.State.AttributesExcluding(EquipmentSlot.Weapon):new CharacterAttributeValues()):new CharacterAttributeValues();
+        if(item==null || (!item.HasWeaponScaling && !item.HasArmorScaling))return GameText.Get("scaling.none");
+        var requirementsValues=item.HasWeaponScaling?item.weapon.requirements:item.armor.requirements;
+        var slot=item.HasWeaponScaling?EquipmentSlot.Weapon:item.equipmentSlot;
+        var available=viewer!=null && viewer.Attributes!=null?viewer.Attributes.Calculate(viewer.level,viewer.Equipment!=null?viewer.Equipment.State.AttributesExcluding(slot):new CharacterAttributeValues()):new CharacterAttributeValues();
         var requirements=new List<string>();
         for(int i=0;i<CharacterAttributeValues.Count;i++)
         {
-            var attribute=(CharacterAttribute)i;int required=weapon.requirements.Get(attribute);
+            var attribute=(CharacterAttribute)i;int required=requirementsValues.Get(attribute);
             if(required>0)requirements.Add(GameText.Get("scaling.requirement",GameText.Get("attribute."+attribute.ToString().ToLowerInvariant()+".abbr"),required,available.Get(attribute)));
         }
         return requirements.Count>0?string.Join(" / ",requirements):GameText.Get("scaling.none");
+    }
+    private static string ArmorText(ItemData item,BattleUnit viewer)
+    {
+        var values=viewer!=null && viewer.UsesPrimaryAttributes?viewer.Attributes.Calculate(viewer.level,
+            (viewer.Equipment!=null?viewer.Equipment.State.AttributesExcluding(item.equipmentSlot):new CharacterAttributeValues())+item.bonuses.attributes):new CharacterAttributeValues();
+        var bonus=item.armor.Bonuses(values,viewer!=null && viewer.UsesPrimaryAttributes?viewer.Attributes.rules:null);
+        var grades=new List<string>();
+        foreach(var entry in item.armor.physicalScaling ?? System.Array.Empty<AttributeScalingEntry>())
+            if(entry.grade!=ScalingGrade.None)grades.Add(GameText.Get("attribute."+entry.attribute.ToString().ToLowerInvariant()+".abbr")+": "+entry.grade);
+        foreach(var entry in item.armor.magicScaling ?? System.Array.Empty<AttributeScalingEntry>())
+            if(entry.grade!=ScalingGrade.None)grades.Add(GameText.Get("attribute."+entry.attribute.ToString().ToLowerInvariant()+".abbr")+": "+entry.grade);
+        foreach(var entry in item.armor.evasionScaling ?? System.Array.Empty<AttributeScalingEntry>())
+            if(entry.grade!=ScalingGrade.None)grades.Add(GameText.Get("attribute."+entry.attribute.ToString().ToLowerInvariant()+".abbr")+": "+entry.grade);
+        return GameText.Get("armor.defense",item.armor.physicalDefense,bonus.defense,item.armor.magicDefense,bonus.magicDefense,bonus.evasion*100)+"\n"+
+            GameText.Get("scaling.grades",grades.Count>0?string.Join(" / ",grades):GameText.Get("scaling.none"))+"\n"+GameText.Get("scaling.requires",RequirementsText(item,viewer));
     }
     private static string Escape(string text)=>string.IsNullOrEmpty(text)?"":text.Replace("<","‹").Replace(">","›");
 }

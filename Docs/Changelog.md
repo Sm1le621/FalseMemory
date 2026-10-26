@@ -1,5 +1,9 @@
 # История значимых изменений FalseMemory
 
+## 2026-10-26 —5.4 Armor Scaling и Holy
+
+Добавлены6 тестовых Chest-предметов/пикапов, отдельные armorgrades/requirements/evasion, diminishingDefenseK20, WIS HolyтолькоUndead/Unholy, HolyResistance иcomponentresult. Старыеgear/GUID/сцены сохранены. Сценарные ожидания актуализированы под12/9/20 урона, новыеEdit/Playконтракты добавлены. Результаты иограничения —[ClasslessStage54](ClasslessStage54.md).
+
 ## 2026-10-26 —подэтап5.3, рабочая копия
 
 Добавлены кусочные soft caps10 stats, очки1/level, база≤99, MP40/INT-кривая, Weapon Scaling S–E/requirements и6 новых ItemData/pickups. AGI больше не ускоряет ходьбу, старые bonuses не начисляются второй раз. Через MCP обновлены DefaultCharacterAttributes/English StringTable и существующая SampleScene. Старые предметы защищены явным useWeaponScaling=false; исправлена обнаруженная регрессия вложенного поля Unity. Tests адаптированы к новой экономике и дополнены; итоговые результаты фиксируются в [ClasslessStage53](ClasslessStage53.md). Armor/Holy/abilities/Character ещё отсутствуют; push не выполняется.

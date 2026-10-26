@@ -1,7 +1,7 @@
 using System;
 
 public enum ScalingGrade { None, E, D, C, B, A, S }
-public enum WeaponDamageType { Physical, Magic }
+public enum WeaponDamageType { Physical, Magic, Holy }
 
 [Serializable]
 public struct AttributeScalingEntry
@@ -17,6 +17,7 @@ public sealed class WeaponScalingData
     public string weaponType = "sword";
     public WeaponDamageType damageType;
     public int baseDamage = 1;
+    public int holyBaseDamage;
     public CharacterAttributeValues requirements;
     public AttributeScalingEntry[] scaling = Array.Empty<AttributeScalingEntry>();
 
@@ -27,10 +28,14 @@ public sealed class WeaponScalingData
         return true;
     }
     public int Damage(CharacterAttributeValues values, CharacterAttributeRules rules)
+        => Scale(baseDamage,values,scaling,rules);
+    public int HolyDamage(CharacterAttributeValues values, CharacterAttributeRules rules)
+        => Scale(holyBaseDamage,values,scaling,rules);
+    public static int Scale(int basis,CharacterAttributeValues values,AttributeScalingEntry[] entries,CharacterAttributeRules rules)
     {
         double bonus = 0;
         var used = new bool[CharacterAttributeValues.Count];
-        foreach (var entry in scaling ?? Array.Empty<AttributeScalingEntry>())
+        foreach (var entry in entries ?? Array.Empty<AttributeScalingEntry>())
         {
             int index = (int)entry.attribute;
             if (index < 0 || index >= used.Length || used[index] || rules == null) continue;
@@ -38,6 +43,6 @@ public sealed class WeaponScalingData
             bonus += rules.GradeCoefficient(entry.grade) * rules.ScalingScore(values, entry.attribute);
         }
         bonus = Math.Max(0, Math.Min(rules != null ? Math.Max(0, rules.maximumWeaponScalingBonus) : 0, bonus));
-        return (int)Math.Min(int.MaxValue, Math.Round(Math.Max(0, baseDamage) * (1 + bonus), MidpointRounding.AwayFromZero));
+        return (int)Math.Min(int.MaxValue, Math.Round(Math.Max(0, basis) * (1 + bonus), MidpointRounding.AwayFromZero));
     }
 }

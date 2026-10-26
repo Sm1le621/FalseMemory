@@ -39,7 +39,7 @@ public sealed partial class BattleFlowTests
         for(int i=1;i<8;i++)Assert.That(observed[i]-observed[i-1],Is.EqualTo(1f/16f).Within(tolerance),"Sprite interval "+i);
         Assert.That(finished-first,Is.EqualTo(.5f).Within(tolerance*2f));
         Assert.That(changes,Is.EqualTo(1));Assert.That(contact,Is.EqualTo(4));
-        Assert.That(enemy.Health.currentHealth,Is.EqualTo(50));Assert.That(player.CurrentMP,Is.EqualTo(40));
+        Assert.That(enemy.Health.currentHealth,Is.EqualTo(48));Assert.That(player.CurrentMP,Is.EqualTo(40));
     }
 
     [UnityTest]
@@ -66,7 +66,7 @@ public sealed partial class BattleFlowTests
         }
         Assert.That(manager.State,Is.EqualTo(BattleState.AwaitingPlayer));
         Assert.That(heroAttack.Count,Is.GreaterThanOrEqualTo(6));Assert.That(foeAttack.Count,Is.GreaterThanOrEqualTo(6));
-        Assert.That(enemy.Health.currentHealth,Is.EqualTo(50));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
+        Assert.That(enemy.Health.currentHealth,Is.EqualTo(48));Assert.That(player.Health.currentHealth,Is.EqualTo(91));
         Assert.That(player.CurrentMP,Is.EqualTo(40));Assert.That(manager.presentation.IsAnimating,Is.False);
         Assert.That(player.visualAnimations.idle,Does.Contain(manager.ui.playerPortrait.sprite));
         Assert.That(enemy.visualAnimations.idle,Does.Contain(manager.ui.enemyPortrait.sprite));

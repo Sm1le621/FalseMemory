@@ -1,5 +1,9 @@
 # BattleUnit
 
+## Изменение5.4 —2026-10-26
+
+creatureCategories — flags Human/Beast/Undead/Unholy; holyResistance 0…1. SampleScene Player=Human, Enemy=Undead. HolyBonus читает WIS-кривую classless rules. IntrinsicWeaponHoly читает отдельную scaled Holy-базу оружия; HolyWeaponAttack определяет чистый канал. DealDamage(target,basis,intrinsicHoly,pureHoly) проверяет живую цель, компонует BattleDamageResult, вызывает Health.TakeDamage ровно один раз, хранит LastDamageDealt и возвращает компоненты. EquipmentBonuses теперь ScaledBonuses, но EquipmentAttributes читает raw Bonuses.attributes: рекурсии primary→armor→primary нет. Исторические результаты ниже не являются результатами текущего запуска; см. [ClasslessStage54](../../ClasslessStage54.md).
+
 ## Текущее изменение5.3 —2026-10-26
 
 EquippedWeapon возвращает только ItemData.HasWeaponScaling; UsesWeaponScaling дополнительно проверяет classless profile и требования без primary-бонусов самого оружия. BasicAttackPower выбирает physical/magic канал. Оружейный Damage заменяет базовый Attack соответствующего канала и глобальную STR/DEX/MAG-поправку, direct flat gear остаётся отдельным бонусом. MaxMP в classless использует referenceMana40 вместо serialized maxMP30; HP baseline100 прежний. RefreshDerivedStats/Awake вызывают SynchronizeLevel; изменения вместимости не лечат. Старый рост действует только в legacy-ветке. MovementAdjustment от AGI всегда0.
@@ -69,3 +73,5 @@ Health (RequireComponent), необязательные BattleInventory/Equipmen
 - 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
 
 - 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.
+
+- 2026-10-26 — броня/Holy/рейтинговая защита подэтапа5.4; описание изменений приведено в начале документа.

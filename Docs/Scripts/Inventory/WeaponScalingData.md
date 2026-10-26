@@ -1,5 +1,9 @@
 # WeaponScalingData
 
+## Изменение5.4 —2026-10-26
+
+WeaponDamageType дополнен Holy в конце enum без изменения старых индексов Physical/Magic. holyBaseDamage — отдельная база, HolyDamage(values,rules) масштабирует её теми же entries. Damage и HolyDamage используют общий Scale(basis,values,entries,rules): дубли stat игнорируются, коэффициенты/soft caps/округление и cap сохраняются. Не смешивает каналы и не применяет сопротивление: это делает BattleDamage. Исторические результаты ниже не являются результатами текущего запуска; см. [ClasslessStage54](../../ClasslessStage54.md).
+
 ## 1. Название и назначение
 
 Исходник: `Assets/Scripts/Inventory/WeaponScalingData.cs`. Данные Weapon Scaling в существующем ItemData. ScalingGrade None/E/D/C/B/A/S, WeaponDamageType Physical/Magic и AttributeScalingEntry сохраняют английские идентификаторы.
@@ -35,3 +39,5 @@ Greatsword40, STR25/DEX10, S/E: normalized scores .45/.2, сумма .47, ито
 ## 9. История изменений
 
 - 2026-10-26 — создана реализация подэтапа5.3; первичная документация текущего кода. Отдельный акт художественной/балансной приёмки не подразумевается.
+
+- 2026-10-26 — броня/Holy/рейтинговая защита подэтапа5.4; описание изменений приведено в начале документа.

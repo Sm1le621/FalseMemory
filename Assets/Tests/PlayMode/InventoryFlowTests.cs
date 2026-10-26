@@ -53,20 +53,20 @@ public sealed partial class BattleFlowTests
         yield return BeginBattle(player,enemy);var manager=Manager();
         Assert.That(manager.Player.Inventory.State,Is.SameAs(shared));Assert.That(equipment.TryUnequip(EquipmentSlot.Weapon),Is.False);
         manager.TryPlayerAction(BattleAction.Attack);yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(enemy.Health.currentHealth,Is.EqualTo(45));Assert.That(player.Health.currentHealth,Is.EqualTo(79));
+        Assert.That(enemy.Health.currentHealth,Is.EqualTo(44));Assert.That(player.Health.currentHealth,Is.EqualTo(72));
         manager.TryPlayerItem(potion);yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(player.Health.currentHealth,Is.EqualTo(99));Assert.That(shared.Count(potion),Is.EqualTo(1));
+        Assert.That(player.Health.currentHealth,Is.EqualTo(92));Assert.That(shared.Count(potion),Is.EqualTo(1));
         manager.TryPlayerSpell(Fire(player));yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(player.CurrentMP,Is.EqualTo(27));Assert.That(enemy.Health.currentHealth,Is.EqualTo(26));
+        Assert.That(player.CurrentMP,Is.EqualTo(27));Assert.That(enemy.Health.currentHealth,Is.EqualTo(24));
         manager.TryPlayerItem(ether);yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(player.CurrentMP,Is.EqualTo(40));Assert.That(shared.Count(ether),Is.Zero);Assert.That(player.Health.currentHealth,Is.EqualTo(97));
+        Assert.That(player.CurrentMP,Is.EqualTo(40));Assert.That(shared.Count(ether),Is.Zero);Assert.That(player.Health.currentHealth,Is.EqualTo(76));
         enemy.Health.TakeDamage(26);yield return WaitUntil(()=>manager.State==BattleState.Victory);
         Assert.That(BattleTransition.Instance.ReturnAfterVictory(),Is.True);yield return WaitUntil(()=>!BattleTransition.Instance.EncounterActive);
         Assert.That(player.Inventory.State,Is.SameAs(shared));Assert.That(player.transform.position,Is.EqualTo(home));
         Assert.That(player.EffectiveAttack,Is.EqualTo(20));Assert.That(player.EffectiveDefense,Is.EqualTo(14));
         Assert.That(equipment.State.GetSlot(EquipmentSlot.Weapon),Is.SameAs(sword));Assert.That(shared.Count(sword),Is.Zero);
-        Assert.That(player.Health.currentHealth,Is.EqualTo(97));Assert.That(player.CurrentMP,Is.EqualTo(40));Assert.That(player.CurrentExperience,Is.EqualTo(20));
-        Assert.That(player.Health.hpText.text,Does.Contain("97"));
+        Assert.That(player.Health.currentHealth,Is.EqualTo(76));Assert.That(player.CurrentMP,Is.EqualTo(40));Assert.That(player.CurrentExperience,Is.EqualTo(20));
+        Assert.That(player.Health.hpText.text,Does.Contain("76"));
     }
     [UnityTest] public IEnumerator WorldUseRestrictionsDisableButtonsWithoutConsumingItems()
     {

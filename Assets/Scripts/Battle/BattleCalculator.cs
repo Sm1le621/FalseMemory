@@ -34,8 +34,9 @@ public static class BattleCalculator
     public static int MagicalDamage(int attack, int defense, int power, BattleRules rules)
     {
         if (rules == null) throw new ArgumentNullException(nameof(rules));
-        double raw = Math.Max(0, power) + Math.Max(0, attack) * Math.Max(0f, rules.magicAttackMultiplier)
-                   - Math.Max(0, defense) * Math.Max(0f, rules.magicDefenseMultiplier);
+        double powerTotal=Math.Max(0,power)+Math.Max(0,attack)*Math.Max(0f,rules.magicAttackMultiplier);
+        double mitigation=Math.Max(0,defense)*Math.Max(0f,rules.magicDefenseMultiplier);
+        double raw=rules.useDiminishingDefense?Mitigate(powerTotal,mitigation,rules):powerTotal-mitigation;
         return (int)Math.Min(int.MaxValue, Math.Ceiling(Math.Max(Math.Max(1, rules.minimumMagicDamage), raw)));
     }
 
@@ -47,11 +48,17 @@ public static class BattleCalculator
     private static int PhysicalDamage(int attack, int defense, bool defending, BattleRules rules, float criticalMultiplier)
     {
         if (rules == null) throw new ArgumentNullException(nameof(rules));
-        double raw = Math.Max(0, attack) * Math.Max(0f, rules.attackMultiplier)
-                   - Math.Max(0, defense) * Math.Max(0f, rules.defenseMultiplier);
+        double power=Math.Max(0,attack)*Math.Max(0f,rules.attackMultiplier);
+        double mitigation=Math.Max(0,defense)*Math.Max(0f,rules.defenseMultiplier);
+        double raw=rules.useDiminishingDefense?Mitigate(power,mitigation,rules):power-mitigation;
         double damage = Math.Max(Math.Max(1, rules.minimumDamage), raw);
         damage *= criticalMultiplier;
         if (defending) damage *= Math.Max(0f, Math.Min(1f, rules.defendMultiplier));
         return (int)Math.Min(int.MaxValue, Math.Max(1, Math.Ceiling(damage)));
+    }
+    private static double Mitigate(double power,double defense,BattleRules rules)
+    {
+        double k=float.IsNaN(rules.defenseRatingConstant)||float.IsInfinity(rules.defenseRatingConstant)?20:Math.Max(1,rules.defenseRatingConstant);
+        return power*k/(k+defense);
     }
 }

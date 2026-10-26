@@ -3,6 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "FalseMemory/Battle Rules")]
 public sealed class BattleRules : ScriptableObject
 {
+    public bool useDiminishingDefense;
+    [Min(1)] public float defenseRatingConstant=20f;
     [Header("Stage 1: physical combat")]
     [Min(0f)] public float attackMultiplier = 1f;
     [Min(0f)] public float defenseMultiplier = 1f;

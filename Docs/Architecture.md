@@ -1,5 +1,9 @@
 # Архитектура FalseMemory
 
+## Броня/защита/Holy5.4 —2026-10-26
+
+ItemData Armor opt-in→ArmorScalingData→EquipmentState.ScaledBonuses→BattleUnit. BattleCalculator рассчитывает mitigation, BattleDamage компонует каналы, BattleUnit единожды применяет Health.TakeDamage. Категориисуществ/сопротивление находятся наBattleUnit, learning/CharacterUI ещё следующийэтап. [Факты5.4](ClasslessStage54.md).
+
 ## Бесклассовая ветка5.3 —2026-10-26
 
 CharacterAttributes теперь хранит свободные очки/максимальный уже учтённый level и базу0…99; BattleUnit остаётся владельцемLevel/EXP/MP, Health —HP. DefaultCharacterAttributes включает classless, при котором growth заменён свободными points, caps интегрируются, AGI не меняет walk, baselineMP40. ItemData имеет явный opt-in WeaponScalingData, EquipmentState делегирует проверку primary владельцу до атомарной операции. Оружейная сила заменяет глобальную поправку соответствующего Attack-канала; новый UI не создан. Старые serialized поля/ID/GUID сохраняются. [Реализация и проверки](ClasslessStage53.md). Ниже исторические модели.

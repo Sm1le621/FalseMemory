@@ -13,6 +13,8 @@ public sealed class CharacterAttributeRules : ScriptableObject
     [Min(0)] public float maximumWeaponScalingBonus = 1.5f;
     public double[] scalingGrades = { 0, .1, .2, .4, .6, .8, 1 };
     public AttributeSoftCapCurve[] softCaps = DefaultCurves();
+    public AttributeSoftCapCurve holyBonusCurve=new AttributeSoftCapCurve{attribute=CharacterAttribute.Wisdom,thresholds=new[]{30,60},gains=new[]{.005d,.0025d,.001d}};
+    public double HolyBonus(CharacterAttributeValues values) => Math.Max(0,holyBonusCurve.Evaluate(values.wisdom)-holyBonusCurve.Evaluate(referenceValue));
     [Min(0)] public int referenceValue=10;
     public CharacterAttributeValues growthPerLevel=CharacterAttributeValues.Uniform(1);
     [Min(0)] public float strengthAttack=1f, dexterityAttack=1f, enduranceDefense=1f;

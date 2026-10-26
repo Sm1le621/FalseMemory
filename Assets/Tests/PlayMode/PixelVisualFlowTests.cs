@@ -18,10 +18,10 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.ui.enemyPortrait.sprite.texture.width,Is.EqualTo(384));
         Assert.That(manager.TryPlayerAction(BattleAction.Attack),Is.True);
         yield return WaitUntil(()=>manager.ui.enemyPortrait.sprite.name.Contains("Hurt"));
-        Assert.That(enemy.Health.currentHealth,Is.EqualTo(50));
+        Assert.That(enemy.Health.currentHealth,Is.EqualTo(48));
         yield return WaitUntil(()=>manager.CurrentActor==enemy && manager.presentation.IsAnimating && manager.ui.enemyPortrait.sprite.name.Contains("Attack"));
         yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(enemy.Health.currentHealth,Is.EqualTo(50));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
+        Assert.That(enemy.Health.currentHealth,Is.EqualTo(48));Assert.That(player.Health.currentHealth,Is.EqualTo(91));
         enemy.Health.TakeDamage(50);yield return WaitUntil(()=>manager.State==BattleState.Victory);
         Assert.That(manager.ui.enemyPortrait.sprite,Is.SameAs(set.death[3]));Assert.That(manager.ui.enemyPortrait.color.a,Is.Zero);
         Assert.That(manager.presentation.IsAnimating,Is.False);
@@ -32,13 +32,13 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.TryPlayerSpell(Fire(player)),Is.True);Assert.That(manager.TryPlayerSpell(Fire(player)),Is.False);
         yield return WaitUntil(()=>vfx.HasAnimatedFrame);Assert.That(vfx.CurrentFrame,Is.InRange(0,7));
         Assert.That(manager.ui.feedbackGlow.gameObject.activeSelf,Is.False,"Magic uses pixel VFX instead of a solid portrait rectangle");
-        Assert.That(player.CurrentMP,Is.EqualTo(32));Assert.That(manager.Enemy.Health.currentHealth,Is.EqualTo(41));
+        Assert.That(player.CurrentMP,Is.EqualTo(32));Assert.That(manager.Enemy.Health.currentHealth,Is.EqualTo(40));
         yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);yield return WaitUntil(()=>!vfx.HasAnimatedFrame);
         Assert.That(vfx.ActiveParticles,Is.Zero);Assert.That(vfx.EffectsPlayed,Is.EqualTo(1));
         player.Health.TakeDamage(20);Assert.That(manager.TryPlayerSpell(Heal(player)),Is.True);
         yield return WaitUntil(()=>vfx.HasAnimatedFrame);Assert.That(player.CurrentMP,Is.EqualTo(26));
         vfx.enabled=false;Assert.That(vfx.HasAnimatedFrame,Is.False);Assert.That(vfx.ActiveParticles,Is.Zero);
-        yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);Assert.That(player.Health.currentHealth,Is.EqualTo(96));
+        yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);Assert.That(player.Health.currentHealth,Is.EqualTo(87));
         Assert.That(vfx.EffectsPlayed,Is.EqualTo(2));Assert.That(manager.TryPlayerAction(BattleAction.Defend),Is.True);
         yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);Assert.That(player.CurrentMP,Is.EqualTo(26));
     }

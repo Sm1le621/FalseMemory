@@ -121,13 +121,14 @@ public sealed class BattleManager : MonoBehaviour
                         if (audioController != null) audioController.Play(healing ? BattleSound.Heal : BattleSound.Fire);
                         hit = !healing;
                         ui.ShowMessage(healing ? GameText.Get("battle.spell_heal",actor.LocalizedName,pendingSpell.LocalizedName,amount) : GameText.Get("battle.spell_damage",actor.LocalizedName,pendingSpell.LocalizedName,amount));
+                        if(!healing && actor.LastDamageDealt.HolyDamage>0)ui.ShowMessage(ui.messageText.text+GameText.Get("battle.holy_component",actor.LastDamageDealt.HolyDamage));
                         ui.ShowFeedback(spellTarget == Player, (healing ? "+" : "−") + amount + (healing ? " HP" : " " + pendingSpell.LocalizedName), pendingSpell.effectColor,false);
                         if (vfx != null) vfx.Play(spellTarget == Player, pendingSpell.visualEffect, pendingSpell.effectColor, healing);
                     }
                 }
                 else
                 {
-                    var result = BattleCalculator.ResolvePhysical(actor.BasicAttackPower, actor.MagicalWeaponAttack?target.EffectiveMagicDefense:target.EffectiveDefense, target.IsDefending, rules,
+                    var result = BattleCalculator.ResolvePhysical(actor.BasicAttackPower, actor.HolyWeaponAttack?0:actor.MagicalWeaponAttack?target.EffectiveMagicDefense:target.EffectiveDefense, target.IsDefending, rules,
                         actor.EffectiveCriticalChance, Mathf.Clamp01(actor.EffectiveMissChance+target.Evasion), random);
                     if (result.Missed)
                     {
@@ -137,11 +138,11 @@ public sealed class BattleManager : MonoBehaviour
                     }
                     else
                     {
-                        target.Health.TakeDamage(result.Damage);
-                        hit = true; criticalHit = result.Critical;
+                        var components=actor.DealDamage(target,result.Damage,actor.IntrinsicWeaponHoly,actor.HolyWeaponAttack);
+                        hit = components.Total>0; criticalHit = result.Critical;
                         if (audioController != null) audioController.Play(result.Critical ? BattleSound.Critical : BattleSound.Hit);
-                        ui.ShowMessage((result.Critical ? GameText.Get("battle.critical")+" " : "") + GameText.Get("battle.attack", actor.LocalizedName, target.LocalizedName, result.Damage));
-                        ui.ShowFeedback(target == Player, (result.Critical ? GameText.Get("battle.critical")+"\n" : "") + "−" + result.Damage,
+                        ui.ShowMessage((result.Critical ? GameText.Get("battle.critical")+" " : "") + GameText.Get("battle.attack", actor.LocalizedName, target.LocalizedName, components.Total)+(components.HolyDamage>0?GameText.Get("battle.holy_component",components.HolyDamage):""));
+                        ui.ShowFeedback(target == Player, (result.Critical ? GameText.Get("battle.critical")+"\n" : "") + "−" + components.Total,
                             result.Critical ? new Color(1f, 0.82f, 0.2f) : new Color(1f, 0.4f, 0.4f));
                     }
                 }

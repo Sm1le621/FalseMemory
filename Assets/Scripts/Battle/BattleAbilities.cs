@@ -35,7 +35,7 @@ public static class BattleAbilities
         else
         {
             amount = BattleCalculator.MagicalDamage(caster.EffectiveMagicAttack, target.EffectiveMagicDefense, spell.power, rules);
-            target.Health.TakeDamage(amount);
+            amount=caster.DealDamage(target,amount).Total;
         }
         return true;
     }

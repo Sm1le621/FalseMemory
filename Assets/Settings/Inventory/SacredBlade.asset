@@ -53,6 +53,7 @@ MonoBehaviour:
     weaponType: sword
     damageType: 0
     baseDamage: 30
+    holyBaseDamage: 5
     requirements:
       strength: 0
       agility: 0
@@ -70,3 +71,22 @@ MonoBehaviour:
     - attribute: 0
       grade: 4
   useWeaponScaling: 1
+  useArmorScaling: 0
+  armor:
+    physicalDefense: 0
+    magicDefense: 0
+    evasion: 0
+    requirements:
+      strength: 0
+      agility: 0
+      dexterity: 0
+      endurance: 0
+      vitality: 0
+      intelligence: 0
+      wisdom: 0
+      charisma: 0
+      magicPower: 0
+      magicControl: 0
+    physicalScaling: []
+    magicScaling: []
+    evasionScaling: []
