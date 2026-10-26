@@ -1,5 +1,9 @@
 # Attribute Scaling —подэтап5.3
 
+## Баланс и регрессия 5.7 —2026-10-26
+
+Итоговаярегрессияпокрываетвсе grades/10stats около caps,base99/effective120,все 6armors,одинаковыйбюджет 60 исохранностьресурсов. Общие коэффициенты характеристиквбалансномподэтапенеменялись. MCR притекущейэффективности.02 достигаетпределаэкономии 30%при 25;дальнейшие базовые MCR поканеуменьшают MPcost —этоявноеограничениепервой экономики.
+
 Система задаёт настраиваемую убывающую эффективность существующих10 CharacterAttributes. Назначенный DefaultCharacterAttributes включает classless; CharacterAttributes хранит одну базу/очки, BattleUnit/Health остаются владельцамиEXP/MP/HP.
 
 Последовательность: EXP меняетlevel → SynchronizeLevel начисляет ещё не выданные points → TryIncreaseBase покупает+1 → Changed → RefreshDerivedStats → HP/MP capacity/бой/Inventory. Рост вместимости не лечит; уровень сам не повышает все характеристики. Gear/temporary складываются с базой перед вычислением кривой, class modifier в classless игнорируется.

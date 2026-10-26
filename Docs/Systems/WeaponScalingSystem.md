@@ -1,5 +1,9 @@
 # Weapon Scaling —подэтап5.3
 
+## Баланс и регрессия 5.7 —2026-10-26
+
+Tooltip показывает также отдельную HolyBase и Scalingbonus SacredBlade сявнымограничением Undead/Unholy. Это intrinsic канал,которыйзатемкомпонуетсяс WIS и HolyResistance; не прибавляетсявдвухместах. [Проверки 5.7](../ClasslessStage57.md).
+
 ItemData.useWeaponScaling явно включает вложенные WeaponScalingData. Старые предметы продолжают прежние flat bonuses. Новые6 ассетов/requirements/grades описаны в [ClasslessStage53](../ClasslessStage53.md).
 
 Бой: BattleUnit проверяет пригодность надетого main weapon → Damage поэффективнымprimary/общимsoft caps → замена соответствующего базовогоAttack без повторнойSTR/DEX/MAG-поправки → BasicAttackPower и physical/magicDefense цели → прежний BattleCalculator/crit/miss/Defend → единичное применение BattleManager. Сила Tooltip до защиты отличается от реально снятыхHP.

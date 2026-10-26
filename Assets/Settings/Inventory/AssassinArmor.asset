@@ -71,7 +71,7 @@ MonoBehaviour:
   armor:
     physicalDefense: 8
     magicDefense: 5
-    evasion: 0.03
+    evasion: 0.06
     requirements:
       strength: 0
       agility: 15

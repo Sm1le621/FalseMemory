@@ -1,5 +1,9 @@
 # Character UI
 
+## Баланс и регрессия 5.7 —2026-10-26
+
+Открытый tooltip обновляетсяв Refresh приизменении temporary/gear. Дляручнойприёмки без C# добавлен Editor-only пункт FalseMemory/Testing/Grant 60 Levels (Play Mode Only),которыйвыдаётреальный EXP втекущейсессиибез лечения/сохранения. [Сценарийприёмки](../ClasslessStage57.md).
+
 ## Назначение и структура
 
 Отдельное окно по C на Player, под существующим InventoryCanvas с его CanvasScaler. Сетка Inventory30/Equipment9 сохранена. Четыре вкладки: Attributes, Combat Stats, Abilities, Equipment. CharacterWindow читает существующие компоненты и не хранит дубликат характеристик/ресурсов.

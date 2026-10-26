@@ -15,6 +15,7 @@ public static class ArmorHolySetup
         var table=AssetDatabase.LoadAssetAtPath<StringTable>("Assets/Resources/Localization/GameText_en-US.asset");
         Add(table,"armor.defense","Physical Defense: {0} -> {1}\nMagic Defense: {2} -> {3}\nEvasion: {4:0.#}%");
         Add(table,"battle.holy_component"," (+{0} Holy)");Add(table,"scaling.type.holy","Holy");
+        Add(table,"scaling.holy_damage","Additional Holy Damage: {0} + {1} = {2}\nApplies to Undead and Unholy foes.");
         string[] names={"Heavy Plate Armor","Knight Armor","Assassin Armor","Mage Robes","Holy Armor","Battlemage Armor"};
         string[] files={"HeavyPlateArmor","KnightArmor","AssassinArmor","MageRobes","HolyArmor","BattlemageArmor"};
         var first=new[]{CharacterAttribute.Endurance,CharacterAttribute.Vitality,CharacterAttribute.Agility,CharacterAttribute.Wisdom,CharacterAttribute.Wisdom,CharacterAttribute.MagicPower};
@@ -33,7 +34,7 @@ public static class ArmorHolySetup
             item.category=ItemCategory.Armor;item.equipmentSlot=EquipmentSlot.Chest;item.stackable=false;item.useArmorScaling=true;
             item.armor=new ArmorScalingData{physicalDefense=physical[i],magicDefense=magic[i],requirements=new CharacterAttributeValues(),
                 physicalScaling=i<3?entries:Array.Empty<AttributeScalingEntry>(),magicScaling=i>=3?entries:Array.Empty<AttributeScalingEntry>(),
-                evasion=i==2?.03f:0,evasionScaling=i==2?entries:Array.Empty<AttributeScalingEntry>()};
+                evasion=i==2?.06f:0,evasionScaling=i==2?entries:Array.Empty<AttributeScalingEntry>()};
             item.armor.requirements.Set(first[i],i==4?25:15);
             if(item.icon==null)item.icon=AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Settings/Inventory/LeatherArmor.asset").icon;
             Add(table,item.id+".name",item.displayName);Add(table,item.id+".description",item.description);EditorUtility.SetDirty(item);AssetDatabase.SaveAssetIfDirty(item);

@@ -1,5 +1,9 @@
 # Как проверять FalseMemory
 
+## Проверки 5.7 —2026-10-26
+
+Финальные ClasslessBalanceTests экспортируют 30 пар×64seeds в Temp/ClasslessBalance/Stage57.json;сохранённыйсрезв Docs/Verification. Эторасчёт,нереальныйИИ/новые локации. Дополнительный Play проверяет MagicStaff/SacredBlade/tooltip. Ручнаяприёмка Character/балансаобязательнаперед 6:см.[сценарий](../ClasslessStage57.md).
+
 ## Character5.6 —2026-10-26
 
 CharacterWindowFlowTests проверяет клавиши,modal,движение,doublecallbacks,LP/points/99/ресурсы/gear/послебоя и4страницыв1920×1080/3440×1440. Вручную оценитьчитаемость/tooltip/вкладки иудобство распределения. [Результаты](../ClasslessStage56.md).

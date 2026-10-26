@@ -1,5 +1,9 @@
 # Документация FalseMemory
 
+## Проверки 5.7 —2026-10-26
+
+[Итог 5.7 и ручная приёмка](ClasslessStage57.md), [метрики 30 пар](Verification/ClasslessStage57.json). Новые скрипты: [ClasslessBalanceTests](Scripts/Tests/EditMode/ClasslessBalanceTests.md), [ClasslessRegressionFlowTests](Scripts/Tests/PlayMode/ClasslessRegressionFlowTests.md), [ClasslessPlayTestTools](Scripts/Editor/ClasslessPlayTestTools.md).
+
 ## Character5.6 —2026-10-26
 
 [Character UI](Systems/CharacterUISystem.md), [проверки5.6](ClasslessStage56.md). Скрипты: [CharacterWindow](Scripts/Inventory/CharacterWindow.md), [CharacterPresentation](Scripts/Inventory/CharacterPresentation.md), [CharacterAttributeView](Scripts/Inventory/CharacterAttributeView.md), [CharacterWindowSetup](Scripts/Editor/CharacterWindowSetup.md), [Play tests](Scripts/Tests/PlayMode/CharacterWindowFlowTests.md).

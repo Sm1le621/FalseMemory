@@ -1,5 +1,9 @@
 # ItemPresentation
 
+## Уточнение 5.7 —2026-10-26
+
+ScalingText дополнительно показывает отдельный intrinsic Holy: base+scaledbonus=total и ограничение Undead/Unholy через Englishkeyscaling.holy_damage. Например SacredBlade5+4=9 при STR20/WIS30. Это данныеоружия до HolyResistance/WIS добавки,не итоговыйуронпоцели. Основнойканал/requirements сохранены.
+
 ## Изменение5.4 —2026-10-26
 
 ScalingText маршрутизирует ArmorText для armor. ArmorText строит preview после замены слота: physical/magic base→final, evasion%, grades и requirements. RequirementsText учитывает weapon либо armor и исключает соответствующий исходящий слот. Description добавляет эти данные к прежнему описанию. Данные берутся из реального BattleUnit, не из демонстрационных чисел. Исторические результаты ниже не являются результатами текущего запуска; см. [ClasslessStage54](../../ClasslessStage54.md).
@@ -77,3 +81,5 @@ Ancient и влияние редкости на награды не добавл
 - 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.
 
 - 2026-10-26 — броня/Holy/рейтинговая защита подэтапа5.4; описание изменений приведено в начале документа.
+
+- 2026-10-26 — баланс/регрессия 5.7; актуальное уточнение приведено выше.

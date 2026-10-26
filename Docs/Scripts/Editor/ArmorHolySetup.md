@@ -1,5 +1,9 @@
 # ArmorHolySetup
 
+## Уточнение 5.7 —2026-10-26
+
+Баланс 5.7: AssassinArmor.evasion=.06 вместо.03, остальные 5 профилей/grades/requirements не менялись. Добавлен StringTable key scaling.holy_damage для отдельного intrinsicHoly в tooltip. Фактический ассет обновлён адресно через MCP, полный setup повторно не запускался.
+
 ## 1. Название и назначение
 
 Исходник: `Assets/Editor/ArmorHolySetup.cs`. Адресная миграция существующей SampleScene и данных5.4 через Unity MCP.
@@ -35,3 +39,5 @@ ArmorScalingData → WeaponScalingData.Scale/CharacterAttributeRules; EquipmentS
 ## 9. История изменений
 
 - 2026-10-26 — реализация и первичная документация подэтапа5.4.
+
+- 2026-10-26 — баланс/регрессия 5.7; актуальное уточнение приведено выше.

@@ -1,5 +1,9 @@
 # CharacterWindow
 
+## Уточнение 5.7 —2026-10-26
+
+Refresh теперь обновляет также уже открытую tooltipText после StatsChanged: временныебонусы/смена gear не оставляютстарое effective значение. Повторныйрендернеизменяет points/HP/MP. Проверено ClasslessRegressionFlowTests.
+
 ## 1. Название и назначение
 
 Исходник: `Assets/Scripts/Inventory/CharacterWindow.cs`. Отдельное окно Character с реальными данными Player, распределением очков и изучением умений.
@@ -37,3 +41,5 @@ CharacterWindow → BattleUnit/CharacterAttributes/AbilityLearning/EquipmentCont
 ## 9. История изменений
 
 - 2026-10-26 — реализация/документация Character UI подэтапа5.6.
+
+- 2026-10-26 — баланс/регрессия 5.7; актуальное уточнение приведено выше.

@@ -1,5 +1,9 @@
 # Настройка существующего проекта в Unity
 
+## Проверки 5.7 —2026-10-26
+
+Дляприёмкибез C#:SampleScene→Play→FalseMemory/Testing/Grant 60 Levels (Play Mode Only)→C. Командадаётреальный EXP тольковтекущейсессии,неизменяетсцену/ассеты/HP/MP напрямую. После StopPlay всёсбросится. Подробныйсценарий —[5.7](../ClasslessStage57.md).
+
 ## Character5.6 —2026-10-26
 
 В SampleScene Player.CharacterWindow связан сновыми CharacterPanel/Backdrop/Tooltip под InventoryCanvas. C открывает/закрывает,Escзакрывает,IпереключаетвInventory. Подробности ссылок —[CharacterUISystem](../Systems/CharacterUISystem.md).

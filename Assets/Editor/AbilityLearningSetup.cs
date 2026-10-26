@@ -19,7 +19,7 @@ public static class AbilityLearningSetup
         foreach(var spell in new[]{fire,heal}){Add(table,spell.localizationId+".description",spell.description);EditorUtility.SetDirty(spell);AssetDatabase.SaveAssetIfDirty(spell);}
         learn.catalog=new[]{fire,heal,
             Make(table,"PowerStrike","Power Strike","A powerful physical attack.",new CharacterAttributeValues{strength=20},BattleEffect.PhysicalDamage,6,0,1.5f,0,0),
-            Make(table,"QuickStrike","Quick Strike","A precise physical attack with improved accuracy.",new CharacterAttributeValues{dexterity=18,agility=15},BattleEffect.PhysicalDamage,5,0,1.15f,.2f,0),
+            Make(table,"QuickStrike","Quick Strike","A precise physical attack with improved accuracy.",new CharacterAttributeValues{dexterity=18,agility=15},BattleEffect.PhysicalDamage,4,0,1.6f,.2f,0),
             Make(table,"GreaterHeal","Greater Heal","Restore a large amount of your own health.",new CharacterAttributeValues{magicPower=20,wisdom=20},BattleEffect.RestoreHealth,12,50,1,0,0),
             Make(table,"SacredStrike","Sacred Strike","A physical strike with additional Holy damage against Undead and Unholy foes.",new CharacterAttributeValues{wisdom=25,strength=15},BattleEffect.PhysicalDamage,8,0,1.2f,0,8)};
         learn.pointsPerLevel=1;

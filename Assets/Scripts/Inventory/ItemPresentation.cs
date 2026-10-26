@@ -83,6 +83,11 @@ public static class ItemPresentation
             viewer.Attributes.Calculate(viewer.level,(viewer.Equipment!=null?viewer.Equipment.State.AttributesExcluding(EquipmentSlot.Weapon):new CharacterAttributeValues())+item.bonuses.attributes):new CharacterAttributeValues();
         int total=weapon.Damage(values,viewer!=null && viewer.UsesPrimaryAttributes?viewer.Attributes.rules:null);
         lines.Add(GameText.Get("scaling.damage",GameText.Get("scaling.type."+weapon.damageType.ToString().ToLowerInvariant()),Mathf.Max(0,weapon.baseDamage),total-Mathf.Max(0,weapon.baseDamage),total));
+        if(weapon.holyBaseDamage>0)
+        {
+            int holy=weapon.HolyDamage(values,viewer!=null && viewer.UsesPrimaryAttributes?viewer.Attributes.rules:null);
+            lines.Add(GameText.Get("scaling.holy_damage",weapon.holyBaseDamage,holy-weapon.holyBaseDamage,holy));
+        }
         lines.Add(GameText.Get("scaling.weapon_type",GameText.Get("scaling.weapon."+weapon.weaponType)));
         var grades=new List<string>();
         foreach(var entry in weapon.scaling ?? System.Array.Empty<AttributeScalingEntry>())

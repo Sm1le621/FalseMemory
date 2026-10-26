@@ -1143,6 +1143,10 @@ MonoBehaviour:
     m_Key: derived.maximummana
     m_Metadata:
       m_Items: []
+  - m_Id: 5132276230242304
+    m_Key: scaling.holy_damage
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

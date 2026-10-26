@@ -86,6 +86,7 @@ public sealed class CharacterWindow : MonoBehaviour
             row.increase.interactable=data.UnspentPoints>0 && data.BaseValues.Get(stat)<99;
         }
         attributeDetail.text=CharacterPresentation.AttributeDescription(unit,selectedAttribute);
+        if(tooltipPanel.gameObject.activeSelf)tooltipText.text=attributeDetail.text;
         combatStats.text=CharacterPresentation.CombatStats(unit);
         var weapon=unit.Equipment!=null?unit.Equipment.State.GetSlot(EquipmentSlot.Weapon):null;
         combatWeapon.text=weapon!=null?ItemPresentation.Description(weapon,1,unit):GameText.Get("character.unarmed");

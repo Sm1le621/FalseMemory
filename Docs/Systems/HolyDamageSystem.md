@@ -1,5 +1,9 @@
 # Holy Damage
 
+## Баланс и регрессия 5.7 —2026-10-26
+
+Добавлены реальные Play проверки MagicStaffbasic27+3 и SacredBladebase42/intrinsic9/resistance50%→Holy7;Beast бездобавки. Отдельный HolyScaling теперьвиденв Character/Inventorytooltip. Zombie fixture остаётсяданнымисимуляции,готового NPC/спрайтазомбине создано.
+
 ## Назначение и события
 
 BattleCalculator рассчитывает основной урон, BattleUnit.DealDamage вызывает чистый BattleDamage.Compose, получает Base/Holy и один раз меняет Health. WIS-добавка работает на физические/магические повреждения только против flagsUndead/Unholy. Имя существа не используется. Heal и предметы восстановления не проходят этот путь.

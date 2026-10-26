@@ -1257,6 +1257,12 @@ MonoBehaviour:
     m_Localized: Max MP
     m_Metadata:
       m_Items: []
+  - m_Id: 5132276230242304
+    m_Localized: 'Additional Holy Damage: {0} + {1} = {2}
+
+      Applies to Undead and Unholy foes.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

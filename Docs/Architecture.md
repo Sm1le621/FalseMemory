@@ -1,5 +1,9 @@
 # Архитектура FalseMemory
 
+## Проверки 5.7 —2026-10-26
+
+Итог 5.7: runtime архитектура 5.3–5.6 сохранена,точечнонастроены QuickStrike/AssassinArmor;tooltip показывает intrinsicHoly иобновляетсяпосле изменений. Добавлены Editor-only тестовое меню иформульныйбалансный fixture,непродакшенИИврагов. Этап 6/постоянный save не начинались. [Факты](ClasslessStage57.md).
+
 ## Character5.6 —2026-10-26
 
 CharacterWindow на Player читает BattleUnit/Attributes/Learning/Equipment, операции делегирует существующим владельцам. UI под InventoryCanvas, совместный WorldInputGate и взаимное закрытие сInventory. Preview вынесен в CharacterPresentation, строки pointer — CharacterAttributeView. Новых менеджеров HP/MP/сохранения нет. [Устройство](Systems/CharacterUISystem.md).

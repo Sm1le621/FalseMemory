@@ -31,10 +31,10 @@ MonoBehaviour:
     magicControl: 0
   damageType: 0
   scaling: []
-  attackMultiplier: 1.15
+  attackMultiplier: 1.6
   accuracyBonus: 0.2
   holyPower: 0
-  mpCost: 5
+  mpCost: 4
   effect: 2
   target: 0
   power: 0
