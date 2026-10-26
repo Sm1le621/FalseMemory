@@ -1,5 +1,9 @@
 # Документация FalseMemory
 
+## Исправление стойки Down —2026-10-26
+
+[Фронтальная стойка исправлена по замечанию владельца](PlayerStandingDownFix.md): обе стопы рядом; новый DownStanding подключён к Idle Down и обеим нейтральным позициям Walk Down, прежние рисунки сохранены.
+
 ## Анимации героя —2026-10-26
 
 Подключены четыре направления Idle/Walk. Актуальная схема Walk: четыре позиции **стойка → RightStep → LeftStep → стойка** с разрешённым повтором нейтрального Sprite. [Отчёт и ручная оценка](PlayerWalkOrder.md), [ссылки на кадры](PlayerWalkOrderFrameAudit.json), [фактические проверки](PlayerWalkOrderVerification.json). Обновлены описания7 изменённых C# в Docs/Scripts и AnimationSystem. Ниже сохранён указатель прежних контрольных точек.

@@ -1,0 +1,135 @@
+{
+  "date": "2026-10-26",
+  "tool": "Встроенный imagegen",
+  "prompt": "Use case: precise-object-edit. Edit target: the attached 1254x1254 four-by-four IDLE sprite sheet. Make ONE highly targeted correction: ONLY the TOP ROW FOUR FRONT-FACING figures must stand still. Currently their leg on viewer left is forward and the other is behind, so they look like walking. Correct ALL four top-row poses to a balanced relaxed NEUTRAL STANDING position: both legs straight and parallel, both knees at equal height, BOTH BOOTS FLAT side by side on exactly the SAME horizontal ground line, equal boot size, equal shin length, no forward leg, no raised heel, no stepping, no contrapposto, no crossed legs. Feet about hip-width apart, arms hanging relaxed. Preserve their face, dark hair, black detailed armor, burgundy cape, sword on viewer-right hip, same body proportions and exact native drawing scale. Top row four frames are a very subtle breathing cycle ONLY in chest/shoulders/cape: lower legs and planted boot placement remain identical, head height nearly fixed. Preserve the existing four-column/four-row layout, 1254x1254 canvas, existing spacing and pixel density: figures roughly 300-315 native pixels tall. Do NOT make a single large character. Do NOT add poses, objects or text. Rows 2/3/4 remain left/right/back IDLE just as in input, do not reinterpret them. Crisp detailed dark fantasy PIXEL ART, preserve transparent alpha background and hard edges, no blur, ground shadow, glow or checkerboard. Critical top-row neutral feet must visibly look like two equal boots NEXT TO EACH OTHER, rather than a forward step. The same hero simply STANDING STILL.",
+  "source": "Assets/Art/Characters/Player/Cardinal4/Source/StandingDownCorrection.png",
+  "note": "Подключена только первая фронтальная строка. Новый источник не заменяет исторические картинки; старые PNG сохранены. Числа/хеши проверяют файлы, художественная оценка выполняется просмотром.",
+  "observation": {
+    "done": true,
+    "maxIdlePhysicsDrift": 0,
+    "events": "0:Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_00.png\n0:Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_01.png\n0:Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_02.png\n0:Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_03.png\n0:Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_00.png\n1:Assets/Art/Characters/Player/Cardinal4/WalkSteps/Down/ApprovedHero_Down_RightStep.png\n1:Assets/Art/Characters/Player/Cardinal4/WalkSteps/Down/ApprovedHero_Down_LeftStep.png\n1:Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_00.png\n1:Assets/Art/Characters/Player/Cardinal4/WalkSteps/Down/ApprovedHero_Down_RightStep.png\n1:Assets/Art/Characters/Player/Cardinal4/WalkSteps/Down/ApprovedHero_Down_LeftStep.png\n1:Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_00.png\n1:Assets/Art/Characters/Player/Cardinal4/WalkSteps/Down/ApprovedHero_Down_RightStep.png\n1:Assets/Art/Characters/Player/Cardinal4/WalkSteps/Down/ApprovedHero_Down_LeftStep.png\n2:Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_00.png\n2:Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_01.png"
+  },
+  "console": {
+    "success": true,
+    "message": "Retrieved 0 log entries.",
+    "data": []
+  },
+  "tests": {
+    "edit": {
+      "job": "f77ee909efae4b0e9cb3583d0bdd0a13",
+      "total": 98,
+      "passed": 98,
+      "failed": 0
+    },
+    "play": {
+      "job": "0f0f111f42d540c2b061630af10d3e30",
+      "total": 58,
+      "passed": 58,
+      "failed": 0
+    }
+  },
+  "verification": {
+    "resolution": "1920x1080",
+    "captures": "Temp/StandingDownVerification",
+    "viewed": [
+      "ApprovedHero_Idle_Down_00.png",
+      "ApprovedHero_Idle_Down_02.png"
+    ],
+    "playStopped": true,
+    "compiling": false,
+    "sceneDirty": false,
+    "gameViewPresetRestored": 0,
+    "runInBackgroundRestored": false,
+    "note": "Просмотрены две фазы с параллельными стопами; журнал наблюдал все четыре новых Idle и обе прежние шаговые позы. Художественная оценка владельцем остаётся следующей границей."
+  },
+  "frames": [
+    {
+      "path": "Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_00.png",
+      "motion": "Idle",
+      "direction": "Down",
+      "index": 0,
+      "source": "Assets/Art/Characters/Player/Cardinal4/Source/StandingDownCorrection.png",
+      "sourceBox": [
+        44,
+        15,
+        310,
+        332
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 256,
+      "pivotY": 20,
+      "ppu": 602,
+      "resampled": false,
+      "visibleHeight": 317,
+      "discardedOrphanPixels": 0,
+      "pixelHash": "c735a21beb81612c0ee521ce21cc344301bc84416841d4f3f07f74ff0c75ad2c"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_01.png",
+      "motion": "Idle",
+      "direction": "Down",
+      "index": 1,
+      "source": "Assets/Art/Characters/Player/Cardinal4/Source/StandingDownCorrection.png",
+      "sourceBox": [
+        344,
+        14,
+        610,
+        332
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 256,
+      "pivotY": 20,
+      "ppu": 602,
+      "resampled": false,
+      "visibleHeight": 318,
+      "discardedOrphanPixels": 2,
+      "pixelHash": "ed528a856746533b1939889011f572925f3e97b2b0f05abde82aa8df2f20fef0"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_02.png",
+      "motion": "Idle",
+      "direction": "Down",
+      "index": 2,
+      "source": "Assets/Art/Characters/Player/Cardinal4/Source/StandingDownCorrection.png",
+      "sourceBox": [
+        646,
+        13,
+        915,
+        335
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 256,
+      "pivotY": 20,
+      "ppu": 602,
+      "resampled": false,
+      "visibleHeight": 322,
+      "discardedOrphanPixels": 0,
+      "pixelHash": "edcd1396d9bd91e7d19f06f955d47fe24b5fce43451b36712b80a41d4af28bf3"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_03.png",
+      "motion": "Idle",
+      "direction": "Down",
+      "index": 3,
+      "source": "Assets/Art/Characters/Player/Cardinal4/Source/StandingDownCorrection.png",
+      "sourceBox": [
+        952,
+        14,
+        1222,
+        335
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 256,
+      "pivotY": 20,
+      "ppu": 602,
+      "resampled": false,
+      "visibleHeight": 321,
+      "discardedOrphanPixels": 0,
+      "pixelHash": "a3b34e952d4893c66587956299fa4c88e9b2b23bb0215a32bca811207a9b68bf"
+    }
+  ]
+}

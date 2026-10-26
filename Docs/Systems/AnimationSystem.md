@@ -4,6 +4,8 @@
 
 Input System → PlayerController (настоящие движение/LastDirection) → визуальное CardinalFacing → Move/LastMove в прежнем Animator. WalkSpeed по фактической скорости управляет только Walk; при остановке/модальном окне остаётся отдельный Idle последнего ракурса. Оба Blend Tree используют Down/Left/Right/Up; диагональное движение физически сохранено, визуально выбирается одна ось, при равенстве вертикаль.
 
+После замечания владельца Idle Down и нейтральные позиции Walk Down используют новую папку Idle/DownStanding: две стопы рядом, без шага. Старые Down PNG сохранены как IdleArchived в manifest; CardinalFrames выбирает действующий Idle по motion/direction/index, а не по имени каталога. [Источник и проверки](../PlayerStandingDownFix.md).
+
 Восемь существующих cardinal-клипов обновлены через ApprovedHeroImporter/MCP. Walk:4 ключа Idle_00/RightStep/LeftStep/Idle_00 на0/.0625/.25/.4375с, конец .5с. Idle:4 уникальных рисунка/2с и техническое замыкание. Активных уникальных PNG24, повтор стойки предписан владельцем. Single/Point/Uncompressed/pivot256,20, PPU согласован внутри направления; sources/старые анимации сохранены. BattlePresentation/HeroDetailed/SkeletonDetailed не менялись. [Подключение и проверки](../PlayerWalkOrder.md). Ниже прежние контрольные точки.
 
 ## Актуально2026-10-16 —16 FPS, художественная часть не завершена

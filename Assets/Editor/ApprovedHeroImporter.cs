@@ -28,6 +28,8 @@ public static class ApprovedHeroImporter
     [Serializable] private sealed class PreparedFrame
     {
         public string path = "";
+        public string motion = "", direction = "";
+        public int index = -1;
         public int canvasWidth = 0, canvasHeight = 0, pivotX = 0, pivotY = 0, ppu = 0;
     }
     public static readonly string[] Directions = { "Up", "Down", "Right", "Left", "UpRight", "UpLeft", "DownRight", "DownLeft" };
@@ -174,11 +176,13 @@ public static class ApprovedHeroImporter
                 throw new InvalidOperationException("Missing or duplicate step poses: " + direction);
             return ordered;
         }
-        string folder = CardinalRoot + "/" + motion + "/" + direction;
-        var frames = System.IO.Directory.GetFiles(folder, "*.png").OrderBy(p => p, StringComparer.Ordinal)
-            .Select(p => AssetDatabase.LoadAssetAtPath<Sprite>(p.Replace('\\', '/'))).ToArray();
+        var prepared = JsonUtility.FromJson<PreparedManifest>(System.IO.File.ReadAllText(CardinalManifest)).frames
+            .Where(f => f.motion == motion && f.direction == direction).OrderBy(f => f.index).ToArray();
+        if (prepared.Length != 4 || !prepared.Select(f => f.index).SequenceEqual(new[] { 0, 1, 2, 3 }))
+            throw new InvalidOperationException("Exactly four ordered prepared frames required: " + motion + "/" + direction);
+        var frames = prepared.Select(f => AssetDatabase.LoadAssetAtPath<Sprite>(f.path)).ToArray();
         if (frames.Length != 4 || frames.Any(s => s == null))
-            throw new InvalidOperationException("Exactly four imported cardinal frames required: " + folder);
+            throw new InvalidOperationException("Exactly four imported cardinal frames required: " + motion + "/" + direction);
         return frames;
     }
 

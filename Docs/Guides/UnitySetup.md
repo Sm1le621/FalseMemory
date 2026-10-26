@@ -2,7 +2,7 @@
 
 ## Подключение Cardinal4 —2026-10-26
 
-В существующей SampleScene уже сохранены Player preview Idle_Down_00 и Use Cardinal Animations=true. Player использует прежний Player.controller: два состояния/Blend Tree,4 child Down/Left/Right/Up, WalkSpeed только у Walk. Для повторного импорта вне Play: FalseMemory → Art → Import approved hero animation sheets; затем ApprovedHeroImporter.WireActivePlayer только на SampleScene. Не назначать Source PNG как игровой кадр, не менять Rigidbody/scale/скорость4. Порядок Walk читается из PlayerCardinal4Manifest.walkSequences; ручная сортировка папки архивного Walk его не заменяет. [Полные параметры/проверки](../PlayerWalkOrder.md). Ниже исторические настройки.
+В существующей SampleScene уже сохранены Player preview Idle_Down_00 и Use Cardinal Animations=true. Player использует прежний Player.controller: два состояния/Blend Tree,4 child Down/Left/Right/Up, WalkSpeed только у Walk. Для повторного импорта вне Play: FalseMemory → Art → Import approved hero animation sheets; затем ApprovedHeroImporter.WireActivePlayer только на SampleScene. Не назначать Source PNG как игровой кадр, не менять Rigidbody/scale/скорость4. Активный Idle выбирается из PlayerCardinal4Manifest.frames по motion/direction/index0…3; DownStanding заменяет старый Idle/Down без удаления его файлов. Порядок Walk читается из PlayerCardinal4Manifest.walkSequences; ручная сортировка папки архивного Walk его не заменяет. [Полные параметры/проверки](../PlayerWalkOrder.md). Ниже исторические настройки.
 
 ## Действующие настройки героя2026-10-16
 

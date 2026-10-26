@@ -10,12 +10,12 @@
 
 Общий корень изображений: `Assets/Art/Characters/Player/Cardinal4/`.
 
-- **Down:** `Idle/Down/ApprovedHero_Idle_Down_00.png` → `WalkSteps/Down/ApprovedHero_Down_RightStep.png` → `WalkSteps/Down/ApprovedHero_Down_LeftStep.png` → тот же `Idle_Down_00`.
+- **Down:** `Idle/DownStanding/ApprovedHero_Idle_Down_00.png` → `WalkSteps/Down/ApprovedHero_Down_RightStep.png` → `WalkSteps/Down/ApprovedHero_Down_LeftStep.png` → тот же `Idle_Down_00`.
 - **Left:** `Idle/Left/ApprovedHero_Idle_Left_00.png` → `WalkSteps/Left/ApprovedHero_Left_RightStep.png` → `WalkSteps/Left/ApprovedHero_Left_LeftStep.png` → тот же `Idle_Left_00`.
 - **Right:** `Idle/Right/ApprovedHero_Idle_Right_00.png` → `WalkSteps/Right/ApprovedHero_Right_RightStep.png` → `WalkSteps/Right/ApprovedHero_Right_LeftStep.png` → тот же `Idle_Right_00`.
 - **Up:** `Idle/Up/ApprovedHero_Idle_Up_00.png` → `WalkSteps/Up/ApprovedHero_Up_RightStep.png` → `WalkSteps/Up/ApprovedHero_Up_LeftStep.png` → тот же `Idle_Up_00`.
 
-Idle каждого направления использует свои прежние `ApprovedHero_Idle_DIRECTION_00…03.png`. Итого в активных Idle/Walk24 уникальных изображения:16 Idle и8 шаговых; логических позиций32. Архивная папка `Walk` с прежними16 подготовленными PNG не удалена и больше не определяет порядок активных Walk. Точный список ссылок: [FrameAudit](PlayerWalkOrderFrameAudit.json), [импортный manifest](../Assets/Art/PlayerCardinal4Manifest.json).
+После следующего замечания владельца Idle Down использует исправленные `Idle/DownStanding/ApprovedHero_Idle_Down_00…03.png`; прочие направления — прежние `ApprovedHero_Idle_DIRECTION_00…03.png`. Старые Down PNG сохранены, см. [исправление стойки](PlayerStandingDownFix.md). Итого в активных Idle/Walk24 уникальных изображения:16 Idle и8 шаговых; логических позиций32. Архивная папка `Walk` с прежними16 подготовленными PNG не удалена и больше не определяет порядок активных Walk. Точный список ссылок: [FrameAudit](PlayerWalkOrderFrameAudit.json), [импортный manifest](../Assets/Art/PlayerCardinal4Manifest.json).
 
 ## Источники и подготовка графики
 
@@ -27,7 +27,7 @@ Idle каждого направления использует свои пре�
 
 ## Клипы и Animator
 
-В существующей папке `Assets/Animations/Player64` обновлены8 клипов: Idle и Walk для Down/Left/Right/Up; их GUID сохранены. Idle-рисунки не перерисованы: четыре фазы удерживаются по .5с, цикл2с; пятый технический ключ повторяет первый на границе петли.
+В существующей папке `Assets/Animations/Player64` обновлены8 клипов: Idle и Walk для Down/Left/Right/Up; их GUID сохранены. Idle Down впоследствии исправлен на стойку с двумя параллельными ногами; прочие Idle сохранены. Четыре фазы удерживаются по .5с, цикл2с; пятый технический ключ повторяет первый на границе петли.
 
 **Walk:** Samples16 — сетка времени, цикл .5с. Четыре ключа на0/.0625/.25/.4375с, конец .5с, Loop=true. Выдержки: стойка .0625с, правый шаг .1875с, левый шаг .1875с, стойка .0625с. Нейтральные участки на шве суммарно .125с, шаги остаются хорошо видны. Нет пятого замыкающего ключа и нет Transform-кривых. Это два цикла в секунду при WalkSpeed1, а не16 разных рисунков/с.
 
@@ -37,7 +37,7 @@ Idle каждого направления использует свои пре�
 
 ## Изменённые C# и документация
 
-- `Assets/Editor/ApprovedHeroImporter.cs` — manifest.walkSequences с явным порядком4 ссылок; проверка двух различных шагов/повторной стойки, импорт40 подготовленных PNG, запись четырёх Walk-ключей без дополнительного замыкания, настройка прежнего controller/Player. [Описание](Scripts/Editor/ApprovedHeroImporter.md).
+- `Assets/Editor/ApprovedHeroImporter.cs` — manifest.walkSequences с явным порядком4 ссылок; проверка двух различных шагов/повторной стойки, импорт44 подготовленных PNG после исправления стойки, запись четырёх Walk-ключей без дополнительного замыкания, настройка прежнего controller/Player. [Описание](Scripts/Editor/ApprovedHeroImporter.md).
 - `Assets/Scripts/PlayerController.cs` — только переключатель useCardinalAnimations и округление визуального взгляда. [Описание](Scripts/PlayerController.md).
 - `Assets/Tests/EditMode/ApprovedHeroAssetTests.cs` — четыре Walk-ключа/три уникальных Sprite, время/импорт/24 активных изображения/controller/сохранность резервов. [Описание](Scripts/Tests/EditMode/ApprovedHeroAssetTests.md).
 - `Assets/Tests/PlayMode/PlayerDirectionFlowTests.cs` — реальная диагональная скорость, cardinal-ракурсы, остановка/взгляд и смена Sprite. [Описание](Scripts/Tests/PlayMode/PlayerDirectionFlowTests.md).

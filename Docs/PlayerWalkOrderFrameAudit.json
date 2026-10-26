@@ -1,10 +1,10 @@
 {
   "Down": {
     "paths": [
-      "Assets/Art/Characters/Player/Cardinal4/Idle/Down/ApprovedHero_Idle_Down_00.png",
+      "Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_00.png",
       "Assets/Art/Characters/Player/Cardinal4/WalkSteps/Down/ApprovedHero_Down_RightStep.png",
       "Assets/Art/Characters/Player/Cardinal4/WalkSteps/Down/ApprovedHero_Down_LeftStep.png",
-      "Assets/Art/Characters/Player/Cardinal4/Idle/Down/ApprovedHero_Idle_Down_00.png"
+      "Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_00.png"
     ],
     "phases": [
       "Stance",

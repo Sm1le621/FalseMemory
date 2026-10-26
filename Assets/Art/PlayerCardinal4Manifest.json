@@ -12,7 +12,7 @@
   "frames": [
     {
       "path": "Assets/Art/Characters/Player/Cardinal4/Idle/Down/ApprovedHero_Idle_Down_00.png",
-      "motion": "Idle",
+      "motion": "IdleArchived",
       "direction": "Down",
       "index": 0,
       "source": "Assets/Art/Characters/Player/Cardinal4/Source/IdleSheet.png",
@@ -35,7 +35,7 @@
     },
     {
       "path": "Assets/Art/Characters/Player/Cardinal4/Idle/Down/ApprovedHero_Idle_Down_01.png",
-      "motion": "Idle",
+      "motion": "IdleArchived",
       "direction": "Down",
       "index": 1,
       "source": "Assets/Art/Characters/Player/Cardinal4/Source/IdleSheet.png",
@@ -58,7 +58,7 @@
     },
     {
       "path": "Assets/Art/Characters/Player/Cardinal4/Idle/Down/ApprovedHero_Idle_Down_02.png",
-      "motion": "Idle",
+      "motion": "IdleArchived",
       "direction": "Down",
       "index": 2,
       "source": "Assets/Art/Characters/Player/Cardinal4/Source/IdleSheet.png",
@@ -81,7 +81,7 @@
     },
     {
       "path": "Assets/Art/Characters/Player/Cardinal4/Idle/Down/ApprovedHero_Idle_Down_03.png",
-      "motion": "Idle",
+      "motion": "IdleArchived",
       "direction": "Down",
       "index": 3,
       "source": "Assets/Art/Characters/Player/Cardinal4/Source/IdleSheet.png",
@@ -929,16 +929,104 @@
       "resampled": false,
       "discardedOrphanPixels": 2,
       "pixelHash": "dc4757758bbbd794e4867670dcacfb797369010f100ff984b12eb31f5849a711"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_00.png",
+      "motion": "Idle",
+      "direction": "Down",
+      "index": 0,
+      "source": "Assets/Art/Characters/Player/Cardinal4/Source/StandingDownCorrection.png",
+      "sourceBox": [
+        44,
+        15,
+        310,
+        332
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 256,
+      "pivotY": 20,
+      "ppu": 602,
+      "resampled": false,
+      "visibleHeight": 317,
+      "discardedOrphanPixels": 0,
+      "pixelHash": "c735a21beb81612c0ee521ce21cc344301bc84416841d4f3f07f74ff0c75ad2c"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_01.png",
+      "motion": "Idle",
+      "direction": "Down",
+      "index": 1,
+      "source": "Assets/Art/Characters/Player/Cardinal4/Source/StandingDownCorrection.png",
+      "sourceBox": [
+        344,
+        14,
+        610,
+        332
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 256,
+      "pivotY": 20,
+      "ppu": 602,
+      "resampled": false,
+      "visibleHeight": 318,
+      "discardedOrphanPixels": 2,
+      "pixelHash": "ed528a856746533b1939889011f572925f3e97b2b0f05abde82aa8df2f20fef0"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_02.png",
+      "motion": "Idle",
+      "direction": "Down",
+      "index": 2,
+      "source": "Assets/Art/Characters/Player/Cardinal4/Source/StandingDownCorrection.png",
+      "sourceBox": [
+        646,
+        13,
+        915,
+        335
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 256,
+      "pivotY": 20,
+      "ppu": 602,
+      "resampled": false,
+      "visibleHeight": 322,
+      "discardedOrphanPixels": 0,
+      "pixelHash": "edcd1396d9bd91e7d19f06f955d47fe24b5fce43451b36712b80a41d4af28bf3"
+    },
+    {
+      "path": "Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_03.png",
+      "motion": "Idle",
+      "direction": "Down",
+      "index": 3,
+      "source": "Assets/Art/Characters/Player/Cardinal4/Source/StandingDownCorrection.png",
+      "sourceBox": [
+        952,
+        14,
+        1222,
+        335
+      ],
+      "canvasWidth": 512,
+      "canvasHeight": 512,
+      "pivotX": 256,
+      "pivotY": 20,
+      "ppu": 602,
+      "resampled": false,
+      "visibleHeight": 321,
+      "discardedOrphanPixels": 0,
+      "pixelHash": "a3b34e952d4893c66587956299fa4c88e9b2b23bb0215a32bca811207a9b68bf"
     }
   ],
   "walkSequences": [
     {
       "direction": "Down",
       "paths": [
-        "Assets/Art/Characters/Player/Cardinal4/Idle/Down/ApprovedHero_Idle_Down_00.png",
+        "Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_00.png",
         "Assets/Art/Characters/Player/Cardinal4/WalkSteps/Down/ApprovedHero_Down_RightStep.png",
         "Assets/Art/Characters/Player/Cardinal4/WalkSteps/Down/ApprovedHero_Down_LeftStep.png",
-        "Assets/Art/Characters/Player/Cardinal4/Idle/Down/ApprovedHero_Idle_Down_00.png"
+        "Assets/Art/Characters/Player/Cardinal4/Idle/DownStanding/ApprovedHero_Idle_Down_00.png"
       ],
       "phases": [
         "Stance",
