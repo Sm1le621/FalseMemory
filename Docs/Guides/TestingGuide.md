@@ -1,5 +1,9 @@
 # Как проверять FalseMemory
 
+## Изучение способностей5.5 —2026-10-26
+
+Запустить AbilityLearningTests и AbilityLearningFlowTests вместе с полной регрессией. Проверить отказ при низких stats, отдельное списание LP, повторный callback, старые Fire/Heal, расход MP/MCR и возврат из боя. [Результаты](../ClasslessStage55.md).
+
 ## Подэтап5.4 —2026-10-26
 
 Запуститьполные Edit/Playassemblies, отдельноArmorHolyTests/ArmorHolyFlowTests. Вручную проверитьArmorTooltip/equipприrequirements, базовыйAttack12/ответ9/Defend5, HolyнаUndeadприWIS30иотсутствиеHolyнаHeal. Новаяформуладелаетисторическиечисла10/4/19неактуальными. [Результаты](../ClasslessStage54.md).

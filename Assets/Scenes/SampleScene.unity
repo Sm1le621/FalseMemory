@@ -5712,6 +5712,7 @@ GameObject:
   - component: {fileID: 504028426}
   - component: {fileID: 504028427}
   - component: {fileID: 504028428}
+  - component: {fileID: 504028429}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -6147,6 +6148,29 @@ MonoBehaviour:
     magicControl: 0
   unspentPoints: 0
   highestPointLevel: 1
+--- !u!114 &504028429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504028413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3de8239af4914b43a0e17ab6467f898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FalseMemory.Runtime::AbilityLearning
+  catalog:
+  - {fileID: 11400000, guid: 55a451c4fffd6cd4a8e4ed1dd65b672f, type: 2}
+  - {fileID: 11400000, guid: eb8097ab973a2c14ab1ac8c0cc304715, type: 2}
+  - {fileID: 11400000, guid: d65581d683b64904fbacc37225676311, type: 2}
+  - {fileID: 11400000, guid: 13c71e092f38a2d4cbc9c036aed49972, type: 2}
+  - {fileID: 11400000, guid: 54b0e5bf8b3249c40b70b14d96b3c375, type: 2}
+  - {fileID: 11400000, guid: 8e108e67a8a70ac41b003096fd09527b, type: 2}
+  pointsPerLevel: 1
+  learningPoints: 3
+  highestAwardLevel: 1
+  learnedIds: []
 --- !u!1 &508568440
 GameObject:
   m_ObjectHideFlags: 0

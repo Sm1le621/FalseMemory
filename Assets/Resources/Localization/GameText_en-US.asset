@@ -513,7 +513,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 899137652
-    m_Localized: Deals fire magic damage to one enemy.
+    m_Localized: A focused flame that deals magic damage.
     m_Metadata:
       m_Items: []
   - m_Id: 899137653
@@ -521,7 +521,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 899137654
-    m_Localized: Restores HP to the caster.
+    m_Localized: Restore your own health.
     m_Metadata:
       m_Items: []
   - m_Id: 735124635648
@@ -1006,6 +1006,66 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5120832495403009
     m_Localized: Defensive equipment shaped by your attributes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124059634843648
+    m_Localized: Power Strike
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124059664203776
+    m_Localized: A powerful physical attack.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124060272377856
+    m_Localized: Quick Strike
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124060272377857
+    m_Localized: A precise physical attack with improved accuracy.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124060884746240
+    m_Localized: Greater Heal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124060884746241
+    m_Localized: Restore a large amount of your own health.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061488726016
+    m_Localized: Sacred Strike
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061488726017
+    m_Localized: A physical strike with additional Holy damage against Undead and Unholy foes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161472
+    m_Localized: Learned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161473
+    m_Localized: Requirements not met
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161474
+    m_Localized: Not enough Learning Points
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161475
+    m_Localized: Available to learn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161476
+    m_Localized: 'Learning Points: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161477
+    m_Localized: Learn ({0} LP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161478
+    m_Localized: Level {0} | {1}
     m_Metadata:
       m_Items: []
   references:

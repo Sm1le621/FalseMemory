@@ -1,5 +1,9 @@
 # История значимых изменений FalseMemory
 
+## Изучение способностей5.5 —2026-10-26
+
+Добавлено бесклассовое изучение по уровню/атрибутам, отдельные LP3+1/level, защита повторного изучения и4 новых способности. Fire/Heal сохранены известными, параметры прежнего эффекта не изменены. Через MCP подключён каталог Player, сохранены English StringTable и SampleScene. Тесты/ограничения — [ClasslessStage55](ClasslessStage55.md).
+
 ## 2026-10-26 —5.4 Armor Scaling и Holy
 
 Добавлены6 тестовых Chest-предметов/пикапов, отдельные armorgrades/requirements/evasion, diminishingDefenseK20, WIS HolyтолькоUndead/Unholy, HolyResistance иcomponentresult. Старыеgear/GUID/сцены сохранены. Сценарные ожидания актуализированы под12/9/20 урона, новыеEdit/Playконтракты добавлены. Результаты иограничения —[ClasslessStage54](ClasslessStage54.md).

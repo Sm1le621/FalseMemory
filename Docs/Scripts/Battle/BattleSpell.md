@@ -1,5 +1,9 @@
 # BattleSpell
 
+## Подэтап5.5 —2026-10-26
+
+BattleEffect дополнен PhysicalDamage в конце enum. StableId возвращает id, при пустом — прежний localizationId; старые ID/GUID сохранены. LocalizedDescription читает StringTable. requiredLevel/requirements/learningCost описывают изучение, damageType/scaling/attackMultiplier/accuracyBonus/holyPower — эффект. MeetsRequirements(level,values) проверяет уровень и все10 минимумов, возвращает bool. ScaledPower(unit) использует общий Scale для power, при пустых entries сохраняет базу. Fire/Heal сохраняют стоимость8/6, силу10/25 и известность. Awake/Update у ScriptableObject нет; назначать в AbilityLearning.catalog.
+
 ## 1. Название и назначение
 
 **Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleSpell.cs.
@@ -53,3 +57,5 @@ Assets/Settings/Battle/Spells/Fire.asset и Heal.asset назначены Player
 - 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
 
 - 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
+
+- 2026-10-26 — интеграция бесклассового изучения и новых техник; см. актуальное описание выше.

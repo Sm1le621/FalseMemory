@@ -1,5 +1,9 @@
 # Настройка существующего проекта в Unity
 
+## Изучение способностей5.5 —2026-10-26
+
+На Player добавлен AbilityLearning, catalog содержит Fire/Heal/PowerStrike/QuickStrike/GreaterHeal/SacredStrike. Условия и экономика — [AbilityLearningSystem](../Systems/AbilityLearningSystem.md). Изучение пока через API; окно Character подключается следующим подэтапом.
+
 ## Подэтап5.4 —2026-10-26
 
 SampleScene содержит6 новыхPickup_Scaling_*Armor подTestLoot, Enemy категорииUndead, PlayerHuman. DefaultBattleRules useDiminishingDefense/K20; DefaultCharacterAttributesholycurve. Настройкаипримеры —[ClasslessStage54](../ClasslessStage54.md). НезапускатьEditorsetupвPlay; старыйконтентнезаменён.

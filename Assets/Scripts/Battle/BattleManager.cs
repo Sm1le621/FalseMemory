@@ -115,14 +115,15 @@ public sealed class BattleManager : MonoBehaviour
                 else if (pendingAction == BattleAction.Magic)
                 {
                     var spellTarget = pendingSpell.target == BattleTarget.Self ? actor : target;
-                    if (BattleAbilities.TryCast(actor, spellTarget, pendingSpell, rules, out int amount))
+                    if (BattleAbilities.TryCast(actor, spellTarget, pendingSpell, rules, out int amount,random))
                     {
                         bool healing = pendingSpell.effect == BattleEffect.RestoreHealth;
                         if (audioController != null) audioController.Play(healing ? BattleSound.Heal : BattleSound.Fire);
-                        hit = !healing;
+                        hit = !healing && !actor.LastAbilityMissed && amount>0;criticalHit=actor.LastAbilityCritical;
                         ui.ShowMessage(healing ? GameText.Get("battle.spell_heal",actor.LocalizedName,pendingSpell.LocalizedName,amount) : GameText.Get("battle.spell_damage",actor.LocalizedName,pendingSpell.LocalizedName,amount));
                         if(!healing && actor.LastDamageDealt.HolyDamage>0)ui.ShowMessage(ui.messageText.text+GameText.Get("battle.holy_component",actor.LastDamageDealt.HolyDamage));
                         ui.ShowFeedback(spellTarget == Player, (healing ? "+" : "−") + amount + (healing ? " HP" : " " + pendingSpell.LocalizedName), pendingSpell.effectColor,false);
+                        if(actor.LastAbilityMissed){ui.ShowMessage(GameText.Get("battle.missed",actor.LocalizedName));ui.ShowFeedback(spellTarget==Player,GameText.Get("battle.miss"),UnityEngine.Color.white,false);}
                         if (vfx != null) vfx.Play(spellTarget == Player, pendingSpell.visualEffect, pendingSpell.effectColor, healing);
                     }
                 }
@@ -221,7 +222,7 @@ public sealed class BattleManager : MonoBehaviour
     {
         if (!CanChoose) return false;
         var names = new List<string>(); var actions = new List<Action>(); var enabled = new List<bool>();
-        foreach (var spell in Player.spells ?? Array.Empty<BattleSpell>())
+        foreach (var spell in Player.KnownAbilities)
         {
             if (spell == null) continue;
             var entry = spell;
@@ -238,7 +239,7 @@ public sealed class BattleManager : MonoBehaviour
 
     public bool TryPlayerSpell(BattleSpell spell)
     {
-        if (!CanChoose || spell == null || Player.spells == null || Array.IndexOf(Player.spells, spell) < 0 ||
+        if (!CanChoose || spell == null || !System.Linq.Enumerable.Contains(Player.KnownAbilities,spell) ||
             !BattleAbilities.CanCast(Player, spell.target == BattleTarget.Self ? Player : Enemy, spell) || !gate.TryConsume()) return false;
         pendingSpell = spell; pendingAction = BattleAction.Magic;
         State = BattleState.Resolving; ui.SetCommandsEnabled(false);

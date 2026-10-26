@@ -14,6 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: FalseMemory.Runtime::BattleSpell
   displayName: Fire
   localizationId: spell.fire
+  id: spell.fire
+  description: A focused flame that deals magic damage.
+  requiredLevel: 1
+  learningCost: 1
+  requirements:
+    strength: 0
+    agility: 0
+    dexterity: 0
+    endurance: 0
+    vitality: 0
+    intelligence: 12
+    wisdom: 0
+    charisma: 0
+    magicPower: 15
+    magicControl: 0
+  damageType: 1
+  scaling: []
+  attackMultiplier: 1
+  accuracyBonus: 0
+  holyPower: 0
   mpCost: 8
   effect: 0
   target: 0

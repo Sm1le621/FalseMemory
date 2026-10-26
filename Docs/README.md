@@ -1,5 +1,9 @@
 # Документация FalseMemory
 
+## Изучение способностей5.5 —2026-10-26
+
+[Подэтап5.5](ClasslessStage55.md), [AbilityLearningSystem](Systems/AbilityLearningSystem.md), [AbilityLearning](Scripts/Battle/AbilityLearning.md), [AbilityLearningSetup](Scripts/Editor/AbilityLearningSetup.md), [Edit tests](Scripts/Tests/EditMode/AbilityLearningTests.md), [Play tests](Scripts/Tests/PlayMode/AbilityLearningFlowTests.md).
+
 ## Броня и Holy5.4 —2026-10-26
 
 [Результаты5.4](ClasslessStage54.md), [ArmorScalingSystem](Systems/ArmorScalingSystem.md), [HolyDamageSystem](Systems/HolyDamageSystem.md). Новые документы скриптов: [ArmorScalingData](Scripts/Inventory/ArmorScalingData.md), [BattleDamage](Scripts/Battle/BattleDamage.md), [ArmorHolySetup](Scripts/Editor/ArmorHolySetup.md), [Edittests](Scripts/Tests/EditMode/ArmorHolyTests.md), [Playtests](Scripts/Tests/PlayMode/ArmorHolyFlowTests.md).

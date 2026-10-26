@@ -36,6 +36,10 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
     public CreatureCategory creatureCategories;
     [Range(0,1)] public float holyResistance;
     public BattleDamageResult LastDamageDealt {get;private set;}
+    public bool LastAbilityMissed {get;internal set;}
+    public bool LastAbilityCritical {get;internal set;}
+    public AbilityLearning Learning=>GetComponent<AbilityLearning>();
+    public System.Collections.Generic.IEnumerable<BattleSpell> KnownAbilities=>Learning!=null?Learning.KnownAbilities:spells ?? System.Array.Empty<BattleSpell>();
     public CharacterGrowthRules growthRules;
     public event System.Action ProgressChanged;
     public event System.Action StatsChanged;

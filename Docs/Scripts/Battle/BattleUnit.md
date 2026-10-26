@@ -1,5 +1,9 @@
 # BattleUnit
 
+## Подэтап5.5 —2026-10-26
+
+Learning получает компонент AbilityLearning. KnownAbilities возвращает его известные способности либо прежний spells без компонента. LastAbilityMissed/LastAbilityCritical — результат последнего успешного TryCast, публичное чтение и internal запись; это не Inspector. HP/MP/EXP по-прежнему принадлежат существующим компонентам.
+
 ## Изменение5.4 —2026-10-26
 
 creatureCategories — flags Human/Beast/Undead/Unholy; holyResistance 0…1. SampleScene Player=Human, Enemy=Undead. HolyBonus читает WIS-кривую classless rules. IntrinsicWeaponHoly читает отдельную scaled Holy-базу оружия; HolyWeaponAttack определяет чистый канал. DealDamage(target,basis,intrinsicHoly,pureHoly) проверяет живую цель, компонует BattleDamageResult, вызывает Health.TakeDamage ровно один раз, хранит LastDamageDealt и возвращает компоненты. EquipmentBonuses теперь ScaledBonuses, но EquipmentAttributes читает raw Bonuses.attributes: рекурсии primary→armor→primary нет. Исторические результаты ниже не являются результатами текущего запуска; см. [ClasslessStage54](../../ClasslessStage54.md).
@@ -75,3 +79,5 @@ Health (RequireComponent), необязательные BattleInventory/Equipmen
 - 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.
 
 - 2026-10-26 — броня/Holy/рейтинговая защита подэтапа5.4; описание изменений приведено в начале документа.
+
+- 2026-10-26 — интеграция бесклассового изучения и новых техник; см. актуальное описание выше.

@@ -1,5 +1,9 @@
 # Архитектура FalseMemory
 
+## Изучение способностей5.5 —2026-10-26
+
+BattleSpell расширен данными обучения/Scaling/типа; AbilityLearning хранит LP и known IDs на Player. BattleUnit.KnownAbilities соединяет старые Fire/Heal и новые изученные, BattleManager строит прежнее меню. BattleAbilities выполняет physical/magic/heal без второй системы ресурсов. [Детали](Systems/AbilityLearningSystem.md).
+
 ## Броня/защита/Holy5.4 —2026-10-26
 
 ItemData Armor opt-in→ArmorScalingData→EquipmentState.ScaledBonuses→BattleUnit. BattleCalculator рассчитывает mitigation, BattleDamage компонует каналы, BattleUnit единожды применяет Health.TakeDamage. Категориисуществ/сопротивление находятся наBattleUnit, learning/CharacterUI ещё следующийэтап. [Факты5.4](ClasslessStage54.md).

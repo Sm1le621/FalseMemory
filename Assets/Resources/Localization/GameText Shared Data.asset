@@ -939,6 +939,66 @@ MonoBehaviour:
     m_Key: armor.battlemagearmor.description
     m_Metadata:
       m_Items: []
+  - m_Id: 5124059634843648
+    m_Key: ability.powerstrike.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124059664203776
+    m_Key: ability.powerstrike.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124060272377856
+    m_Key: ability.quickstrike.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124060272377857
+    m_Key: ability.quickstrike.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124060884746240
+    m_Key: ability.greaterheal.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124060884746241
+    m_Key: ability.greaterheal.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061488726016
+    m_Key: ability.sacredstrike.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061488726017
+    m_Key: ability.sacredstrike.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161472
+    m_Key: ability.state.learned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161473
+    m_Key: ability.state.requirements
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161474
+    m_Key: ability.state.points
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161475
+    m_Key: ability.state.available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161476
+    m_Key: ability.learning_points
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161477
+    m_Key: ability.learn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5124061757161478
+    m_Key: ability.requirements
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
