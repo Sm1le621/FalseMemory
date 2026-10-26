@@ -741,7 +741,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 122651013529626
-    m_Localized: Increases maximum MP and Magic Defense. Perception checks are planned.
+    m_Localized: Magic Defense, WIS Scaling and additional Holy damage against Undead and Unholy foes. Does not grant MP.
     m_Metadata:
       m_Items: []
   - m_Id: 122651013529627
@@ -1066,6 +1066,195 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5124061757161478
     m_Localized: Level {0} | {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101321367552
+    m_Localized: Character
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727680
+    m_Localized: Attributes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727681
+    m_Localized: Combat Stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727682
+    m_Localized: Abilities
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727683
+    m_Localized: Equipment
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727684
+    m_Localized: '{0}  |  Level {1}  |  EXP {2}  |  {3}
+
+      HP {4} / {5}    MP {6} / {7}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727685
+    m_Localized: 'Attribute Points: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727686
+    m_Localized: '{0}  {1}: {2} ({3:+#;-#;0})  ->  {4}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727687
+    m_Localized: '{0}
+
+      {1}
+
+
+      Base: {2}  |  Equipment: {3:+#;-#;0}
+
+      Temporary: {4:+#;-#;0}  |  Effective: {5}
+
+      Next soft cap: {6}
+
+
+      Next point:
+
+      {7}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727688
+    m_Localized: '{0}: {1:+#;-#;0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727689
+    m_Localized: '{0}: {1:+0.###;-0.###;0} percentage points'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727690
+    m_Localized: '{0} MP Cost: {1:+#;-#;0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727691
+    m_Localized: Base attribute limit reached (99).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727692
+    m_Localized: No immediate combat change after rounding. Some effects are prepared for future systems.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727693
+    m_Localized: 'Physical Attack: {0}
+
+      Magic Attack: {1}
+
+      Physical Defense: {2}
+
+      Magic Defense: {3}
+
+      Critical Chance: {4:0.#}%
+
+      Evasion: {5:0.#}%
+
+      Initiative: {6}
+
+      Holy Damage Bonus: {7:0.#}%
+
+      Miss Chance: {8:0.#}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727694
+    m_Localized: Weapon Power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727695
+    m_Localized: Critical Chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727696
+    m_Localized: Evasion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727697
+    m_Localized: Accuracy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727698
+    m_Localized: Holy Damage Bonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727699
+    m_Localized: Healing Power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727700
+    m_Localized: 'Unarmed
+
+      No weapon Scaling or requirements.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727701
+    m_Localized: '{0}
+
+      {1}
+
+
+      MP Cost: {2}
+
+      Requires: {3}
+
+      Status: {4}
+
+      Damage Type: {5}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727702
+    m_Localized: '{0}  |  {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727703
+    m_Localized: '{0}: {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727704
+    m_Localized: Empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727705
+    m_Localized: Select an equipped item to inspect its bonuses, Scaling and requirements. Change equipment in Inventory (I).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727706
+    m_Localized: 'C / Esc: Close   |   I: Inventory'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727707
+    m_Localized: +
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727708
+    m_Localized: Physical Attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727709
+    m_Localized: Physical Defense
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727710
+    m_Localized: Magic Attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727711
+    m_Localized: Magic Defense
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727712
+    m_Localized: Initiative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727713
+    m_Localized: Max HP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5126101350727714
+    m_Localized: Max MP
     m_Metadata:
       m_Items: []
   references:

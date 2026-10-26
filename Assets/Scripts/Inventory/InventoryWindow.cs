@@ -82,6 +82,8 @@ public sealed partial class InventoryWindow : MonoBehaviour
     {
         if(panel==null || !isActiveAndEnabled || unit==null || !unit.IsAlive ||
             (BattleTransition.Instance!=null && BattleTransition.Instance.EncounterActive))return false;
+        var character=GetComponent<CharacterWindow>();if(character!=null && character.IsOpen)character.Close();
+        if(gate.IsBlocked && !IsOpen)return false;
         if(modalBackdrop!=null)modalBackdrop.gameObject.SetActive(true);
         panel.gameObject.SetActive(true);gate.Acquire(this);message.text="";Refresh();return true;
     }

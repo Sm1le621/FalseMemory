@@ -1,5 +1,9 @@
 # Как проверять FalseMemory
 
+## Character5.6 —2026-10-26
+
+CharacterWindowFlowTests проверяет клавиши,modal,движение,doublecallbacks,LP/points/99/ресурсы/gear/послебоя и4страницыв1920×1080/3440×1440. Вручную оценитьчитаемость/tooltip/вкладки иудобство распределения. [Результаты](../ClasslessStage56.md).
+
 ## Изучение способностей5.5 —2026-10-26
 
 Запустить AbilityLearningTests и AbilityLearningFlowTests вместе с полной регрессией. Проверить отказ при низких stats, отдельное списание LP, повторный callback, старые Fire/Heal, расход MP/MCR и возврат из боя. [Результаты](../ClasslessStage55.md).

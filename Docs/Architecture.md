@@ -1,5 +1,9 @@
 # Архитектура FalseMemory
 
+## Character5.6 —2026-10-26
+
+CharacterWindow на Player читает BattleUnit/Attributes/Learning/Equipment, операции делегирует существующим владельцам. UI под InventoryCanvas, совместный WorldInputGate и взаимное закрытие сInventory. Preview вынесен в CharacterPresentation, строки pointer — CharacterAttributeView. Новых менеджеров HP/MP/сохранения нет. [Устройство](Systems/CharacterUISystem.md).
+
 ## Изучение способностей5.5 —2026-10-26
 
 BattleSpell расширен данными обучения/Scaling/типа; AbilityLearning хранит LP и known IDs на Player. BattleUnit.KnownAbilities соединяет старые Fire/Heal и новые изученные, BattleManager строит прежнее меню. BattleAbilities выполняет physical/magic/heal без второй системы ресурсов. [Детали](Systems/AbilityLearningSystem.md).

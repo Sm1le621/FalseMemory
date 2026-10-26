@@ -1,5 +1,9 @@
 # Настройка существующего проекта в Unity
 
+## Character5.6 —2026-10-26
+
+В SampleScene Player.CharacterWindow связан сновыми CharacterPanel/Backdrop/Tooltip под InventoryCanvas. C открывает/закрывает,Escзакрывает,IпереключаетвInventory. Подробности ссылок —[CharacterUISystem](../Systems/CharacterUISystem.md).
+
 ## Изучение способностей5.5 —2026-10-26
 
 На Player добавлен AbilityLearning, catalog содержит Fire/Heal/PowerStrike/QuickStrike/GreaterHeal/SacredStrike. Условия и экономика — [AbilityLearningSystem](../Systems/AbilityLearningSystem.md). Изучение пока через API; окно Character подключается следующим подэтапом.

@@ -1,5 +1,9 @@
 # Документация FalseMemory
 
+## Character5.6 —2026-10-26
+
+[Character UI](Systems/CharacterUISystem.md), [проверки5.6](ClasslessStage56.md). Скрипты: [CharacterWindow](Scripts/Inventory/CharacterWindow.md), [CharacterPresentation](Scripts/Inventory/CharacterPresentation.md), [CharacterAttributeView](Scripts/Inventory/CharacterAttributeView.md), [CharacterWindowSetup](Scripts/Editor/CharacterWindowSetup.md), [Play tests](Scripts/Tests/PlayMode/CharacterWindowFlowTests.md).
+
 ## Изучение способностей5.5 —2026-10-26
 
 [Подэтап5.5](ClasslessStage55.md), [AbilityLearningSystem](Systems/AbilityLearningSystem.md), [AbilityLearning](Scripts/Battle/AbilityLearning.md), [AbilityLearningSetup](Scripts/Editor/AbilityLearningSetup.md), [Edit tests](Scripts/Tests/EditMode/AbilityLearningTests.md), [Play tests](Scripts/Tests/PlayMode/AbilityLearningFlowTests.md).
