@@ -1,5 +1,11 @@
 # EquipmentState
 
+## Текущее изменение5.3 —2026-10-26
+
+BindRequirements(Func<ItemData,CharacterAttributeValues,bool>) назначает transient проверку владельца; отсутствие callback сохраняет автономную legacy-совместимость модели. AttributesExcluding(excluded,emptied?,replacement?) суммирует primary всех остальных предполагаемых слотов. RequirementsAllow проверяет кандидата без его бонусов/вытесняемой вещи. CanEquip, CanMove (оба участника) и TryUnequipTo проверяют требования до обмена; changing/атомарность/откат сохранены. Новый callback не Inspector и не static.
+
+Фактические проверки и ограничения: [ClasslessStage53](../../ClasslessStage53.md). Старые датированные значения ниже сохраняют историю соответствующих режимов.
+
 ## 1. Название и назначение
 
 Assets/Scripts/Inventory/EquipmentState.cs. Serializable владелец девяти надетых ItemData отдельно от исходного InventoryState. Статические определения не хранят количество.
@@ -44,3 +50,5 @@ Sword перетаскивается из Weapon в bag12: один экземп
 2026-10-12 — добавлен восьмой слот Gloves; протокол атомарных операций сохранён.
 
 2026-10-12 — 4.4: семь слотов, атомарный обмен/снятие/бонусы/защита событий.
+
+- 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.

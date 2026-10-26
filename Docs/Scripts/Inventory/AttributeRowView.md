@@ -1,5 +1,11 @@
 # AttributeRowView
 
+## Текущее изменение5.3 —2026-10-26
+
+Description при classless выбирает новый GameText key character.attribute_tooltip_classless: base/equipment/temporary/ближайший soft cap, без Class. Legacy-строка доступна только старому профилю. Render/hover/callbacks прежние.
+
+Фактические проверки и ограничения: [ClasslessStage53](../../ClasslessStage53.md). Старые датированные значения ниже сохраняют историю соответствующих режимов.
+
 ## 1. Название и назначение
 
 `Assets/Scripts/Inventory/AttributeRowView.cs`. Одна строка primary attribute в существующем Inventory, значение/gear bonus и источник общей hover-панели.
@@ -35,3 +41,5 @@ STR base10 +gear3 → `STR Strength: 13 (+3)`. Tooltip раскрывает Base
 ## 9. История изменений
 
 - 2026-10-12 — добавлены10 primary rows и источник общей hover-панели; без собственного состояния ресурсов.
+
+- 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.

@@ -1,5 +1,11 @@
 # BattleUnit
 
+## Текущее изменение5.3 —2026-10-26
+
+EquippedWeapon возвращает только ItemData.HasWeaponScaling; UsesWeaponScaling дополнительно проверяет classless profile и требования без primary-бонусов самого оружия. BasicAttackPower выбирает physical/magic канал. Оружейный Damage заменяет базовый Attack соответствующего канала и глобальную STR/DEX/MAG-поправку, direct flat gear остаётся отдельным бонусом. MaxMP в classless использует referenceMana40 вместо serialized maxMP30; HP baseline100 прежний. RefreshDerivedStats/Awake вызывают SynchronizeLevel; изменения вместимости не лечат. Старый рост действует только в legacy-ветке. MovementAdjustment от AGI всегда0.
+
+Фактические проверки и ограничения: [ClasslessStage53](../../ClasslessStage53.md). Старые датированные значения ниже сохраняют историю соответствующих режимов.
+
 ## 1. Название и назначение
 
 Исходник Assets/Scripts/Battle/BattleUnit.cs. Один участник мира/боя: Level/EXP/текущийMP, производные характеристики и Defend. HP принадлежит прежнему Health, предметы/gear прежним Inventory/Equipment. IBattleParticipant предоставляет Speed/IsAlive очереди.
@@ -61,3 +67,5 @@ Health (RequireComponent), необязательные BattleInventory/Equipmen
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 
 - 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
+
+- 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.

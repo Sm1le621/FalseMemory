@@ -1,5 +1,11 @@
 # Документация FalseMemory
 
+## Бесклассовая прогрессия5.3 —2026-10-26
+
+[ClasslessStage53](ClasslessStage53.md), [AttributeScalingSystem](Systems/AttributeScalingSystem.md), [WeaponScalingSystem](Systems/WeaponScalingSystem.md). Классов нет;10 stats/soft caps/свободные points/новое оружие расширяют прежние системы. Последующие Armor/Holy/learning/Character — по актуальной верхней части Roadmap.
+
+Новые описания: [AttributeSoftCapCurve](Scripts/Battle/AttributeSoftCapCurve.md), [WeaponScalingData](Scripts/Inventory/WeaponScalingData.md), [ClasslessProgressionSetup](Scripts/Editor/ClasslessProgressionSetup.md), [ClasslessScalingTests](Scripts/Tests/EditMode/ClasslessScalingTests.md), [ClasslessScalingFlowTests](Scripts/Tests/PlayMode/ClasslessScalingFlowTests.md).
+
 ## Исправление стойки Down —2026-10-26
 
 [Фронтальная стойка исправлена по замечанию владельца](PlayerStandingDownFix.md): обе стопы рядом; новый DownStanding подключён к Idle Down и обеим нейтральным позициям Walk Down, прежние рисунки сохранены.

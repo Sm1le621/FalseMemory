@@ -31,6 +31,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
     public BattleInventory Inventory {get;private set;}
     private WorldInputGate gate;
     private BattleUnit unit;
+    public BattleUnit Unit => unit;
     private int dragging=-1;
     private EquipmentSlot? draggingEquipment;
     private ItemData draggedItem;

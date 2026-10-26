@@ -7,7 +7,11 @@ public sealed class EquipmentController : MonoBehaviour
     private BattleUnit unit;
     private BattleInventory inventory;
     private InventoryWindow window;
-    private void Awake(){unit=GetComponent<BattleUnit>();inventory=GetComponent<BattleInventory>();window=GetComponent<InventoryWindow>();}
+    private void Awake()
+    {
+        unit=GetComponent<BattleUnit>();inventory=GetComponent<BattleInventory>();window=GetComponent<InventoryWindow>();
+        State.BindRequirements((item,gear)=>!item.HasWeaponScaling || (unit.Attributes!=null && item.weapon.MeetsRequirements(unit.Attributes.Calculate(unit.level,gear))));
+    }
     private void OnEnable()
     {
         if(window==null)return;
@@ -35,7 +39,9 @@ public sealed class EquipmentController : MonoBehaviour
     public bool TryUnequipTo(EquipmentSlot from,int destination) => CanChange && State.TryUnequipTo(inventory.State,from,destination,unit.level);
     private void HandleEquip(int index,EquipmentSlot? target)
     {
-        bool ok=TryEquip(index,target);window.ShowMessage(ok?GameText.Get("equipment.equipped"):GameText.Get("equipment.equip_failed"));window.Refresh();
+        bool ok=TryEquip(index,target);var item=index>=0 && index<InventoryState.Capacity?inventory.State.GetSlot(index).Item:null;
+        window.ShowMessage(ok?GameText.Get("equipment.equipped"):item!=null && item.HasWeaponScaling?
+            GameText.Get("scaling.requirements_failed",ItemPresentation.RequirementsText(item,unit)):GameText.Get("equipment.equip_failed"));window.Refresh();
     }
     private void HandleUnequip(EquipmentSlot slot)
     {

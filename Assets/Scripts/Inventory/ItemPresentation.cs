@@ -59,19 +59,49 @@ public static class ItemPresentation
         if(value==0 || float.IsNaN(value) || float.IsInfinity(value))return;
         parts.Add(GameText.Get(percentage?"item.percent_bonus":"item.float_bonus",GameText.Get("stat."+key),percentage?value*100:value));
     }
-    public static string Description(ItemData item,int count)
+    public static string Description(ItemData item,int count,BattleUnit viewer=null)
     {
         if(item==null)return "";
         // Assets are content, not TMP markup. Do not allow names/descriptions to alter layout.
         var lines=new List<string>{"<b>"+Escape(item.LocalizedName)+"</b>"+(count>1?"  ×"+count:""),
             "<color=#"+ColorUtility.ToHtmlStringRGB(RarityColor(item.rarity))+">"+GameText.Get("rarity."+item.rarity.ToString().ToLowerInvariant())+"</color>  •  "+TypeName(item)};
         string bonuses=BonusText(item);if(bonuses.Length>0)lines.Add(bonuses);
+        if(item.HasWeaponScaling)lines.Add(ScalingText(item,viewer));
         if(!string.IsNullOrWhiteSpace(item.LocalizedDescription))lines.Add("\n"+Escape(item.LocalizedDescription));
         if(item.category==ItemCategory.Weapon && item.twoHanded)lines.Add(GameText.Get("equipment.two_handed"));
         lines.Add("\n"+GameText.Get("item.level", Mathf.Max(1,item.requiredLevel)));
         if(item.buyPrice>0)lines.Add(GameText.Get("item.buy_price", item.buyPrice));
         if(item.CanSell)lines.Add(GameText.Get("item.sell_price", item.sellPrice));
         return string.Join("\n",lines);
+    }
+    public static string ScalingText(ItemData item,BattleUnit viewer)
+    {
+        if(item==null || !item.HasWeaponScaling)return "";
+        var weapon=item.weapon;var lines=new List<string>();
+        var values=viewer!=null && viewer.UsesPrimaryAttributes?
+            viewer.Attributes.Calculate(viewer.level,(viewer.Equipment!=null?viewer.Equipment.State.AttributesExcluding(EquipmentSlot.Weapon):new CharacterAttributeValues())+item.bonuses.attributes):new CharacterAttributeValues();
+        int total=weapon.Damage(values,viewer!=null && viewer.UsesPrimaryAttributes?viewer.Attributes.rules:null);
+        lines.Add(GameText.Get("scaling.damage",GameText.Get("scaling.type."+weapon.damageType.ToString().ToLowerInvariant()),Mathf.Max(0,weapon.baseDamage),total-Mathf.Max(0,weapon.baseDamage),total));
+        lines.Add(GameText.Get("scaling.weapon_type",GameText.Get("scaling.weapon."+weapon.weaponType)));
+        var grades=new List<string>();
+        foreach(var entry in weapon.scaling ?? System.Array.Empty<AttributeScalingEntry>())
+            if(entry.grade!=ScalingGrade.None)grades.Add(GameText.Get("attribute."+entry.attribute.ToString().ToLowerInvariant()+".abbr")+": "+entry.grade);
+        lines.Add(GameText.Get("scaling.grades",grades.Count>0?string.Join(" / ",grades):GameText.Get("scaling.none")));
+        lines.Add(GameText.Get("scaling.requires",RequirementsText(item,viewer)));
+        return string.Join("\n",lines);
+    }
+    public static string RequirementsText(ItemData item,BattleUnit viewer)
+    {
+        if(item==null || !item.HasWeaponScaling)return GameText.Get("scaling.none");
+        var weapon=item.weapon;
+        var available=viewer!=null && viewer.Attributes!=null?viewer.Attributes.Calculate(viewer.level,viewer.Equipment!=null?viewer.Equipment.State.AttributesExcluding(EquipmentSlot.Weapon):new CharacterAttributeValues()):new CharacterAttributeValues();
+        var requirements=new List<string>();
+        for(int i=0;i<CharacterAttributeValues.Count;i++)
+        {
+            var attribute=(CharacterAttribute)i;int required=weapon.requirements.Get(attribute);
+            if(required>0)requirements.Add(GameText.Get("scaling.requirement",GameText.Get("attribute."+attribute.ToString().ToLowerInvariant()+".abbr"),required,available.Get(attribute)));
+        }
+        return requirements.Count>0?string.Join(" / ",requirements):GameText.Get("scaling.none");
     }
     private static string Escape(string text)=>string.IsNullOrEmpty(text)?"":text.Replace("<","‹").Replace(">","›");
 }

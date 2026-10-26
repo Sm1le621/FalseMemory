@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateAnimation()
     {
-        if (animator == null) return;
+        if (animator == null || !animator.isInitialized || animator.runtimeAnimatorController == null) return;
         bool walking = ActualMovementSpeed > 0.03f && currentSpeed > 0.03f;
         animator.SetBool("isMoving", walking);
         if (hasWalkSpeedParameter)

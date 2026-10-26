@@ -53,9 +53,22 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
     private ItemStatBonus LevelBonuses => !UsesPrimaryAttributes && growthRules!=null?growthRules.Bonuses(level):new ItemStatBonus();
     private int Derived(int baseValue,int growth,int gear,DerivedAttributeStat stat)
         => (int)System.Math.Max(0,System.Math.Min(int.MaxValue,(long)System.Math.Max(0,baseValue)+growth+gear+(UsesPrimaryAttributes?Attributes.rules.Adjustment(PrimaryValues,stat):0)));
-    public int EffectiveAttack => Derived(attack,LevelBonuses.attack,EquipmentBonuses.attack,DerivedAttributeStat.Attack);
+    public WeaponScalingData EquippedWeapon
+    {
+        get {var item=Equipment!=null?Equipment.State.GetSlot(EquipmentSlot.Weapon):null;return item!=null && item.HasWeaponScaling?item.weapon:null;}
+    }
+    public bool UsesWeaponScaling => UsesPrimaryAttributes && Attributes.rules.classlessProgression && EquippedWeapon!=null &&
+        EquippedWeapon.MeetsRequirements(Attributes.Calculate(level,Equipment.State.AttributesExcluding(EquipmentSlot.Weapon)));
+    private int WeaponDamage => EquippedWeapon.Damage(PrimaryValues, Attributes.rules);
+    public bool MagicalWeaponAttack => UsesWeaponScaling && EquippedWeapon.damageType==WeaponDamageType.Magic;
+    public int BasicAttackPower => MagicalWeaponAttack?EffectiveMagicAttack:EffectiveAttack;
+    public int EffectiveAttack => UsesWeaponScaling && !MagicalWeaponAttack
+        ? ItemStatBonus.Sum(WeaponDamage,EquipmentBonuses.attack)
+        : Derived(attack,LevelBonuses.attack,EquipmentBonuses.attack,DerivedAttributeStat.Attack);
     public int EffectiveDefense => Derived(defense,LevelBonuses.defense,EquipmentBonuses.defense,DerivedAttributeStat.Defense);
-    public int EffectiveMagicAttack => Derived(magicAttack,LevelBonuses.magicAttack,EquipmentBonuses.magicAttack,DerivedAttributeStat.MagicAttack);
+    public int EffectiveMagicAttack => MagicalWeaponAttack
+        ? ItemStatBonus.Sum(WeaponDamage,EquipmentBonuses.magicAttack)
+        : Derived(magicAttack,LevelBonuses.magicAttack,EquipmentBonuses.magicAttack,DerivedAttributeStat.MagicAttack);
     public int EffectiveMagicDefense => Derived(magicDefense,LevelBonuses.magicDefense,EquipmentBonuses.magicDefense,DerivedAttributeStat.MagicDefense);
     public int Speed => Derived(speed,LevelBonuses.speed,EquipmentBonuses.speed,DerivedAttributeStat.Speed);
     private static float Finite(float value) => float.IsNaN(value)||float.IsInfinity(value)?0:value;
@@ -67,7 +80,7 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
     public int SpellHealing(BattleSpell spell) => spell==null?0:(int)System.Math.Max(0,System.Math.Min(int.MaxValue,(long)System.Math.Max(0,spell.power)+(UsesPrimaryAttributes?Attributes.rules.HealingBonus(PrimaryValues):0)));
     public bool IsAlive => Health != null && Health.currentHealth > 0;
     public bool IsDefending { get; private set; }
-    public int MaxMP => Derived(maxMP,!UsesPrimaryAttributes && growthRules!=null?growthRules.Growth(growthRules.manaPerLevel,level):0,EquipmentBonuses.maximumMana,DerivedAttributeStat.MaximumMana);
+    public int MaxMP => Derived(UsesPrimaryAttributes && Attributes.rules.classlessProgression?Attributes.rules.referenceMana:maxMP,!UsesPrimaryAttributes && growthRules!=null?growthRules.Growth(growthRules.manaPerLevel,level):0,EquipmentBonuses.maximumMana,DerivedAttributeStat.MaximumMana);
     public int CurrentMP => Mathf.Clamp(currentMP, 0, MaxMP);
     public int CurrentExperience => Mathf.Max(0, currentExperience);
     public int ExperienceToNextLevel => growthRules!=null?growthRules.Remaining(CurrentExperience,level):0;
@@ -96,10 +109,10 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
         if(Health!=null)
             Health.SetMaximumHealth(System.Math.Max(1,Derived(baseMaximumHealth,!UsesPrimaryAttributes && growthRules!=null?growthRules.Growth(growthRules.healthPerLevel,level):0,EquipmentBonuses.maximumHealth,DerivedAttributeStat.MaximumHealth)));
     }
-    public void RefreshDerivedStats(){EnsureGrowthBaseline();ApplyHealthGrowth();currentMP=CurrentMP;StatsChanged?.Invoke();}
+    public void RefreshDerivedStats(){if(UsesPrimaryAttributes)Attributes.SynchronizeLevel(level);EnsureGrowthBaseline();ApplyHealthGrowth();currentMP=CurrentMP;StatsChanged?.Invoke();}
     private void Awake()
     {
-        EnsureGrowthBaseline();ApplyHealthGrowth();currentMP=MaxMP;
+        if(UsesPrimaryAttributes)Attributes.SynchronizeLevel(level);EnsureGrowthBaseline();ApplyHealthGrowth();currentMP=MaxMP;
         boundAttributes=Attributes;boundEquipment=Equipment;
         if(boundAttributes!=null)boundAttributes.Changed+=RefreshDerivedStats;
         if(boundEquipment!=null)boundEquipment.State.Changed+=RefreshDerivedStats;

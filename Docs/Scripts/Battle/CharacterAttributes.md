@@ -1,5 +1,11 @@
 # CharacterAttributes
 
+## Текущее изменение5.3 —2026-10-26
+
+BaseValues/SetBase/RestoreBaseValues ограничивают базу0…99. classless Calculate игнорирует прежнее serialized classBonuses, Growth возвращает0; поля/метод класса оставлены только для совместимости данных, классовой системы нет. SynchronizeLevel(level) выдаёт pointsPerLevel за ещё не учтённые уровни, хранит highestPointLevel/unspentPoints. TryIncreaseBase(attribute) — bool атомарной покупки+1: только classless, достаточно очков, база<99, правильный enum; сначала списание/изменение, затем Changed; allocating отклоняет повторный вход. Свободные очки принадлежат этому компоненту, EXP по-прежнему BattleUnit. Перезапуск не является дисковым сохранением.
+
+Фактические проверки и ограничения: [ClasslessStage53](../../ClasslessStage53.md). Старые датированные значения ниже сохраняют историю соответствующих режимов.
+
 ## Дополнение2026-10-12
 
 Player rework4: компонент уже назначен существующемуPlayer в SampleScene; DefaultCharacterAttributes. BattleUnit подписан на Changed иобновляет прежниеcapacities без лечения. Фраза «неподключён» вdata-настройке ниже относится к историческому подэтапу3.
@@ -41,3 +47,5 @@ CharacterAttributeRules/Values. Не требует BattleUnit для изоли
 ## 9. История изменений
 
 - 2026-10-12 — добавлены десять primary attributes, настраиваемые формулы и проверки данных; игровая интеграция — отдельный следующий подэтап.
+
+- 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.

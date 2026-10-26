@@ -47,7 +47,7 @@ public sealed partial class BattleFlowTests
         Assert.That(player.Health.currentHealth,Is.EqualTo(80));Assert.That(player.Inventory.Count(potion),Is.EqualTo(2));
         Assert.That(use.TryUse(0),Is.False,"A duplicate callback in the same frame is rejected");
         yield return null;window.Select(1);window.useButton.onClick.Invoke();
-        Assert.That(player.CurrentMP,Is.EqualTo(25));Assert.That(player.Inventory.Count(ether),Is.EqualTo(1));
+        Assert.That(player.CurrentMP,Is.EqualTo(35));Assert.That(player.Inventory.Count(ether),Is.EqualTo(1));
         equipment.TryEquip(2);equipment.TryEquip(3);equipment.TryEquip(4);window.Close();
         var shared=player.Inventory.State;var home=player.transform.position;
         yield return BeginBattle(player,enemy);var manager=Manager();
@@ -57,15 +57,15 @@ public sealed partial class BattleFlowTests
         manager.TryPlayerItem(potion);yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
         Assert.That(player.Health.currentHealth,Is.EqualTo(99));Assert.That(shared.Count(potion),Is.EqualTo(1));
         manager.TryPlayerSpell(Fire(player));yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(player.CurrentMP,Is.EqualTo(17));Assert.That(enemy.Health.currentHealth,Is.EqualTo(26));
+        Assert.That(player.CurrentMP,Is.EqualTo(27));Assert.That(enemy.Health.currentHealth,Is.EqualTo(26));
         manager.TryPlayerItem(ether);yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(player.CurrentMP,Is.EqualTo(30));Assert.That(shared.Count(ether),Is.Zero);Assert.That(player.Health.currentHealth,Is.EqualTo(97));
+        Assert.That(player.CurrentMP,Is.EqualTo(40));Assert.That(shared.Count(ether),Is.Zero);Assert.That(player.Health.currentHealth,Is.EqualTo(97));
         enemy.Health.TakeDamage(26);yield return WaitUntil(()=>manager.State==BattleState.Victory);
         Assert.That(BattleTransition.Instance.ReturnAfterVictory(),Is.True);yield return WaitUntil(()=>!BattleTransition.Instance.EncounterActive);
         Assert.That(player.Inventory.State,Is.SameAs(shared));Assert.That(player.transform.position,Is.EqualTo(home));
         Assert.That(player.EffectiveAttack,Is.EqualTo(20));Assert.That(player.EffectiveDefense,Is.EqualTo(14));
         Assert.That(equipment.State.GetSlot(EquipmentSlot.Weapon),Is.SameAs(sword));Assert.That(shared.Count(sword),Is.Zero);
-        Assert.That(player.Health.currentHealth,Is.EqualTo(97));Assert.That(player.CurrentMP,Is.EqualTo(30));Assert.That(player.CurrentExperience,Is.EqualTo(20));
+        Assert.That(player.Health.currentHealth,Is.EqualTo(97));Assert.That(player.CurrentMP,Is.EqualTo(40));Assert.That(player.CurrentExperience,Is.EqualTo(20));
         Assert.That(player.Health.hpText.text,Does.Contain("97"));
     }
     [UnityTest] public IEnumerator WorldUseRestrictionsDisableButtonsWithoutConsumingItems()
@@ -100,7 +100,7 @@ public sealed partial class BattleFlowTests
         window.Select(1);window.equipButton.onClick.Invoke();window.Select(2);window.equipButton.onClick.Invoke();window.Select(3);window.equipButton.onClick.Invoke();
         Assert.That(player.EffectiveAttack,Is.EqualTo(20));Assert.That(player.EffectiveDefense,Is.EqualTo(14));
         Assert.That(player.attack,Is.EqualTo(15));Assert.That(player.defense,Is.EqualTo(8));
-        Assert.That(player.Health.currentHealth,Is.EqualTo(100));Assert.That(player.CurrentMP,Is.EqualTo(30));
+        Assert.That(player.Health.currentHealth,Is.EqualTo(100));Assert.That(player.CurrentMP,Is.EqualTo(40));
         Assert.That(window.equipmentStats.text,Does.Contain("DEF 14"));
         Assert.That(equipment.State.GetSlot(EquipmentSlot.Head),Is.SameAs(helmet));window.Close();yield return null;
     }

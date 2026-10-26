@@ -127,7 +127,7 @@ public sealed class BattleManager : MonoBehaviour
                 }
                 else
                 {
-                    var result = BattleCalculator.ResolvePhysical(actor.EffectiveAttack, target.EffectiveDefense, target.IsDefending, rules,
+                    var result = BattleCalculator.ResolvePhysical(actor.BasicAttackPower, actor.MagicalWeaponAttack?target.EffectiveMagicDefense:target.EffectiveDefense, target.IsDefending, rules,
                         actor.EffectiveCriticalChance, Mathf.Clamp01(actor.EffectiveMissChance+target.Evasion), random);
                     if (result.Missed)
                     {

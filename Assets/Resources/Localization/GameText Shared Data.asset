@@ -771,6 +771,114 @@ MonoBehaviour:
     m_Key: equipment.two_handed
     m_Metadata:
       m_Items: []
+  - m_Id: 5114274592047104
+    m_Key: scaling.damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018624
+    m_Key: scaling.type.physical
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018625
+    m_Key: scaling.type.magic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018626
+    m_Key: scaling.weapon_type
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018627
+    m_Key: scaling.grades
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018628
+    m_Key: scaling.none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018629
+    m_Key: scaling.requires
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018630
+    m_Key: scaling.requirement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018631
+    m_Key: scaling.weapon.sword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018632
+    m_Key: scaling.weapon.greatsword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018633
+    m_Key: scaling.weapon.rapier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018634
+    m_Key: scaling.weapon.dagger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018635
+    m_Key: scaling.weapon.staff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018636
+    m_Key: scaling.requirements_failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018637
+    m_Key: character.attribute_tooltip_classless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274977923072
+    m_Key: weapon.greatsword.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274977923073
+    m_Key: weapon.greatsword.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114275586097152
+    m_Key: weapon.longsword.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114275586097153
+    m_Key: weapon.longsword.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114276206854144
+    m_Key: weapon.rapier.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114276206854145
+    m_Key: weapon.rapier.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114276865359872
+    m_Key: weapon.dagger.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114276865359873
+    m_Key: weapon.dagger.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114277452562432
+    m_Key: weapon.magicstaff.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114277452562433
+    m_Key: weapon.magicstaff.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114278002016256
+    m_Key: weapon.sacredblade.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114278002016257
+    m_Key: weapon.sacredblade.description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

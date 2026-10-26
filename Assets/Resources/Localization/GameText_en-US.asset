@@ -681,7 +681,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 122651013529611
-    m_Localized: Increases movement speed, turn speed, Evasion and Critical Chance.
+    m_Localized: Evasion and initiative. Does not change walking speed.
     m_Metadata:
       m_Items: []
   - m_Id: 122651013529612
@@ -824,6 +824,124 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 132540653879300
     m_Localized: Requires both hands.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274592047104
+    m_Localized: '{0} Damage: {1} + {2} = {3}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018624
+    m_Localized: Physical
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018625
+    m_Localized: Magic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018626
+    m_Localized: 'Weapon Type: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018627
+    m_Localized: 'Scaling: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018628
+    m_Localized: None
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018629
+    m_Localized: 'Requires: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018630
+    m_Localized: '{0} {1} (current {2})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018631
+    m_Localized: Sword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018632
+    m_Localized: Greatsword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018633
+    m_Localized: Rapier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018634
+    m_Localized: Dagger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018635
+    m_Localized: Staff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018636
+    m_Localized: Attribute requirements not met. {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274613018637
+    m_Localized: '{0} {1}
+
+      {2}
+
+      Base: {3}
+
+      Equipment: {4}
+
+      Temporary: {5}
+
+      Next soft cap: {6}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274977923072
+    m_Localized: Greatsword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114274977923073
+    m_Localized: Scales with its listed attributes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114275586097152
+    m_Localized: Longsword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114275586097153
+    m_Localized: Scales with its listed attributes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114276206854144
+    m_Localized: Rapier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114276206854145
+    m_Localized: Scales with its listed attributes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114276865359872
+    m_Localized: Dagger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114276865359873
+    m_Localized: Scales with its listed attributes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114277452562432
+    m_Localized: Magic Staff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114277452562433
+    m_Localized: Scales with its listed attributes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114278002016256
+    m_Localized: Sacred Blade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5114278002016257
+    m_Localized: Scales with its listed attributes.
     m_Metadata:
       m_Items: []
   references:

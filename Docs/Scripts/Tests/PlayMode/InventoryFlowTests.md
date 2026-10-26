@@ -1,5 +1,11 @@
 # InventoryFlowTests
 
+## Текущее изменение5.3 —2026-10-26
+
+Общие Potion/Ether/gear/drag/pickup/gate остаются под строгими сценариями. Ожидаемые MP адаптированы к новой вместимости40; прежние Sword20ATK/Armor14DEF и количество вещей не изменены.
+
+Фактические проверки и ограничения: [ClasslessStage53](../../../ClasslessStage53.md). Старые датированные значения ниже сохраняют историю соответствующих режимов.
+
 ## 1. Название и назначение
 
 Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Tests/PlayMode/InventoryFlowTests.cs.
@@ -49,3 +55,5 @@ FalseMemory.Battle.PlayModeTests/Runtime/InputSystem/EventSystem и общие f
 2026-10-12 — 4.3: реальный E/полный запас/резерв/повторные вызовы.
 
 2026-10-12 — 4.2: два сценария окна/ввода/handlers.
+
+- 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.

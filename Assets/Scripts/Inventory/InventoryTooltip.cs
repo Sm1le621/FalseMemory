@@ -25,7 +25,7 @@ public sealed class InventoryTooltip : MonoBehaviour
         var equipment=source as EquipmentSlotView;if(equipment!=null)item=equipment.Item;
         var attribute=source as AttributeRowView;
         if(item==null && attribute==null){Hide();return;}
-        content.text=attribute!=null?attribute.Description():ItemPresentation.Description(item,count);
+        content.text=attribute!=null?attribute.Description():ItemPresentation.Description(item,count,owner.Unit);
         rarityBorder.effectColor=attribute!=null?new Color32(150,133,101,255):ItemPresentation.RarityColor(item.rarity);
         var parent=panel.parent as RectTransform;
         float width=Mathf.Min(320,parent.rect.width-24);

@@ -1,5 +1,11 @@
 # ItemData
 
+## Текущее изменение5.3 —2026-10-26
+
+Добавлены optional WeaponScalingData weapon и явный serialized bool useWeaponScaling=false. HasWeaponScaling требует флаг, category Weapon и непустые данные. Явный флаг обязателен: Unity может материализовать вложенное поле у старого ассета. Поэтому прежние IronSword/WoodenStaff сохраняют старые flat bonuses и ID. Новые6 weapon assets имеют флаг true и стабильные weapon.* ID.
+
+Фактические проверки и ограничения: [ClasslessStage53](../../ClasslessStage53.md). Старые датированные значения ниже сохраняют историю соответствующих режимов.
+
 ## 1. Название и назначение
 
 Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Inventory/ItemData.cs.
@@ -71,3 +77,5 @@ Enum EquipmentSlot пока8 слотов; Off-Hand/двуручное прав�
 2026-10-12 — переработка UI: шесть редкостей и Gloves без перенумерации прежних слотов и изменения баланса.
 
 2026-10-12 — 4.1: общие определения и совместимость Potion.
+
+- 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.

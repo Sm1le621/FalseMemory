@@ -42,6 +42,9 @@ public class ItemData : ScriptableObject
     public EquipmentSlot equipmentSlot=EquipmentSlot.Chest;
     public bool twoHanded, canUseOffHand;
     public ItemStatBonus bonuses;
+    public WeaponScalingData weapon;
+    public bool useWeaponScaling;
+    public bool HasWeaponScaling => useWeaponScaling && category==ItemCategory.Weapon && weapon!=null;
     public string LocalizedName=>GameText.Content(id+".name",displayName);
     public string LocalizedDescription=>GameText.Content(id+".description",description);
     public bool IsEquipment => category==ItemCategory.Weapon || category==ItemCategory.Armor || category==ItemCategory.Accessory;

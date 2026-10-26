@@ -1,5 +1,9 @@
 # Архитектура FalseMemory
 
+## Бесклассовая ветка5.3 —2026-10-26
+
+CharacterAttributes теперь хранит свободные очки/максимальный уже учтённый level и базу0…99; BattleUnit остаётся владельцемLevel/EXP/MP, Health —HP. DefaultCharacterAttributes включает classless, при котором growth заменён свободными points, caps интегрируются, AGI не меняет walk, baselineMP40. ItemData имеет явный opt-in WeaponScalingData, EquipmentState делегирует проверку primary владельцу до атомарной операции. Оружейная сила заменяет глобальную поправку соответствующего Attack-канала; новый UI не создан. Старые serialized поля/ID/GUID сохраняются. [Реализация и проверки](ClasslessStage53.md). Ниже исторические модели.
+
 ## Изменение2026-10-26 —cardinal4
 
 Существующий ApprovedHeroImporter читает PlayerCardinal4Manifest.frames и walkSequences, обновляет прежние8 cardinal-клипов и два Blend Tree на4 child. Walk содержит4 ключа с повторным Idle_00 на концах, Idle отдельно сохраняет4 рисунка. PlayerController.useCardinalAnimations=true квантит только Move/LastMove для Animator; физическое направление/нормализованные диагонали прежние. Через MCP сохранена SampleScene (preview Sprite/флаг), боевая архитектура/ресурсы не менялись. Новых runtime-систем нет. [Файлы и проверенное поведение](PlayerWalkOrder.md). Ниже — исторические состояния.

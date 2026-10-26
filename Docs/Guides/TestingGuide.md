@@ -1,5 +1,9 @@
 # Как проверять FalseMemory
 
+## Подэтап5.3 —актуальные проверки2026-10-26
+
+Edit: ClasslessScalingTests проверяет все soft caps до/на/после порога, заданныеHP/MP, max99/points/reentry, ранги и requirements без самофинансирования/потерь, явное opt-in старых предметов. Play: ClasslessScalingFlowTests проверяет реальный уровень/распределение/оружие/бой/возврат/Tooltip; остальные сценарии адаптированы к стартовым40MP и росту через свободные очки. Финальные114 Edit/59 Play прошли; не считать этим проверенными будущиеArmor/Holy/learning/Character. [Job IDs, первый неуспешный прогон и обычный Play](../ClasslessStage53.md).
+
 ## Проверка Cardinal4/порядка Walk —2026-10-26
 
 Edit Mode → FalseMemory.Battle.EditModeTests: ApprovedHeroAssetTests требует4 ключа/3 уникальных Sprite с повторной стойкой, времена0/.0625/.25/.4375, длину .5с, импорт/pivot/24 активных изображения/4 child. Play Mode → FalseMemory.Battle.PlayModeTests: PlayerIdle30FlowTests наблюдает полный порядок каждого Walk и4 Idle при неподвижном Rigidbody; PlayerDirectionFlowTests/MovementSmoothingFlowTests проверяют движение/темп/стену/gate/направления. Название файла30 историческое.

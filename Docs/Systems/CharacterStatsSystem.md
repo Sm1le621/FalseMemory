@@ -1,5 +1,9 @@
 # Primary attributes персонажа
 
+## Актуальная бесклассовая модель5.3 —2026-10-26
+
+Старые линейные формулы ниже являются legacy. Новый назначенный classless-профиль отключает автоматические10 primary заlevel, выдаёт1 свободное очко за каждый ещё не учтённый level, ограничивает базу99, игнорирует classBonuses. HP(VIT10)=100, MP(INT10)=40; VIT40/60/99 даёт340/420/459HP, INT40/60/99 даёт160/200/220MP. Увеличениеcapacity не лечит. AGI влияет наSpeed/Evasion и явно назначенный item Scaling, но не наскоростьходьбы. MCR максимум30%/платное заклинание≥1MP. Все curves/grade coefficients в прежнем CharacterAttributeRules. [Полные параметры](../ClasslessStage53.md).
+
 ## Актуально2026-10-13
 
 Экипировка теперь9slots, включаяOffHand8; primary/direct gear bonuses агрегируются тойжеState. Переносы между gear не дублируютбонус и не записываютего вbase. Всеprimary/HPMP/float bonus строки предмета теперьпоказаныTooltip; прежнееограничениеfloat display устранено.

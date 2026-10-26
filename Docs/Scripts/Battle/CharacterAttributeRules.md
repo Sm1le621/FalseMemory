@@ -1,5 +1,11 @@
 # CharacterAttributeRules
 
+## Текущее изменение5.3 —2026-10-26
+
+Новый classlessProgression по умолчанию false для совместимости, в DefaultCharacterAttributes true. attributePointsPerLevel1/referenceMana40/scalingReferencePoints50/maximumWeaponScalingBonus1.5; scalingGrades None/E/D/C/B/A/S =0/.1/.2/.4/.6/.8/1. SoftCaps содержит10 AttributeSoftCapCurve. Curve возвращает профиль/безопасный default, GradeCoefficient проверяет enum/NaN, ScalingScore нормирует интеграл/первую marginal gain/50. Delta при classless использует интеграл относительно reference10. HP — VIT-кривая8/4/1, MP — только INT4/2/.5, одно AwayFromZero округление; legacy-линейные HP5/MP INT+WIS сохранены только при false. MovementAdjustment всегда0, default максимум экономииMP=.3. В назначенном профиле growthPerLevel0/agilityMovement0: автоматических primary-бонусов за уровень больше нет. Все приведённые ниже старые линейные примеры относятся к legacy-режиму.
+
+Фактические проверки и ограничения: [ClasslessStage53](../../ClasslessStage53.md). Старые датированные значения ниже сохраняют историю соответствующих режимов.
+
 **Исходник:** `Assets/Scripts/Battle/CharacterAttributeRules.cs`.
 
 ## 1. Название и назначение
@@ -47,3 +53,5 @@ Create → FalseMemory → Character Attribute Rules. Созданный чер�
 - 2026-10-12 — Player rework4: primary attributes подключены к исходным ресурсам/бою/UI; прежние идентификаторы и игровая сессия сохранены.
 
 - 2026-10-12 — добавлены десять primary attributes, настраиваемые формулы и проверки данных; игровая интеграция — отдельный следующий подэтап.
+
+- 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.

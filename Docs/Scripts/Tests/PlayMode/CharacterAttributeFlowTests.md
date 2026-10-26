@@ -1,5 +1,11 @@
 # CharacterAttributeFlowTests
 
+## Текущее изменение5.3 —2026-10-26
+
+Проверяет тот же агрегат gear/resources. При VIT+2 HP116, INT+2 MP48, AGI не меняет walk4. За level free point вместо+1 ко всем stats, поэтому повторный level не меняет capacities/Attack до распределения. Классовый legacy modifier игнорируется; temporary−1 даётSTR9/ATK14 и Tooltip без Class. Magic-тест явно оставляет7MP из40, исходы Fire/Heal прежние.
+
+Фактические проверки и ограничения: [ClasslessStage53](../../../ClasslessStage53.md). Старые датированные значения ниже сохраняют историю соответствующих режимов.
+
 ## 1. Название и назначение
 
 `Assets/Tests/PlayMode/CharacterAttributeFlowTests.cs`. Три дополнительных UnityTest существующего BattleFlowTests для игровой интеграции primary.
@@ -39,3 +45,5 @@ Level1 gear даётATK27/HPmax110/MPmax33, текущие70/22 сохраняю
 ## 9. История изменений
 
 - 2026-10-12 — добавлены3 сценария primary/ресурсов/level/экипировки/UI/Fire/Heal.
+
+- 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.

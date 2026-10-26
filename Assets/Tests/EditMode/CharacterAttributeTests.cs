@@ -26,11 +26,11 @@ public sealed class CharacterAttributeTests
             var values=CharacterAttributeValues.Uniform(10);values.strength=13;values.agility=14;values.dexterity=12;values.magicControl=20;
             Assert.That(rules.Adjustment(values,DerivedAttributeStat.Attack),Is.EqualTo(5));
             Assert.That(rules.Adjustment(values,DerivedAttributeStat.MaximumHealth),Is.Zero);
-            Assert.That(rules.MovementAdjustment(values),Is.EqualTo(.12f).Within(.0001f));
+            Assert.That(rules.MovementAdjustment(values),Is.Zero);
             Assert.That(rules.Evasion(values),Is.EqualTo(.02f).Within(.0001f));
             Assert.That(rules.AccuracyBonus(values),Is.EqualTo(.01f).Within(.0001f));
             Assert.That(rules.ManaCost(8,values),Is.EqualTo(7));values.magicControl=int.MaxValue;
-            Assert.That(rules.ManaCost(8,values),Is.EqualTo(4));Assert.That(rules.ManaCost(0,values),Is.Zero);Assert.That(rules.ManaCost(-1,values),Is.EqualTo(-1));
+            Assert.That(rules.ManaCost(8,values),Is.EqualTo(6));Assert.That(rules.ManaCost(0,values),Is.Zero);Assert.That(rules.ManaCost(-1,values),Is.EqualTo(-1));
         }
         finally {Object.DestroyImmediate(rules);}
     }

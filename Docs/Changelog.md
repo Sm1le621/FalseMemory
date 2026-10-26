@@ -1,5 +1,9 @@
 # История значимых изменений FalseMemory
 
+## 2026-10-26 —подэтап5.3, рабочая копия
+
+Добавлены кусочные soft caps10 stats, очки1/level, база≤99, MP40/INT-кривая, Weapon Scaling S–E/requirements и6 новых ItemData/pickups. AGI больше не ускоряет ходьбу, старые bonuses не начисляются второй раз. Через MCP обновлены DefaultCharacterAttributes/English StringTable и существующая SampleScene. Старые предметы защищены явным useWeaponScaling=false; исправлена обнаруженная регрессия вложенного поля Unity. Tests адаптированы к новой экономике и дополнены; итоговые результаты фиксируются в [ClasslessStage53](ClasslessStage53.md). Armor/Holy/abilities/Character ещё отсутствуют; push не выполняется.
+
 ## 2026-10-26 —герой стоит в нейтральных кадрах Down
 
 По замечанию владельца исправлена ошибочная фронтальная «стойка» с ногой впереди. Встроенный imagegen подготовил источник StandingDownCorrection1254²; подключены только четыре фронтальных PNG512² из него, без resampling. В прежних Idle_Down/Walk_Down и preview SampleScene заменены ссылки; шаги и остальные направления сохранены. ApprovedHeroImporter выбирает активный Idle из manifest по motion/direction/index, старые Down PNG остаются IdleArchived. Архитектура движения/боя не менялась. Проверки и ручная художественная граница — [в отчёте](PlayerStandingDownFix.md). Чужой TMP-кэш исключён; push не выполняется.

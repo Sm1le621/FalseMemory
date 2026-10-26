@@ -12,18 +12,96 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fda3648e45f9764196b5b5efd6dcf9e, type: 3}
   m_Name: DefaultCharacterAttributes
   m_EditorClassIdentifier: FalseMemory.Runtime::CharacterAttributeRules
+  classlessProgression: 1
+  attributePointsPerLevel: 1
+  referenceMana: 40
+  scalingReferencePoints: 50
+  maximumWeaponScalingBonus: 1.5
+  scalingGrades:
+  - 0
+  - 0.1
+  - 0.2
+  - 0.4
+  - 0.6
+  - 0.8
+  - 1
+  softCaps:
+  - attribute: 0
+    thresholds: 140000003700000050000000i
+    gains:
+    - 1
+    - 0.5
+    - 0.25
+    - 0.1
+  - attribute: 1
+    thresholds: 1e0000003c000000i
+    gains:
+    - 1
+    - 0.5
+    - 0.2
+  - attribute: 2
+    thresholds: 140000003700000050000000i
+    gains:
+    - 1
+    - 0.5
+    - 0.25
+    - 0.1
+  - attribute: 3
+    thresholds: 1e000000320000003c000000i
+    gains:
+    - 1
+    - 0.5
+    - 0.25
+    - 0.1
+  - attribute: 4
+    thresholds: 280000003c000000i
+    gains:
+    - 8
+    - 4
+    - 1
+  - attribute: 5
+    thresholds: 280000003c000000i
+    gains:
+    - 4
+    - 2
+    - 0.5
+  - attribute: 6
+    thresholds: 1e0000003c000000i
+    gains:
+    - 1
+    - 0.5
+    - 0.2
+  - attribute: 7
+    thresholds: 1e0000003c000000i
+    gains:
+    - 1
+    - 0.5
+    - 0.2
+  - attribute: 8
+    thresholds: 140000003700000050000000i
+    gains:
+    - 1
+    - 0.5
+    - 0.25
+    - 0.1
+  - attribute: 9
+    thresholds: 1e0000003c000000i
+    gains:
+    - 1
+    - 0.5
+    - 0.2
   referenceValue: 10
   growthPerLevel:
-    strength: 1
-    agility: 1
-    dexterity: 1
-    endurance: 1
-    vitality: 1
-    intelligence: 1
-    wisdom: 1
-    charisma: 1
-    magicPower: 1
-    magicControl: 1
+    strength: 0
+    agility: 0
+    dexterity: 0
+    endurance: 0
+    vitality: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    magicPower: 0
+    magicControl: 0
   strengthAttack: 1
   dexterityAttack: 1
   enduranceDefense: 1
@@ -33,7 +111,7 @@ MonoBehaviour:
   vitalityHealth: 5
   intelligenceMana: 1
   wisdomMana: 1
-  agilityMovement: 0.03
+  agilityMovement: 0
   dexterityAccuracy: 0.005
   maximumMovementSpeed: 12
   dexterityCritical: 0.002
@@ -41,7 +119,7 @@ MonoBehaviour:
   agilityEvasion: 0.005
   magicControlEfficiency: 0.02
   magicPowerHealing: 1
-  maximumManaReduction: 0.5
+  maximumManaReduction: 0.3
   maximumCritical: 0.95
   maximumEvasion: 0.5
   strengthCapacity: 2

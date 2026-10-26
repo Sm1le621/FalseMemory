@@ -34,7 +34,7 @@ public sealed partial class BattleFlowTests
         yield return WaitUntil(() => manager.ui.messageText.text.Contains("Couldn't escape!"));
         yield return WaitUntil(() => manager.State == BattleState.AwaitingPlayer);
         Assert.That(manager.Round, Is.EqualTo(2)); Assert.That(player.Health.currentHealth, Is.EqualTo(96));
-        Assert.That(player.CurrentMP, Is.EqualTo(30)); Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(3));
+        Assert.That(player.CurrentMP, Is.EqualTo(40)); Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(3));
         Assert.That(enemy.Health.currentHealth, Is.EqualTo(60));
     }
 
@@ -60,7 +60,7 @@ public sealed partial class BattleFlowTests
             "Enemy position before="+enemyPosition.ToString("R")+" after="+enemy.transform.position.ToString("R")+
             " physics="+enemy.GetComponent<Rigidbody2D>().position.ToString("R")+
             " distance="+Vector3.Distance(enemy.transform.position,enemyPosition).ToString("R"));
-        Assert.That(player.Health.currentHealth, Is.EqualTo(80)); Assert.That(player.CurrentMP, Is.EqualTo(22));
+        Assert.That(player.Health.currentHealth, Is.EqualTo(80)); Assert.That(player.CurrentMP, Is.EqualTo(32));
         Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(2));
         Assert.That(player.CurrentExperience, Is.EqualTo(5));
         Assert.That(transition.TryGrantVictoryExperience(out _), Is.False);
@@ -72,7 +72,7 @@ public sealed partial class BattleFlowTests
         yield return WaitUntil(() => !transition.IsEncounterProtected);
         Assert.That(transition.TryBegin(player, enemy), Is.True);
         yield return WaitUntil(() => Manager() != null && Manager().State == BattleState.AwaitingPlayer);
-        Assert.That(Manager().Player.CurrentMP, Is.EqualTo(22));
+        Assert.That(Manager().Player.CurrentMP, Is.EqualTo(32));
         Assert.That(Manager().Player.Inventory.Count(Potion(player)), Is.EqualTo(2));
         Assert.That(Manager().Enemy.Health.currentHealth, Is.EqualTo(50));
         Assert.That(Manager().Player.CurrentExperience, Is.EqualTo(5));
@@ -90,7 +90,7 @@ public sealed partial class BattleFlowTests
         manager.TryPlayerAction(BattleAction.Attack); yield return WaitUntil(() => manager.State == BattleState.AwaitingPlayer);
         manager.TryPlayerSpell(Fire(player)); yield return WaitUntil(() => manager.State == BattleState.Victory);
         Assert.That(player.CurrentExperience, Is.EqualTo(25)); Assert.That(player.level, Is.EqualTo(1));
-        Assert.That(player.Health.currentHealth, Is.EqualTo(88)); Assert.That(player.CurrentMP, Is.EqualTo(6));
+        Assert.That(player.Health.currentHealth, Is.EqualTo(88)); Assert.That(player.CurrentMP, Is.EqualTo(16));
         Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(2));
         Assert.That(manager.ui.resultPanel.gameObject.activeSelf, Is.True);
         Assert.That(manager.ui.resultText.text, Does.Contain("EXP Gained: +20"));
@@ -103,7 +103,7 @@ public sealed partial class BattleFlowTests
         Assert.That(player.Health.currentHealth, Is.EqualTo(88)); Assert.That(player.CurrentExperience, Is.EqualTo(25));
         Assert.That(transition.ReturnAfterVictory(), Is.True); Assert.That(transition.ReturnAfterVictory(), Is.False);
         yield return WaitUntil(() => !transition.EncounterActive);
-        Assert.That(player.Health.currentHealth, Is.EqualTo(88)); Assert.That(player.CurrentMP, Is.EqualTo(6));
+        Assert.That(player.Health.currentHealth, Is.EqualTo(88)); Assert.That(player.CurrentMP, Is.EqualTo(16));
         Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(2)); Assert.That(player.CurrentExperience, Is.EqualTo(25));
         Assert.That(player.level, Is.EqualTo(1)); Assert.That(enemy.gameObject.activeSelf, Is.False);
         Assert.That(player.Health.hpSlider.value, Is.EqualTo(88f));
@@ -117,7 +117,7 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.TryPlayerSpell(Fire(player)), Is.True);
         enemy.Health.TakeDamage(60);
         yield return WaitUntil(() => manager.State == BattleState.Victory);
-        Assert.That(player.CurrentMP, Is.EqualTo(30)); Assert.That(player.Health.currentHealth, Is.EqualTo(100));
+        Assert.That(player.CurrentMP, Is.EqualTo(40)); Assert.That(player.Health.currentHealth, Is.EqualTo(100));
         Assert.That(player.CurrentExperience, Is.EqualTo(20));
         Assert.That(manager.TryPlayerSpell(Fire(player)), Is.False);
     }
@@ -134,13 +134,13 @@ public sealed partial class BattleFlowTests
             InputSystem.QueueStateEvent(keyboard, new KeyboardState(Key.Enter));
             yield return new WaitForSecondsRealtime(0.4f);
             Assert.That(manager.ui.commandLabels[0].text, Does.Contain("Fire"));
-            Assert.That(player.CurrentMP, Is.EqualTo(30)); Assert.That(enemy.Health.currentHealth, Is.EqualTo(60));
+            Assert.That(player.CurrentMP, Is.EqualTo(40)); Assert.That(enemy.Health.currentHealth, Is.EqualTo(60));
             InputSystem.QueueStateEvent(keyboard, new KeyboardState()); yield return null; yield return null;
             InputSystem.QueueStateEvent(keyboard, new KeyboardState(Key.Enter));
-            yield return WaitUntil(() => player.CurrentMP == 22);
+            yield return WaitUntil(() => player.CurrentMP == 32);
             yield return WaitUntil(() => manager.State == BattleState.AwaitingPlayer);
             yield return new WaitForSecondsRealtime(0.3f);
-            Assert.That(player.CurrentMP, Is.EqualTo(22)); Assert.That(enemy.Health.currentHealth, Is.EqualTo(41));
+            Assert.That(player.CurrentMP, Is.EqualTo(32)); Assert.That(enemy.Health.currentHealth, Is.EqualTo(41));
         }
         finally { InputSystem.RemoveDevice(keyboard); }
     }
@@ -165,7 +165,7 @@ public sealed partial class BattleFlowTests
             Assert.That(manager.ui.commandLabels[4].text, Does.Contain("Back"));
             manager.ui.commandButtons[4].onClick.Invoke();
             Assert.That(manager.ui.MenuCount, Is.EqualTo(5)); Assert.That(manager.Round, Is.EqualTo(1));
-            Assert.That(player.CurrentMP, Is.EqualTo(30)); Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(3));
+            Assert.That(player.CurrentMP, Is.EqualTo(40)); Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(3));
         }
         finally
         {
@@ -183,7 +183,7 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.ui.playerStats.text, Does.Contain("HP  0 / 100"));
         Assert.That(manager.TryPlayerAction(BattleAction.Attack), Is.False);
         Assert.That(manager.TryPlayerSpell(Heal(player)), Is.False); Assert.That(manager.TryPlayerItem(Potion(player)), Is.False);
-        Assert.That(player.CurrentMP, Is.EqualTo(30)); Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(3));
+        Assert.That(player.CurrentMP, Is.EqualTo(40)); Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(3));
         Assert.That(enemy.Health.currentHealth, Is.EqualTo(60));
     }
 
@@ -220,7 +220,7 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.ui.feedbackText.color.g, Is.GreaterThan(manager.ui.feedbackText.color.r));
         yield return WaitUntil(() => manager.State == BattleState.AwaitingPlayer);
         Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(2));
-        Assert.That(player.Health.currentHealth, Is.EqualTo(76)); Assert.That(player.CurrentMP, Is.EqualTo(30));
+        Assert.That(player.Health.currentHealth, Is.EqualTo(76)); Assert.That(player.CurrentMP, Is.EqualTo(40));
         Assert.That(manager.Round, Is.EqualTo(round + 1));
     }
 
@@ -247,16 +247,16 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.TryPlayerSpell(Fire(player)), Is.True);
         Assert.That(manager.TryPlayerSpell(Fire(player)), Is.False);
         yield return WaitUntil(() => manager.State == BattleState.AwaitingPlayer);
-        Assert.That(player.CurrentMP, Is.EqualTo(22)); Assert.That(enemy.Health.currentHealth, Is.EqualTo(41));
+        Assert.That(player.CurrentMP, Is.EqualTo(32)); Assert.That(enemy.Health.currentHealth, Is.EqualTo(41));
         Assert.That(player.Health.currentHealth, Is.EqualTo(96));
         enemy.Health.currentHealth = 1;
         Assert.That(manager.TryPlayerSpell(Fire(player)), Is.True);
         yield return WaitUntil(() => manager.State == BattleState.Victory);
-        Assert.That(player.CurrentMP, Is.EqualTo(14));
+        Assert.That(player.CurrentMP, Is.EqualTo(24));
         Assert.That(manager.TryPlayerSpell(Heal(player)), Is.False);
         Assert.That(transition.ReturnAfterVictory(), Is.True);
         yield return WaitUntil(() => !transition.EncounterActive);
-        Assert.That(player.CurrentMP, Is.EqualTo(14)); Assert.That(player.Health.currentHealth, Is.EqualTo(96));
+        Assert.That(player.CurrentMP, Is.EqualTo(24)); Assert.That(player.Health.currentHealth, Is.EqualTo(96));
         Assert.That(enemy.gameObject.activeSelf, Is.False);
     }
 
@@ -265,12 +265,12 @@ public sealed partial class BattleFlowTests
         var player = Player(); player.Health.TakeDamage(5);
         yield return BeginBattle(player, Enemy()); var manager = Manager();
         Assert.That(manager.TryPlayerSpell(Heal(player)), Is.True);
-        yield return WaitUntil(() => player.CurrentMP == 24);
+        yield return WaitUntil(() => player.CurrentMP == 34);
         Assert.That(manager.ui.feedbackText.text, Does.Contain("+5"));
         Assert.That(manager.ui.feedbackText.color.g, Is.GreaterThan(manager.ui.feedbackText.color.r));
         yield return WaitUntil(() => manager.State == BattleState.AwaitingPlayer);
-        Assert.That(player.CurrentMP, Is.EqualTo(24)); Assert.That(player.Health.currentHealth, Is.EqualTo(96));
-        player.TrySpendMP(24); int round = manager.Round;
+        Assert.That(player.CurrentMP, Is.EqualTo(34)); Assert.That(player.Health.currentHealth, Is.EqualTo(96));
+        player.TrySpendMP(34); int round = manager.Round;
         Assert.That(manager.TryPlayerSpell(Fire(player)), Is.False);
         yield return new WaitForSecondsRealtime(0.25f);
         Assert.That(manager.State, Is.EqualTo(BattleState.AwaitingPlayer)); Assert.That(manager.Round, Is.EqualTo(round));
@@ -289,9 +289,9 @@ public sealed partial class BattleFlowTests
             InputSystem.QueueStateEvent(keyboard, new KeyboardState(Key.Escape));
             yield return null; yield return null;
             Assert.That(manager.ui.commandLabels[0].text, Does.Contain("Attack"));
-            Assert.That(manager.Round, Is.EqualTo(round)); Assert.That(player.CurrentMP, Is.EqualTo(30));
+            Assert.That(manager.Round, Is.EqualTo(round)); Assert.That(player.CurrentMP, Is.EqualTo(40));
             InputSystem.QueueStateEvent(keyboard, new KeyboardState()); yield return null;
-            player.TrySpendMP(23); manager.OpenMagicMenu();
+            player.TrySpendMP(33); manager.OpenMagicMenu();
             yield return null; yield return null; yield return null;
             Assert.That(manager.ui.commandButtons[0].interactable, Is.False);
             InputSystem.QueueStateEvent(keyboard, new KeyboardState(Key.Enter));

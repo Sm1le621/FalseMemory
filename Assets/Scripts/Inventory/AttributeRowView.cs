@@ -18,6 +18,9 @@ public sealed class AttributeRowView : MonoBehaviour,IPointerEnterHandler,IPoint
     {
         var unit=owner.GetComponent<BattleUnit>();var primary=unit.Attributes;
         if(primary==null)return "";
+        if(primary.rules!=null && primary.rules.classlessProgression)
+            return GameText.Get("character.attribute_tooltip_classless",GameText.Get(Key+".abbr"),GameText.Get(Key+".name"),GameText.Get(Key+".description"),
+                primary.BaseValues.Get(attribute),unit.EquipmentAttributes.Get(attribute),primary.TemporaryBonuses.Get(attribute),primary.rules.Curve(attribute).NextCap(unit.PrimaryValues.Get(attribute)));
         return GameText.Get("character.attribute_tooltip",GameText.Get(Key+".abbr"),GameText.Get(Key+".name"),GameText.Get(Key+".description"),
             primary.BaseValues.Get(attribute),primary.Growth(unit.growthRules!=null?Mathf.Clamp(unit.level,1,unit.growthRules.MaximumLevel):Mathf.Max(1,unit.level)).Get(attribute),
             unit.EquipmentAttributes.Get(attribute),primary.ClassBonuses.Get(attribute),primary.TemporaryBonuses.Get(attribute));

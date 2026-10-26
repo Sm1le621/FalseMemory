@@ -1,5 +1,11 @@
 # EquipmentController
 
+## Текущее изменение5.3 —2026-10-26
+
+Awake дополнительно привязывает State.BindRequirements: для HasWeaponScaling проверяет weapon.MeetsRequirements(Attributes.Calculate(level,gearБезПроверяемогоПредмета)). Все Can/Try drag/bag-swap используют этот контракт State. HandleEquip при отказе показывает конкретные requirements/current через RequirementsText; предмет не расходуется. Старое ItemData без явного useWeaponScaling не получает нового Scaling.
+
+Фактические проверки и ограничения: [ClasslessStage53](../../ClasslessStage53.md). Старые датированные значения ниже сохраняют историю соответствующих режимов.
+
 ## 1. Название и назначение
 
 Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Inventory/EquipmentController.cs.
@@ -57,3 +63,5 @@ BattleUnit читает новые EffectiveAttack/Defense/MagicAttack/MagicDefe
 2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
 
 2026-10-12 — 4.4: интеграция компонентов/ограничение фазы/команды окна.
+
+- 2026-10-26 — подэтап5.3: бесклассовая прокачка/soft caps/Weapon Scaling; актуальные методы, значения и условия описаны в начале документа.

@@ -1,5 +1,9 @@
 # Настройка существующего проекта в Unity
 
+## Подэтап5.3 —бесклассовая прокачка
+
+Существующий Player.CharacterAttributes использует обновлённый DefaultCharacterAttributes: classless=true, points1/level, MP40, soft caps, без AGI movement/автороста10 stats. Новые6 weapon assets/pickups созданы адресно через MCP/ClasslessProgressionSetup.ApplyStage53 вне Play на SampleScene; прежние ItemData и объекты сохранены. Для нового оружия обязателен useWeaponScaling=true, одного вложенного поля weapon недостаточно. Команда настройки повторно применяет баланс своих тестовых предметов; не запускать автоматически при каждом Refresh. [Подключение/ограничения](../ClasslessStage53.md).
+
 ## Подключение Cardinal4 —2026-10-26
 
 В существующей SampleScene уже сохранены Player preview Idle_Down_00 и Use Cardinal Animations=true. Player использует прежний Player.controller: два состояния/Blend Tree,4 child Down/Left/Right/Up, WalkSpeed только у Walk. Для повторного импорта вне Play: FalseMemory → Art → Import approved hero animation sheets; затем ApprovedHeroImporter.WireActivePlayer только на SampleScene. Не назначать Source PNG как игровой кадр, не менять Rigidbody/scale/скорость4. Активный Idle выбирается из PlayerCardinal4Manifest.frames по motion/direction/index0…3; DownStanding заменяет старый Idle/Down без удаления его файлов. Порядок Walk читается из PlayerCardinal4Manifest.walkSequences; ручная сортировка папки архивного Walk его не заменяет. [Полные параметры/проверки](../PlayerWalkOrder.md). Ниже исторические настройки.

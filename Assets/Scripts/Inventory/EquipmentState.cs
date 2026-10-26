@@ -7,6 +7,21 @@ public sealed class EquipmentState
     public const int SlotCount=9;
     [SerializeField] private ItemData[] slots=new ItemData[SlotCount];
     private bool changing;
+    private Func<ItemData,CharacterAttributeValues,bool> requirementsCheck;
+    public void BindRequirements(Func<ItemData,CharacterAttributeValues,bool> check) => requirementsCheck=check;
+    public CharacterAttributeValues AttributesExcluding(EquipmentSlot excluded, EquipmentSlot? emptied=null, ItemData replacement=null)
+    {
+        EnsureSize();var values=new CharacterAttributeValues();
+        for(int i=0;i<slots.Length;i++)
+        {
+            if(i==(int)excluded)continue;
+            var item=emptied.HasValue && i==(int)emptied.Value?replacement:slots[i];
+            if(item!=null)values+=item.bonuses.attributes;
+        }
+        return values;
+    }
+    private bool RequirementsAllow(ItemData item,EquipmentSlot target,EquipmentSlot? emptied=null,ItemData replacement=null)
+        => item==null || requirementsCheck==null || requirementsCheck(item,AttributesExcluding(target,emptied,replacement));
     public event Action Changed;
     public ItemData GetSlot(EquipmentSlot slot)
     {
@@ -27,7 +42,7 @@ public sealed class EquipmentState
     {
         if(changing || inventory==null || index<0 || index>=InventoryState.Capacity || !Valid(slot))return false;
         var source=inventory.GetSlot(index);var item=source.Item;
-        return !source.IsEmpty && source.Count==1 && item.Fits(slot) && level>=Math.Max(1,item.requiredLevel) && HandsAllow(slot,item);
+        return !source.IsEmpty && source.Count==1 && item.Fits(slot) && level>=Math.Max(1,item.requiredLevel) && HandsAllow(slot,item) && RequirementsAllow(item,slot);
     }
     public bool TryEquip(InventoryState inventory,int index,EquipmentSlot slot,int level)
     {
@@ -65,7 +80,7 @@ public sealed class EquipmentState
         if(other!=null && (!other.Fits(from) || level<Math.Max(1,other.requiredLevel)))return false;
         var weapon=from==EquipmentSlot.Weapon?other:to==EquipmentSlot.Weapon?item:GetSlot(EquipmentSlot.Weapon);
         var offhand=from==EquipmentSlot.OffHand?other:to==EquipmentSlot.OffHand?item:GetSlot(EquipmentSlot.OffHand);
-        return weapon==null || !weapon.twoHanded || offhand==null;
+        return (weapon==null || !weapon.twoHanded || offhand==null) && RequirementsAllow(item,to,from,other) && RequirementsAllow(other,from,to,item);
     }
     public bool TryMove(EquipmentSlot from,EquipmentSlot to,int level)
     {
@@ -79,7 +94,7 @@ public sealed class EquipmentState
         if(changing || inventory==null || !Valid(from) || destination<0 || destination>=InventoryState.Capacity)return false;
         var item=GetSlot(from);if(item==null)return false;var entry=inventory.GetSlot(destination);var replacement=entry.Item;
         if(!entry.IsEmpty && (entry.Count!=1 || !replacement.Fits(from) || level<Math.Max(1,replacement.requiredLevel)))return false;
-        if(!HandsAllow(from,replacement))return false;
+        if(!HandsAllow(from,replacement) || !RequirementsAllow(replacement,from))return false;
         changing=true;
         try
         {
