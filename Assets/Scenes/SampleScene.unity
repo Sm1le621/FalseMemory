@@ -5670,7 +5670,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 98c4dc95c1e6fdc46b08bdca9c98122e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 219bbfbacdd4d854689ed4265110cf16, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5712,6 +5712,7 @@ MonoBehaviour:
   acceleration: 48
   deceleration: 80
   animationReferenceSpeed: 4
+  useCardinalAnimations: 1
   defaultFacingRight: 1
 --- !u!95 &504028419
 Animator:

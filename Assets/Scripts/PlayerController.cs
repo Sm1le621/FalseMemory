@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Min(0.01f)] private float animationReferenceSpeed = 4f;
 
     [Header("Visual Settings")]
+    [SerializeField] private bool useCardinalAnimations;
     [SerializeField] private bool defaultFacingRight = true; // Спрайт по умолчанию смотрит вправо?
 
     private Rigidbody2D rb;
@@ -91,12 +92,20 @@ public class PlayerController : MonoBehaviour
         if (hasWalkSpeedParameter)
             animator.SetFloat("WalkSpeed", Mathf.Clamp(ActualMovementSpeed / Mathf.Max(.01f, animationReferenceSpeed), 0f, 3f));
         if (!directionalAnimator) return;
-        animator.SetFloat("MoveX", lastDirection.x);
-        animator.SetFloat("MoveY", lastDirection.y);
-        animator.SetFloat("LastMoveX", lastDirection.x);
-        animator.SetFloat("LastMoveY", lastDirection.y);
+        Vector2 facing = useCardinalAnimations ? CardinalFacing(lastDirection) : lastDirection;
+        animator.SetFloat("MoveX", facing.x);
+        animator.SetFloat("MoveY", facing.y);
+        animator.SetFloat("LastMoveX", facing.x);
+        animator.SetFloat("LastMoveY", facing.y);
         // Directional clips own the facing; horizontal flipping would corrupt real diagonal art.
         spriteRenderer.flipX = false;
+    }
+
+    // Only the visual direction is quantized. Movement and diagonal speed remain unchanged.
+    private static Vector2 CardinalFacing(Vector2 direction)
+    {
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y)) return new Vector2(Mathf.Sign(direction.x), 0f);
+        return new Vector2(0f, direction.y >= 0f ? 1f : -1f);
     }
 
     private void OnDisable()

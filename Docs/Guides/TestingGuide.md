@@ -1,5 +1,11 @@
 # Как проверять FalseMemory
 
+## Проверка Cardinal4/порядка Walk —2026-10-26
+
+Edit Mode → FalseMemory.Battle.EditModeTests: ApprovedHeroAssetTests требует4 ключа/3 уникальных Sprite с повторной стойкой, времена0/.0625/.25/.4375, длину .5с, импорт/pivot/24 активных изображения/4 child. Play Mode → FalseMemory.Battle.PlayModeTests: PlayerIdle30FlowTests наблюдает полный порядок каждого Walk и4 Idle при неподвижном Rigidbody; PlayerDirectionFlowTests/MovementSmoothingFlowTests проверяют движение/темп/стену/gate/направления. Название файла30 историческое.
+
+Текущий финальный результат98/98 Edit и58/58 Play. Первичный57/58 выявил старое побитовое сравнение интерполированного Transform после победы: BattleFlowTests теперь отдельно требует точную Rigidbody2D.position и отображаемое расхождение≤1e-5. Игровой код боя не менялся. Обычный Play1920×1080 тоже выполнен; художественное качество не следует из хешей/счётчиков. [Job IDs, ограничения и ручные шаги](../PlayerWalkOrder.md). Ниже — исторические результаты.
+
 ## Герой16 FPS —2026-10-16
 
 [Текущий отчёт](../PlayerAnimation16.md):97/97 Edit и58/58 Play, не исторический прогон. ApprovedHeroAssetTests проверяет Samples и реальные ticks20 клипов/stopTime. DetailedAnimationFlowTests.HeroAttackUsesSixteenFpsAndAppliesDamageAtContactOnce наблюдает8 кадров, интервалы1/16 с, длительность.5 с, HP-изменение ровно на контакте4. MovementSmoothingFlowTests проверяет также16 FPS на реальном Animator и сохранение фазы поворота.

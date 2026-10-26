@@ -2,40 +2,41 @@
 
 ## 1. Название и назначение
 
-Исходник: `Assets/Tests/EditMode/ApprovedHeroAssetTests.cs`. Проверяет реальные ассеты героя, Sprite-ссылки, импорт и сетку времени 16 FPS.
+Исходник: `Assets/Tests/EditMode/ApprovedHeroAssetTests.cs`. Контракты существующих клипов, 24 используемых уникальных Sprite и резервных ресурсов героя.
 
 ## 2. Как работает
 
-Четыре NUnit-теста читают AssetDatabase/AnimationUtility; не меняют сцены и настройки. Ссылки, времена и параметры импорта проверяются отдельно от художественного качества.
+Пять NUnit-тестов только читают AssetDatabase/импорт/ключи/controller. Проверки реальных четырёх кадров отличаются от архивных8/30 наборов, которые не удаляются.
 
 ## 3. Методы и функции
 
-- `AllHeroClipsIncludingBackupsUseTheSixteenFpsTimeGrid()` — Test/void: все20 существующих клипов (16 directional и4 явно перечисленных резервных), Samples16, каждый Sprite-key.time×16 и stopTime×16 целые. Ловит изменение только метаданных без ретайминга ключей.
-- `IdleDownHasThirtyNativeDistinctFramesAtSixteenFramesPerSecond()` — Test/void:31 ключ/30 уникальных ссылок и SHA256 PNG, FPS16/1,875 с, последний повторяет первый, stopTime1,875; каждый Sprite320×320/pivot160,16/PPU477/Point/no mipmaps/Uncompressed, набор отдельно от Walk.
-- `SheetsKeepNativeResolutionAndConsistentGroundPivots()` — Test/void: резервные Multiple-листы каждого направления имеют4 Sprite/ожидаемые нативные размеры/PPU/pivot/Point/NPOT/no mipmaps/compression.
-- `WalkClipsUseEightFramesForTheirDirectionWithoutTransformAnimation()` — Test/void: каждый текущий Walk имеет9 ключей,8 разных Sprite правильного направления, замыкание.5 с,16 FPS/Loop/stopTime.5, нет Transform-кривых.
+- `AllHeroClipsIncludingBackupsUseTheSixteenFpsTimeGrid()` — Test/void: все20 прежних clip Samples16, времена Sprite-ключей и stopTime целые ticks1/16. Сохраняет проверку и архивных диагоналей/резерва.
+- `CardinalIdleKeepsFourFramesAndWalkUsesStanceRightLeftStance()` — Test/void: Idle имеет5 ключей (4 разных Sprite и замыкание), цикл2с. Walk имеет ровно4 ключа, нейтральный Sprite равен Idle_00 в позициях0/3, имена двух шагов RightStep/LeftStep, три разных ссылки/PNG-хеша, времена0/.0625/.25/.4375 и stopTime .5с. Все Sprite лежат в Cardinal4, canvas512/pivot256,20, PPU одинаков внутри направления, Point/no mipmaps/Uncompressed; всего24 уникальных используемых изображения.
+- `ActiveControllerHasOnlyFourCardinalChildrenPerMotion()` — Test/void: два существующих Blend Tree имеют только4 cardinal позиции/timeScale1, диагональных child нет.
+- `SheetsKeepNativeResolutionAndConsistentGroundPivots()` — Test/void: старые Multiple-листы по-прежнему имеют4 Sprite/исходные размеры/PPU/pivot/Point/NPOT/no mipmaps/compression. Они резерв, не новые кадры.
+- `WalkClipsHaveOnlyFourOrderedKeysWithoutTransformAnimation()` — Test/void: четыре действующих Walk имеют ровно4 Sprite-ключа, Samples16/native clip.length .5с/Loop; float Transform-кривых нет.
 
-Unity callbacks отсутствуют; результаты — NUnit assertions.
+Awake/Update и собственных Unity callbacks нет; результаты через assertions.
 
 ## 4. Переменные и Inspector
 
-Root/Directions/paths/hash-наборы — тестовые данные, не Inspector. Размеры старых листов и Idle относятся к текущим ассетам, не универсальному ограничению графики.
+Root/Directions/массив cardinal-направлений/HashSet/hashes — тестовые значения, не Inspector. Число4/размер512 относятся к текущему новому набору, не ко всем будущим ассетам.
 
 ## 5. Связи
 
-AssetDatabase/TextureImporter/AnimationUtility, Player64 и четыре резервных clip, подготовленные PNG. Тест не зависит от Editor-класса импортёра напрямую.
+AssetDatabase/AnimationUtility/TextureImporter/AnimatorController/BlendTree, Player64, Cardinal4 PNG и старые ApprovedHero Multiple-листы.
 
 ## 6. Пример
 
-Samples16 с ключами по1/12 с не пройдёт проверку целых ticks и длительности. Назначение Down-кадров в Up нарушит проверку направления.
+Подмена двух разных шагов одним PNG провалит hashes; одинаковая нейтральная стойка в начале/конце обязательна; оставшиеся8 children провалят topology; Samples16 с неверными временами провалит ticks/duration.
 
 ## 7. Настройка в Unity
 
-Не прикреплять к GameObject. Test Runner → EditMode → FalseMemory.Battle.EditModeTests после завершения импорта.
+Не прикреплять к объекту. Test Runner → EditMode → FalseMemory.Battle.EditModeTests после фактического импорта/компиляции.
 
 ## 8. Возможные проблемы
 
-Разные ссылки/хеши не доказывают последовательное движение. Частоту фактического воспроизведения/ввод проверяют Play Mode сценарии, художественное качество — просмотр кадров и владельцем.
+Различия pixel SHA256/ссылок не доказывают качество походки. Play-сценарии проверяют фактическую смену24 уникальных Sprite и порядок Walk; результаты — [PlayerWalkOrder](../../../PlayerWalkOrder.md). Неподключённые файлы не считаются прошедшими тестами.
 
 ## 9. История изменений
 
@@ -49,3 +50,7 @@ Samples16 с ключами по1/12 с не пройдёт проверку ц�
 - 2026-10-13 — проверка нового30-frame Idle_Down без ослабления прежних направлений/движения.
 
 - 2026-10-16 — актуализированы реальная сетка16 FPS, opt-in тайминг/проверки и ограничения текущего технического подэтапа.
+
+- 2026-10-26 — актуализирован новый ограниченный набор4×4 Idle/Walk, выбор cardinal-взгляда/импорт и соответствующие проверки. Фактический статус выполнения — в PlayerCardinal4.
+
+- 2026-10-26 — через Unity MCP подключён четырёхпозиционный Walk: нейтральная стойка → RightStep → LeftStep → та же стойка; обновлены контракты и реальные Play-проверки. Подробности текущей проверки — в PlayerWalkOrder.

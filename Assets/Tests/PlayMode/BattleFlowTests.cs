@@ -83,6 +83,7 @@ public sealed partial class BattleFlowTests
         Assert.That(transition.TryBegin(player, enemy), Is.False);
         yield return WaitUntil(() => Manager() != null && Manager().State == BattleState.AwaitingPlayer);
         var manager = Manager(); var worldPosition = player.transform.position;
+        var worldPhysicsPosition = player.GetComponent<Rigidbody2D>().position;
         Assert.That(manager.ui.enemyPortrait.sprite.texture.filterMode, Is.EqualTo(FilterMode.Point));
         Assert.That(player.gameObject.activeInHierarchy, Is.False);
         Assert.That(health.currentHealth, Is.EqualTo(100), "Legacy contact damage must not run");
@@ -107,7 +108,11 @@ public sealed partial class BattleFlowTests
         Assert.That(transition.ReturnAfterVictory(), Is.True);
         yield return WaitUntil(() => !transition.EncounterActive);
         Assert.That(player.gameObject.activeSelf, Is.True); Assert.That(enemy.gameObject.activeSelf, Is.False);
-        Assert.That(player.transform.position, Is.EqualTo(worldPosition));
+        Assert.That(player.GetComponent<Rigidbody2D>().position, Is.EqualTo(worldPhysicsPosition), "Victory must preserve the exact physics position.");
+        float renderedDrift=Vector3.Distance(player.transform.position,worldPosition);
+        Assert.That(renderedDrift, Is.LessThanOrEqualTo(.00001f),
+            "Rendered before="+worldPosition.ToString("R")+" after="+player.transform.position.ToString("R")+" drift="+renderedDrift.ToString("R"));
+        if(renderedDrift>0f)TestContext.WriteLine("Interpolated Transform rounding after victory: "+renderedDrift.ToString("R")+" world units; physics position unchanged.");
         Assert.That(health.currentHealth, Is.EqualTo(remaining));
         Assert.That(SceneManager.GetSceneByName("BattleScene").isLoaded, Is.False);
         Assert.That(SceneManager.GetSceneByName("SampleScene").isLoaded, Is.True);

@@ -1,5 +1,9 @@
 # Настройка существующего проекта в Unity
 
+## Подключение Cardinal4 —2026-10-26
+
+В существующей SampleScene уже сохранены Player preview Idle_Down_00 и Use Cardinal Animations=true. Player использует прежний Player.controller: два состояния/Blend Tree,4 child Down/Left/Right/Up, WalkSpeed только у Walk. Для повторного импорта вне Play: FalseMemory → Art → Import approved hero animation sheets; затем ApprovedHeroImporter.WireActivePlayer только на SampleScene. Не назначать Source PNG как игровой кадр, не менять Rigidbody/scale/скорость4. Порядок Walk читается из PlayerCardinal4Manifest.walkSequences; ручная сортировка папки архивного Walk его не заменяет. [Полные параметры/проверки](../PlayerWalkOrder.md). Ниже исторические настройки.
+
 ## Действующие настройки героя2026-10-16
 
 Использовать те же SampleScene/Player/Player.controller и16 Player64 Idle/Walk клипов. ApprovedHeroImporter.ImportAnimations вне Play воспроизводит16 FPS/ключи; DetailedAnimationImporter.ImportAll сохраняет HeroDetailed16/Idle16/useFrameTiming=true и отдельные SkeletonDetailed12/Idle4/useFrameTiming=false. Никаких новых сцен/контроллеров. World PNG/PPU/pivot/scale2/скорость4/Interpolate/камера5 сохранены. Отклонённые sheets из Docs не назначать Sprite-клипам.

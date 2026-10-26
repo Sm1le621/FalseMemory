@@ -2,44 +2,45 @@
 
 ## 1. Название и назначение
 
-`Assets/Scripts/PlayerController.cs` — единственный существующий контроллер движения героя на карте, ввода и directional Animator.
+Исходник: `Assets/Scripts/PlayerController.cs`. Существующий единственный контроллер перемещения героя, клавиатуры и параметров Animator.
 
 ## 2. Как работает
 
-Start получает компоненты. Update читает WASD/стрелки и нормализует диагонали. FixedUpdate измеряет завершённое физическое перемещение, плавно меняет модуль скорости и вызывает MovePosition. Направление меняется сразу, поэтому боковой инерции нет. LateUpdate передаёт фактическую скорость в Animator; Walk продолжает общую фазу при повороте. Inventory/gate и отключение компонента останавливают движение немедленно. Health/MP/баланс характеристик прежние.
+Update читает нормализованный WASD/стрелки; FixedUpdate измеряет фактическое перемещение и вызывает MovePosition с прежним разгоном/торможением. LateUpdate передаёт состояние в Animator. Новый переключатель useCardinalAnimations округляет только визуальный взгляд до четырёх ракурсов, физическое направление/диагонали/скорость не меняет. Gate и OnDisable немедленно останавливают движение.
 
 ## 3. Методы и функции
 
-- `Start()` — Unity перед первым Update кеширует Rigidbody2D, Animator, SpriteRenderer, WorldInputGate, BattleUnit, начальную физическую позицию; определяет directional/WalkSpeed параметры и обновляет позу.
-- `Update()` — каждый render-кадр читает Keyboard.current; сохраняет moveInput и последний ненулевой lastDirection. Gate вызывает StopMovement и UpdateAnimation. Legacy Animator получает HandleSpriteFlipping.
-- `FixedUpdate()` — каждый шаг физики измеряет ActualMovementSpeed по rb.position предыдущего шага и fixedDeltaTime; currentSpeed приближается к MovementSpeed либо0 через acceleration/deceleration; MovePosition двигает вдоль lastDirection. При gate/несимулируемом теле StopMovement.
-- `LateUpdate()` — после Update вызывает UpdateAnimation с результатами физики.
-- `UpdateAnimation()` — isMoving включён при actual/current speed выше.03; WalkSpeed=actual/reference, ограничено0…3. Четыре directional float получают последнее направление; flipX=false. Без Animator безопасный выход.
-- `StopMovement()` — из gate/OnDisable/FixedUpdate; обнуляет модуль скорости, измеренную скорость и rb.linearVelocity, обновляет previousPhysicsPosition; позицию не переносит.
-- `OnDisable()` — очищает ввод, вызывает StopMovement и UpdateAnimation, сохраняет взгляд.
-- `HasFloat(parameter)` — ищет float-параметр Animator, возвращает bool, ничего не создаёт.
-- `HandleSpriteFlipping()`/`SetFacingDirection(lookRight)` — legacy-ветка отражает SpriteRenderer по горизонтальному вводу с учётом defaultFacingRight.
-- Readonly `MovementInput`, `LastDirection`, `MovementSpeed`, `ActualMovementSpeed`, `CurrentMovementSpeed` — нормализованный ввод, взгляд, целевая скорость с атрибутами/gear, измеренная скорость и внутренний модуль разгона. Это диагностика, не Inspector.
+- `Start()` — Unity перед Update получает Rigidbody2D/Animator/SpriteRenderer/WorldInputGate/BattleUnit, исходную физическую позицию, проверяет float-параметры, обновляет позу.
+- `Update()` — каждый render-кадр читает Keyboard.current, нормализует moveInput, сохраняет ненулевой lastDirection; при gate StopMovement/UpdateAnimation. Legacy-ветка использует flip.
+- `FixedUpdate()` — измеряет ActualMovementSpeed по завершённому шагу, currentSpeed приближается к MovementSpeed/0 через acceleration/deceleration; MovePosition вдоль настоящего lastDirection. Несимулируемое тело/gate → StopMovement.
+- `LateUpdate()` — вызывает UpdateAnimation после Update.
+- `UpdateAnimation()` — isMoving при actual/current>.03; WalkSpeed=actual/reference clamp0…3. При useCardinalAnimations получает CardinalFacing, иначе исходный lastDirection; передаёт этот взгляд в MoveX/Y и LastMoveX/Y, flipX=false. Без Animator безопасный выход.
+- `CardinalFacing(direction)` → Vector2, приватный static: при absX>absY возвращает горизонтальную ось со знаком X, иначе вертикальную со знаком Y (при равенстве приоритет вертикали). Не записывает moveInput/lastDirection/позицию.
+- `StopMovement()` — очищает current/actual speed, rb.linearVelocity, сбрасывает previousPhysicsPosition; позицию не переносит.
+- `OnDisable()` — нулевой ввод/StopMovement/обновление позы, взгляд сохранён.
+- `HasFloat(parameter)` → bool наличия float-параметра Animator.
+- `HandleSpriteFlipping()`/`SetFacingDirection(lookRight)` — прежняя legacy-совместимость по горизонтальному вводу/defaultFacingRight.
+- Readonly MovementInput/LastDirection/MovementSpeed/ActualMovementSpeed/CurrentMovementSpeed — диагностические значения; MovementSpeed учитывает BattleUnit.MovementAdjustment и прежний лимит правил.
 
 ## 4. Переменные и Inspector
 
-moveSpeed: код/сцена4, ≥0; acceleration:48 world units/s², deceleration:80, оба≥.01; animationReferenceSpeed:4 world units/s, ≥.01; defaultFacingRight=true только legacy. До4 разгон≈.083с, остановка≈.05с, дискретизированы физическим шагом. MovementSpeed добавляет BattleUnit.MovementAdjustment и ограничивает максимумом CharacterAttributeRules (назначено12). Кеши, previousPhysicsPosition/currentSpeed/ActualMovementSpeed и lastDirection — внутреннее состояние. Inspector не хранит отдельные HP/MP.
+moveSpeed код/сцена4, acceleration48, deceleration80, animationReferenceSpeed4 (≥.01). useCardinalAnimations по умолчанию false для совместимости; существующему Player в SampleScene через MCP назначено true, сцена сохранена. defaultFacingRighttrue только legacy. moveInput/lastDirection/currentSpeed/previousPhysicsPosition и ссылки — внутренние состояния. Диагональный LastDirection остаётся нормализованным диагональным вектором, даже когда визуальный взгляд cardinal.
 
 ## 5. Связи
 
-Rigidbody2D/SpriteRenderer/Collider2D исходного Player; WorldInputGate и BattleTransition блокируют карту; BattleUnit даёт бонус скорости. Player.controller содержит isMoving, MoveX/Y, LastMoveX/Y и новый WalkSpeed только для Walk-состояния. World Idle остаётся статическим отдельным ракурсом.
+Прежний Player/SpriteRenderer/Rigidbody2D/Collider2D, WorldInputGate/Inventory/BattleTransition, BattleUnit/attributes. Player.controller содержит прежние параметры и два Blend Tree; новая графика — четыре ракурса: четыре разных Idle Sprite и четыре позиции Walk с тремя уникальными Sprite (нейтральный повторяется по заданию). Health/MP/очередь не принадлежат контроллеру.
 
 ## 6. Пример
 
-W+D → нормализованное направление, за короткий разгон скорость достигает4 без диагонального ускорения; WalkSpeed≈1. У стены фактическая скорость падает, анимация переходит Idle. Отпускание тормозит вдоль последнего направления, I останавливает сразу.
+W+D → реальный вектор(.707,.707), обычная скорость4; визуально Up, без смешения Sprite двух ракурсов. Отпускание → Idle Up, тело тормозит прежним способом; Inventory прекращает движение немедленно.
 
 ## 7. Настройка в Unity
 
-На существующем Player SampleScene. Rigidbody2D: Dynamic, Gravity0, FreezeRotation, Interpolate, Continuous. Коллайдер/scale не менялись. Настраивать базовую скорость/ускорение/торможение/reference; reference соответствует темпу готового клипа. Не ставить второй контроллер и не двигать Transform параллельно MovePosition.
+Существующий Player SampleScene. Для нового controller4 children включить Use Cardinal Animations, не устанавливать второй контроллер. Сохранить Dynamic/Gravity0/FreezeRotation/Interpolate/Continuous/scale и коллайдеры. WireActivePlayer выполнен через MCP: флаг и Sprite назначены, SaveScene успешен, dirty=false. Остальные параметры сцены сохранены.
 
-## 8. Возможные проблемы и проверки
+## 8. Возможные проблемы
 
-Первое измерение после внешней телепортации может дать краткий завышенный WalkSpeed (ограничено3); штатный переход боя сохраняет позицию. Переназначение Animator после Start не обновляет кеш. Gamepad/настройка клавиш отсутствуют. Interpolate добавляет примерно один шаг визуальной задержки. Естественность ног/плаща и выбранные12FPS требуют ручного просмотра; тесты проверяют физику/кадры, а не художественное качество.
+Для старого8-direction controller можно оставить false. Если новый4-direction controller используется с false, диагональ может смешивать/переключать Sprite — поэтому оба изменения проверяются вместе. При внешнем teleport первое измерение скорости кратко завышено (clamp3), настоящая система движения не переписана. Художественная естественность/темп не доказываются одними числами; [проверки](../PlayerWalkOrder.md).
 
 ## 9. История изменений
 
@@ -52,3 +53,7 @@ W+D → нормализованное направление, за коротк
 - 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
 
 - 2026-10-13 — короткий разгон/торможение, мгновенная модальная остановка, actual-speed WalkSpeed и безопасный сброс; базовая скорость4 сохранена.
+
+- 2026-10-26 — актуализирован новый ограниченный набор4×4 Idle/Walk, выбор cardinal-взгляда/импорт и соответствующие проверки. Фактический статус выполнения — в PlayerCardinal4.
+
+- 2026-10-26 — через Unity MCP подключён четырёхпозиционный Walk: нейтральная стойка → RightStep → LeftStep → та же стойка; обновлены контракты и реальные Play-проверки. Подробности текущей проверки — в PlayerWalkOrder.

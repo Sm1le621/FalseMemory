@@ -2,47 +2,48 @@
 
 ## 1. Название и назначение
 
-Исходник: `Assets/Editor/ApprovedHeroImporter.cs`. Статический редакторский инструмент импорта существующей графики героя и настройки его существующих клипов. Не игровой компонент.
+Исходник: `Assets/Editor/ApprovedHeroImporter.cs`. Редакторский импортёр существующих ресурсов и клипов героя. Новая приоритетная ветка обрабатывает40 подготовленных Cardinal4 PNG (16 Idle, 16 архивных Walk и 8 шагов), не создаёт второй Animator.
 
 ## 2. Как работает
 
-Вне Play Mode импортирует manifest Idle_Down, резервные листы и исходники, записывает 16 направленных Idle/Walk клипов на сетке 16 FPS, переводит четыре прежних резервных клипа на эту же сетку и сохраняет существующую настройку WalkSpeed. GUID и рисунки сохраняются. Отдельный WireActivePlayer подключает прежние ссылки в SampleScene; в задаче 2026-10-16 он не вызывался.
+Вне Play при наличии PlayerCardinal4Manifest читает40 подготовленных PNG, настраивает импорт, записывает восемь прежних cardinal-клипов с четырьмя фазами и обновляет два существующих Blend Tree на четыре child motion. Возвращается без перезаписи архивных диагоналей/Animation30. При отсутствии нового manifest остаётся прежняя ветка восьми направлений. WireActivePlayer отдельно подключает новую графику и useCardinalAnimations в SampleScene, проверяет SaveScene. ImportAnimations и WireActivePlayer выполнены через MCP; существующая SampleScene сохранена, dirty=false.
 
 ## 3. Методы и функции
 
-- `ImportAnimations()` — MenuItem/MCP, без аргументов, void. Проверяет Play Mode, вызывает ImportPreparedFrames, ImportSheet для восьми направлений, Frames/IdleFrames и WriteClip, ConfigureTexture исходников, RetimeLegacyClips, ConfigureController.
-- `ImportPreparedFrames()` — читает PlayerAnimation30Manifest в DTO PreparedManifest/PreparedFrame, проверяет начало пути ThirtyFrameRoot, положительные размеры/PPU и существование PNG; адресно импортирует Single Sprite и исходники Default. Нет manifest → ранний выход.
-- `PreparedFrames(motion,direction)` — возвращает отсортированные Sprite из Animation30/{motion}/{direction}; нет папки → пустой массив, неполные/неимпортированные 30 кадров → исключение. Ограничение 30 относится к этому прежнему набору, не ко всем будущим анимациям.
-- `Frames(direction)` — подготовленный Walk30, если есть, иначе восемь AnimationV2/World PNG, иначе резервный Multiple-лист. Возвращает Sprite[].
-- `IdleFrames(direction)` — подготовленный Idle30, иначе один первый кадр соответствующего Walk. Down использует собственные дыхательные изображения.
-- `ImportSheet(direction)` — сохраняет Multiple/SpriteRect и spriteID старых четырёхкадровых листов; размеры, PPU и ground pivot прежние.
-- `ConfigureTexture(importer)` — Point, без mipmaps, Uncompressed, Max4096, NPOT None, PNG alpha, Clamp; меняет только переданный importer.
-- `WriteClip(motion,direction,frames)` — требует существующий clip/кадры, пишет SpriteRenderer.m_Sprite с шагом 1/16 с и повтором первого на frameCount/16; stopTime ровно frameCount/16, Loop, адресный SaveAssetIfDirty. Все motion используют 16 FPS независимо от количества кадров.
-- `RetimeLegacyClips()` — четыре явно перечисленных резервных Player_* клипа: при прежнем FPS масштабирует времена Sprite-ключей, Animation Events и границы цикла oldFPS/16, затем Samples=16. Уже16 → пропуск; отсутствующий ресурс/невалидный FPS/неожиданные float-кривые → исключение для ручного анализа. Ссылки и порядок Sprite сохраняются; void.
-- `ConfigureController()` — существующий Player.controller, WalkSpeed(default1), Player_DirectionalWalk.speedParameterActive; адресное сохранение без второго контроллера.
-- `WireActivePlayer()` — только SampleScene вне Play: назначает первый Idle Down, прежний HeroDetailed и отдельный Inventory portrait, белый tint; проверяет фактический SaveScene. Физику/HP/MP не меняет.
+- `ImportAnimations()` — MenuItem/MCP, void, требует Play выключен. Новая ветка: ImportPreparedFrames(CardinalManifest,CardinalRoot), CardinalFrames для восьми motion/direction, WriteClip с hold8/добавленным замыканием для Idle и hold2/appendLoopKey=false для Walk, ConfigureController(true), return. Старая ветка: прежний manifest/Multiple sheets/16 клипов, RetimeLegacyClips/ConfigureController.
+- `ImportPreparedFrames()` — void, обёртка прежнего Animation30 manifest. Перегрузка `ImportPreparedFrames(manifestPath,assetRoot)` читает DTO PreparedManifest/PreparedFrame, проверяет path под переданным корнем/существование/положительные размеры/PPU; адресно импортирует Single Sprite Full Rect/Custom pivot и Source как Default. Нет manifest → выход.
+- `CardinalFrames(motion,direction)` → Sprite[]: для Idle сортирует PNG в папке направления, требует четыре ненулевых Sprite. Для Walk читает единственную запись направления в manifest.walkSequences, требует четыре пути, одинаковую стойку в позициях 0/3 и два различных шага, отличных от стойки. Возвращает упорядоченный Sprite[], ошибка данных вызывает исключение.
+- `Frames(direction)` → Sprite[]: для текущих четырёх направлений новый Cardinal Walk; иначе прежний подготовленный Walk30/AnimationV2/старый Multiple.
+- `IdleFrames(direction)` → Sprite[]: новый Cardinal Idle; иначе прежний30-frame Idle или один соответствующий Walk Sprite.
+- `PreparedFrames(motion,direction)` → прежний Animation30 Sprite[]: отсутствующая папка → пусто, неполный набор30 → исключение. Это резервная ветка, не требование нового задания.
+- `ImportSheet(direction)` — сохраняет старые Multiple/SpriteRect/spriteID, PPU и pivot; новая cardinal-ветка его не вызывает.
+- `ConfigureTexture(importer)` — Point/no mipmaps/Uncompressed/4096/NPOT None/PNG alpha/Clamp только у переданного ресурса.
+- `WriteClip(motion,direction,frames,holdSamples=1,appendLoopKey=true)` — сохраняет существующий clip/GUID и Samples16. Для Idle пишет равномерные ключи i×holdSamples/16 и замыкающий первый Sprite. Для четырёхпозиционного Walk appendLoopKey=false: ровно четыре ключа на ticks 0/1/4/7, без пятого ключа. start=0, stopTime=frameCount×hold/16, Loop=true; адресный SaveAssetIfDirty. Walk длиной .5 с: стойка .0625 с, правый шаг .1875 с, левый .1875 с, стойка .0625 с. Этот режим предназначен только для четырёх переданных поз.
+- `ConfigureController(cardinal=false)` — прежний Player.controller/WalkSpeed на Player_DirectionalWalk. При true назначает существующим Idle/Walk Blend Tree четыре child Down/Left/Right/Up с единичным timeScale; старые диагональные клипы не удаляет. Адресное сохранение.
+- `RetimeLegacyClips()` — резервные четыре Player_*: масштабирование Sprite-ключей/событий/границ oldFPS/16, уже16 → пропуск, неизвестные float-кривые/отсутствующий clip → исключение. В новой ветке повторно не выполняется.
+- `WireActivePlayer()` — только SampleScene вне Play: первый Idle Down/white tint, useCardinalAnimations=true через SerializedObject при новом manifest; сохраняет существующие HeroDetailed/BattleUnit и отдельный Inventory portrait, проверяет SaveScene. Физику/HP/MP не меняет.
 
-Awake/Start/Update/коллизий нет.
+Unity callbacks Awake/Start/Update/коллизий нет.
 
 ## 4. Переменные и Inspector
 
-Root/ThirtyFrameRoot/Directions — технические пути/направления. WalkFramesPerSecond=16 и сохранённый по совместимости ThirtyFrameIdleFramesPerSecond=16 — const, не Inspector. DTO хранит path/canvasWidth/canvasHeight/pivotX/pivotY/ppu. Фактический Idle_Down320×320/pivot160,16/PPU477. Walk8/16=0,5 с; Idle_Down30/16=1,875 с; остальные Idle1/16=0,0625 с, визуально статичны.
+Root/ThirtyFrameRoot/CardinalRoot/CardinalManifest/Directions/CardinalDirections — технические пути/порядки. WalkFramesPerSecond=16 — сетка Samples, не фактическая частота новых рисунков. hold Idle8 даёт смену двух рисунков/с и цикл2 с; Walk2 задаёт цикл .5 с с неравными удержаниями фаз, а не равномерные8 FPS. PreparedManifest.frames содержит40 записей, walkSequences — четыре PreparedWalkSequence(direction,paths[4]); первые/последние paths совпадают. PreparedFrame: path/canvasWidth/canvasHeight/pivotX/pivotY/ppu; Cardinal canvas512×512/pivot256,20; PPU Down602/Left567/Right569/Up576, одинаковый для Idle/Walk. Не параметры Inspector компонента.
 
 ## 5. Связи
 
-AssetDatabase/AnimationUtility/TextureImporter/Sprite data providers/EditorSceneManager; прежние Player64 clips, Player.controller, SpriteRenderer/BattleUnit/InventoryWindow. PlayerController меняет WalkSpeed по фактической скорости относительно4; Idle не ускоряется.
+AssetDatabase/AnimationUtility/TextureImporter/Sprite providers/EditorSceneManager, Player.controller/Player64 clips, PlayerController.useCardinalAnimations/SpriteRenderer/BattleUnit/InventoryWindow. Выбор взгляда меняет только визуальные параметры, фактическая диагональ остаётся у PlayerController.
 
 ## 6. Пример
 
-ImportAnimations → Walk_Down с прежними восемью Sprite и длительностью0,5 с → S запускает ходьбу → отпускание возвращает отдельный Idle_Down1,875 с. Это изменение времени, а не создание новых поз.
+ImportAnimations → четыре Idle2 с/Walk.5 с → WireActivePlayer → на S новый Walk Down, отпускание — четыре кадра спокойного Idle Down, W+D движет по диагонали с визуальным Up.
 
 ## 7. Настройка в Unity
 
-К объекту не прикрепляется. FalseMemory → Art → Import approved hero animation sheets вне Play. Исходники и старые листы сохранять. Новый набор другого размера требует расширения импорта: не заполнять папку30 копиями ради прохождения проверки.
+Не прикреплять к объекту. FalseMemory → Art → Import approved hero animation sheets вне Play, затем WireActivePlayer только для существующей SampleScene. Не назначать Source Texture как игровой кадр и не удалять прежние ассеты.
 
 ## 8. Возможные проблемы
 
-Изменение только Samples без времени ключей не меняет реальную частоту. Новый импорт ретаймит ключи и границы. Резервные клипы не используются активными состояниями; их ритм меняется с60/8 на16 без изменения кадров. Новые рисунки Walk 2026-10-16 отклонены, активные Sprite прежние. Художественная плавность не доказана тестом ссылок. Глобальный SaveAssets не вызывается.
+Неполные4 Sprite/нет клипа/неверная сцена → исключение, не создание альтернативы. Samples16 не означает16 новых изображений/с: новый Idle удерживает4 разных рисунка, Walk —4 позиции с повторной стойкой. Высокий кадр создаётся прозрачным padding без resampling. Художественное качество проверяется отдельно; результаты подключения/тестов — [PlayerWalkOrder](../../PlayerWalkOrder.md).
 
 ## 9. История изменений
 
@@ -60,3 +61,7 @@ ImportAnimations → Walk_Down с прежними восемью Sprite и дл
 - 2026-10-13 — отдельные IdleFrames, подготовленный30-frame manifest/import и Idle_Down15FPS/2с; прежние игровые ресурсы сохранены.
 
 - 2026-10-16 — актуализированы реальная сетка16 FPS, opt-in тайминг/проверки и ограничения текущего технического подэтапа.
+
+- 2026-10-26 — актуализирован новый ограниченный набор4×4 Idle/Walk, выбор cardinal-взгляда/импорт и соответствующие проверки. Фактический статус выполнения — в PlayerCardinal4.
+
+- 2026-10-26 — через Unity MCP подключён четырёхпозиционный Walk: нейтральная стойка → RightStep → LeftStep → та же стойка; обновлены контракты и реальные Play-проверки. Подробности текущей проверки — в PlayerWalkOrder.

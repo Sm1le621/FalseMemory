@@ -1,5 +1,11 @@
 # Направления и Animator игрока
 
+## Текущая world-анимация героя —2026-10-26
+
+Input System → PlayerController (настоящие движение/LastDirection) → визуальное CardinalFacing → Move/LastMove в прежнем Animator. WalkSpeed по фактической скорости управляет только Walk; при остановке/модальном окне остаётся отдельный Idle последнего ракурса. Оба Blend Tree используют Down/Left/Right/Up; диагональное движение физически сохранено, визуально выбирается одна ось, при равенстве вертикаль.
+
+Восемь существующих cardinal-клипов обновлены через ApprovedHeroImporter/MCP. Walk:4 ключа Idle_00/RightStep/LeftStep/Idle_00 на0/.0625/.25/.4375с, конец .5с. Idle:4 уникальных рисунка/2с и техническое замыкание. Активных уникальных PNG24, повтор стойки предписан владельцем. Single/Point/Uncompressed/pivot256,20, PPU согласован внутри направления; sources/старые анимации сохранены. BattlePresentation/HeroDetailed/SkeletonDetailed не менялись. [Подключение и проверки](../PlayerWalkOrder.md). Ниже прежние контрольные точки.
+
 ## Актуально2026-10-16 —16 FPS, художественная часть не завершена
 
 Все20 существующих геройских клипов используют реальную сетку1/16 с. Активные Walk8/направление=.5 с, Idle_Down30=1.875 с; остальные7 Idle — один прежний Sprite, не новые дыхательные циклы. GUID/Animator/PPU/pivot/графика сохранены. WalkSpeed по-прежнему actual/reference4, только Walk; стандарт16 действует при обычной скорости4, разгон/gear намеренно масштабируют темп. Все8 направленных child timeScale1, Animator.speed1, переходы0/без Exit Time. Interpolate/камера5/отсутствующий PixelPerfectCamera не менялись.

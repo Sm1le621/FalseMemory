@@ -20,12 +20,14 @@ Test Runner загружает SampleScene дополнительно, уско�
 - `Cleanup()` [UnityTearDown] → IEnumerator: восстанавливает правила/ввод, возвращает предыдущую сцену либо временный anchor, выгружает мир/бой.
 - `WaitUntil(Func<bool> predicate)` → IEnumerator ожидания; через 15 секунд Assert timeout.
 - `Player()` / `Enemy()` → BattleUnit по имени GameObject; `Manager()` → найденный BattleManager.
-- `ContactStartsOneBattleThenVictoryPreservesWorldAndHealth()` — реальная физика запускает бой один раз, Attack/Defend, победа и прежний Health/позиция; синтетический D проверяет движение после возврата.
+- `ContactStartsOneBattleThenVictoryPreservesWorldAndHealth()` — реальная физика запускает бой один раз, Attack/Defend, победа и прежний Health/позиция: Rigidbody2D.position сравнивается точно, отображаемый интерполированный Transform — с допуском1e-5 world units и R-диагностикой; синтетический D проверяет движение после возврата.
 - `DefeatStopsTurnsAndOffersRestartAndMenu()` — HP1, поражение без следующих атак, новая игра.
 - `HeldEnterConsumesOneActionAndDoesNotAttackOnNextTurn()` — Enter удерживается, второго хода нет.
 - `DefeatCanReturnToMainMenuAndStartNewGame()` — поражение→меню→OnStart и свежие HP. Тестовые методы возвращают IEnumerator, а не игровое значение.
 
 ## 4. Переменные и параметры Inspector
+
+worldPhysicsPosition/worldPosition — снимки физической и отображаемой позиций после скрытия мира; renderedDrift — локальное расстояние после возврата. Это тестовые значения, не параметры сцены. Допуск1e-5 относится только к Transform, физическая позиция обязана совпадать точно.
 
 savedRunInBackground — private bool test fixture, исходный runtime background flag, не Inspector. Нужен только для воспроизводимого запуска без активного Game View.
 
@@ -45,7 +47,7 @@ Collider2D контакт → ожидается EncounterActive → Attack → 
 
 ## 8. Возможные проблемы и проверки
 
-Запуск в Editor, не отдельной сборке. Временные настройки восстанавливаются; таймаут может означать сломанные ссылки/сцену или проблемы ввода. Все 17 Play Mode текущего запуска прошли. Запуск: Test Runner → PlayMode → Run All.
+Запуск в Editor, не отдельной сборке. Временные настройки восстанавливаются; таймаут может означать сломанные ссылки/сцену или проблемы ввода. Исторические17 сценариев этапа2 не являются числом текущей полной сборки; актуальные job IDs/результаты находятся в [PlayerWalkOrder](../../../PlayerWalkOrder.md). Запуск: Test Runner → PlayMode → Run All.
 
 ## 9. История изменений
 
@@ -60,3 +62,5 @@ Collider2D контакт → ожидается EncounterActive → Attack → 
 - 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
 
 - 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
+
+- 2026-10-26 — через Unity MCP подключён четырёхпозиционный Walk: нейтральная стойка → RightStep → LeftStep → та же стойка; обновлены контракты и реальные Play-проверки. Подробности текущей проверки — в PlayerWalkOrder.

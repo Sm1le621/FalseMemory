@@ -1,37 +1,41 @@
-# PlayerIdle30FlowTests
+# PlayerIdle30FlowTests — текущие cardinal-циклы
 
 ## 1. Название и назначение
 
-`Assets/Tests/PlayMode/PlayerIdle30FlowTests.cs` — проверяет отдельный Idle_Down на реальном Player; часть существующей partial fixture BattleFlowTests, не компонент.
+Исходник: `Assets/Tests/PlayMode/PlayerIdle30FlowTests.cs`. Историческое имя файла сохранено; теперь проверяет четыре разных Idle Sprite и четыре позиции Walk для каждого из четырёх направлений по новому заданию. Часть partial BattleFlowTests.
 
 ## 2. Как работает
 
-Shared Setup загружает SampleScene, временно разрешает синтетический Input System. Без клавиш наблюдает4.2с (больше двух Idle циклов), затем включает S и отпускает. Shared TearDown возвращает сцены/настройки.
+Общая fixture загружает SampleScene; тест переносит Player в свободную область, последовательно нажимает S/A/D/W, наблюдает реальную смену Sprite и отпускает клавиши. Сохранённая сцена не перезаписывается.
 
 ## 3. Методы и функции
 
-IdleDownPlaysThirtyFramesWithoutPhysicalStepsAndResumesAfterWalking() — UnityTest/IEnumerator: переносит тело в свободную тестовую область, наблюдает SpriteRenderer и Idle-state, собирает все30 разных имён, проверяет неподвижность Rigidbody и WalkSpeed0 при продолжающемся Idle. S на.2с должно реально двигать тело/показывать прежний Walk; отпускание.12с возвращает Down Idle и взгляд. Finally удаляет только тестовый Keyboard. У файла нет Awake/Update/физических callbacks; UnitySetUp/TearDown в BattleFlowTests.
+`FourCardinalIdleAndWalkCyclesShowAllFramesWithoutIdlePhysicalSteps()` → IEnumerator/UnityTest: для каждого направления ждёт Walk, за1.1с собирает3 правильных уникальных Sprite и список изменений; требует в списке непрерывный порядок neutral|RightStep|LeftStep|neutral; отпускает и ждёт.12с торможения, затем2.2с собирает4 Idle Sprite с правильным prefix. При каждом Idle кадре Rigidbody неподвижен с допуском.0001, после цикла сохранены LastDirection/Idle state/WalkSpeed0. Finally удаляет только тестовый Keyboard. Собственных Awake/Update нет, общие UnitySetUp/TearDown в BattleFlowTests.
 
 ## 4. Переменные и Inspector
 
-player/controller/animator/body/visual/keyboard/start/shown/until — локальные тестовые значения; Inspector отсутствует. Допуск неподвижности.0001 world units,4.2с наблюдения/30 имён. Runtime настройки не сохраняются.
+player/controller/animator/body/visual/keyboard, keys S/A/D/W, names/directions, HashSet и таймеры — локальные, не Inspector. В каждом направлении наблюдаются4 разных Idle и3 уникальных Walk Sprite; совпадение первой/четвёртой позиции Walk разрешено владельцем. changes/previous сохраняют реальный порядок смен, а не только множество ссылок.
 
 ## 5. Связи
 
-PlayerController, Player.controller/Idle_Down/Walk_Down, Rigidbody2D/SpriteRenderer, Input System/Test Framework, общая BattleFlowTests fixture. Ресурсы HP/MP не меняет.
+PlayerController, реальные Rigidbody2D/Animator/SpriteRenderer, Input System и shared fixture. Новые Player64 cardinal-клипы/флаг должны быть назначены перед запуском.
 
 ## 6. Пример
 
-Стоящий герой перебирает30 дыхательных Sprite, сохраняя одну физическую позицию. После короткой ходьбы вниз возвращается именно в новую Idle-анимацию, не в один walk-кадр.
+A →стойка/RightStep/LeftStep/стойка в Walk Left →отпускание→4 Idle Left без шагов физического корня; следующий D даёт Right, прежние другие ракурсы не смешиваются.
 
 ## 7. Настройка в Unity
 
-Не прикреплять. Test Runner → PlayMode → FalseMemory.Battle.PlayModeTests → BattleFlowTests → метод. Нужны сохранённый новый Idle_Down и SampleScene; клавиатура тестовая, реальный фокус не обязателен благодаря fixture.
+Не прикреплять к GameObject. Test Runner → PlayMode → FalseMemory.Battle.PlayModeTests → BattleFlowTests.
 
-## 8. Возможные проблемы и проверки
+## 8. Возможные проблемы
 
-Низкий render FPS может пропускать Sprite между наблюдениями; тест ждёт два полных цикла. Количество кадров/неподвижный root не доказывают спокойное дыхание, неизменность лица/броневых деталей или отсутствие визуального jitter. Эти критерии оцениваются отдельно в Play/preview владельцем. Standalone не проверяется.
+Папка/имя файла30 не означает требование30 кадров: оно отменено владельцем. Низкий render FPS может пропустить фазы. Неподвижный root не доказывает художественную неподвижность ботинок; это проверяется просмотром. [Результаты](../../../PlayerWalkOrder.md).
 
 ## 9. История изменений
 
 - 2026-10-13 — добавлена текущая проверка30-frame Idle_Down, отдельности от Walk и физической неподвижности.
+
+- 2026-10-26 — актуализирован новый ограниченный набор4×4 Idle/Walk, выбор cardinal-взгляда/импорт и соответствующие проверки. Фактический статус выполнения — в PlayerCardinal4.
+
+- 2026-10-26 — через Unity MCP подключён четырёхпозиционный Walk: нейтральная стойка → RightStep → LeftStep → та же стойка; обновлены контракты и реальные Play-проверки. Подробности текущей проверки — в PlayerWalkOrder.

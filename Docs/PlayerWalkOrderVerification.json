@@ -1,0 +1,134 @@
+{
+  "date": "2026-10-26",
+  "project": "FalseMemory",
+  "unity": "6000.6.2f1",
+  "edit": {
+    "job": "0742757ee17840afa2adfb116481573b",
+    "total": 98,
+    "passed": 98,
+    "failed": 0
+  },
+  "play": {
+    "job": "ee75ab6cd0004acab1d4e878bf150692",
+    "total": 58,
+    "passed": 58,
+    "failed": 0
+  },
+  "earlierPlay": {
+    "job": "e22e660538a54ba5bf24082f5eb7c251",
+    "passed": 57,
+    "failed": 1,
+    "note": "Побитовое сравнение интерполированного Transform после победы заменено точной проверкой физической позиции и отдельным допуском1e-5 для отображения. Runtime боя не менялся."
+  },
+  "ordinaryPlay": {
+    "resolution": "1920x1080",
+    "firstPass": {
+      "events": "Down: ApprovedHero_Idle_Down_01 | 1479363264 | speed=0,000\nDown: ApprovedHero_Idle_Down_00 | 160990592 | speed=0,960\nDown: ApprovedHero_Down_RightStep | 160990592 | speed=4,000\nDown: ApprovedHero_Down_LeftStep | 160990592 | speed=4,000\nDown: ApprovedHero_Idle_Down_00 | 160990592 | speed=4,000\nDown: ApprovedHero_Down_RightStep | 160990592 | speed=4,000\nDown: ApprovedHero_Down_LeftStep | 160990592 | speed=4,000\nDown: ApprovedHero_Idle_Down_00 | 160990592 | speed=4,000\nDown: ApprovedHero_Down_RightStep | 160990592 | speed=4,000\nDown: ApprovedHero_Idle_Down_00 | 1479363264 | speed=0,800\nDown: ApprovedHero_Idle_Down_01 | 1479363264 | speed=0,000\nLeft: ApprovedHero_Idle_Left_01 | 1479363264 | speed=0,000\nLeft: ApprovedHero_Idle_Left_00 | 160990592 | speed=0,960\nLeft: ApprovedHero_Left_RightStep | 160990592 | speed=4,000\nLeft: ApprovedHero_Left_LeftStep | 160990592 | speed=4,000\nLeft: ApprovedHero_Idle_Left_00 | 160990592 | speed=4,000\nLeft: ApprovedHero_Idle_Left_01 | 1479363264 | speed=0,000\nLeft: ApprovedHero_Idle_Left_02 | 1479363264 | speed=0,000\nRight: ApprovedHero_Idle_Right_02 | 1479363264 | speed=0,000\nRight: ApprovedHero_Idle_Right_00 | 160990592 | speed=0,960\nRight: ApprovedHero_Right_RightStep | 160990592 | speed=4,000\nRight: ApprovedHero_Right_LeftStep | 160990592 | speed=4,000\nRight: ApprovedHero_Idle_Right_00 | 160990592 | speed=4,000\nRight: ApprovedHero_Right_RightStep | 160990592 | speed=4,000\nRight: ApprovedHero_Right_LeftStep | 160990592 | speed=4,000\nRight: ApprovedHero_Idle_Right_00 | 160990592 | speed=4,000\nRight: ApprovedHero_Right_RightStep | 160990592 | speed=4,000\nRight: ApprovedHero_Idle_Right_00 | 1479363264 | speed=0,800\nRight: ApprovedHero_Idle_Right_01 | 1479363264 | speed=0,000\nUp: ApprovedHero_Idle_Up_01 | 1479363264 | speed=0,000\nUp: ApprovedHero_Idle_Up_00 | 160990592 | speed=0,960\nUp: ApprovedHero_Up_RightStep | 160990592 | speed=4,000\nUp: ApprovedHero_Idle_Up_00 | 1479363264 | speed=0,001\nUp: ApprovedHero_Idle_Up_01 | 1479363264 | speed=0,000\nUp: ApprovedHero_Idle_Up_02 | 1479363264 | speed=0,000\nUp: ApprovedHero_Idle_Up_03 | 1479363264 | speed=0,000"
+    },
+    "freeAreaPass": {
+      "done": true,
+      "events": "Down: ApprovedHero_Idle_Up_00 | 1479363264 | speed=0,000\nDown: ApprovedHero_Idle_Down_00 | 1479363264 | speed=0,000\nDown: ApprovedHero_Idle_Down_01 | 1479363264 | speed=0,000\nDown: ApprovedHero_Idle_Down_00 | 160990592 | speed=0,960\nDown: ApprovedHero_Down_RightStep | 160990592 | speed=4,000\nDown: ApprovedHero_Down_LeftStep | 160990592 | speed=4,000\nDown: ApprovedHero_Idle_Down_00 | 160990592 | speed=4,000\nDown: ApprovedHero_Down_RightStep | 160990592 | speed=4,000\nDown: ApprovedHero_Down_LeftStep | 160990592 | speed=4,000\nDown: ApprovedHero_Idle_Down_00 | 160990592 | speed=4,000\nDown: ApprovedHero_Down_RightStep | 160990592 | speed=4,000\nDown: ApprovedHero_Idle_Down_00 | 1479363264 | speed=0,800\nDown: ApprovedHero_Idle_Down_01 | 1479363264 | speed=0,000\nLeft: ApprovedHero_Idle_Left_01 | 1479363264 | speed=0,000\nLeft: ApprovedHero_Idle_Left_00 | 160990592 | speed=0,960\nLeft: ApprovedHero_Left_RightStep | 160990592 | speed=4,000\nLeft: ApprovedHero_Left_LeftStep | 160990592 | speed=4,000\nLeft: ApprovedHero_Idle_Left_00 | 160990592 | speed=4,000\nLeft: ApprovedHero_Left_RightStep | 160990592 | speed=4,000\nLeft: ApprovedHero_Left_LeftStep | 160990592 | speed=4,000\nLeft: ApprovedHero_Idle_Left_00 | 160990592 | speed=4,000\nLeft: ApprovedHero_Left_RightStep | 160990592 | speed=4,000\nLeft: ApprovedHero_Idle_Left_00 | 1479363264 | speed=0,800\nLeft: ApprovedHero_Idle_Left_01 | 1479363264 | speed=0,000\nRight: ApprovedHero_Idle_Right_01 | 1479363264 | speed=0,000\nRight: ApprovedHero_Idle_Right_00 | 160990592 | speed=0,960\nRight: ApprovedHero_Right_RightStep | 160990592 | speed=4,000\nRight: ApprovedHero_Right_LeftStep | 160990592 | speed=4,000\nRight: ApprovedHero_Idle_Right_00 | 160990592 | speed=4,000\nRight: ApprovedHero_Right_RightStep | 160990592 | speed=4,000\nRight: ApprovedHero_Right_LeftStep | 160990592 | speed=4,000\nRight: ApprovedHero_Idle_Right_00 | 160990592 | speed=4,000\nRight: ApprovedHero_Right_RightStep | 160990592 | speed=4,000\nRight: ApprovedHero_Idle_Right_00 | 1479363264 | speed=0,800\nRight: ApprovedHero_Idle_Right_01 | 1479363264 | speed=0,000\nUp: ApprovedHero_Idle_Up_01 | 1479363264 | speed=0,000\nUp: ApprovedHero_Idle_Up_00 | 160990592 | speed=0,960\nUp: ApprovedHero_Up_RightStep | 160990592 | speed=4,000\nUp: ApprovedHero_Up_LeftStep | 160990592 | speed=4,000\nUp: ApprovedHero_Idle_Up_00 | 160990592 | speed=4,000\nUp: ApprovedHero_Up_RightStep | 160990592 | speed=4,000\nUp: ApprovedHero_Up_LeftStep | 160990592 | speed=4,000\nUp: ApprovedHero_Idle_Up_00 | 160990592 | speed=4,000\nUp: ApprovedHero_Up_RightStep | 160990592 | speed=4,000\nUp: ApprovedHero_Idle_Up_00 | 1479363264 | speed=0,800\nUp: ApprovedHero_Idle_Up_01 | 1479363264 | speed=0,000"
+    },
+    "note": "Первый Up упёрся в дерево; все четыре направления повторены в свободной runtime-области. ScreenCapture может сохраниться в следующем render-кадре; точный порядок Sprite отражён в журнале.",
+    "captures": "Temp/WalkOrderVerification",
+    "visualInspection": [
+      "Down_LeftStep",
+      "Left_RightStep",
+      "Up_RightStep",
+      "Up_LeftStep",
+      "Right_LeftStep"
+    ]
+  },
+  "console": {
+    "success": true,
+    "message": "Retrieved 0 log entries.",
+    "data": []
+  },
+  "editor": {
+    "playing": false,
+    "compiling": false,
+    "scene": "Assets/Scenes/SampleScene.unity",
+    "sceneDirty": false,
+    "animatorSpeed": 1,
+    "clips": [
+      {
+        "direction": "Down",
+        "count": 4,
+        "duration": 0.5,
+        "samples": 16,
+        "times": [
+          0,
+          0.0625,
+          0.25,
+          0.4375
+        ],
+        "sprites": [
+          "ApprovedHero_Idle_Down_00",
+          "ApprovedHero_Down_RightStep",
+          "ApprovedHero_Down_LeftStep",
+          "ApprovedHero_Idle_Down_00"
+        ]
+      },
+      {
+        "direction": "Left",
+        "count": 4,
+        "duration": 0.5,
+        "samples": 16,
+        "times": [
+          0,
+          0.0625,
+          0.25,
+          0.4375
+        ],
+        "sprites": [
+          "ApprovedHero_Idle_Left_00",
+          "ApprovedHero_Left_RightStep",
+          "ApprovedHero_Left_LeftStep",
+          "ApprovedHero_Idle_Left_00"
+        ]
+      },
+      {
+        "direction": "Right",
+        "count": 4,
+        "duration": 0.5,
+        "samples": 16,
+        "times": [
+          0,
+          0.0625,
+          0.25,
+          0.4375
+        ],
+        "sprites": [
+          "ApprovedHero_Idle_Right_00",
+          "ApprovedHero_Right_RightStep",
+          "ApprovedHero_Right_LeftStep",
+          "ApprovedHero_Idle_Right_00"
+        ]
+      },
+      {
+        "direction": "Up",
+        "count": 4,
+        "duration": 0.5,
+        "samples": 16,
+        "times": [
+          0,
+          0.0625,
+          0.25,
+          0.4375
+        ],
+        "sprites": [
+          "ApprovedHero_Idle_Up_00",
+          "ApprovedHero_Up_RightStep",
+          "ApprovedHero_Up_LeftStep",
+          "ApprovedHero_Idle_Up_00"
+        ]
+      }
+    ],
+    "missingPlayerScripts": 0
+  },
+  "limitations": [
+    "Художественная приёмка темпа, контактов ног и согласованности брони/плаща остаётся за владельцем.",
+    "Standalone-сборка и широкий экран в этом задании не проверялись."
+  ],
+  "push": false
+}

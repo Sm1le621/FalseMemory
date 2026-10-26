@@ -1,5 +1,9 @@
 # Архитектура FalseMemory
 
+## Изменение2026-10-26 —cardinal4
+
+Существующий ApprovedHeroImporter читает PlayerCardinal4Manifest.frames и walkSequences, обновляет прежние8 cardinal-клипов и два Blend Tree на4 child. Walk содержит4 ключа с повторным Idle_00 на концах, Idle отдельно сохраняет4 рисунка. PlayerController.useCardinalAnimations=true квантит только Move/LastMove для Animator; физическое направление/нормализованные диагонали прежние. Через MCP сохранена SampleScene (preview Sprite/флаг), боевая архитектура/ресурсы не менялись. Новых runtime-систем нет. [Файлы и проверенное поведение](PlayerWalkOrder.md). Ниже — исторические состояния.
+
 ## Изменение2026-10-16 — действующая сетка16 FPS
 
 ApprovedHeroImporter обновляет16 направленных и4 резервных AnimationClip с реальными временами1/16 с, сохраняя GUID/кадры. SpriteAnimationSet добавляет opt-in useFrameTiming, целый контактный кадр и длительности; BattlePresentation использует их для конечных поз HeroDetailed, BattleManager остаётся единственным владельцем применения эффекта. HeroDetailed16/Idle16; SkeletonDetailed12/Idle4 с useFrameTiming=false. DetailedAnimationImporter воспроизводит это разделение при повторном импорте. Runtime PlayerController/физика/камера/сцены/очередь/Health не переписаны. Восемь изменённых C# имеют актуальные отдельные описания в Docs/Scripts; новых runtime систем нет. [Проверки и незавершённая графика](PlayerAnimation16.md). Ниже исторические значения.

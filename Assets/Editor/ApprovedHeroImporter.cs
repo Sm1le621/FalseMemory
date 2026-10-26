@@ -12,7 +12,19 @@ public static class ApprovedHeroImporter
     public const float WalkFramesPerSecond = 16f;
     public const string ThirtyFrameRoot = "Assets/Art/Characters/Player/Animation30";
     public const float ThirtyFrameIdleFramesPerSecond = 16f;
-    [Serializable] private sealed class PreparedManifest { public PreparedFrame[] frames = Array.Empty<PreparedFrame>(); }
+    public const string CardinalRoot = "Assets/Art/Characters/Player/Cardinal4";
+    public const string CardinalManifest = "Assets/Art/PlayerCardinal4Manifest.json";
+    public static readonly string[] CardinalDirections = { "Down", "Left", "Right", "Up" };
+    [Serializable] private sealed class PreparedManifest
+    {
+        public PreparedFrame[] frames = Array.Empty<PreparedFrame>();
+        public PreparedWalkSequence[] walkSequences = Array.Empty<PreparedWalkSequence>();
+    }
+    [Serializable] private sealed class PreparedWalkSequence
+    {
+        public string direction = "";
+        public string[] paths = Array.Empty<string>();
+    }
     [Serializable] private sealed class PreparedFrame
     {
         public string path = "";
@@ -24,6 +36,17 @@ public static class ApprovedHeroImporter
     public static void ImportAnimations()
     {
         if (EditorApplication.isPlaying) throw new InvalidOperationException("Stop Play Mode before importing hero animations.");
+        if (System.IO.File.Exists(CardinalManifest))
+        {
+            ImportPreparedFrames(CardinalManifest, CardinalRoot);
+            foreach (string direction in CardinalDirections)
+            {
+                WriteClip("Idle", direction, CardinalFrames("Idle", direction), 8);
+                WriteClip("Walk", direction, CardinalFrames("Walk", direction), 2, false);
+            }
+            ConfigureController(true);
+            return;
+        }
         ImportPreparedFrames();
         foreach (string direction in Directions)
         {
@@ -72,7 +95,7 @@ public static class ApprovedHeroImporter
         }
     }
 
-    private static void ConfigureController()
+    private static void ConfigureController(bool cardinal = false)
     {
         var controller = AssetDatabase.LoadAssetAtPath<UnityEditor.Animations.AnimatorController>("Assets/Player.controller");
         if (controller == null) throw new InvalidOperationException("Missing existing player controller.");
@@ -81,6 +104,22 @@ public static class ApprovedHeroImporter
         var walk = controller.layers[0].stateMachine.states.First(s => s.state.name == "Player_DirectionalWalk").state;
         walk.speedParameter = "WalkSpeed";
         walk.speedParameterActive = true;
+        if (cardinal)
+        {
+            var positions = new[] { Vector2.down, Vector2.left, Vector2.right, Vector2.up };
+            foreach (string motion in new[] { "Idle", "Walk" })
+            {
+                var state = controller.layers[0].stateMachine.states.First(s => s.state.name == "Player_Directional" + motion).state;
+                var tree = state.motion as UnityEditor.Animations.BlendTree;
+                if (tree == null) throw new InvalidOperationException("Missing existing directional blend tree.");
+                tree.children = CardinalDirections.Select((direction, i) => new UnityEditor.Animations.ChildMotion
+                {
+                    motion = AssetDatabase.LoadAssetAtPath<AnimationClip>("Assets/Animations/Player64/" + motion + "_" + direction + ".anim"),
+                    position = positions[i], timeScale = 1f
+                }).ToArray();
+                EditorUtility.SetDirty(tree);
+            }
+        }
         EditorUtility.SetDirty(walk);
         EditorUtility.SetDirty(controller);
         AssetDatabase.SaveAssetIfDirty(controller);
@@ -88,12 +127,16 @@ public static class ApprovedHeroImporter
 
     private static void ImportPreparedFrames()
     {
-        const string manifestPath = "Assets/Art/PlayerAnimation30Manifest.json";
+        ImportPreparedFrames("Assets/Art/PlayerAnimation30Manifest.json", ThirtyFrameRoot);
+    }
+
+    private static void ImportPreparedFrames(string manifestPath, string assetRoot)
+    {
         if (!System.IO.File.Exists(manifestPath)) return;
         var manifest = JsonUtility.FromJson<PreparedManifest>(System.IO.File.ReadAllText(manifestPath));
         foreach (var frame in manifest.frames)
         {
-            if (!frame.path.StartsWith(ThirtyFrameRoot + "/", StringComparison.Ordinal) ||
+            if (!frame.path.StartsWith(assetRoot + "/", StringComparison.Ordinal) ||
                 frame.canvasWidth <= 0 || frame.canvasHeight <= 0 || frame.ppu <= 0 || !System.IO.File.Exists(frame.path))
                 throw new InvalidOperationException("Invalid prepared hero frame: " + frame.path);
             AssetDatabase.ImportAsset(frame.path, ImportAssetOptions.ForceSynchronousImport);
@@ -109,13 +152,34 @@ public static class ApprovedHeroImporter
             importer.SetTextureSettings(settings);
             importer.SaveAndReimport();
         }
-        foreach (string path in System.IO.Directory.GetFiles(ThirtyFrameRoot + "/Source", "*.png"))
+        foreach (string path in System.IO.Directory.GetFiles(assetRoot + "/Source", "*.png"))
         {
             var importer = (TextureImporter)AssetImporter.GetAtPath(path.Replace('\\', '/'));
             importer.textureType = TextureImporterType.Default;
             ConfigureTexture(importer);
             importer.SaveAndReimport();
         }
+    }
+
+    private static Sprite[] CardinalFrames(string motion, string direction)
+    {
+        if (motion == "Walk")
+        {
+            var manifest = JsonUtility.FromJson<PreparedManifest>(System.IO.File.ReadAllText(CardinalManifest));
+            var sequence = manifest.walkSequences.Single(s => s.direction == direction);
+            if (sequence.paths.Length != 4 || sequence.paths[0] != sequence.paths[3])
+                throw new InvalidOperationException("Walk requires stance / right / left / same stance: " + direction);
+            var ordered = sequence.paths.Select(p => AssetDatabase.LoadAssetAtPath<Sprite>(p)).ToArray();
+            if (ordered.Any(s => s == null) || ordered[1] == ordered[2] || ordered[0] == ordered[1] || ordered[0] == ordered[2])
+                throw new InvalidOperationException("Missing or duplicate step poses: " + direction);
+            return ordered;
+        }
+        string folder = CardinalRoot + "/" + motion + "/" + direction;
+        var frames = System.IO.Directory.GetFiles(folder, "*.png").OrderBy(p => p, StringComparer.Ordinal)
+            .Select(p => AssetDatabase.LoadAssetAtPath<Sprite>(p.Replace('\\', '/'))).ToArray();
+        if (frames.Length != 4 || frames.Any(s => s == null))
+            throw new InvalidOperationException("Exactly four imported cardinal frames required: " + folder);
+        return frames;
     }
 
     private static Sprite[] PreparedFrames(string motion, string direction)
@@ -131,6 +195,7 @@ public static class ApprovedHeroImporter
 
     public static Sprite[] IdleFrames(string direction)
     {
+        if (System.IO.File.Exists(CardinalManifest) && CardinalDirections.Contains(direction)) return CardinalFrames("Idle", direction);
         var frames = PreparedFrames("Idle", direction);
         return frames.Length > 0 ? frames : new[] { Frames(direction)[0] };
     }
@@ -186,6 +251,7 @@ public static class ApprovedHeroImporter
 
     public static Sprite[] Frames(string direction)
     {
+        if (System.IO.File.Exists(CardinalManifest) && CardinalDirections.Contains(direction)) return CardinalFrames("Walk", direction);
         var thirtyFrames = PreparedFrames("Walk", direction);
         if (thirtyFrames.Length > 0) return thirtyFrames;
         const string prepared="Assets/Art/Characters/Player/AnimationV2/World";
@@ -196,7 +262,7 @@ public static class ApprovedHeroImporter
             .OfType<Sprite>().OrderBy(s => s.name).ToArray();
     }
 
-    private static void WriteClip(string motion, string direction, Sprite[] frames)
+    private static void WriteClip(string motion, string direction, Sprite[] frames, int holdSamples = 1, bool appendLoopKey = true)
     {
         if (frames.Length == 0) throw new InvalidOperationException("Missing animation frames: " + direction);
         string path = "Assets/Animations/Player64/" + motion + "_" + direction + ".anim";
@@ -204,14 +270,16 @@ public static class ApprovedHeroImporter
         if (clip == null) throw new InvalidOperationException("Missing existing clip: " + path);
         clip.frameRate = WalkFramesPerSecond;
         var binding = EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite");
-        var keys = new ObjectReferenceKeyframe[frames.Length + 1];
+        var keys = new ObjectReferenceKeyframe[frames.Length + (appendLoopKey ? 1 : 0)];
+        // Four requested poses: brief stance, right step, left step, brief stance.
+        var sampleStarts = appendLoopKey ? null : new[] { 0, 1, 4, 7 };
         for (int i = 0; i < frames.Length; i++)
-            keys[i] = new ObjectReferenceKeyframe { time = i / clip.frameRate, value = frames[i] };
-        keys[frames.Length] = new ObjectReferenceKeyframe { time = frames.Length / clip.frameRate, value = frames[0] };
+            keys[i] = new ObjectReferenceKeyframe { time = (sampleStarts == null ? i * holdSamples : sampleStarts[i]) / clip.frameRate, value = frames[i] };
+        if (appendLoopKey) keys[frames.Length] = new ObjectReferenceKeyframe { time = frames.Length * holdSamples / clip.frameRate, value = frames[0] };
         AnimationUtility.SetObjectReferenceCurve(clip, binding, keys);
         var settings = AnimationUtility.GetAnimationClipSettings(clip);
         settings.startTime = 0f;
-        settings.stopTime = frames.Length / clip.frameRate;
+        settings.stopTime = frames.Length * holdSamples / clip.frameRate;
         settings.loopTime = true;
         AnimationUtility.SetAnimationClipSettings(clip, settings);
         EditorUtility.SetDirty(clip);
@@ -228,6 +296,12 @@ public static class ApprovedHeroImporter
         var sprite = IdleFrames("Down").First();
         player.GetComponent<SpriteRenderer>().sprite = sprite;
         player.GetComponent<SpriteRenderer>().color = Color.white;
+        if (System.IO.File.Exists(CardinalManifest))
+        {
+            var control = new SerializedObject(player.GetComponent<PlayerController>());
+            control.FindProperty("useCardinalAnimations").boolValue = true;
+            control.ApplyModifiedPropertiesWithoutUndo();
+        }
         var unit = player.GetComponent<BattleUnit>();
         var battleSet=AssetDatabase.LoadAssetAtPath<SpriteAnimationSet>("Assets/Settings/Battle/Visuals/HeroDetailed.asset");
         if(battleSet!=null){unit.visualAnimations=battleSet;unit.battleSprite=battleSet.idle[0];}
