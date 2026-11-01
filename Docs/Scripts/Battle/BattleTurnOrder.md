@@ -2,45 +2,48 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleTurnOrder.cs.
+Исходник: `Assets/Scripts/Battle/BattleTurnOrder.cs`.
 
-Очередь участников по Speed, перечисления команд/состояний и защита от повторного принятия команды.
+Очередь ходов по скорости, одноразовый gate команд и общие перечисления действий/состояний боя. Классы не зависят от Unity lifecycle и тестируются отдельно.
 
 ## 2. Как работает
 
-BeginRound сортирует живых уникальных участников по убыванию Speed; равенство сохраняет исходный порядок. TryNext пропускает погибших. Gate принимает команду один раз до следующего Open.
+`BattleTurnOrder<T>.BeginRound` очищает очередь и вставляет живых уникальных участников по убыванию `Speed`. При равной скорости сохраняется исходный порядок. `TryNext` последовательно выдаёт живых участников; погибший пропускается. `BattleCommandGate` открывается на ход игрока и позволяет потребить команду только один раз, защищая от одновременного клика и Enter.
 
 ## 3. Методы и функции
 
-- `BattleTurnOrder<T>.BeginRound(IEnumerable<T> participants)` — очищает очередь/курсор, добавляет живых участников без дублей; void.
-- `TryNext(out T participant)` → bool; выдаёт следующего живого, в конце false и null.
-- `BattleCommandGate.Open()` / `Close()` — меняют IsOpen; void.
-- `TryConsume()` → bool; если открыта, закрывает и возвращает true, иначе false. Unity callbacks нет.
+- `BeginRound(IEnumerable<T> participants)` — строит очередь раунда; `null`, мёртвые и дубликаты пропускаются.
+- `TryNext(out T participant)` → `bool`; выдаёт следующего живого участника или `false` в конце раунда.
+- `BattleCommandGate.Open()` / `Close()` — открывают/закрывают приём команды.
+- `BattleCommandGate.TryConsume()` → `bool`; при открытом gate закрывает его и возвращает `true`, иначе `false`.
+- `BattleAction` — `Attack`, `Defend`, `Magic`, `Flee`.
+- `BattleState` — `Starting`, `Resolving`, `AwaitingPlayer`, `Victory`, `Defeat`, `Escaped`.
 
-## 4. Переменные и параметры Inspector
+## 4. Переменные и Inspector
 
-Inspector нет. T реализует IBattleParticipant.Speed/IsAlive. order/cursor — внутренние. BattleAction: Attack, Defend, Magic, Items, Flee. BattleState: Starting, Resolving, AwaitingPlayer, Victory, Defeat, Escaped.
+- `order` — внутренний список участников раунда.
+- `cursor` — индекс следующего участника.
+- `IsOpen` — публичное свойство gate только для чтения.
 
-## 5. Связи с другими системами
+Inspector-полей нет: это обычные C#-классы, не MonoBehaviour.
 
-BattleManager содержит очередь BattleUnit и gate. Класс очереди поддерживает N участников, но текущий менеджер формирует только Player/Enemy.
+## 5. Связи
 
-## 6. Пример работы
+`BattleManager` создаёт очередь и gate. Участники реализуют `IBattleParticipant` (`Speed`, `IsAlive`); в игре это `BattleUnit`. `EnemyBattleAI`, `BattleCalculator` и тесты используют `BattleAction`/`BattleState`.
 
-Speed10 игрока и 7 скелета → игрок первым. Два вызова TryConsume после Open дают true, затем false.
+## 6. Пример
+
+Player имеет Speed 10, Skeleton — 7. `BeginRound` ставит Player первым. После его атаки `TryNext` возвращает Skeleton; если скелет погиб до своего хода, он пропускается и раунд заканчивается.
 
 ## 7. Настройка в Unity
 
-Класс не прикрепляется к GameObject и не имеет Inspector. Его вызывает BattleManager/BattleAbilities с данными BattleUnit/Rules. Назначь существующие Rules на BattleTransition; параметры передаются методам, а не через отдельный компонент.
+Компонент не прикрепляется. Порядок зависит от `BattleUnit.speed`; для изменения очерёдности меняй скорость участников, а не код очереди.
 
-## 8. Возможные проблемы и проверки
+## 8. Возможные проблемы
 
-Speed пересортируется только в новом раунде. null список участников не поддерживается. Generic очередь не означает готовую систему партии. Порядок, смерть, равенство и двойная команда проверены Edit Mode.
+Очередь строится заново каждый раунд, поэтому изменение скорости во время боя влияет со следующего раунда. `TryNext` не проверяет `null` после `BeginRound`, но `BeginRound` уже отфильтровал такие элементы. Gate не является потокобезопасным — предполагается один поток Unity.
 
 ## 9. История изменений
 
-- 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
-
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
-
-- 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
+- 2026-10-31 — `BattleAction` сокращён до Attack/Defend/Magic/Flee; документ приведён к текущему коду.
+- 2026-10-11 — базовая очередь и gate.

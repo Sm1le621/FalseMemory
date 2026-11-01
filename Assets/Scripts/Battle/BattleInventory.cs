@@ -26,14 +26,13 @@ public sealed class BattleInventory : MonoBehaviour
             var candidate=new InventoryState();
             foreach(var seed in items ?? new List<BattleItemStack>())
                 if(seed!=null && seed.definition!=null && seed.count>0 && !candidate.TryAdd(seed.definition,seed.count))
-                    throw new InvalidOperationException("Начальные предметы не помещаются в инвентарь30 слотов.");
+                    throw new InvalidOperationException("Starting items do not fit into the 30-slot inventory.");
             foreach(var seed in startingItems ?? new List<StartingItem>())
                 if(seed!=null && seed.definition!=null && seed.count>0 && !candidate.TryAdd(seed.definition,seed.count))
-                    throw new InvalidOperationException("Начальные предметы не помещаются в инвентарь30 слотов.");
+                    throw new InvalidOperationException("Starting items do not fit into the 30-slot inventory.");
             state=candidate;return state;
         }
     }
-    // Keep exhausted starting consumables visible/disabled in the existing battle menu.
     public IEnumerable<BattleConsumable> Definitions => State.Definitions.OfType<BattleConsumable>()
         .Concat((items ?? new List<BattleItemStack>()).Where(s=>s!=null && s.definition!=null).Select(s=>s.definition)).Distinct();
 
@@ -48,7 +47,7 @@ public sealed class BattleInventory : MonoBehaviour
     }
 
     public bool TryAdd(ItemData definition,int amount) => State.TryAdd(definition,amount);
-    public string Summary => string.Join("  ", Definitions.Select(d => GameText.Get("item.quantity", d.LocalizedName,Count(d))));
+    public string Summary => string.Join("  ", Definitions.Select(d => d.displayName + " x" + Count(d)));
 }
 
 [Serializable] public sealed class StartingItem

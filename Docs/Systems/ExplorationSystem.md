@@ -1,39 +1,45 @@
-# Исследование мира и камера
+# Исследование мира
 
 ## 1. Назначение
 
-Клавиатурное движение героя по 2D-карте и следящая камера.
+Перемещение Player по карте, открытие инвентаря, контакт с врагом и переход в пошаговый бой. Подбора предметов, NPC и диалогов нет.
 
 ## 2. Общая логика
 
-Input System даёт WASD/стрелки; Update нормализует ввод и поворачивает спрайт, FixedUpdate двигает тело. Камера следует в LateUpdate.
+`PlayerController` читает WASD/стрелки и двигает `Rigidbody2D`; в покое показывает статичный `idleSprite`, при движении включает Animator с клипом ходьбы. `WorldInputGate` блокирует движение, пока открыт инвентарь. `BattleEncounter` на враге запускает `BattleTransition.TryBegin`; на время боя мир скрывается, после победы/побега возвращается.
 
 ## 3. Основные компоненты
 
-PlayerController, CameraFollow, Player Rigidbody2D/Collider2D/SpriteRenderer/Animator, Tilemap/Grid/Borders и EnemyAI.
+- `PlayerController`, `Rigidbody2D`, `Collider2D`, `SpriteRenderer`, `Animator`.
+- `WorldInputGate`, `InventoryWindow`.
+- `EnemyAI`, `EnemyAttack`, `BattleEncounter`, `EnemySpriteAnimation`.
+- `BattleTransition`, `CameraFollow`.
 
 ## 4. Взаимодействие скриптов
 
-PlayerController обновляет только движение/анимацию; камера читает Transform. Transition приостанавливает систему во время боя.
+`InventoryWindow.Open` захватывает `WorldInputGate`; `Close` отпускает. `BattleEncounter` вызывает `BattleTransition`; тот выключает `PlayerController`, `EnemyAI` и `EnemyAttack`, а после боя восстанавливает. `EnemySpriteAnimation` читает позицию и HP, но не управляет AI и боем.
 
 ## 5. Последовательность событий
 
-Клавиша → moveInput → MovePosition → коллизии карты → LateUpdate камеры → возможная встреча.
+Старт `SampleScene` → Player в покое (`Idle1.ase`) → движение (`Player_Walk`) → `I` открывает инвентарь и блокирует ввод → `Escape` закрывает → касание скелета → бой → возврат на прежнюю позицию с текущими HP/MP/инвентарём.
 
 ## 6. Настраиваемые параметры
 
-moveSpeed код 4; defaultFacingRight кодtrue. CameraFollow smoothSpeed код 5, offset(0,0,−10), target Player. Фактические значения Inspector могут отличаться от дефолтов кода.
+`PlayerController.moveSpeed` (4), `defaultFacingRight` (true), `idleSprite` (`Idle1.ase`). `EnemyAI` — скорость/дистанция преследования. `BattleEncounter` — параметры встречи. `BattleTransition.rules` — тайминги и защита после побега.
 
 ## 7. Использование в Unity
 
-Открыть SampleScene, Play, кликнуть Game View. WASD/стрелки двигают героя; проверить Animator.isMoving и Rigidbody2D. Для камеры назначить target.
+Player и Enemy находятся в `SampleScene`; бой — в `BattleScene`. Для нового врага добавь `BattleUnit`, `Health`, `BattleEncounter`, `EnemyAI` и `EnemySpriteAnimation`. Не создавай второй `BattleTransition` и не копируй Player в боевую сцену.
 
 ## 8. Расширение
 
-Для Gamepad/переназначения нужна отдельная обработка Input Actions; для границ камеры — дополнительная логика. Сохранять движение через физику.
+NPC/сундуки/диалоги отсутствуют; для них потребуется новый контроллер взаимодействия, а не удалённый `PlayerInteractor`. Новые зоны/враги используют существующие компоненты. Подбор предметов с земли не планируется в текущей упрощённой модели.
 
 ## 9. Ограничения и проверки
 
-Нет gamepad, границ камеры, переходов между картами и взаимодействий RPG. Движение после победы подтверждено тестом; все коллизии/анимации/плавность здесь не проверялись.
+Нет геймпада, NPC, квестов, диалогов, подбора и сохранения мира. Побеждённый скелет остаётся выключенным до перезагрузки сцены. PlayMode проверяет движение, блокировку инвентарём, вход в бой, победу/побег и возврат; визуальная оценка карты — за владельцем.
 
-Документ описывает текущую рабочую копию на 2026-10-11. Отдельные методы и поля см. в [указателе скриптов](../README.md#описания-скриптов).
+## История
+
+- 2026-10-31 — удалены подбор предметов, `PlayerInteractor`, `WorldItemPickup` и IDLE-анимация; инвентарь стал единственным источником предметов.
+- 2026-10-11 — базовая документация исследования.

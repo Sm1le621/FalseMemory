@@ -2,7 +2,7 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleScreenFade.cs. Плавный чёрный экран, в том числе через Restart/Main Menu.
+Исходник: Assets/Scripts/Battle/BattleScreenFade.cs. Плавный чёрный экран, в том числе через Restart/Main Menu.
 
 ## 2. Как работает
 

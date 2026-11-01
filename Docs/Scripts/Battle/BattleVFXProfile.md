@@ -2,42 +2,50 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleVFXProfile.cs. Расширяемые данные визуального эффекта, независимо от игрового заклинания.
+Исходник: `Assets/Scripts/Battle/BattleVFXProfile.cs`.
+
+ScriptableObject с художественными параметрами визуального эффекта: форма траектории, цвет, размер, длительность, частицы и необязательные кадры. Профиль не содержит игровой логики и не влияет на урон или MP.
 
 ## 2. Как работает
 
-ScriptableObject выбирает Rising/Orbit/Burst, цвет, размер и необязательный спрайт частиц; VFXController только читает данные.
+`BattleVFXController` читает профиль и проигрывает эффект на портрете цели. Если профиль не назначен, используется fallback `fireProfile` или `healProfile`. Кадры показываются слоем `frameImage`, частицы двигаются по выбранной форме. Ассет можно переиспользовать для разных заклинаний с похожим видом.
 
 ## 3. Методы и функции
 
-2026-10-12 — native pixel visuals: Профиль содержит художественные данные без callbacks/методов. Контроллер дополнительно показывает конечный набор кадров; пустой массив оставляет прежние частицы.
-
-Собственных методов нет. Create Asset Menu создаёт экземпляр средствами Unity. Enum BattleVFXShape задаёт три траектории, без новых игровых эффектов.
+Собственных методов и callbacks нет. Unity создаёт экземпляр через `Create Asset Menu`. Перечисление `BattleVFXShape` задаёт три траектории: `Rising`, `Orbit`, `Burst`.
 
 ## 4. Переменные и Inspector
 
-frames — необязательный Sprite[]; frameSize=128 UI-единиц, Inspector32…256. FireVisual/HealVisual:8 назначенных PNG64×64, duration0.6 вместо кодового default0.45; frameSize128. Остальные shape/color/particle* прежние.
-
-shape; color; particleSprite — необязательный Sprite; duration 0..2 (0.45), particleCount 4..24 (12), particleSize 1..24 (8), radius 0..100 (42). На расчёт/MP не влияют.
+- `shape` — форма движения частиц.
+- `color` — цвет частиц и fallback-цвет.
+- `particleSprite` — необязательный спрайт частицы; без него рисуется цветной квадрат.
+- `frames` — необязательный массив кадров; пустой массив оставляет только частицы.
+- `frameSize` — размер кадра в UI-единицах, 32…256, по умолчанию 128.
+- `duration` — длительность, 0…2, по умолчанию 0.45.
+- `particleCount` — количество частиц, 4…24, по умолчанию 12.
+- `particleSize` — размер частицы, 1…24, по умолчанию 8.
+- `radius` — радиус движения, 0…100, по умолчанию 42.
+- `FireVisual`: 8 кадров 64×64, `duration = 0.6`, `frameSize = 128`, оранжевые частицы.
+- `HealVisual` остаётся в проекте, но текущими заклинаниями не используется.
 
 ## 5. Связи
 
-BattleSpell.visualEffect и BattleVFXController.fireProfile/healProfile. Ассеты Assets/Settings/Battle/VFX/FireVisual и HealVisual.
+`BattleSpell.visualEffect` и `BattleVFXController.fireProfile`/`healProfile` ссылаются на ассеты. `BattleVFXController` читает данные, `BattleManager` вызывает показ после успешного применения. Ассеты лежат в `Assets/Settings/Battle/VFX`.
 
 ## 6. Пример
 
-Один и тот же расчёт Fire можно показать оранжевыми квадратами или позднее кадрами пламени.
+Fire с профилем `FireVisual` показывает 8 кадров и 12 оранжевых частиц; урон и расход MP при этом считает `BattleAbilities`, а не профиль. Если у заклинания нет профиля, эффект всё равно проигрывается с fallback-цветом.
 
 ## 7. Настройка в Unity
 
-Create → FalseMemory → Battle VFX Profile; назначить профиль в Spell.visualEffect. К GameObject не прикрепляется.
+Создай ассет через `Assets → Create → FalseMemory → Battle VFX Profile`, назначь его в `BattleSpell.visualEffect` или в `BattleVFXController.fireProfile`. Компонент к GameObject не прикрепляется. Кадры должны быть импортированы как Sprite 2D с Point filtering.
 
-## 8. Ошибки, ограничения и расширение
+## 8. Возможные проблемы
 
-Нет реализации Ice/Thunder/Poison: новый профиль меняет только вид. Для новых художественных форм расширять shape/controller; игровой эффект отдельно в Abilities.
+Профиль меняет только внешний вид. Пустой `particleSprite` даёт цветные квадраты, пустые `frames` — эффект без кадров. Слишком большой `particleCount` ограничивается длиной массива частиц в сцене. Новые формы траектории требуют расширения `BattleVFXShape` и контроллера.
 
 ## 9. История изменений
 
-2026-10-12 — кадры Skeleton64/Fire/Heal/Hit подключены к существующему представлению; игровые ресурсы не перенесены в анимации. [Текущие проверки](../../PixelVisuals.md).
-
-- 2026-10-11 — 3.3 — профили Fire/Heal и подготовка новых визуальных вариантов.
+- 2026-10-31 — документ приведён к текущему коду; `HealVisual` отмечен как неиспользуемый fallback.
+- 2026-10-12 — кадры Skeleton64/Fire/Heal/Hit подключены к представлению; игровые ресурсы не перенесены в анимации.
+- 2026-10-11 — 3.3 — профили Fire/Heal и подготовка визуальных вариантов.

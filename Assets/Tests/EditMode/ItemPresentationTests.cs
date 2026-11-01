@@ -3,19 +3,21 @@ using UnityEngine;
 
 public sealed class ItemPresentationTests
 {
-    [TestCase(ItemRarity.Common)] [TestCase(ItemRarity.Uncommon)] [TestCase(ItemRarity.Rare)]
-    [TestCase(ItemRarity.Epic)] [TestCase(ItemRarity.Legendary)] [TestCase(ItemRarity.Mythic)]
-    public void RarityIsNamedAndColoredWithoutChangingGameplay(ItemRarity rarity)
+    [Test] public void WeaponAndArmorDescribeOnlyAttackAndDefenseBonuses()
     {
-        var item=ScriptableObject.CreateInstance<ItemData>();
+        var weapon=ScriptableObject.CreateInstance<ItemData>();
+        var armor=ScriptableObject.CreateInstance<ItemData>();
         try
         {
-            item.rarity=rarity;item.category=ItemCategory.Weapon;item.bonuses=new ItemStatBonus{attack=5};
-            Assert.That(ItemPresentation.Description(item,1),Does.Contain(rarity.ToString()).And.Contain("ATK +5"));
-            Assert.That(ItemPresentation.RarityColor(rarity).a,Is.EqualTo(1));
-            Assert.That(item.StackLimit,Is.EqualTo(1));Assert.That(item.bonuses.attack,Is.EqualTo(5));
+            weapon.category=ItemCategory.Weapon;weapon.equipmentSlot=EquipmentSlot.Weapon;weapon.bonuses=new ItemStatBonus{attack=5};
+            armor.category=ItemCategory.Armor;armor.equipmentSlot=EquipmentSlot.Chest;armor.bonuses=new ItemStatBonus{defense=4};
+            Assert.That(ItemPresentation.Description(weapon,1),Does.Contain("Weapon").And.Contain("ATK +5").And.Not.Contain("DEF"));
+            Assert.That(ItemPresentation.Description(armor,1),Does.Contain("Chest").And.Contain("DEF +4").And.Not.Contain("ATK"));
+            Assert.That(ItemPresentation.SlotName(EquipmentSlot.Weapon),Is.EqualTo("Weapon"));
+            Assert.That(ItemPresentation.SlotName(EquipmentSlot.Chest),Is.EqualTo("Chest"));
+            Assert.That(weapon.StackLimit,Is.EqualTo(1));Assert.That(weapon.bonuses.attack,Is.EqualTo(5));
         }
-        finally {Object.DestroyImmediate(item);}
+        finally {Object.DestroyImmediate(weapon);Object.DestroyImmediate(armor);}
     }
     [Test] public void TooltipHidesEmptyFieldsEscapesMarkupAndReportsRealConsumableEffect()
     {
@@ -31,15 +33,14 @@ public sealed class ItemPresentationTests
         }
         finally {Object.DestroyImmediate(item);}
     }
-    [Test] public void AppendingGlovesPreservesOriginalSerializedSlotsAndDoesNotAcceptAccessories()
+    [Test] public void ArmorFitsOnlyItsConfiguredChestSlot()
     {
-        Assert.That((int)EquipmentSlot.Accessory1,Is.EqualTo(5));Assert.That((int)EquipmentSlot.Accessory2,Is.EqualTo(6));
         var item=ScriptableObject.CreateInstance<ItemData>();
         try
         {
-            item.category=ItemCategory.Armor;item.equipmentSlot=EquipmentSlot.Gloves;
-            Assert.That(item.Fits(EquipmentSlot.Gloves),Is.True);Assert.That(item.Fits(EquipmentSlot.Boots),Is.False);
-            item.category=ItemCategory.Accessory;Assert.That(item.Fits(EquipmentSlot.Gloves),Is.False);
+            item.category=ItemCategory.Armor;item.equipmentSlot=EquipmentSlot.Chest;
+            Assert.That(item.Fits(EquipmentSlot.Chest),Is.True);Assert.That(item.Fits(EquipmentSlot.Weapon),Is.False);
+            item.category=ItemCategory.Weapon;Assert.That(item.Fits(EquipmentSlot.Weapon),Is.True);Assert.That(item.Fits(EquipmentSlot.Chest),Is.False);
             Assert.That(ItemPresentation.Description(null,1),Is.Empty);
         }
         finally {Object.DestroyImmediate(item);}

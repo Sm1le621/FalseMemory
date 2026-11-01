@@ -2,7 +2,7 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/EnemyBattleAI.cs.
+**Исходный файл:** Assets/Scripts/Battle/EnemyBattleAI.cs.
 
 Выбор Attack или Defend врагом исключительно в назначенный ему ход.
 

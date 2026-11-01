@@ -2,47 +2,44 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Tests/EditMode/BattleCoreTests.cs.
+Исходник: `Assets/Tests/EditMode/BattleCoreTests.cs`.
 
-Edit Mode проверки базового урона, очереди, защиты и запрета двойной команды.
+EditMode-проверки базового расчёта урона, очереди по скорости, защиты и одноразового gate команд. Не зависит от сцен и UI.
 
 ## 2. Как работает
 
-Test Runner вызывает Setup, отдельную проверку и Cleanup. Временные правила и GameObject уничтожаются. Игрового компонента нет.
+`SetUp` создаёт `BattleRules`, `TearDown` уничтожает их. Для очереди используется вложенный `Participant` с `Speed`/`IsAlive`. В тесте защиты создаётся реальный GameObject с `BattleUnit` и `Health`.
 
 ## 3. Методы и функции
 
-- `Setup()` [SetUp] создаёт BattleRules; `Cleanup()` [TearDown] DestroyImmediate правил; void.
-- `PhysicalDamageIsNonNegativeAndDefenseIsApplied(int attack,int defense,bool guarding,int expected)` — шесть наборов TestCase сверяют расчёт с expected.
-- `DamageMultipliersAreConfigurable()` — проверяет изменённые множители, результат 26.
-- `RoundUsesSpeedAndStableTiesWithOneTurnPerUnit()` — проверяет Speed, равные скорости и дубликаты.
-- `KilledUnitsAreSkippedAndSpeedReordersOnlyAtNextRound()` — смерть/пересортировка нового раунда.
-- `DuplicateCommandsAreRejectedUntilNextTurn()` — gate принимает один раз.
-- `DefendPersistsUntilOwnTurnAndHealthIsShared()` — реальный BattleUnit/Health, урон 2 и сброс защиты. Все проверки void; Assert сообщает провал.
-- Вложенный Participant предоставляет Speed/IsAlive очереди; Unity callbacks нет.
+- `PhysicalDamageIsNonNegativeAndDefenseIsApplied(...)` — шесть TestCase, включая отрицательные значения и минимальный урон 1.
+- `DamageMultipliersAreConfigurable()` — изменённые множители дают 26.
+- `RoundUsesSpeedAndStableTiesWithOneTurnPerUnit()` — порядок по скорости, стабильные равные значения, дубликаты пропускаются.
+- `KilledUnitsAreSkippedAndSpeedReordersOnlyAtNextRound()` — мёртвый пропускается, новая скорость действует со следующего раунда.
+- `DuplicateCommandsAreRejectedUntilNextTurn()` — gate принимает команду один раз.
+- `DefendPersistsUntilOwnTurnAndHealthIsShared()` — `BattleUnit.Health` — тот же `Health`, Defend уменьшает урон и снимается в `BeginTurn`.
 
-## 4. Переменные и параметры Inspector
+## 4. Переменные и Inspector
 
-Inspector нет. rules — временные настройки; входные TestCase задают крайние/обычные значения. Participant — искусственный участник, не GameObject сцены.
+`rules` — временные правила; `Participant` — тестовая реализация `IBattleParticipant`. Inspector отсутствует.
 
-## 5. Связи с другими системами
+## 5. Связи
 
-NUnit, BattleCalculator, BattleTurnOrder, CommandGate, BattleUnit, Health; assembly FalseMemory.Battle.EditModeTests.
+NUnit, `BattleCalculator`, `BattleTurnOrder`, `BattleCommandGate`, `BattleUnit`, `Health`, `BattleRules`.
 
-## 6. Пример работы
+## 6. Пример
 
-ATK12 DEF8 guarding=true → урон 2; тест требует ровно 2.
+Атака 12 против защиты 8 при Defend даёт 2 урона; после `BeginTurn` защита снимается. Очередь [a(7), b(10), c(10), b] выдаёт b, c, a.
 
 ## 7. Настройка в Unity
 
-Это тестовый файл, не компонент сцены: не прикрепляй его к GameObject. Открой Window → General → Test Runner, выбери EditMode и нужную сборку/тест либо Run All. Ссылки и временные объекты создаёт fixture. Для PlayMode должны быть доступны существующие SampleScene, BattleScene и MainMenu; тест не требует ручного изменения их Inspector.
+Компонент не прикрепляется; Test Runner → EditMode. Сцена не требуется.
 
-## 8. Возможные проблемы и проверки
+## 8. Ограничения и проверки
 
-Чистые расчёты не доказывают поведение всего UI. 11 случаев этого файла входят в 40 Edit Mode текущего успешного запуска. Запуск: Test Runner → EditMode → Run All.
+Проверяется чистая логика, не визуал и не ввод. Формулы побега/крита проверяются в отдельных файлах. 2026-10-31: тесты прошли в составе EditMode 59/59.
 
 ## 9. История изменений
 
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
-
-- 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
+- 2026-10-31 — документ сверен с кодом; механики EXP в файле нет.
+- 2026-10-11 — базовая документация.

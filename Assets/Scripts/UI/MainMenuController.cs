@@ -10,7 +10,7 @@ public class MainMenuController : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(gameSceneName))
         {
-            Debug.LogError("Не задано имя игровой сцены.");
+            Debug.LogError("Game scene name is not set.");
             return;
         }
 
@@ -21,7 +21,7 @@ public class MainMenuController : MonoBehaviour
     {
         if (settingsMenu == null)
         {
-            Debug.LogError("Панель настроек не подключена.");
+            Debug.LogError("Settings panel is not assigned.");
             return;
         }
 

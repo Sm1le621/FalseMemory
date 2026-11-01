@@ -2,7 +2,7 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/CameraFollow.cs.
+**Исходный файл:** Assets/Scripts/CameraFollow.cs.
 
 Плавное следование мировой камеры за игроком.
 

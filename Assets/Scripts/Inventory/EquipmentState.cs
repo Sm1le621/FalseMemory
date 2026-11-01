@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public sealed class EquipmentState
 {
-    public const int SlotCount=8;
+    public const int SlotCount=2;
     [SerializeField] private ItemData[] slots=new ItemData[SlotCount];
     private bool changing;
     public event Action Changed;
@@ -16,11 +16,11 @@ public sealed class EquipmentState
     {
         get {var total=new ItemStatBonus();foreach(var item in slots)if(item!=null)total+=item.bonuses;return total;}
     }
-    public bool TryEquip(InventoryState inventory,int index,EquipmentSlot slot,int level)
+    public bool TryEquip(InventoryState inventory,int index,EquipmentSlot slot)
     {
         if(changing || inventory==null || index<0 || index>=InventoryState.Capacity || !Valid(slot))return false;
         var source=inventory.GetSlot(index);var item=source.Item;
-        if(source.IsEmpty || source.Count!=1 || !item.Fits(slot) || level<Math.Max(1,item.requiredLevel))return false;
+        if(source.IsEmpty || source.Count!=1 || !item.Fits(slot))return false;
         var previous=slots[(int)slot];changing=true;
         try
         {

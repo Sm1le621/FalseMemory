@@ -26,7 +26,7 @@ public static class PixelBattleAssetBuilder
         var outputs=new Dictionary<string,Grid>();
         foreach(SpritePose pose in Enum.GetValues(typeof(SpritePose)))
         {
-            int count=pose==SpritePose.Idle || pose==SpritePose.Hurt?2:pose==SpritePose.Attack?3:4;
+            int count=pose==SpritePose.Hurt?2:pose==SpritePose.Attack?3:4;
             for(int i=0;i<count;i++)outputs.Add(SkeletonRoot+"/Skeleton-"+pose+"-"+i.ToString("00")+".png",Skeleton(pose,i));
         }
         for(int i=0;i<8;i++){outputs.Add(VfxRoot+"/Fire64/Fire-"+i.ToString("00")+".png",Fire(i));outputs.Add(VfxRoot+"/Heal64/Heal-"+i.ToString("00")+".png",Heal(i));}
@@ -46,7 +46,7 @@ public static class PixelBattleAssetBuilder
     }
     private static Grid Skeleton(SpritePose pose,int frame)
     {
-        var g=new Grid();int bob=pose==SpritePose.Idle?frame:pose==SpritePose.Move?frame%2:0;
+        var g=new Grid();int bob=pose==SpritePose.Move?frame%2:0;
         int stride=pose==SpritePose.Move?(frame==0?-2:frame==2?2:0):0;
         int lean=pose==SpritePose.Hurt?-2:pose==SpritePose.Attack?frame:0;
         if(pose==SpritePose.Death && frame>=2)

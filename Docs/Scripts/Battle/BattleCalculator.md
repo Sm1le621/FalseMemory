@@ -2,7 +2,7 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleCalculator.cs.
+**Исходный файл:** Assets/Scripts/Battle/BattleCalculator.cs.
 
 Чистые расчёты физического/магического урона и вероятностей; сам HP не меняет.
 

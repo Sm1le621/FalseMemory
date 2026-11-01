@@ -2,63 +2,59 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleTransition.cs.
+Исходник: `Assets/Scripts/Battle/BattleTransition.cs`.
 
-Единственный координатор перехода мир↔бой, сохранения объектов сессии и защиты после побега.
+Единственный координатор перехода «карта → бой → карта». Сохраняет ссылки на исходных `Player`/`Enemy`, приостанавливает исследование, аддитивно загружает `BattleScene`, а после победы/побега возвращает мир без создания копий персонажа и без снимков HP.
 
 ## 2. Как работает
 
-FadeTo использует сохранённый в `SampleScene` overlay `BattleTransition/BattleFadeCanvas/Fade` и делегирует SmoothStep-анимацию `BattleScreenFade.Fade`. LoadFresh больше не добавляет компонент: готовый `BattleScreenFade` на `BattleFadeCanvas` получает панель и выполняет Single-загрузку, сохраняет только экран, проявляет новую сцену и удаляет overlay. Координатор/ресурсы старой сессии по-прежнему выгружаются. `Rules.fadeDuration` в текущем ассете 0.5 секунды.
+`Awake` устанавливает singleton `Instance` (повторный экземпляр отключается), `OnDestroy` очищает ссылку. `TryBegin` проверяет, что игра запущена, встреча ещё не активна, сцена боя доступна в Build Settings, участники живы и находятся в одной сцене с координатором. Затем синхронно ставит `EncounterActive`, сбрасывает защиту участников, выключает `PlayerController`, `EnemyAI`, `EnemyAttack`, останавливает тела и запускает `EnterBattle`.
 
-TryBegin синхронно блокирует повторную встречу, выключает движение/AI и загружает BattleScene дополнительно. Мир скрывается, но не выгружается. После победы враг выключается; после побега остаётся жив и включается временная защита. Поражение может полностью загрузить новую игру/меню.
+`EnterBattle` затемняет экран, скрывает корневые объекты мира, аддитивно загружает бой, делает его активной сценой и проявляет экран. При победе `ReturnAfterVictory` выгружает бой, скрывает побеждённого врага и возвращает мир. При побеге `ReturnAfterEscape` дополнительно даёт защиту от повторной встречи, выключает AI врага на время `fleeProtectionSeconds` и ищет безопасную точку для игрока. `RestartGame`/`ReturnToMainMenu` загружают сцену заново через `BattleScreenFade`.
 
 ## 3. Методы и функции
 
-- `ResetStatics()` — RuntimeInitializeOnLoadMethod SubsystemRegistration очищает Instance при запуске; void.
-- `Awake()` — Unity назначает Instance; лишний экземпляр выключает себя. `OnDestroy()` очищает Instance, если это он.
-- `LateUpdate()` — каждый кадр вызывает ReleaseProtectionIfExpired; тот восстанавливает прежний enabled EnemyAI после таймера.
-- `TryBegin(BattleUnit player,BattleUnit enemy)` → bool; проверяет Play, правила, живых, общую сцену, доступность BattleScene, отсутствие встречи/защиты; сохраняет участников, Pause/StopBody, StartCoroutine EnterBattle.
-- `Pause(Behaviour behaviour)` — запоминает enabled и выключает при наличии; `StopBody(BattleUnit unit)` — обнуляет линейную/угловую скорость тела; void.
-- `EnterBattle()` — coroutine FadeTo, скрытие активных roots кроме собственного, LoadSceneAsync Additive, SetActiveScene, затемнение назад; при неудаче загрузки RestoreWorld.
-- `ReturnAfterVictory()` → bool; живой Player, мёртвый Enemy, активная встреча → coroutine ReturnToWorld(true).
-- `TryGrantVictoryExperience(out int gained)` → bool; проверяет победу/однократность, помечает награду выданной и AddExperience; gained — фактически добавленное.
-- `ReturnAfterEscape()` → bool; живые оба и активная встреча → ReturnToWorld(false).
-- `ReturnToWorld(bool victory)` — coroutine выгрузки BattleScene, RestoreWorld, при побеге таймер/пауза AI/PlacePlayerSafely, завершение перехода и очистка ссылок.
-- `PlacePlayerSafely()` — void: проверяет bounds коллайдера и ищет свободный пункт в восьми направлениях на двух радиусах, меняет позицию только Player.
-- `IsFree(Vector2 center,Vector2 size,int mask)` → bool по OverlapBoxAll; игнорирует trigger и собственные коллайдеры.
-- `RestoreWorld(bool victory)` — активирует сохранённые roots, возвращает enabled Behaviour, снимает Defend; победный враг остаётся отключённым.
-- `RestartGame()` / `ReturnToMainMenu()` — вызывают LeaveFor с миром/меню; void.
-- `LeaveFor(string scene)` — проверяет доступность/переход, запускает LoadFresh; `LoadFresh(string scene)` — coroutine FadeTo и загрузки Single новой сессии.
-- `FadeTo(float alpha)` — coroutine: использует сериализованное поле `fade`; при отсутствии ссылки пишет Error и завершается, иначе меняет прозрачность за `fadeDuration`; alpha 0…1.
+- `TryBegin(BattleUnit player, BattleUnit enemy)` → `bool`; запускает встречу, если все проверки пройдены. Повторный вызов во время боя возвращает `false`.
+- `EnterBattle()` — coroutine загрузки боевой сцены; при ошибке загрузки восстанавливает мир и снимает флаги.
+- `ReturnAfterVictory()` → `bool`; разрешён только при победе (враг мёртв, игрок жив).
+- `ReturnAfterEscape()` → `bool`; разрешён, когда оба участника живы.
+- `ReturnToWorld(bool victory)` — coroutine выгрузки боя и восстановления мира; при побеге размещает игрока и включает защиту.
+- `PlacePlayerSafely()` — ищет свободную точку вокруг врага с учётом коллайдера игрока; если не находит, оставляет исходную позицию.
+- `IsFree(...)` — проверяет пересечение с нетриггерными коллайдерами.
+- `RestoreWorld(bool victory)` — выключает побеждённого врага, включает скрытые корни, возвращает `enabled` приостановленным компонентам и сбрасывает защиту.
+- `RestartGame()` / `ReturnToMainMenu()` — запускают `LoadFresh` через `BattleScreenFade`.
+- `FadeTo(float alpha)` — coroutine затемнения/проявления.
+- `ReleaseProtectionIfExpired()` — в `LateUpdate` возвращает AI врага после истечения защиты.
+- `ResetStatics()` — `RuntimeInitializeOnLoadMethod`, очищает singleton при входе в Play Mode.
+- `IsEncounterProtected` — bool; защита от повторного контакта после побега.
 
-## 4. Переменные и параметры Inspector
+## 4. Переменные и Inspector
 
-rules — обязательный BattleRules; battleSceneName/mainMenuSceneName — строки BattleScene/MainMenu, сцены должны быть в сборке. Player/Enemy/EncounterActive/IsTransitioning/IsEncounterProtected — читаемое состояние. hiddenRoots/pausedBehaviours/worldScene/protectedUntil/protectedEnemyAI/victoryRewardClaimed/fade — внутренние.
+- `rules` — обязательные правила боя (`BattleRules`).
+- `battleSceneName` — имя боевой сцены, по умолчанию `BattleScene`.
+- `mainMenuSceneName` — сцена главного меню, по умолчанию `MainMenu`.
+- `fade` — `Image` затемнения; обязательна для переходов.
+- `Player`, `Enemy`, `EncounterActive`, `IsTransitioning` — публичные свойства только для чтения.
+- `worldScene`, `hiddenRoots`, `pausedBehaviours`, `protectedUntil`, `protectedEnemyAI`, `protectedEnemyAIWasEnabled` — внутреннее состояние.
+- Собственных числовых параметров нет: длительности и дистанции берутся из `BattleRules`.
 
-## 5. Связи с другими системами
+## 5. Связи
 
-Объект BattleTransition в SampleScene; BattleEncounter вызывает старт, Manager — исход. Сохраняет Health/MP/Inventory/EXP на настоящем Player. Работает с PlayerController, EnemyAI/EnemyAttack, Collider2D и правилами.
+Компонент находится в `SampleScene` на отдельном объекте-координаторе. `BattleEncounter` вызывает `TryBegin`. `BattleManager` использует `Player`, `Enemy`, `rules`, `ReturnAfterVictory`, `ReturnAfterEscape`, `RestartGame`, `ReturnToMainMenu`. Требуются `BattleScene` и `MainMenu` в Build Settings, `BattleScreenFade`, а также компоненты Player/Enemy.
 
-## 6. Пример работы
+## 6. Пример
 
-Flee успешен → BattleScene выгружена → Player отнесён в свободное место → скелет жив с прежними HP →3 секунды без повторной встречи → вновь может начать бой.
+Игрок касается скелета. `BattleEncounter` вызывает `TryBegin`; мир скрывается, загружается `BattleScene`. После победы кнопка `Return to Map` вызывает `ReturnAfterVictory`: бой выгружается, скелет выключается, игрок остаётся на прежнем месте с текущими HP/MP. После побега игрок оказывается в безопасной точке, а скелет ненадолго не преследует его.
 
 ## 7. Настройка в Unity
 
-На отдельном существующем BattleTransition в SampleScene, вне скрываемых roots Player/Enemy. Назначь Rules=DefaultBattleRules; имена BattleScene/MainMenu должны совпадать со списком сборки. Нужен один координатор; параметры защиты меняй в Rules.
+Объект с компонентом должен находиться в той же сцене, что Player и Enemy. Назначь `rules` и `fade`. Добавь `BattleScene` и `MainMenu` в Build Settings. Не создавай второй координатор и не копируй Player в боевую сцену.
 
-## 8. Возможные проблемы и проверки
+## 8. Возможные проблемы
 
-Защита блокирует все встречи этого координатора, не только прежнего врага. Без свободного места оставляет Player на месте с таймером. Сохранения на диск нет, Single/перезагрузка мира сбрасывает сессию. Один координатор на сцену; дубликат не удаляется, только выключается. Победа/побег/повторный бой и сохранение покрыты Play Mode.
+Если `BattleScene` отсутствует в Build Settings, `TryBegin` пишет ошибку и бой не начинается. Без `fade` переход не выполнится. Участники из разных сцен не принимаются. При побеге нужно свободное место; иначе игрок остаётся на исходной позиции, но защита от врага всё равно действует. После победы враг выключается и не возрождается до перезагрузки сцены.
 
 ## 9. История изменений
 
-- 2026-10-11 — 3.5: SmoothStep-затемнение и проявление Restart/Main Menu без сохранения игрового состояния.
-
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
-
-- 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
-
-- 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
-
-- 2026-10-25 — overlay `BattleFadeCanvas/Fade` и `BattleScreenFade` перенесены в `SampleScene`; рантайм-создание Canvas удалено.
+- 2026-10-31 — документ приведён к текущему коду; удалены упоминания опыта и роста, добавлены `PlacePlayerSafely` и защита после побега.
+- 2026-10-11 — аддитивная загрузка боя и сохранение объектов мира.

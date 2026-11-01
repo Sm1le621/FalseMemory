@@ -2,46 +2,42 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Tests/EditMode/BattleRandomTests.cs.
+Исходник: `Assets/Tests/EditMode/BattleRandomTests.cs`.
 
-Проверка крита, промаха, границ вероятности и повторяемого источника.
+Проверки крита, промаха, границ вероятности и воспроизводимости seeded-генератора.
 
 ## 2. Как работает
 
-Тесты создают правила в try/finally и фиксированный источник, затем сравнивают результаты. Общих lifecycle callbacks нет.
+Тесты создают `BattleRules` в try/finally и используют `FixedRandom` с заданным `sample`. `SeededBattleRandom(42)` сравнивается с таким же экземпляром.
 
 ## 3. Методы и функции
 
-- Вложенный `FixedRandom.Next01()` возвращает sample и увеличивает calls.
-- `CriticalMultipliesDamageAndDefendAppliesAfterIt()` —10 обычный,15 крит,8 крит с Defend.
-- `MissDoesZeroDamageAndNeverRollsCritical()` —0 урона, Missed=true, Critical=false и только 1 запрос random.
-- `ChanceBoundsIncludeGuaranteedSuccessAndFailure(float chance,float sample,bool expected)` — четыре крайних TestCase, включая chance1/sample1.
-- `SameSeedProducesSameStream()` — сравнивает 20 значений seed42. Тесты void, Assert; временные правила DestroyImmediate.
+- `CriticalMultipliesDamageAndDefendAppliesAfterIt()` — обычный удар 10, крит 15, крит при Defend 8.
+- `MissDoesZeroDamageAndNeverRollsCritical()` — промах даёт 0, `Missed = true`, `Critical = false`, random вызывается один раз.
+- `ChanceBoundsIncludeGuaranteedSuccessAndFailure(chance, sample, expected)` — четыре крайних TestCase, включая chance 1/sample 1.
+- `SameSeedProducesSameStream()` — 20 значений seed 42 совпадают.
 
-## 4. Переменные и параметры Inspector
+## 4. Переменные и Inspector
 
-Inspector нет. FixedRandom.sample — заданная выборка, calls — счётчик; seed42 используется только тестом.
+`FixedRandom.sample`/`calls` — тестовые параметры; seed 42 используется только в тесте. Inspector отсутствует.
 
-## 5. Связи с другими системами
+## 5. Связи
 
-IBattleRandom, SeededBattleRandom, BattleCalculator и Rules, NUnit.
+NUnit, `BattleCalculator.ResolvePhysical`, `ChanceSucceeds`, `SeededBattleRandom`, `IBattleRandom`, `BattleRules`.
 
-## 6. Пример работы
+## 6. Пример
 
-Принудительный промах → нет второго броска на крит.
+При `criticalChance = 1`, `missChance = 0` и sample 0.5 удар 15/5 даёт крит 15; при Defend — 8.
 
 ## 7. Настройка в Unity
 
-Это тестовый файл, не компонент сцены: не прикрепляй его к GameObject. Открой Window → General → Test Runner, выбери EditMode и нужную сборку/тест либо Run All. Ссылки и временные объекты создаёт fixture. Для PlayMode должны быть доступны существующие SampleScene, BattleScene и MainMenu; тест не требует ручного изменения их Inspector.
+Компонент не прикрепляется; Test Runner → EditMode.
 
-## 8. Возможные проблемы и проверки
+## 8. Ограничения и проверки
 
-Фиксированная выборка проверяет ветки, не статистическое распределение за тысячи боёв. Семь случаев входят в 40 прошедших Edit Mode.
+Проверяется математика и генератор, не боевой UI. 2026-10-31: тесты прошли в составе EditMode 59/59.
 
 ## 9. История изменений
 
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
-
-- 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
-
-- 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
+- 2026-10-31 — документ сверен с текущим кодом.
+- 2026-10-11 — базовая документация.

@@ -2,47 +2,46 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Tests/EditMode/BattleItemTests.cs.
+Исходник: `Assets/Tests/EditMode/BattleItemTests.cs`.
 
-Часть partial BattleAbilityTests для лечения и расхода Potion.
+Partial-часть `BattleAbilityTests`: восстановление MP, ограничения мест использования, лечение Potion, невалидные эффекты и влияние экипировки на физическую атаку.
 
 ## 2. Как работает
 
-Использует Setup/Cleanup из BattleAbilityTests.cs; меняет только временные стопки и HP.
+Использует `SetUp`/`TearDown` из `BattleAbilityTests.cs`. Каждый тест меняет только временные HP/MP, количества и ScriptableObject; реальные ассеты и сцены не затрагиваются.
 
 ## 3. Методы и функции
-4.5: `EtherRestoresActualManaWithoutHealingAndConsumesOne` —20MP/добор5/HP неизменен/qty-1. `ItemLocationsAndRequiredLevelRejectWithoutResourceChanges` — Battle запрет/Exploration успех/низкий уровень отказ. `InvalidHybridAndNegativeEffectsNeverConsume` — смешанный/отрицательный/нулевой эффект без расхода. `MagicReadsEquipmentBonusesAndKeepsSpellCost` — временный Staff MATK4, Fire23, цена8, база12. NUnit void, temporary SO уничтожается finally.
 
-- `PotionHealsAndConsumesExactlyOneItem(int initial,int expected,int restored)` — три набора HP40/95/100: лечение, фактическое количество, Potion3→2 и отсутствие расхода MP.
-- `EmptyPotionStackCannotHealOrBecomeNegative()` — Count0 не лечит и не отрицательный.
-- `PotionCannotReviveDeadUserOrTarget()` — мёртвый не воскресает, Potion остаётся 3.
-- `DuplicateStacksConsumeOnlyOneAndNegativeStacksAreUnavailable()` — отрицательная стопка игнорируется, одна положительная уменьшается на 1. Все void с Assert; своих Unity callbacks нет.
+- `ManaPotionRestoresActualManaWithoutHealingAndConsumesOne()` — MP-зелье возвращает 20, затем 5 (до максимума), HP не меняется, количество уменьшается на 1.
+- `ItemLocationsRejectWithoutResourceChanges()` — `Exploration`/`Battle` маски соблюдаются; отказ не тратит предмет.
+- `InvalidHybridAndNegativeEffectsNeverConsume()` — одновременно HP+MP, отрицательный или нулевой эффект отклоняются без расхода.
+- `EquipmentAttackBonusRaisesPhysicalAttackButNotSpellPower()` — меч +5 ATK повышает `EffectiveAttack` до 20, но Fire по-прежнему наносит 19 и стоит 8 MP; база `attack` остаётся 15.
+- `PotionHealsAndConsumesExactlyOneItem(initial, expected, restored)` — HP 40/95/100: лечение, фактическое значение, Potion 3→2.
+- `EmptyPotionStackCannotHealOrBecomeNegative()` — пустая стопка не лечит и не уходит в минус.
+- `PotionCannotReviveDeadUserOrTarget()` — мёртвого нельзя вылечить, предмет остаётся.
+- `DuplicateStacksConsumeOnlyOneAndNegativeStacksAreUnavailable()` — отрицательная стопка игнорируется, из положительных списывается одна единица.
 
-## 4. Переменные и параметры Inspector
+## 4. Переменные и Inspector
 
-Собственных Inspector/полей нет; player/potion и остальные поля из partial fixture.
+Собственных полей нет: `player`, `enemy`, `potion`, `fire`, `rules` берутся из partial fixture. Inspector отсутствует.
 
-## 5. Связи с другими системами
+## 5. Связи
 
-BattleAbilityTests, BattleAbilities, BattleInventory, Health, NUnit.
+`BattleAbilityTests`, `BattleAbilities`, `BattleInventory`, `Health`, `BattleUnit`, `EquipmentController`, `ItemData`, NUnit.
 
-## 6. Пример работы
+## 6. Пример
 
-HP95 +Potion30 →100, amount5, количество 2.
+Potion с `healing = 30` при HP 95/100 возвращает 5, HP становится 100, количество 3→2. При `manaRestoration = 20` и MP 5/30 возвращает 20, MP становится 25.
 
 ## 7. Настройка в Unity
 
-Это тестовый файл, не компонент сцены: не прикрепляй его к GameObject. Открой Window → General → Test Runner, выбери EditMode и нужную сборку/тест либо Run All. Ссылки и временные объекты создаёт fixture. Для PlayMode должны быть доступны существующие SampleScene, BattleScene и MainMenu; тест не требует ручного изменения их Inspector.
+Компонент не прикрепляется; запускается через Test Runner → EditMode вместе с `BattleAbilityTests`.
 
-## 8. Возможные проблемы и проверки
+## 8. Ограничения и проверки
 
-Имя файла отличается от имени partial-класса; Test Runner показывает BattleAbilityTests. Это проверка данных, меню отдельно в PlayMode. Все случаи входят в прошедшие 40 Edit Mode.
+Проверяется модель и `BattleAbilities`, не окно инвентаря. Гибридные зелья намеренно запрещены. Нет тестов редкости/уровня — этих механик больше нет. 2026-10-31: все EditMode-тесты прошли.
 
 ## 9. История изменений
-- 2026-10-12 — 4.5: четыре новых случая Ether/ограничений/магической экипировки.
 
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
-
-- 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
-
-- 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
+- 2026-10-31 — Ether заменён на MP-зелье, удалены проверки уровня и редкости; добавлено влияние меча на ATK.
+- 2026-10-12 — базовая часть тестов предметов.

@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Fire
   m_EditorClassIdentifier: FalseMemory.Runtime::BattleSpell
   displayName: Fire
-  localizationId: spell.fire
   mpCost: 8
   effect: 0
   target: 0

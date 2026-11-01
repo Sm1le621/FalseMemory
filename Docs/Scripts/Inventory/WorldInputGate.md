@@ -2,7 +2,7 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Inventory/WorldInputGate.cs.
+Исходник: Assets/Scripts/Inventory/WorldInputGate.cs.
 
 Блокировка мирового ввода владельцами открытых окон без изменения Time.timeScale/enabled контроллера.
 

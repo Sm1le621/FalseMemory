@@ -2,48 +2,44 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Tests/EditMode/BattleAbilityTests.cs.
+Исходник: `Assets/Tests/EditMode/BattleAbilityTests.cs`.
 
-Общая fixture и Edit Mode проверки Fire, Heal, MP и допустимых целей.
+Базовая fixture EditMode-тестов способностей: Fire, расход MP, мёртвые участники и цели. Класс `partial`, поэтому `BattleItemTests.cs` добавляет проверки предметов в ту же fixture.
 
 ## 2. Как работает
 
-Setup создаёт временных участников, Health, правила, Fire/Heal/Potion и инвентарь; Cleanup уничтожает их. Partial-класс объединяется с BattleItemTests/BattleExperienceTests.
+`SetUp` создаёт Player/Enemy с `BattleUnit`, HP 100/60, MP 30, MATK 12/MDEF 3, правила, Fire и Potion; Potion ×3 добавляется в `BattleInventory`. `TearDown` уничтожает объекты и временные ScriptableObject. Каждый тест работает только в памяти.
 
 ## 3. Методы и функции
 
-- `Setup()` [SetUp] — HP100/60, MP30, MATK12/MDEF3, данные эффектов; void.
-- `Cleanup()` [TearDown] — DestroyImmediate созданных объектов/ассетов; void.
-- `FireCostsEightMPAndIgnoresPhysicalDefend()` — цена 8, урон 19 независимо от Defend.
-- `InsufficientMPRejectsFireWithoutChangingHealthOrMP()` — MP7 отклоняет Fire.
-- `HealCapsHealthAndReturnsActualAmount(int initial,int expected,int restored)` — три TestCase40/95/100 HP, проверяет итог, фактическое лечение и MP24.
-- `DeadCasterOrTargetAndIncorrectTargetsCannotCast()` — мёртвые/неверная цель отклонены.
-- `ManaNeverGoesNegativeOrAboveMaximum()` — отрицательная цена/недостаток/большое восстановление. Проверки void с Assert; Unity callbacks нет.
+- `Setup()` / `Cleanup()` — NUnit lifecycle.
+- `FireCostsEightMPAndIgnoresPhysicalDefend()` — Fire стоит 8 MP, даёт 19 урона даже при Defend; HP врага 41, MP 22.
+- `InsufficientMPRejectsFireWithoutChangingHealthOrMP()` — при 7 MP заклинание отклоняется, HP/MP не меняются.
+- `DeadCasterOrTargetCannotCast()` — мёртвый кастер или цель отклоняются.
+- `SelfTargetedDamageSpellCannotBeCastOnTheOpponent()` — Self-заклинание нельзя направить на врага; на себя — можно.
+- `ManaNeverGoesNegativeOrAboveMaximum()` — отрицательная/избыточная стоимость и восстановление до максимума.
 
-## 4. Переменные и параметры Inspector
+## 4. Переменные и Inspector
 
-Inspector нет. playerObject/enemyObject/player/enemy/fire/heal/rules/potion — поля тестовой fixture; данные только в памяти.
+`playerObject`, `enemyObject`, `player`, `enemy`, `fire`, `rules`, `potion` — поля fixture. Inspector отсутствует; данные создаются в памяти.
 
-## 5. Связи с другими системами
+## 5. Связи
 
-NUnit, BattleUnit, Health, BattleAbilities, Inventory, SO; partial-класс находится ещё в двух отдельных исходных файлах.
+NUnit, `BattleUnit`, `Health`, `BattleAbilities`, `BattleCalculator`, `BattleInventory`, `BattleSpell`, `BattleConsumable`. Partial-часть находится в `BattleItemTests.cs`.
 
-## 6. Пример работы
+## 6. Пример
 
-Временный Player30 MP → Fire →22 MP и Enemy41 HP.
+Тест с MP 7: `FireCostsEightMP...` не запускается, а `InsufficientMP...` подтверждает, что `TryCast` вернул false и не списал последние 7 MP.
 
 ## 7. Настройка в Unity
 
-Это тестовый файл, не компонент сцены: не прикрепляй его к GameObject. Открой Window → General → Test Runner, выбери EditMode и нужную сборку/тест либо Run All. Ссылки и временные объекты создаёт fixture. Для PlayMode должны быть доступны существующие SampleScene, BattleScene и MainMenu; тест не требует ручного изменения их Inspector.
+Компонент не прикрепляется. Тесты запускаются через Test Runner → EditMode; отдельная сцена не нужна.
 
-## 8. Возможные проблемы и проверки
+## 8. Ограничения и проверки
 
-Это не готовые ассеты сцены и не проверка выбора меню. Вместе с item/experience partial-файлами использует общую Setup/Cleanup. Проверки включены в успешные 40 Edit Mode.
+Проверяется модель, а не UI/анимация. Нет проверки Heal — лечебных заклинаний нет. Результаты 2026-10-31: EditMode 59/59, 0 failed.
 
 ## 9. История изменений
 
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
-
-- 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
-
-- 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
+- 2026-10-31 — удалены проверки Heal и EXP; fixture приведена к Fire + Potion.
+- 2026-10-12 — базовая fixture.

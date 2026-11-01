@@ -2,61 +2,50 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Tests/PlayMode/BattleStage2FlowTests.cs.
+Исходник: `Assets/Tests/PlayMode/BattleStage2FlowTests.cs`.
 
-13 интеграционных Play Mode сценариев этапа 2 в partial BattleFlowTests.
+Partial `BattleFlowTests`: интеграционные сценарии побега, победы, магии, ввода и смерти. Также содержит helper `BeginBattle` и поиск ассетов Fire/Potion/Sword/Armor.
 
 ## 2. Как работает
 
-Использует Setup/Cleanup предыдущего файла; BeginBattle запускает встречу и ждёт меню. Часть ввода идёт через Input System, кнопки проверяются прямыми onClick.Invoke. Данные в этих сценариях временные.
+Использует общий `Setup`/`Cleanup`. `BeginBattle` вызывает `BattleTransition.TryBegin` и ждёт `AwaitingPlayer`. `ConstantBattleRandom` фиксирует случайные исходы. Все изменения — runtime, сцены/ассеты не сохраняются.
 
 ## 3. Методы и функции
 
-2026-10-12 — актуальная локализация: Текстовые ожидания приведены к английскому UI (New Game/Main Menu/Back/No items available/Inventory full/DEFEAT/описания HPMP/цен). Проверки состояния, количества, урона, ресурсов и поведения сохранены.
+- `Fire`, `Potion`, `Sword`, `Armor` — поиск первых подходящих определений в инвентаре/заклинаниях.
+- `FailedFleeConsumesOneTurnAndDoesNotSpendResources()` — неудачный побег тратит ход, но не HP/MP/предметы.
+- `SuccessfulFleePreservesResourcesAndEnemyThenProtectsAndAllowsAnotherBattle()` — побег сохраняет HP/MP/предметы, враг жив, игрок в безопасной точке, защита блокирует повторный вход.
+- `VictoryPreservesAllSessionStateAndShowsResults()` — победа не содержит EXP, сохраняет MP 14/предметы/HP, выключает врага.
+- `TargetDeathBeforeQueuedSpellCancelsManaSpendAndFurtherActions()` — смерть цели до применения отменяет расход MP.
+- `HoldingEnterAcrossMagicMenuDoesNotCastUntilASeparatePress()` — удержание Enter не кастует Fire.
+- `ExpandedSpellListScrollsAndBackDoesNotSpendResources()` — 6 временных заклинаний + Back, прокрутка без хода.
+- `DeathWhileSelectingCancelsPendingTurnAndRejectsActions()` — смерть в меню блокирует действия и не тратит ресурсы.
+- `CriticalAndMissHaveCorrectDamageMessagesAndEachSpendOneTurn()` — крит 15 и MISS 0, сообщения и один ход на действие.
+- `FireConsumesMPOnceAndReturnsWithSameHealthAndMana()` — Fire 8 MP, возврат на карту с теми же HP/MP.
+- `InsufficientManaDoesNotConsumeTurnOrSpendMP()` — при 6 MP Fire недоступен, ход не тратится.
+- `MagicEscapeAndDisabledSpellDoNotSpendTurnOrDoubleUseMana()` — Escape возвращает меню, недоступный Fire не применяется.
 
-- `Fire(BattleUnit player)` / `Heal(BattleUnit player)` → первое заклинание нужного эффекта; `Potion(BattleUnit player)` → первое определение предмета.
-- `ConstantBattleRandom(float value)` сохраняет выборку, `Next01()` возвращает её.
-- `BeginBattle(BattleUnit player,BattleUnit enemy)` → IEnumerator старта и ожидания готового UI.
-- `FailedFleeConsumesOneTurnAndDoesNotSpendResources()` — неудача, враг действует, ресурсов не списывает.
-- `SuccessfulFleePreservesResourcesAndEnemyThenProtectsAndAllowsAnotherBattle()` — побег, прежние HP/MP/Items/EXP, живой враг, свободная позиция, защита/повторный бой.
-- `VictoryAwardsExperienceOnceAndPreservesAllSessionState()` — полный Fire/Potion/Attack, итог 88 HP/6 MP/2 Potion/25 EXP/level1, результаты, HUD, выключенный враг, защита награды.
-- `TargetDeathBeforeQueuedSpellCancelsManaSpendAndFurtherActions()` — погибшая до применения цель отменяет расход MP.
-- `HoldingEnterAcrossMagicMenuDoesNotCastUntilASeparatePress()` — вход в Magic удержанием не кастует Fire.
-- `ExpandedSpellListScrollsAndBackDoesNotSpendResources()` —6 временных SO+Назад, скролл/возврат без хода.
-- `DeathWhileSelectingCancelsPendingTurnAndRejectsActions()` — смерть ожидающего игрока, Game Over, команды отклонены.
-- `CriticalAndMissHaveCorrectDamageMessagesAndEachSpendOneTurn()` —15 крит,0 промах, сообщения и очередность.
-- `PotionConsumesOneItemAndOneTurnDespiteDoubleSubmission()` — двойной onClick, один предмет/ход, зелёное +30.
-- `EmptyItemsAndCancelDoNotConsumeTurn()` — ноль Potion, блокировка/возврат.
-- `FireConsumesMPOnceAndReturnsWithSameHealthAndMana()` — двойная команда/неприменимость crit-miss к Fire/MP при возврате.
-- `HealCapsHPAndInsufficientManaDoesNotConsumeTurn()` — зелёное +5, лимит/недостаток MP.
-- `MagicEscapeAndDisabledSpellDoNotSpendTurnOrDoubleUseMana()` — Escape через клавиатуру, недоступный Fire, двойной Heal. Все 13 проверок возвращают IEnumerator; Assert фиксирует результат.
+## 4. Переменные и Inspector
 
-## 4. Переменные и параметры Inspector
+`ConstantBattleRandom`, `originalSpells`, временные `extraSpells`, локальные HP/MP. Inspector отсутствует; временные SO уничтожаются.
 
-Inspector нет; value фиксированного источника 0/0.5/1, HP/MP/стопки меняются только у тестовых объектов. extraSpells уничтожаются в finally.
+## 5. Связи
 
-## 5. Связи с другими системами
+`BattleFlowTests`, `BattleManager`, `BattleTransition`, `BattleUnit`, `BattleAbilities`, `BattleUI`, `BattleRules`, Input System.
 
-Общая fixture BattleFlowTests, реальные игровые компоненты/сцены, NUnit и Input System. Имя класса в Test Runner — BattleFlowTests, не имя файла.
+## 6. Пример
 
-## 6. Пример работы
-
-Полный сценарий с исходными 80 HP/5 EXP → победа 88 HP/6 MP/2 Potion/25 EXP → мир с теми же значениями.
+Победа: Fire ×2 (MP 30→14), затем атаки до HP 0. Результат содержит VICTORY без EXP; возврат сохраняет 14 MP и 3 Potion.
 
 ## 7. Настройка в Unity
 
-Это тестовый файл, не компонент сцены: не прикрепляй его к GameObject. Открой Window → General → Test Runner, выбери PlayMode и нужную сборку/тест либо Run All. Ссылки и временные объекты создаёт fixture. Для PlayMode должны быть доступны существующие SampleScene, BattleScene и MainMenu; тест не требует ручного изменения их Inspector.
+Test Runner → PlayMode; реальные `SampleScene`/`BattleScene`. Без `BattleTransition` сценарии не запустятся.
 
-## 8. Возможные проблемы и проверки
+## 8. Ограничения и проверки
 
-Прямой onClick проверяет обработчик, не raycast реального курсора. Частичные тесты могут уменьшать HP врага ради короткого завершения, полный сценарий отдельно проходит весь бой. Все 13 входят в 17 успешно выполненных Play Mode; новых тестов в задаче документации не добавлялось.
+Проверяет боевые сценарии, не баланс и не визуал. 2026-10-31: PlayMode 36/36.
 
 ## 9. История изменений
 
-2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
-
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
-
-- 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
-
-- 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
+- 2026-10-31 — удалены EXP/Heal/Items-сценарии; ожидания приведены к MP 22/6, HP 96/94/92.
+- 2026-10-12 — базовая документация.

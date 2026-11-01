@@ -1,5 +1,7 @@
 # FalseMemory — завершение английской локализации
 
+> **Исторический документ.** Локализация полностью удалена 2026-10-31: игровой текст хранится английскими строками в сценах. Актуальная картина — [README](README.md), [Architecture](Architecture.md), [SceneComposition](Systems/SceneComposition.md).
+
 Дата: 2026-10-12. Статус: **Tested**, визуальная приёмка владельцем Pending. Все проверки ниже относятся к текущей рабочей копии после возобновления, если явно не указано другое.
 
 ## Восстановленная точка остановки
@@ -25,11 +27,11 @@ NPC, диалоги, квесты, торговля и дисковые сохр
 
 Созданы пять собственных C#-файлов:
 
-- [GameText](Scripts/Localization/GameText.md) — чтение native таблиц, форматирование параметров и английский fallback.
-- [LocalizedLabel](Scripts/Localization/LocalizedLabel.md) — статическая TMP-подпись по ключу, обновление/отписка.
-- [GameTextEditor](Scripts/Editor/GameTextEditor.md) — Unity → FalseMemory → Localization → English Text, поиск/редактирование/добавление устойчивых ключей и Save table.
-- [LocalizationTests](Scripts/Tests/EditMode/LocalizationTests.md) — таблица, форматы, ключи, fallback, предметные подписи.
-- [LocalizationFlowTests](Scripts/Tests/PlayMode/LocalizationFlowTests.md) — меню/Settings/инвентарь/tooltip/Magic/Items/настоящая победа и английские TMP-подписи.
+- `GameText` (удалён) — чтение native таблиц, форматирование параметров и английский fallback.
+- `LocalizedLabel` (удалён) — статическая TMP-подпись по ключу, обновление/отписка.
+- `GameTextEditor` (удалён) — Unity → FalseMemory → Localization → English Text, поиск/редактирование/добавление устойчивых ключей и Save table.
+- `LocalizationTests` (удалены) — таблица, форматы, ключи, fallback, предметные подписи.
+- `LocalizationFlowTests` (удалены) — меню/Settings/инвентарь/tooltip/Magic/Items/настоящая победа и английские TMP-подписи.
 
 Изменён 21 существующий файл:
 
@@ -42,7 +44,7 @@ Runtime/EditMode asmdef подключают Unity.Localization. Packages/manife
 
 В существующих SampleScene/BattleScene через MCP переведены сохранённые TMP-подписи, добавлены LocalizedLabel и ссылки unit.player/unit.skeleton. Fire/Heal получили ключи spell.fire/spell.heal; предметные поля переведены без изменения ID, GUID, эффектов, цен и бонусов. MainMenu UI создаётся существующим Bootstrap в Play Mode; отдельная сцена/альтернативные системы не создавались. Health.cs, EnemyAI.cs и формулы/очередь боя не менялись.
 
-Таблицы находятся в Assets/Resources/Localization; Locale — Assets/Localization/Locales. [LocalizationSystem](Systems/LocalizationSystem.md) объясняет изменение текста без программирования. Текущий GameText синхронно читает native StringTables из Resources; глобальные LocalizationSettings, Smart Strings, plurals и меню выбора языка не подключены. Подготовлен только en-US.
+Таблицы находятся в Assets/Resources/Localization; Locale — Assets/Localization/Locales. `LocalizationSystem` (удалена) объясняет изменение текста без программирования. Текущий GameText синхронно читает native StringTables из Resources; глобальные LocalizationSettings, Smart Strings, plurals и меню выбора языка не подключены. Подготовлен только en-US.
 
 ## Реально выполненные проверки
 

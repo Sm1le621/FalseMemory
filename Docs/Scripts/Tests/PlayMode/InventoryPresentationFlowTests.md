@@ -2,40 +2,42 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Tests/PlayMode/InventoryPresentationFlowTests.cs.
+Исходник: `Assets/Tests/PlayMode/InventoryPresentationFlowTests.cs`.
 
-Три Play Mode сценария hover, экипировки, экранных границ и связей нового интерфейса.
+Partial `BattleFlowTests`: hover/tooltip, рамка экипировки, границы экрана, счётчики сумки и мировая MP-полоса.
 
 ## 2. Как работает
 
-Часть существующего BattleFlowTests; общий Setup загружает реальную SampleScene и подключает Input System. Общий Cleanup выгружает тестовые сцены и восстанавливает временные настройки.
+Использует общий `Setup`/`Cleanup` и реальную `SampleScene`. Отправляет MouseState в Input System, работает с Canvas/TMP и существующими компонентами; временные устройства удаляются.
 
 ## 3. Методы и функции
 
-`RealMouseHoverShowsItemAndHidesOnEmptyDragAndClose()` IEnumerator создаёт тестовую Mouse, отправляет MouseState в реальные screen-центры ячеек, ждёт EventSystem, проверяет Potion/Common/HP, уход на пустую ячейку, скрытие при drag/close и неизменность3 предметов; finally удаляет только тестовую мышь.
-
-`EquippedHoverAndRarityRemainCorrectAfterReplacementAndEmptying()` IEnumerator надевает Sword, проверяет tooltip Rare/ATK5, icon/рамку; снимает, проверяет скрытие/базу15, удаляет тестово добавленный Sword из сумки и проверяет обновление hover. `TooltipClampsToAllScreenCornersAndLiveBagResourceCountsMatchModel()` IEnumerator показывает tooltip в4 углах, проверяет worldcorners в Screen; деление обновляет занятость1→2, HP/MP читаются реально, портрет/8 кнопок назначены. Не все Show здесь через мышь — первый сценарий отдельно подтверждает настоящий raycast.
+- `RealMouseHoverShowsItemAndHidesOnEmptyDragAndClose()` — наведение на Potion показывает `Potion`/`Consumable`/`30 HP`; пустой слот, drag и закрытие скрывают подсказку; количество не меняется.
+- `EquippedHoverAndBorderSurviveReplacementAndEmptying()` — надетый Iron Sword показывает `ATK +5`, `border` назначен; снятие скрывает tooltip и возвращает ATK 15.
+- `TooltipClampsToAllScreenCornersAndLiveBagResourceCountsMatchModel()` — четыре угла экрана не выходят за границы; `3 / 30`, HP/MP-строка, две кнопки экипировки.
+- `WorldManaBarFollowsSharedManaWithoutChangingIt()` — `ManaHUD` показывает 30/30, после трат 18/30, после восстановления 30/30; сам MP не меняет.
 
 ## 4. Переменные и Inspector
 
-Временная Mouse/экранные координаты, существующие Potion/Sword/Player, публичные UI-ссылки. Inspector отсутствует. Тесты не сохраняют scene/SO.
+Синтетическая Mouse, экранные координаты, существующие Potion/Sword/Player. Inspector отсутствует; сцена/ассеты не сохраняются.
 
 ## 5. Связи
 
-BattleFlowTests lifecycle, InventoryWindow/Tooltip, InputSystem/MouseState, EquipmentController, TMP/Canvas, реальные данные SampleScene.
+`BattleFlowTests`, `InventoryWindow`, `InventoryTooltip`, `EquipmentController`, `ManaHUD`, `BattleUnit`, Input System, Canvas/TMP.
 
 ## 6. Пример
 
-После снятия надетого меча открытая подсказка немедленно исчезает, меч возвращается в сумку, ATK снова15.
+При наведении на Potion подсказка содержит `Potion`, `Consumable`, `Restores up to 30 HP`; при переносе в другой слот количество остаётся 3, а занятость сумки не меняется.
 
 ## 7. Настройка в Unity
 
-Не прикрепляется. Test Runner → PlayMode → FalseMemory.Battle.PlayModeTests. Тестовый EditorInputBehavior позволяет событиям работать без фокуса.
+Test Runner → PlayMode; требуется `SampleScene` с назначенными `ManaHUD.mpSlider/mpText/unit` и `InventoryTooltip`.
 
-## 8. Ограничения и расширение
+## 8. Ограничения и проверки
 
-Проверка углов выполняется в текущем размере Game View; четыре разных разрешения проверяются отдельно через MCP/измерения/снимки. Художественное впечатление, standalone и физическая мышь владельца требуют ручной проверки.
+Проверяется поведение UI, не художественный вид. Tooltip позиционируется по курсору; ручная оценка удобства — за владельцем. 2026-10-31: PlayMode 36/36.
 
 ## 9. История изменений
 
-2026-10-12 — добавлены три сценария нового RPG-инвентаря, сохраняющие исходные боевые тесты.
+- 2026-10-31 — удалены проверки редкости; добавлен тест мировой MP-полосы.
+- 2026-10-12 — базовая документация.

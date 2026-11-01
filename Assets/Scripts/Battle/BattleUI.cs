@@ -172,12 +172,11 @@ public sealed class BattleUI : MonoBehaviour
 
     public void ShowMessage(string message) => messageText.text = message;
 
-    public void ShowVictoryResults(int gained, BattleUnit player)
+    public void ShowVictoryResults(BattleUnit player)
     {
+        if (resultPanel == null || resultText == null) return;
         resultPanel.gameObject.SetActive(true);
-        resultText.text = GameText.Get(player.LevelsGainedLastAward>0?"battle.victory_level_up_result":"battle.victory_result",
-            gained, player.CurrentExperience, player.level,
-            player.AtMaximumLevel?GameText.Get("character.max_level"):GameText.Get("character.next_experience",player.ExperienceToNextLevel));
+        resultText.text = "VICTORY\n" + player.displayName + " stands victorious.";
         if(hud!=null)hud.RevealResult();
     }
 
@@ -185,7 +184,7 @@ public sealed class BattleUI : MonoBehaviour
     {
         if(resultPanel==null || resultText==null)return;
         resultPanel.color=new Color32(43,24,35,248);resultPanel.gameObject.SetActive(true);
-        resultText.text=GameText.Get("battle.defeat_result");
+        resultText.text="DEFEAT\nYour journey ends here.";
         if(hud!=null)hud.RevealResult();
     }
 
@@ -238,17 +237,17 @@ public sealed class BattleUI : MonoBehaviour
 
     public void RefreshStats(BattleUnit player, BattleUnit enemy, int round)
     {
-        playerStats.text = hud == null ? Stats(player) : GameText.Get("battle.player_status",player.LocalizedName,player.level,player.Health.currentHealth,player.Health.maxHealth,player.CurrentMP,player.MaxMP);
-        enemyStats.text = hud == null ? Stats(enemy) : GameText.Get("battle.enemy_status",enemy.LocalizedName,enemy.level,enemy.Health.currentHealth,enemy.Health.maxHealth)+(enemy.IsDefending?"   "+GameText.Get("battle.defending"):"");
-        roundText.text = GameText.Get("battle.round", round);
+        playerStats.text = Stats(player);
+        enemyStats.text = Stats(enemy) + (enemy.IsDefending ? "\nDEFENDING" : "");
+        roundText.text = "ROUND " + round;
         if(enemy.IsAlive)enemyPortrait.color=enemy.spriteColor;
         else if(GetComponent<BattlePresentation>()==null)enemyPortrait.color=new Color(0.35f,0.35f,0.35f,0.35f);
     }
 
     private static string Stats(BattleUnit unit) =>
-        GameText.Get("battle.full_stats",unit.LocalizedName,unit.level,unit.Health.currentHealth,unit.Health.maxHealth,
-            unit.CurrentMP,unit.MaxMP,unit.EffectiveAttack,unit.EffectiveDefense,unit.Speed,unit.magicAttack,unit.magicDefense)+
-        (unit.Inventory!=null?"\n"+unit.Inventory.Summary:"")+"\n"+GameText.Get("battle.exp",unit.CurrentExperience)+
-        (unit.IsDefending?"\n"+GameText.Get("battle.defending"):"");
-
+        unit.displayName + "\nHP " + unit.Health.currentHealth + " / " + unit.Health.maxHealth +
+        "   MP " + unit.CurrentMP + " / " + unit.MaxMP +
+        "\nATK " + unit.EffectiveAttack + "   DEF " + unit.EffectiveDefense + "   SPD " + unit.Speed +
+        (unit.Inventory!=null ? "\n" + unit.Inventory.Summary : "") +
+        (unit.IsDefending ? "\nDEFENDING" : "");
 }

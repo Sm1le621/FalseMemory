@@ -1317,17 +1317,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Skeleton   LV 1
+  m_text: 'Skeleton
 
-    HP 60 / 60
+    HP 60 / 60   MP 0 / 0
 
-    MP 0 / 0
-
-    ATK 12  DEF 5  SPD 7
-
-    MATK 0  MDEF 3
-
-    EXP 0'
+    ATK 12   DEF 5   SPD 7'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1539,7 +1533,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Defend
+  m_text: Flee
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2081fbbc8a91d794d9ad35c30a9fc990, type: 2}
   m_sharedMaterial: {fileID: 502531929111639556, guid: 2081fbbc8a91d794d9ad35c30a9fc990, type: 2}
@@ -2023,7 +2017,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Flee
+  m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2081fbbc8a91d794d9ad35c30a9fc990, type: 2}
   m_sharedMaterial: {fileID: 502531929111639556, guid: 2081fbbc8a91d794d9ad35c30a9fc990, type: 2}
@@ -2640,7 +2634,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '> Attack'
+  m_text: Attack
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2081fbbc8a91d794d9ad35c30a9fc990, type: 2}
   m_sharedMaterial: {fileID: 502531929111639556, guid: 2081fbbc8a91d794d9ad35c30a9fc990, type: 2}
@@ -4476,7 +4470,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Items
+  m_text: Defend
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2081fbbc8a91d794d9ad35c30a9fc990, type: 2}
   m_sharedMaterial: {fileID: 502531929111639556, guid: 2081fbbc8a91d794d9ad35c30a9fc990, type: 2}
@@ -6273,7 +6267,6 @@ GameObject:
   - component: {fileID: 1597176670}
   - component: {fileID: 1597176672}
   - component: {fileID: 1597176671}
-  - component: {fileID: 1597176673}
   m_Layer: 0
   m_Name: Controls
   m_TagString: Untagged
@@ -6400,19 +6393,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1597176669}
   m_CullTransparentMesh: 1
---- !u!114 &1597176673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1597176669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4179893e913464e4ea8b8e26f5074c85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FalseMemory.Runtime::LocalizedLabel
-  key: battle.controls
 --- !u!1 &1635609190
 GameObject:
   m_ObjectHideFlags: 0
@@ -6553,7 +6533,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Player   LV 1\nHP 100 / 100\nMP 30 / 30\nATK 15  DEF 8  SPD 10\nMATK 12  MDEF 8\nPotion \xD73\nEXP 0"
+  m_text: 'Player
+
+    HP 100 / 100   MP 30 / 30
+
+    ATK 15   DEF 8   SPD 10'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7646,7 +7630,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: LOW HP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2081fbbc8a91d794d9ad35c30a9fc990, type: 2}
   m_sharedMaterial: {fileID: 502531929111639556, guid: 2081fbbc8a91d794d9ad35c30a9fc990, type: 2}
@@ -8125,13 +8109,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Victory!
-
-    EXP Gained: +20
-
-    Total EXP: 20
-
-    Current Level: 1'
+  m_text: VICTORY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

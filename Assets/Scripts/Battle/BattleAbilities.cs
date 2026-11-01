@@ -4,7 +4,7 @@ public static class BattleAbilities
     public static bool CanUseItem(BattleUnit user, BattleUnit target, BattleConsumable item, ItemUseLocation location=ItemUseLocation.Battle)
     {
         return user != null && target != null && item != null && user.IsAlive && target.IsAlive &&
-               item.category==ItemCategory.Consumable && user.level>=System.Math.Max(1,item.requiredLevel) &&
+               item.category==ItemCategory.Consumable &&
                (location==ItemUseLocation.Exploration || location==ItemUseLocation.Battle) && (item.useLocations & location)==location &&
                item.healing >= 0 && item.manaRestoration>=0 && (item.healing>0 || item.manaRestoration>0) &&
                !(item.healing>0 && item.manaRestoration>0) && (item.target == BattleTarget.Self ? user == target : user != target) &&
@@ -24,19 +24,15 @@ public static class BattleAbilities
         return caster != null && target != null && spell != null && caster.IsAlive && target.IsAlive &&
                spell.mpCost >= 0 && caster.CurrentMP >= spell.mpCost &&
                (spell.target == BattleTarget.Self ? caster == target : caster != target) &&
-               (spell.effect == BattleEffect.MagicDamage || spell.effect == BattleEffect.RestoreHealth);
+               spell.effect == BattleEffect.MagicDamage;
     }
 
     public static bool TryCast(BattleUnit caster, BattleUnit target, BattleSpell spell, BattleRules rules, out int amount)
     {
         amount = 0;
         if (rules == null || !CanCast(caster, target, spell) || !caster.TrySpendMP(spell.mpCost)) return false;
-        if (spell.effect == BattleEffect.RestoreHealth) amount = target.Health.Heal(spell.power);
-        else
-        {
-            amount = BattleCalculator.MagicalDamage(caster.EffectiveMagicAttack, target.EffectiveMagicDefense, spell.power, rules);
-            target.Health.TakeDamage(amount);
-        }
+        amount = BattleCalculator.MagicalDamage(caster.EffectiveMagicAttack, target.EffectiveMagicDefense, spell.power, rules);
+        target.Health.TakeDamage(amount);
         return true;
     }
 }

@@ -2,44 +2,46 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Inventory/WorldItemUseController.cs.
+Исходник: `Assets/Scripts/Inventory/WorldItemUseController.cs`.
 
-Применение расходуемого из окна мира через тот же BattleAbilities/InventoryState, что и бой.
+Использование расходуемых предметов из окна инвентаря вне боя. Компонент связывает кнопку Use с `BattleAbilities` и тем же `BattleUnit`, которому принадлежит инвентарь. Подбора предметов с земли больше нет.
 
 ## 2. Как работает
 
-Awake получает Unit/Window; OnEnable связывает UseRequested и CanUseSelection. Попытка проверяет контекст/слот/условия и резервирует номер кадра до расхода. Повторный callback в тот же кадр отклоняется. Эффект не копируется в новый код.
+`Awake` получает `BattleUnit` и `InventoryWindow`. `OnEnable` подписывается на `UseRequested` и назначает `CanUseSelection`; `OnDisable` снимает подписки. `CanUse` проверяет, что компонент активен, окно открыто, индекс корректен, встреча не активна, а выбранный предмет — `BattleConsumable`, разрешённый в исследовании. `TryUse` дополнительно защищает от повторного использования в одном кадре, списывает предмет, применяет эффект и обновляет окно.
 
 ## 3. Методы и функции
 
-2026-10-12 — актуальная локализация: TryUse показывает inventory.item_used с именем/amount/HP либоMP, отказ inventory.unavailable. Общая Abilities и защита кадра сохранены.
-
-Unity `Awake` ссылки, `OnEnable` подписывает HandleUse/назначает CanUse, `OnDisable` снимает собственные подписку/predicate. `CanUse(index)` bool требует активного компонента/открытого окна/индекс0..29/отсутствия встречи; получает BattleConsumable и вызывает CanUseItem с Exploration. `TryUse(index)` bool проверяет lastUseFrame/CanUse, ставит кадр до TryUseItem, показывает фактический HP или MP/Refresh. `HandleUse(index)` void делегирует. Игра не ждёт coroutine.
+- `Awake()` — кеширует `unit` и `window`.
+- `OnEnable()` / `OnDisable()` — управляют подпиской на событие и делегатом доступности.
+- `CanUse(int index)` → `bool`; проверяет контекст и `BattleAbilities.CanUseItem(..., Exploration)`.
+- `TryUse(int index)` → `bool`; применяет предмет, показывает сообщение `+N HP/MP` или отказ, обновляет окно.
+- `HandleUse(int index)` — обработчик `UseRequested`.
 
 ## 4. Переменные и Inspector
 
-unit/window private ссылки; lastUseFrame=-1 transient. Нет отдельного количества/HP/MP/Inspector-параметров. Predicate не содержит lastUseFrame, чтобы кнопка не оставалась disabled после операции.
+- `unit` — `BattleUnit` владельца инвентаря.
+- `window` — `InventoryWindow`.
+- `lastUseFrame` — защита от двойного применения в одном кадре.
+- Inspector-полей нет; требования задаются через `RequireComponent`.
 
 ## 5. Связи
 
-GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
-
-InventoryWindow.UseRequested/CanUseSelection, BattleAbilities и прежние Health/BattleUnit.Inventory. После скрытия мира отписывается, после возврата подписывается без сброса ресурсов.
+Требуются `BattleUnit` и `InventoryWindow` на одном объекте. Использует `BattleInventory.State`, `BattleAbilities`, `Health`, `BattleUnit.RestoreMP` и `BattleTransition`. Кнопка Use в окне получает доступность через `CanUseSelection`.
 
 ## 6. Пример
 
-HP50/MP5 → Potion (+30HP)80, Ether (+20MP)25. Каждый уменьшает одну вещь общего запаса, повторное событие кадра отказ.
+В окне выбрано Potion (лечение 30), HP 40/100. `CanUse` возвращает true; `TryUse` списывает зелье, восстанавливает 30 HP до 70 и показывает `Potion: +30 HP`. Повторный вызов в том же кадре отклоняется.
 
 ## 7. Настройка в Unity
 
-Добавлен MCP на прежний Player, Require Unit/InventoryWindow. Нет другого менеджера/запаса. Window.Open задаёт допустимый контекст.
+Компонент находится на Player рядом с `BattleUnit`, `BattleInventory` и `InventoryWindow`. Отдельных ссылок назначать не нужно. Убедись, что у зелья `useLocations` включает Exploration, а эффект задан только один — HP или MP.
 
-## 8. Ограничения и расширение
+## 8. Возможные проблемы
 
-Как раньше Potion, положительный расходуемый можно потратить при полном ресурсе: фактический amount0. HPMP-гибриды/нулевые эффекты не поддержаны. Самые быстрые отдельные нажатия разных кадров — отдельные действия, не копии. Нет лечения погибшего.
+Во время боя использование через окно запрещено: инвентарь в бою не открывается, а боевого меню Items нет. Предмет с двумя эффектами или без эффекта не используется. Если окно не открыто, `CanUse` возвращает false. Нет воскрешения: мёртвый персонаж не может использовать предмет.
 
 ## 9. История изменений
 
-2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
-
-2026-10-12 — 4.5: общая логика мира/боя и защита callback кадра.
+- 2026-10-31 — контроллер оставлен только для использования из инвентаря; подбор предметов и `WorldItemPickup` удалены.
+- 2026-10-12 — базовая версия использования предметов в мире.

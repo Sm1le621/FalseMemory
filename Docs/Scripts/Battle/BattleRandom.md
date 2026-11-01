@@ -2,7 +2,7 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleRandom.cs.
+**Исходный файл:** Assets/Scripts/Battle/BattleRandom.cs.
 
 Управляемый источник случайности и неизменяемый результат попадания.
 

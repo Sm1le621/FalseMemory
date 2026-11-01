@@ -26,7 +26,7 @@ public sealed partial class BattleFlowTests
             yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
             yield return new WaitForSecondsRealtime(0.2f);
             Assert.That(enemy.Health.currentHealth,Is.EqualTo(50));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
-            Assert.That(player.CurrentMP,Is.EqualTo(30));Assert.That(player.CurrentExperience,Is.Zero);
+            Assert.That(player.CurrentMP,Is.EqualTo(30));
             Assert.That(player.Inventory.Summary,Does.Contain("3"));Assert.That(manager.Round,Is.EqualTo(2));
             Assert.That(portrait.anchoredPosition,Is.EqualTo(home));Assert.That(Time.timeScale,Is.EqualTo(timeScale));
         }
@@ -100,9 +100,9 @@ public sealed partial class BattleFlowTests
         yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
         yield return new WaitForSecondsRealtime(0.5f);
         Assert.That(manager.vfx.ActiveParticles,Is.Zero);Assert.That(enemy.Health.currentHealth,Is.EqualTo(41));
-        manager.vfx=null;manager.TryPlayerSpell(Heal(player));
+        manager.vfx=null;manager.TryPlayerAction(BattleAction.Defend);
         yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);
-        Assert.That(player.CurrentMP,Is.EqualTo(16));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
+        Assert.That(player.CurrentMP,Is.EqualTo(22));Assert.That(player.Health.currentHealth,Is.EqualTo(94));
     }
 
     [UnityTest] public IEnumerator TargetDeathDuringWindupCancelsDamageAndManaSpend()
@@ -114,7 +114,7 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.TryPlayerSpell(Fire(player)),Is.False);
         enemy.Health.TakeDamage(60);
         yield return WaitUntil(()=>manager.State==BattleState.Victory);
-        Assert.That(player.CurrentMP,Is.EqualTo(30));Assert.That(player.CurrentExperience,Is.EqualTo(20));
+        Assert.That(player.CurrentMP,Is.EqualTo(30));
         Assert.That(manager.presentation.IsAnimating,Is.False);
     }
 
@@ -143,7 +143,7 @@ public sealed partial class BattleFlowTests
         Assert.That(hud.hpBar.value, Is.EqualTo(0.2f).Within(0.001f));
         Assert.That(hud.mpBar.value, Is.EqualTo(22f/30f).Within(0.001f));
         Assert.That(hud.lowHealthText.gameObject.activeSelf, Is.True);
-        Assert.That(manager.ui.playerStats.text, Does.Contain("HP  20 / 100"));
+        Assert.That(manager.ui.playerStats.text, Does.Contain("HP 20 / 100"));
         manager.OpenMagicMenu(); manager.ShowMainMenu();
         yield return new WaitForSecondsRealtime(0.2f);
         Assert.That(hud.menuGroup.alpha, Is.EqualTo(1f));

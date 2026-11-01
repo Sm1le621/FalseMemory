@@ -104,18 +104,6 @@ public sealed class InventoryState
         else {slots[to]=source;slots[from]=target.IsEmpty?null:target;}
         Changed?.Invoke();return true;
     }
-    public bool TrySplit(int from,int to,int amount)
-    {
-        if(!Valid(from) || !Valid(to) || from==to || !GetSlot(to).IsEmpty)return false;
-        var source=GetSlot(from);
-        if(source.IsEmpty || !source.Item.stackable || amount<=0 || amount>=source.Count)return false;
-        slots[from]=new InventorySlot(source.Item,source.Count-amount);slots[to]=new InventorySlot(source.Item,amount);
-        Changed?.Invoke();return true;
-    }
-    public int FirstEmptySlot()
-    {
-        for(int i=0;i<Capacity;i++)if(GetSlot(i).IsEmpty)return i;return -1;
-    }
     internal bool TryExchangeSingle(int index,ItemData expected,ItemData replacement)
     {
         if(!Valid(index) || GetSlot(index).Item!=expected || GetSlot(index).Count!=1 ||

@@ -2,54 +2,50 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** `Assets/Scripts/UI/SettingsMenu.cs`.
+Исходник: `Assets/Scripts/UI/SettingsMenu.cs`.
 
-Открывает/закрывает панель настроек и хранит громкость и полноэкранность в `PlayerPrefs`; не является системой сохранения игрового прогресса.
+Панель настроек: громкость и полноэкранный режим. Значения сохраняются в `PlayerPrefs`; текст подписи английский, локализации нет.
 
 ## 2. Как работает
 
-Компонент находится на объекте `Menu` рядом с `MainMenuController`. Ссылки на корень панели `SettingsDim`, слайдер громкости и TMP-подпись fullscreen сохранены в сцене. `Start` скрывает панель и применяет сохранённые настройки. `Show` открывает панель и перечитывает настройки; `Hide` закрывает. Слайдер и кнопка fullscreen пишут значения в `PlayerPrefs`.
+`Start` скрывает панель, загружает сохранённые значения и применяет их. `Show` включает панель и повторно применяет настройки. `OnVolumeChanged` задаёт `AudioListener.volume`, сохраняет значение и пишет его в `PlayerPrefs`. `ToggleFullscreen` переключает режим, применяет его, сохраняет и обновляет подпись. `OnEnable` обновляет подпись при повторном включении.
 
 ## 3. Методы и функции
 
-- `Start()` — `Hide()` + `LoadAndApply()`; вызывается Unity один раз при загрузке сцены, когда объект `Menu` активен.
-- `Show()` — `root.SetActive(true)`, затем `LoadAndApply()`.
-- `Hide()` — `root.SetActive(false)`.
-- `OnVolumeChanged(float value)` — `AudioListener.volume = Clamp01(value)`, сохраняет `FalseMemory.Volume`.
-- `ToggleFullscreen()` — инвертирует `fullscreen`, применяет `Screen.fullScreen`, сохраняет `FalseMemory.Fullscreen`, обновляет подпись.
-- `LoadAndApply()` — читает `PlayerPrefs`, применяет громкость и fullscreen, выставляет слайдер без события и обновляет подпись.
-- `ApplyFullscreen()` — `Screen.fullScreen = fullscreen`.
-- `RefreshFullscreenLabel()` — берёт `settings.fullscreen_on`/`settings.fullscreen_off` через `GameText`.
-- `OnEnable()`/`OnDisable()` — подписка/отписка на `GameText.LanguageChanged` и обновление подписи.
+- `Start()` — Unity callback; скрывает панель и вызывает `LoadAndApply`.
+- `Show()` / `Hide()` — включают/выключают `root`.
+- `OnVolumeChanged(float value)` — применяет и сохраняет громкость 0…1.
+- `ToggleFullscreen()` — переключает полноэкранный режим и сохраняет выбор.
+- `LoadAndApply()` — читает `PlayerPrefs`, задаёт громкость, ползунок и режим экрана.
+- `ApplyFullscreen()` — устанавливает `Screen.fullScreen`.
+- `RefreshFullscreenLabel()` — текст `Fullscreen: On/Off`.
+- `OnEnable()` — обновляет подпись.
 
-## 4. Переменные и параметры Inspector
+## 4. Переменные и Inspector
 
-- `root` — GameObject `SettingsDim`; при старте выключается.
-- `volumeSlider` — `Slider` 0…1 в панели настроек.
-- `fullscreenLabel` — TMP-подпись кнопки Fullscreen.
-- `fullscreen` — внутреннее состояние, не редактируется вручную.
-- Ключи `FalseMemory.Volume` (float 0…1) и `FalseMemory.Fullscreen` (int 0/1).
+- `root` — объект панели, который показывается/скрывается.
+- `volumeSlider` — ползунок громкости; значение задаётся без уведомления.
+- `fullscreenLabel` — TMP-подпись режима.
+- `fullscreen` — внутреннее состояние.
+- Ключи `PlayerPrefs`: `FalseMemory.Volume`, `FalseMemory.Fullscreen`.
 
-## 5. Связи с другими системами
+## 5. Связи
 
-`MainMenuController.OnSettings()` вызывает `Show()`. Кнопка `BackButton` вызывает `Hide()`, `FullscreenButton` — `ToggleFullscreen()`, слайдер — `OnVolumeChanged`. `GameText`/`LocalizedLabel` отвечают за английские подписи.
+Вызывается `MainMenuController.OnSettings`. Использует `AudioListener`, `Screen`, `PlayerPrefs`, uGUI Slider и TMP. Не зависит от боевых систем.
 
-## 6. Пример работы
+## 6. Пример
 
-MainMenu → Settings → панель `SettingsDim` включается, слайдер показывает сохранённую громкость → перетаскивание меняет `AudioListener.volume` → Back выключает панель. Fullscreen переключает режим и подпись On/Off.
+Пользователь открывает Settings, ставит громкость 0.5 — значение сразу применяется и сохраняется. После перезапуска игры `LoadAndApply` восстанавливает 0.5. Переключение полноэкранного режима сохраняется аналогично.
 
 ## 7. Настройка в Unity
 
-Компонент размещён на объекте `Menu` (активном), а не на самой скрытой панели. В Inspector назначьте `Root = SettingsDim`, `Volume Slider = VolumeSlider`, `Fullscreen Label = Label` кнопки `FullscreenButton`. На кнопках должны быть persistent-вызовы `Hide`, `ToggleFullscreen`; на слайдере — `OnVolumeChanged`. Панель `SettingsDim` в сцене выключена.
+Назначь `root`, `volumeSlider` и `fullscreenLabel`. Ползунок должен вызывать `OnVolumeChanged` через `onValueChanged`, кнопка режима — `ToggleFullscreen`. Панель может быть выключена по умолчанию: `Hide` вызывается в `Start`.
 
-## 8. Возможные проблемы и проверки
+## 8. Возможные проблемы
 
-- Если компонент положить на выключенный `SettingsDim`, `Start` не выполнится, но `Show` продолжит работать; правильное место — активный объект `Menu`.
-- Без `root` панель не откроется.
-- Смена fullscreen в редакторе может отличаться от сборки.
-- Громкость/fullscreen в standalone-сборке не проверялись; меню и настройки покрыты PlayMode-тестами.
+Без `root` настройки не показываются. `PlayerPrefs` хранит значения локально и не синхронизируется между устройствами. `Screen.fullScreen` в редакторе может вести себя иначе, чем в сборке. Громкость общая для всего `AudioListener`, отдельной громкости музыки/эффектов нет.
 
 ## 9. История изменений
 
-- 2026-10-11 — впервые документирован прочитанный код.
-- 2026-10-25 — удалён `Bind`; добавлен `Start`, ссылки назначаются в сцене. Панель и все элементы сохранены объектами `MainMenu`.
+- 2026-10-31 — удалена локализация, подпись режима задаётся английской строкой.
+- 2026-10-11 — базовая документация настроек.

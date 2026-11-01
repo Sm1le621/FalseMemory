@@ -24,7 +24,6 @@ public sealed class BattleTransition : MonoBehaviour
     private float protectedUntil;
     private EnemyAI protectedEnemyAI;
     private bool protectedEnemyAIWasEnabled;
-    private bool victoryRewardClaimed;
     public bool IsEncounterProtected => Time.realtimeSinceStartup < protectedUntil;
 
     private void LateUpdate() => ReleaseProtectionIfExpired();
@@ -54,7 +53,7 @@ public sealed class BattleTransition : MonoBehaviour
             player == null || enemy == null || player == enemy || !player.IsAlive || !enemy.IsAlive) return false;
         if (!Application.CanStreamedLevelBeLoaded(battleSceneName))
         {
-            Debug.LogError("BattleScene отсутствует в списке сцен сборки.", this);
+            Debug.LogError("BattleScene is missing from the build settings.", this);
             return false;
         }
         if (player.gameObject.scene != enemy.gameObject.scene || gameObject.scene != player.gameObject.scene) return false;
@@ -62,7 +61,6 @@ public sealed class BattleTransition : MonoBehaviour
         IsTransitioning = true;
         Player = player;
         Enemy = enemy;
-        victoryRewardClaimed = false;
         worldScene = player.gameObject.scene;
         player.ResetBattleState(); enemy.ResetBattleState();
         Pause(player.GetComponent<PlayerController>());
@@ -118,15 +116,6 @@ public sealed class BattleTransition : MonoBehaviour
         if (!EncounterActive || IsTransitioning || Player == null || !Player.IsAlive || Enemy == null || Enemy.IsAlive) return false;
         IsTransitioning = true;
         StartCoroutine(ReturnToWorld(true));
-        return true;
-    }
-
-    public bool TryGrantVictoryExperience(out int gained)
-    {
-        gained = 0;
-        if (!EncounterActive || IsTransitioning || victoryRewardClaimed || Player == null || !Player.IsAlive || Enemy == null || Enemy.IsAlive) return false;
-        victoryRewardClaimed = true; // Claim before awarding, including zero rewards.
-        gained = Player.AddExperience(Enemy.experienceReward);
         return true;
     }
 
@@ -236,7 +225,7 @@ public sealed class BattleTransition : MonoBehaviour
         var reveal = overlay.GetComponent<BattleScreenFade>();
         if (reveal == null)
         {
-            Debug.LogError("BattleTransition: BattleScreenFade отсутствует на объекте fade overlay.", this);
+            Debug.LogError("BattleTransition: BattleScreenFade is missing from the fade overlay.", this);
             yield break;
         }
         reveal.panel = fade;
@@ -247,7 +236,7 @@ public sealed class BattleTransition : MonoBehaviour
     {
         if (fade == null)
         {
-            Debug.LogError("BattleTransition: fade overlay не назначен в сцене.", this);
+            Debug.LogError("BattleTransition: fade overlay is not assigned in the scene.", this);
             yield break;
         }
         yield return BattleScreenFade.Fade(fade, alpha, rules.fadeDuration);

@@ -2,55 +2,45 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Tests/PlayMode/BattleFlowTests.cs.
+Исходник: `Assets/Tests/PlayMode/BattleFlowTests.cs`.
 
-Общая Play Mode fixture и четыре исходных сценария боя на настоящих сценах.
+Базовая PlayMode-fixture боя на реальных сценах `SampleScene`/`BattleScene` и четыре сценария: вход по контакту, победа, поражение и удержание Enter. Остальные сценарии находятся в partial-файлах `BattleStage2FlowTests`, `BattlePresentationFlowTests`, `InventoryFlowTests`, `InventoryPresentationFlowTests` и `PixelVisualFlowTests`.
 
 ## 2. Как работает
 
-Test Runner загружает SampleScene дополнительно, ускоряет паузы и делает исходы детерминированными. Cleanup выгружает сцены и восстанавливает Input System/правила. Partial-класс содержит ещё 13 тестов в BattleStage2FlowTests.
+`[UnitySetUp] Setup` сохраняет настройки Input System и правила, загружает `SampleScene` аддитивно, делает её активной, ускоряет `actionDelay` до 0.1, отключает fade и случайные криты/промахи. `[UnityTearDown] Cleanup` восстанавливает правила/ввод, выгружает бой и мир, при необходимости создаёт якорную сцену. `WaitUntil` ждёт условие не дольше 15 секунд.
 
 ## 3. Методы и функции
 
-2026-10-12 — актуальная локализация: Текстовые ожидания приведены к английскому UI (New Game/Main Menu/Back/No items available/Inventory full/DEFEAT/описания HPMP/цен). Проверки состояния, количества, урона, ресурсов и поведения сохранены.
+- `Setup()` / `Cleanup()` — PlayMode lifecycle.
+- `WaitUntil(Func<bool>)` → IEnumerator; ожидание с таймаутом-assert.
+- `Player()`, `Enemy()`, `Manager()` — поиск реальных объектов сцены.
+- `ContactStartsOneBattleThenVictoryPreservesWorldAndHealth()` — физический контакт запускает бой один раз; Attack/Defend, победа, прежние HP/позиция, выгрузка боя и возобновление движения.
+- `DefeatStopsTurnsAndOffersRestartAndMenu()` — HP 1, поражение, блокировка действий, New Game/Main Menu, сброс сцены.
+- `HeldEnterConsumesOneActionAndDoesNotAttackOnNextTurn()` — удержание Enter не даёт второго хода.
+- `DefeatCanReturnToMainMenuAndStartNewGame()` — поражение → меню → `OnStart` → свежие HP 100.
 
-- `Setup()` [UnitySetUp] → IEnumerator: сохраняет настройки ввода/правил, включает синтетический ввод без фокуса, загружает мир, задаёт задержку 0.1/фейд 0/Defend0 и crit/miss0 на тестовых участниках.
-- `Cleanup()` [UnityTearDown] → IEnumerator: восстанавливает правила/ввод, возвращает предыдущую сцену либо временный anchor, выгружает мир/бой.
-- `WaitUntil(Func<bool> predicate)` → IEnumerator ожидания; через 15 секунд Assert timeout.
-- `Player()` / `Enemy()` → BattleUnit по имени GameObject; `Manager()` → найденный BattleManager.
-- `ContactStartsOneBattleThenVictoryPreservesWorldAndHealth()` — реальная физика запускает бой один раз, Attack/Defend, победа и прежний Health/позиция; синтетический D проверяет движение после возврата.
-- `DefeatStopsTurnsAndOffersRestartAndMenu()` — HP1, поражение без следующих атак, новая игра.
-- `HeldEnterConsumesOneActionAndDoesNotAttackOnNextTurn()` — Enter удерживается, второго хода нет.
-- `DefeatCanReturnToMainMenuAndStartNewGame()` — поражение→меню→OnStart и свежие HP. Тестовые методы возвращают IEnumerator, а не игровое значение.
+## 4. Переменные и Inspector
 
-## 4. Переменные и параметры Inspector
+`previousScene`, `rules`, `previousDelay`, `previousFade`, `previousDefendChance`, сохранённые настройки Input System. Inspector отсутствует; тесты меняют только runtime-копии правил и восстанавливают их.
 
-Inspector нет; previousScene/rules/previousDelay/previousFade/previousDefendChance и сохранённые режимы InputSettings — состояние fixture. Штатные ассеты не сохраняются тестом.
+## 5. Связи
 
-## 5. Связи с другими системами
+NUnit, Unity Test Framework, Input System, `BattleTransition`, `BattleManager`, `BattleUI`, `PlayerController`, `Health`, `MainMenuController`. Реальные сцены и объекты не сохраняются.
 
-NUnit/Unity Test Framework/Input System, реальные SampleScene/BattleScene/MainMenu. Зависит от имён Player/Enemy и сцен сборки.
+## 6. Пример
 
-## 6. Пример работы
-
-Collider2D контакт → ожидается EncounterActive → Attack → Enemy50 HP, Player96 HP → Defend → Player94 HP.
+Игрок ставится в позицию врага; физика запускает встречу. После победы `ReturnAfterVictory` выгружает `BattleScene`, Enemy выключается, Player остаётся на прежней позиции с тем же HP.
 
 ## 7. Настройка в Unity
 
-Это тестовый файл, не компонент сцены: не прикрепляй его к GameObject. Открой Window → General → Test Runner, выбери PlayMode и нужную сборку/тест либо Run All. Ссылки и временные объекты создаёт fixture. Для PlayMode должны быть доступны существующие SampleScene, BattleScene и MainMenu; тест не требует ручного изменения их Inspector.
+Запуск через Test Runner → PlayMode. Сцены `SampleScene`, `BattleScene`, `MainMenu` должны быть доступны; тесты сами управляют загрузкой.
 
-## 8. Возможные проблемы и проверки
+## 8. Ограничения и проверки
 
-Запуск в Editor, не отдельной сборке. Временные настройки восстанавливаются; таймаут может означать сломанные ссылки/сцену или проблемы ввода. Все 17 Play Mode текущего запуска прошли. Запуск: Test Runner → PlayMode → Run All.
+Проверяется поведение в PlayMode, но не художественный вид и не standalone-сборка. Синтетический ввод требует настроек Input System, которые восстанавливаются. 2026-10-31: PlayMode 36/36, 0 failed.
 
 ## 9. История изменений
 
-2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
-
-- 2026-10-11 — 3.7: устаревший FindFirstObjectByType заменён FindAnyObjectByType для единственных Manager/MainMenu; сценарии не менялись.
-
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
-
-- 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
-
-- 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
+- 2026-10-31 — удалены проверки EXP/Items/Heal; ожидания HP/MP приведены к текущей модели.
+- 2026-10-11 — базовая документация.

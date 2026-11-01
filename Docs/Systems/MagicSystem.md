@@ -1,45 +1,47 @@
-# Магия и MP
+# Система магии и MP
 
 ## 1. Назначение
 
-Fire и Heal в пошаговом бою.
+Заклинания с уроном и запас MP участника. Сейчас в игре одно боевое заклинание Fire; лечебных заклинаний и боевого меню предметов нет.
 
 ## 2. Общая логика
 
-MP заполняется Awake один раз; CanCast проверяет живых, цель и стоимость. Успешный выбор занимает ход, применение списывает MP один раз.
+`BattleUnit.Awake` заполняет MP до максимума. В ход игрока `BattleManager.OpenMagicMenu` строит список заклинаний с ценой и доступностью. `BattleAbilities.CanCast` проверяет живых участников, цель, эффект и достаточность MP. `TryCast` списывает MP и наносит магический урон через `BattleCalculator`. Неуспешная проверка не тратит ход и MP.
 
 ## 3. Основные компоненты
 
-BattleUnit, BattleSpell SO, BattleAbilities, Calculator, Manager, UI.
+- `BattleUnit` — `maxMP`, `currentMP`, `magicAttack`, `magicDefense`, `spells`.
+- `BattleSpell` — ScriptableObject заклинания.
+- `BattleAbilities` — проверка/применение.
+- `BattleCalculator` — магический урон.
+- `BattleManager`/`BattleUI` — меню и сообщения.
+- `ManaHUD`, `BattleHUD`, `InventoryWindow` — отображение MP.
 
 ## 4. Взаимодействие скриптов
 
-Unit.spells задаёт изученные способности; Manager проверяет принадлежность, Abilities расходует ресурс и вызывает Health.
+`BattleManager` проверяет принадлежность заклинания игроку и вызывает `BattleAbilities`. `BattleUnit.TrySpendMP` меняет MP, `Health.TakeDamage` — HP цели. `BattleVFXController` показывает визуал, `BattleAudioController` — звук. `ManaHUD` читает MP, но не тратит его.
 
 ## 5. Последовательность событий
 
-Magic → список стоимости/доступности → выбор → CanCast → gate закрыт → TryCast → эффект/число → следующий участник. Escape/Back без хода.
+Magic → список `Fire 8 MP` + Back → выбор → `CanCast` → закрытие gate → `TryCast` → списание 8 MP → расчёт урона → сообщение/число/VFX → ход врага. Escape/Back не тратит ход.
 
 ## 6. Настраиваемые параметры
 
-Player MP30 MATK12 MDEF8; Enemy MDEF3. Fire8 MP power10 Opponent →19 урона. Heal6 MP power25 Self →до 25 HP. Magic coefficients1/1, минимум 1.
+Player: MP 30, MATK 12, MDEF 8; Enemy MDEF 3. Fire: 8 MP, power 10, цель Opponent, оранжевый цвет. `BattleRules` задаёт коэффициенты магии и минимальный урон. Формула Fire при текущих данных даёт 19 урона.
 
 ## 7. Использование в Unity
 
-Настраивать Fire/Heal в Assets/Settings/Battle/Spells и ссылки Player.BattleUnit.spells. Не менять Current MP вне Play ради начального запаса: Awake берёт maxMP.
+Ассеты заклинаний лежат в `Assets/Settings/Battle/Spells`; Fire назначен в `BattleUnit.spells` игрока. Новое заклинание создаётся через `Assets → Create → FalseMemory → Battle Spell` и добавляется в массив. Стартовый MP задаётся через `maxMP`.
 
 ## 8. Расширение
 
-Create → FalseMemory → Battle Spell, выбрать существующий эффект, цель, цену/мощность/цвет, добавить в Spells. Новый вид эффекта требует Abilities и тестов.
+Новый эффект требует расширения `BattleEffect`, `BattleAbilities` и, при необходимости, `BattleCalculator`. Лечение через заклинания отсутствует; зелья восстанавливают HP/MP из инвентаря. Для MP-предмета используй `BattleConsumable.manaRestoration`.
 
 ## 9. Ограничения и проверки
 
-Только Self/Opponent, без выбора союзника/воскрешения/статусов. Fire игнорирует физический Defend/crit/miss. При полном HP Heal разрешён с расходом 6 MP и лечением 0. Проверено Edit/Play.
+Только цель Self/Opponent, нет выбора союзника, статусов, воскрешения и лечения заклинанием. Fire игнорирует физический Defend, крит и промах. MP не сохраняется на диск, но переживает переход в бой и обратно в рамках сессии. EditMode-тесты проверяют расход, нехватку MP, мёртвых участников и границы; PlayMode — меню, VFX и возврат с тем же MP.
 
-Документ описывает текущую рабочую копию на 2026-10-11. Отдельные методы и поля см. в [указателе скриптов](../README.md#описания-скриптов).
+## История
 
-## Проверка и история сопровождения
-
-2026-10-12 — BattleSpell.LocalizedName использует localizationId (spell.fire/spell.heal), ключи и описания сохранены в английской StringTable. Данные стоимости/эффектов/целей и технические ID не заменены. Magic и сообщения читают GameText; отдельного окна описания заклинания пока нет. Текущие проверки: [EnglishLocalization](../EnglishLocalization.md), расширение текста: [LocalizationSystem](LocalizationSystem.md).
-
-2026-10-11 — существующие изменения этапа 2 сохранены вместе с этим документом в локальном Git. Повторно прошли 40 тестов Edit Mode и 17 тестов Play Mode; Console до и после — без ошибок и предупреждений. Это проверка существующих сценариев редактора; ручная оценка удобства/баланса и сборка вне Editor остаются отдельными проверками. Новые игровые системы в задаче главного промпта повторно не создавались, push не выполнялся. Подробности и точные job ID: [Testing](../Testing.md#повторная-проверка-по-главному-промпту).
+- 2026-10-31 — удалён Heal; магия ограничена `MagicDamage`.
+- 2026-10-11 — базовая система магии.

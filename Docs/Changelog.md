@@ -1,5 +1,17 @@
 # История значимых изменений FalseMemory
 
+## 2026-10-31 — упрощение игры и MP-полоса
+
+**Удалено:** локализация (`GameText`, `LocalizedLabel`, Unity StringTables, Addressables, пакет `com.unity.localization`, ссылки в asmdef), уровни/EXP/growth (`CharacterGrowthRules`, `level`, `currentExperience`, `experienceReward`, `ProgressChanged`), редкость предметов (`rarity`, `ItemRarity`), подбор предметов (`PlayerInteractor`, `WorldItemPickup`, `IWorldInteractable`), заклинание Heal и вкладка Items в боевом меню. Idle-анимации игрока и скелета удалены: в покое показывается статичный кадр, Animator включается только при движении.
+
+**Изменено:** инвентарь сведён к 30 слотам и категориям `Consumable`/`Weapon`/`Armor`; экипировка — только `Weapon` и `Chest`; бонусы — только `attack`/`defense`. Стартовый набор: Iron Sword ×1, Leather Armor ×1, Potion ×3. Боевые команды: Attack, Magic, Defend, Flee. Все игровые тексты в сценах — английские строки; Docs остаются русскими. В `SampleScene` добавлена MP-полоса `ManaHUD` (`ManaSlider` + `MPText`), читающая `BattleUnit.CurrentMP/MaxMP`.
+
+**Удалённые ассеты:** `Heal.asset`, `Ether`, `EtherVisual`, `Bone`, `IronHelmet`, `WoodenStaff`, `DefaultCharacterGrowth`, данные Addressables/Localization. `HealVisual.asset` оставлен, но ни одним заклинанием не используется.
+
+**Проверки:** EditMode **59/59**, PlayMode **36/36**, 0 failed/skipped; Console без ошибок и предупреждений. MCP-проверка сцен: Missing Script = 0, ссылки `ManaHUD` заполнены, `equipmentButtons.Length == 2`, `slots.Length == 30`, `border` назначен, в `BattleScene` нет Items/Heal/LV/EXP. Добавлен PlayMode-тест `WorldManaBarFollowsSharedManaWithoutChangingIt`. Ручная визуальная оценка полосы, инвентаря и боя остаётся за владельцем.
+
+**Ограничения:** дисковых сохранений, классов, квестов, торговли и партийного боя по-прежнему нет; standalone-сборка отдельно не проверялась. Push не выполнялся до отдельной команды владельца.
+
 ## 2026-10-25 — сценовая композиция: меньше кода, больше объектов
 
 Главное меню, настройки, инвентарь, боевой UI, VFX и затемнение перехода перенесены из рантайм-построения в сохранённые объекты сцен. В `MainMenu` созданы Canvas/фон/MenuRoot/три кнопки/SettingsDim/панель/слайдер/EventSystem и объект `Menu` с `MainMenuController`/`SettingsMenu`; подписи получили `LocalizedLabel`, кнопки — persistent-события. В `SampleScene` сохранены `BattleFadeCanvas/Fade` + `BattleScreenFade`. В `BattleScene` добавлен `BattleContent/VFXLayer` с `PixelSpellFrame` и 24 `BattleParticle*`.

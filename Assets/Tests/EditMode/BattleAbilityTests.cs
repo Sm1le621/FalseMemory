@@ -5,7 +5,7 @@ public sealed partial class BattleAbilityTests
 {
     private GameObject playerObject, enemyObject;
     private BattleUnit player, enemy;
-    private BattleSpell fire, heal;
+    private BattleSpell fire;
     private BattleRules rules;
     private BattleConsumable potion;
 
@@ -18,9 +18,8 @@ public sealed partial class BattleAbilityTests
         player.maxMP = 30; player.RestoreMP(30); player.magicAttack = 12; enemy.magicDefense = 3;
         rules = ScriptableObject.CreateInstance<BattleRules>();
         fire = ScriptableObject.CreateInstance<BattleSpell>();
-        heal = ScriptableObject.CreateInstance<BattleSpell>();
-        heal.displayName = "Heal"; heal.mpCost = 6; heal.effect = BattleEffect.RestoreHealth;
-        heal.target = BattleTarget.Self; heal.power = 25;
+        fire.displayName = "Fire"; fire.mpCost = 8; fire.effect = BattleEffect.MagicDamage;
+        fire.target = BattleTarget.Opponent; fire.power = 10;
         potion = ScriptableObject.CreateInstance<BattleConsumable>();
         playerObject.AddComponent<BattleInventory>().items.Add(new BattleItemStack {definition = potion, count = 3});
     }
@@ -28,7 +27,7 @@ public sealed partial class BattleAbilityTests
     [TearDown] public void Cleanup()
     {
         Object.DestroyImmediate(playerObject); Object.DestroyImmediate(enemyObject);
-        Object.DestroyImmediate(fire); Object.DestroyImmediate(heal); Object.DestroyImmediate(rules);
+        Object.DestroyImmediate(fire); Object.DestroyImmediate(rules);
         Object.DestroyImmediate(potion);
     }
 
@@ -47,23 +46,21 @@ public sealed partial class BattleAbilityTests
         Assert.That(player.CurrentMP, Is.EqualTo(7)); Assert.That(enemy.Health.currentHealth, Is.EqualTo(60));
     }
 
-    [TestCase(40, 65, 25)] [TestCase(95, 100, 5)] [TestCase(100, 100, 0)]
-    public void HealCapsHealthAndReturnsActualAmount(int initial, int expected, int restored)
+    [Test] public void DeadCasterOrTargetCannotCast()
     {
-        player.Health.currentHealth = initial;
-        Assert.That(BattleAbilities.TryCast(player, player, heal, rules, out int amount), Is.True);
-        Assert.That(amount, Is.EqualTo(restored)); Assert.That(player.Health.currentHealth, Is.EqualTo(expected));
-        Assert.That(player.CurrentMP, Is.EqualTo(24));
-    }
-
-    [Test] public void DeadCasterOrTargetAndIncorrectTargetsCannotCast()
-    {
-        Assert.That(BattleAbilities.TryCast(player, enemy, heal, rules, out _), Is.False);
         enemy.Health.currentHealth = 0;
         Assert.That(BattleAbilities.TryCast(player, enemy, fire, rules, out _), Is.False);
         player.Health.currentHealth = 0;
-        Assert.That(BattleAbilities.TryCast(player, player, heal, rules, out _), Is.False);
+        Assert.That(BattleAbilities.TryCast(player, player, fire, rules, out _), Is.False);
         Assert.That(player.CurrentMP, Is.EqualTo(30));
+    }
+
+    [Test] public void SelfTargetedDamageSpellCannotBeCastOnTheOpponent()
+    {
+        fire.target = BattleTarget.Self;
+        Assert.That(BattleAbilities.TryCast(player, enemy, fire, rules, out _), Is.False);
+        Assert.That(BattleAbilities.TryCast(player, player, fire, rules, out _), Is.True);
+        Assert.That(player.Health.currentHealth, Is.EqualTo(78));
     }
 
     [Test] public void ManaNeverGoesNegativeOrAboveMaximum()

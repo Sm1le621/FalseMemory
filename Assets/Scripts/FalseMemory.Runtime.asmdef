@@ -1,5 +1,5 @@
 {
   "name": "FalseMemory.Runtime",
-  "references": ["Unity.InputSystem", "Unity.TextMeshPro", "UnityEngine.UI", "Unity.Localization"],
+  "references": ["Unity.InputSystem", "Unity.TextMeshPro", "UnityEngine.UI"],
   "autoReferenced": true
 }

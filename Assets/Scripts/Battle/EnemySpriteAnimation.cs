@@ -29,6 +29,7 @@ public sealed class EnemySpriteAnimation : MonoBehaviour
         if(clock<hurtUntil){visual.sprite=set.At(SpritePose.Hurt,1-(hurtUntil-clock)/Mathf.Max(0.05f,hurtDuration),unit.battleSprite);return;}
         bool moving=displacement.sqrMagnitude>movementThreshold*movementThreshold;
         if(faceMovement && moving && Mathf.Abs(displacement.x)>movementThreshold)visual.flipX=displacement.x<0;
-        visual.sprite=set.Loop(moving?SpritePose.Move:SpritePose.Idle,clock,unit.battleSprite);
+        // Standing still shows a single static frame; there is no idle animation.
+        visual.sprite=moving?set.Loop(SpritePose.Move,clock,unit.battleSprite):unit.battleSprite;
     }
 }

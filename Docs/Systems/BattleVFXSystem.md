@@ -1,11 +1,46 @@
 # Магические эффекты боя
 
-2026-10-12 — FireVisual/HealVisual имеют по8 native PNG64×64, duration0.6 и frameSize128; Controller переиспользует один PixelSpellFrame поверх прежних частиц. Кадр следует портрету и очищается при завершении/disable/unload; пустые массивы сохраняют fallback. Magic/Items не включают старый сплошной glow, физическое попадание использует64px Hit/Slash-маску BattleUI. [Проверки и исходники](../PixelVisuals.md).
+## 1. Назначение
 
-BattleVFXController использует 24 заранее сохранённых `Image` (`BattleParticle0…23`) и один `PixelSpellFrame` в `BattleScene/BattleCanvas/BattleContent/VFXLayer`; контроллер только включает, двигает и выключает их, ничего не создавая в рантайме. FireVisual показывает кадры пламени и оранжевые частицы, HealVisual — кадры кольца/искр и зелёные ромбы; Potion использует лечебный вариант. Play запускается после успешного применения ресурса в Manager, в тот же кадр, и не пишет HP/MP/предметы.
+Визуальные эффекты заклинаний и физических попаданий: кадры `BattleVFXProfile` и частицы в `BattleScene`. Эффекты не меняют HP/MP и не задерживают очередь.
 
-BattleSpell.visualEffect ссылается на BattleVFXProfile. Создать новый профиль через Create → FalseMemory → Battle VFX Profile: цвет, форма Rising/Orbit/Burst, duration, размер/радиус/количество и необязательный Sprite. Можно подготовить оформление Ice/Thunder/Holy/Dark, но сами новые заклинания сейчас не реализованы. Отсутствующие профили имеют fallback, отключение/выгрузка очищает пул. Эффекты не блокируют ход и не требуют Animator/частиц 3D/новых пакетов.
+## 2. Общая логика
 
-Детали: [профиль](../Scripts/Battle/BattleVFXProfile.md), [контроллер](../Scripts/Battle/BattleVFXController.md). Проверка Play Mode подтверждает один запуск, завершение и сохранение правил при отсутствии VFX; внешний вид оценивать в Game View.
+`BattleVFXController` использует 24 заранее сохранённых `Image` и один `PixelSpellFrame`. `Play` запускается после успешного `TryCast` и выбирает профиль заклинания либо fallback. Анимация показывает кадры и двигает частицы по форме Rising/Orbit/Burst, затем очищает пул. Отключение компонента или выгрузка сцены также очищает эффект.
 
-2026-10-25 — пул частиц и кадр перенесены из кода в `BattleScene`; `VFXLayer` — последний sibling `BattleContent` с anchor (0,0), pivot (0.5,0.5) и size 0, чтобы координаты совпадали с портретами. Список недостающих спрайтов частиц: [RequiredSprites](../Art/RequiredSprites.md).
+## 3. Основные компоненты
+
+- `BattleVFXController` — проигрывание/очистка.
+- `BattleVFXProfile` — ScriptableObject настроек.
+- `BattleSpell.visualEffect` — ссылка на профиль.
+- `BattleUI` — портрет цели и `impactSprite`.
+- `BattleManager` — момент запуска.
+
+## 4. Взаимодействие скриптов
+
+`BattleManager` вызывает `vfx.Play(target == Player, spell.visualEffect, spell.effectColor, false)` после успешного применения. `BattleUI.ShowFeedback` показывает число; для магии сплошная вспышка отключена. `BattlePresentation` не зависит от VFX.
+
+## 5. Последовательность событий
+
+Успешный Fire → `EffectsPlayed++` → кадры/частицы → завершение → `Clear` → `ActiveParticles = 0`. При отсутствии VFX или профиля бой продолжается, урон/MP применяются один раз.
+
+## 6. Настраиваемые параметры
+
+`FireVisual`: 8 кадров 64×64, duration 0.6, frameSize 128, оранжевые частицы. `HealVisual` остаётся в проекте как fallback, но лечебных заклинаний нет. Профиль задаёт `particleCount` 4…24, `duration` 0…2, `radius` 0…100, `particleSize` 1…24, цвет, форму и спрайт.
+
+## 7. Использование в Unity
+
+Пул частиц и кадр находятся в `BattleScene/BattleCanvas/BattleContent/VFXLayer`. Назначь `BattleManager.vfx`, `BattleVFXController.ui`, `fireProfile`. Для нового заклинания создай профиль через `Create → FalseMemory → Battle VFX Profile` и назначь его в `BattleSpell`.
+
+## 8. Расширение
+
+Новый эффект — новый профиль или кадры; контроллер менять не нужно, если форма/частицы подходят. Для принципиально новой анимации потребуется расширение `BattleVFXShape`/контроллера. Не создавай GameObject эффектов в рантайме.
+
+## 9. Ограничения и проверки
+
+Нет 3D-частиц и Animator. `HealVisual` не используется текущей магией. Отсутствующий профиль безопасен. PlayMode проверяет один запуск, завершение, отключённый VFX и отсутствие изменения ресурсов; визуальная оценка — за владельцем.
+
+## История
+
+- 2026-10-31 — удалено лечебное заклинание; HealVisual оставлен как неиспользуемый fallback.
+- 2026-10-12 — базовые пиксельные VFX.

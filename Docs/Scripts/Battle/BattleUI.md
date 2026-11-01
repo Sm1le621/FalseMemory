@@ -2,97 +2,66 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleUI.cs.
+Исходник: `Assets/Scripts/Battle/BattleUI.cs`.
 
-Существующий интерфейс боя: сообщения, характеристики, меню, портреты, цветные эффекты и результаты. В этапе 3.1 оформление делегируется назначенному BattleHUD: RenderMenu вызывает StyleCommand, ShowMenu — MenuChanged, ShowUnits — Bind. Без HUD сохранён прежний формат Stats. RefreshStats с HUD показывает компактные HP/MP и имя/HP врага. ShowFeedback размещает число и вспышку относительно позиции/размера портрета, включая фиксированные якоря нового макета.
+Интерфейс боя: сообщение, характеристики участников, номер раунда, портреты, меню команд, всплывающие числа попаданий и окно результата. Компонент только отображает данные и передаёт выбранную команду через callbacks; он не меняет HP/MP.
 
 ## 2. Как работает
 
-Этап 3.4: необязательный audioController. ShowMenu отправляет MenuOpen; Select при смене индекса — Move; Invoke перед разрешённым callback — Confirm; успешный CancelMenu перед backAction — Cancel. Пустые клипы/ссылка не влияют на ввод.
+`Awake` отключает у `InputSystemUIInputModule` обработку move/submit/cancel, чтобы клавиатура не срабатывала дважды, и подписывает кнопки на `Invoke`. `Update` вручную читает стрелки/WASD, Enter и Escape, пока меню активно. `ShowMenu` сохраняет подписи, действия, доступность и необязательный обработчик возврата, сбрасывает выбор и блокирует приём на один кадр.
 
-Этап 3.2: ShowFeedback задаёт больший размер CRITICAL, Feedback поднимает число на 22 единицы и гасит alpha в конце; MISS не включает feedbackGlow. feedbackDuration в коде и сцене 0.8 секунды. Health/MP не изменяются из эффектов.
-
-Awake подключает мышь и отключает дублирующий keyboard Submit модуля UI. Update вручную обрабатывает отдельные нажатия стрелок/WASD/Enter/Escape. ShowMenu назначает подписи/callbacks, прокрутка использует пять сохранённых кнопок. Manager обновляет характеристики и сообщения.
+`RenderMenu` активирует только нужные кнопки, ставит маркер `>` у выбранной строки, задаёт цвет и `interactable`. Если назначен `BattleHUD`, оформление делегируется ему. `ShowUnits` применяет портреты и сразу обновляет характеристики. `RefreshStats` выводит HP/MP, ATK/DEF/SPD, содержимое инвентаря и состояние защиты. Победа и поражение показывают отдельное окно результата.
 
 ## 3. Методы и функции
 
-ShowVictoryResults выбирает battle.victory_level_up_result при LevelsGainedLastAward>0: EXP/Level Up/Next или Maximum Level. Обычная победа без повышения сохраняет старый ключ; результат после TryGrantVictoryExperience читает актуальный Unit.
+- `Awake()` — Unity callback; настраивает EventSystem и listeners кнопок.
+- `Update()` — читает клавиатуру: стрелки/WASD меняют выбор, Enter вызывает, Escape выполняет `CancelMenu`.
+- `Invoke(int index)` — проверяет включённость меню, диапазон, доступность и защиту от повторного кадра; проигрывает звук подтверждения и вызывает callback.
+- `ShowMenu(string[] names, Action[] actions, bool[] enabledOptions = null, Action onBack = null)` — проверяет совпадение длин массивов, сохраняет меню, включает ввод, обновляет `BattleHUD`; void.
+- `CancelMenu()` → `bool`; вызывает `backAction`, если он есть и ввод разрешён.
+- `Select(int index)` — меняет выбранную строку, корректирует прокрутку и вызывает `RenderMenu`.
+- `RenderMenu()` — обновляет видимость, текст, цвет, доступность кнопок и значки через `BattleHUD.StyleCommand`.
+- `SetCommandsEnabled(bool enabled)` — включает/выключает приём команд и перерисовывает меню.
+- `ShowFeedback(bool onPlayer, string text, Color color, bool showImpact = true)` — размещает вспышку и число над портретом цели; при `MISS` вспышка не показывается.
+- `Feedback(Color color, bool showImpact)` — coroutine подъёма и затухания текста.
+- `ShowMessage(string message)` — обновляет строку сообщения.
+- `ShowVictoryResults(BattleUnit player)` / `ShowDefeatResults()` — включают панель результата; тексты английские, без опыта и уровней.
+- `ShowUnits(BattleUnit player, BattleUnit enemy)` — применяет портреты, вызывает `RefreshStats` и `BattleHUD.Bind`.
+- `ApplyPortrait`/`PointSprite` — назначают спрайт, цвет, отражение и при необходимости создают Point-копию текстуры через GPU.
+- `OnDestroy()` — освобождает временные спрайты и текстуры.
+- `RefreshStats(BattleUnit player, BattleUnit enemy, int round)` — обновляет оба блока характеристик и номер раунда.
+- `Stats(BattleUnit unit)` — private static; собирает строку `HP`, `MP`, `ATK/DEF/SPD`, инвентарь и `DEFENDING`.
 
-2026-10-12 — native pixel visuals: ShowFeedback(onPlayer,text,color,showImpact=true) назначает mask/Point Sprite вместо сплошного прямоугольника. Feedback(color,showImpact) включает glow только при showImpact и тексте кроме MISS. Magic/Items передаютfalse и показывают собственный VFX; числа сохраняются. Крит использует прежний цвет/размер числа/реакцию.
+## 4. Переменные и Inspector
 
-2026-10-12 — актуальная локализация: ShowVictoryResults/ShowDefeatResults/RefreshStats/Stats и editor builders читают ключи battle.*. Статусы/раунд/EXP форматируются аргументами, Player/Enemy/Spell/Item используют LocalizedName. Устройство меню/ввод/анимации/параметры сохранены.
+- `messageText`, `playerStats`, `enemyStats`, `roundText` — обязательные TMP-поля.
+- `playerPortrait`, `enemyPortrait` — изображения участников.
+- `commandButtons`, `commandLabels` — массивы одинаковой длины; в сцене пять кнопок, но одновременно используется столько строк, сколько передано в меню.
+- `feedbackGlow`, `impactSprite`, `feedbackText`, `feedbackDuration` — эффект попадания; `feedbackDuration ≥ 0.1`, по умолчанию 0.8 с.
+- `resultPanel`, `resultText` — окно победы/поражения.
+- `hud` — необязательный `BattleHUD`; при наличии отвечает за оформление и анимации.
+- `audioController` — необязательный источник звуков меню и подтверждения.
+- `previewPlayerSprite`, `previewEnemySprite` — исходные спрайты для редактора/предпросмотра.
+- `CommandsEnabled`, `MenuCount`, `SelectedIndex` — только чтение.
 
-- Этап 3.5: `ShowDefeatResults()` включает прежний resultPanel с Game Over и вариантами Restart/Main Menu. ShowVictoryResults и ShowDefeatResults запускают hud.RevealResult. RefreshStats не перезаписывает цвет смерти, если есть BattlePresentation.
+## 5. Связи
 
-- `Awake()` — Unity: на текущем EventSystem делает move/submit/cancel=null, подключает listeners кнопок к Invoke.
-- `Update()` — кадр: при активном меню и после acceptAfterFrame клавиатура вызывает Select/Invoke/CancelMenu; удержание Enter не повторяет ход.
-- `Invoke(int index)` — внутренний void: проверяет доступность/диапазон/кадр и вызывает callback.
-- `ShowMenu(string[] names,Action[] actions,bool[] enabledOptions=null,Action onBack=null)` — проверяет равную длину, сбрасывает выбор/scroll, задерживает приём на кадр, включает меню; void.
-- `CancelMenu()` → bool; при разрешённом возврате вызывает backAction, иначе false.
-- `Select(int index)` — меняет выбор/firstVisible и RenderMenu; void.
-- `RenderMenu()` — активирует нужные кнопки, обновляет подписи, цвета и interactable.
-- `SetCommandsEnabled(bool enabled)` — состояние меню и RenderMenu.
-- `ShowFeedback(bool onPlayer,string text,Color color)` — привязывает эффект к портрету, заменяет прежнюю coroutine Feedback.
-- `Feedback(Color color)` — coroutine синусной вспышки/временного текста; в конце скрывает.
-- `ShowMessage(string message)` — обновляет messageText; `ShowVictoryResults(int gained,BattleUnit player)` — включает окно и четыре строки результата; void.
-- `ShowUnits(BattleUnit player,BattleUnit enemy)` — ApplyPortrait и RefreshStats.
-- `ApplyPortrait(Image image,BattleUnit unit)` — sprite/color/flip. `PointSprite(Sprite source)` → исходный или временный Point-спрайт, копируя непрочитанную текстуру через GPU.
-- `OnDestroy()` — Unity: освобождает временные текстуры/спрайты pointSprites.
-- `RefreshStats(BattleUnit player,BattleUnit enemy,int round)` — тексты/раунд/тусклый портрет погибшего; `Stats(BattleUnit unit)` → строка HP/MP/характеристик/инвентаря/EXP/Defend.
-- Editor-методы `BuildLayout()`/`UpgradeLayout()` удалены: все объекты и ссылки боевого UI сохранены в `BattleScene`.
-- Editor-помощники: `Fit(RectTransform rect,Vector2 min,Vector2 max)` задаёт якоря; `Panel(Transform parent,string name,Color color,Vector2 min,Vector2 max)` → Image; `Portrait(...,Sprite sprite,...)` → Image; `Label(Transform parent,string name,string value,int size,Vector2 min,Vector2 max)` → TMP. Только создание в Editor, не игровой цикл.
+Компонент находится на `BattleManager` в `BattleScene`. Использует `BattleUnit`, `Health`, `BattleInventory`, `BattleHUD`, `BattleAudioController` и TMP/uGUI/Input System. `BattleManager` вызывает меню, сообщения и обновление; `BattlePresentation` двигает портреты, но не меняет боевые значения. `BattleHUD` читает те же HP/MP.
 
-## 4. Переменные и параметры Inspector
+## 6. Пример
 
-Новых Inspector-полей в5.1 нет; resultText/image/layout прежние.
-
-impactSprite — новый необязательный Sprite маски физического попадания; в BattleScene назначен Assets/Art/VFX/Hit64/Impact.png. Размеры/позиции/числа прежние.
-
-Обязательны messageText/playerStats/enemyStats/roundText, playerPortrait/enemyPortrait, равные массивы commandButtons/commandLabels (в сцене 5). feedbackGlow/feedbackText — ссылки эффектов; feedbackDuration≥0.1, в коде и сцене 0.8 сек. resultPanel/resultText — победа. previewPlayerSprite/previewEnemySprite — начальное оформление Editor. hud — необязательный BattleHUD, назначенный в текущей сцене. CommandsEnabled/MenuCount/SelectedIndex — чтение. Canvas ScaleWithScreenSize960×540, match1 (по высоте); содержимое ограничено шириной 960, меню и текст имеют якоря/авторазмер.
-
-## 5. Связи с другими системами
-
-GameText и5 новых ключей в native таблице; роста ресурсов в UI нет.
-
-GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
-
-Компонент на BattleManager в BattleScene; Manager назначает callbacks и обновления. Требуются TMP/uGUI/Input System/EventSystem. Source-спрайты не меняются; их временные копии освобождаются.
-
-## 6. Пример работы
-
-Magic → Fire 8 MP и Heal6 MP → Escape возвращает Attack/Magic/Items/Defend/Flee без хода. Fire выводит оранжевую вспышку и число над противником.
+В ход игрока отображается меню `Attack / Magic / Defend / Flee`. Выбор `Magic` открывает список заклинаний с ценой MP и пунктом `Back`; Escape возвращает в главное меню без расхода хода. После попадания над портретом врага поднимается `−19`, а строка сообщения показывает имя атакующего и урон.
 
 ## 7. Настройка в Unity
 
-На BattleManager BattleScene. Назначь TMP-поля сообщений/характеристик/раунда, Image-портреты, пять Button и соответствующие пять Label, AbilityGlow/AbilityAmount и окно BattleResults/VictoryResultText. Canvas Scale With Screen Size 960×540. Всё оформление сохранено в сцене; перестраивать его кодом не нужно.
+Назначь TMP-поля, оба портрета, пять кнопок и пять подписей, эффект попадания и панель результата. Canvas должен использовать Scale With Screen Size 960×540. `BattleHUD` и `BattlePresentation` назначаются на том же объекте или отдельно, как в текущей сцене. Список команд формируется кодом, поэтому добавлять кнопку Items не нужно.
 
-## 8. Возможные проблемы и проверки
+## 8. Возможные проблемы
 
-Отсутствующие основные ссылки/несогласованные массивы дают ошибки. UI listeners button.onClick в тестах проверяют обработку команд, не весь физический путь курсора. Only Enter, не Space. Gamepad нет. Длинные списки прокручиваются, выбор цели партии отсутствует. Меню, сообщения и эффекты проверены Play Mode; на этапе 3.6 через MCP проверены главное меню, Magic, Items, Victory и Game Over в 1280×720, 1920×1080, 2560×1440 и 3440×1440; границы/переполнение проверены автоматически, снимки просмотрены.
+Несовпадение длин `commandButtons` и `commandLabels` даёт ошибку. Без `messageText`, портретов или панели результата соответствующие вызовы не сработают. Клавиатура обрабатывается только при фокусе Game View; геймпад не поддерживается. Прокрутка рассчитана на число видимых кнопок. Вспышка не должна использоваться как источник урона: числа приходят из `BattleCalculator`.
 
 ## 9. История изменений
 
-2026-10-12 —5.1: кривая EXP/производный рост/Level Up при прежнем владельце HP. [Проверки](../../ProgressionStage5.md).
-
-2026-10-12 — кадры Skeleton64/Fire/Heal/Hit подключены к существующему представлению; игровые ресурсы не перенесены в анимации. [Текущие проверки](../../PixelVisuals.md).
-
-2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
-- 2026-10-12 — 4.5: fallback Stats читает итоговые ATK/DEF/Speed с экипировкой, ресурсы прежние.
-
-- 2026-10-11 — 3.6: feedback привязан к внутренней области портрета, чёрная обводка; проверены пять состояний на четырёх разрешениях.
-
-- 2026-10-11 — 3.5: Game Over и проявление окон исходов.
-
-- 2026-10-11 — 3.4: звуковые события меню.
-
-- 2026-10-11 — 3.2: всплывающие числа и отсутствие вспышки при MISS.
-
-- 2026-10-11 — этап 3.1: связь с BattleHUD, компактные характеристики, цвета выбора и привязка feedback к фиксированному макету. Игровые формулы сохранены.
-
-- 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
-
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
-
-- 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
-
-- 2026-10-25 — удалены Editor-методы `BuildLayout`/`UpgradeLayout`; UI остаётся объектами `BattleScene`.
+- 2026-10-31 — удалены Items и Heal, характеристики без LV/EXP; результат победы не содержит опыта; меню сокращено до четырёх команд.
+- 2026-10-12 — английские строки и пиксельные эффекты; запись историческая, `GameText` удалён.
+- 2026-10-11 — оформление HUD, всплывающие числа и окно результата.

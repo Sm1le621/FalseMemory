@@ -21,7 +21,6 @@ public sealed class BattleManager : MonoBehaviour
     private readonly BattleTurnOrder<BattleUnit> turns = new BattleTurnOrder<BattleUnit>();
     private BattleAction? pendingAction;
     private BattleSpell pendingSpell;
-    private BattleConsumable pendingItem;
     private IBattleRandom random = UnityBattleRandom.Instance;
     public void SetRandomSource(IBattleRandom source) => random = source ?? throw new ArgumentNullException(nameof(source));
 
@@ -30,8 +29,8 @@ public sealed class BattleManager : MonoBehaviour
         transition = BattleTransition.Instance;
         if (transition == null || !transition.EncounterActive)
         {
-            ui.ShowMessage(GameText.Get("battle.preview"));
-            ui.ShowMenu(new[] { GameText.Get("menu.explore"), GameText.Get("menu.main") }, new System.Action[] {
+            ui.ShowMessage("Preview mode. Start from the map and touch the skeleton to fight.");
+            ui.ShowMenu(new[] { "Explore Map", "Main Menu" }, new System.Action[] {
                 () => UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene"),
                 () => UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu") });
             yield break;
@@ -40,7 +39,7 @@ public sealed class BattleManager : MonoBehaviour
         ui.ShowUnits(Player, Enemy);
         if (presentation != null) presentation.Bind(Player, Enemy);
         if (ui.hud != null) ui.hud.HideForEntrance();
-        ui.ShowMessage(GameText.Get("battle.encounter"));
+        ui.ShowMessage("A skeleton bars your path.");
         ui.SetCommandsEnabled(false);
         while (transition.IsTransitioning) yield return null;
         if (ui.hud != null) yield return ui.hud.RevealScreen(rules.actionDelay);
@@ -60,8 +59,7 @@ public sealed class BattleManager : MonoBehaviour
                     State = BattleState.AwaitingPlayer;
                     pendingAction = null;
                     pendingSpell = null;
-                    pendingItem = null;
-                    ui.ShowMessage(GameText.Get("battle.your_turn"));
+                    ui.ShowMessage("Your turn.");
                     gate.Open();
                     ShowMainMenu();
                     while (!pendingAction.HasValue && Player.IsAlive && Enemy.IsAlive) yield return null;
@@ -69,7 +67,7 @@ public sealed class BattleManager : MonoBehaviour
                 else
                 {
                     State = BattleState.Resolving;
-                    ui.ShowMessage(GameText.Get("battle.thinking", Enemy.LocalizedName));
+                    ui.ShowMessage(Enemy.displayName + " is thinking...");
                     yield return Pause(true);
                     if (!Player.IsAlive || !Enemy.IsAlive) break;
                     pendingAction = EnemyBattleAI.Choose(rules, random);
@@ -91,38 +89,24 @@ public sealed class BattleManager : MonoBehaviour
                     if (audioController != null) audioController.Play(BattleSound.Flee);
                     bool escaped = BattleCalculator.ChanceSucceeds(BattleCalculator.FleeChance(Player.Speed, Enemy.Speed, rules), random.Next01());
                     if (escaped) { State = BattleState.Escaped; CurrentActor = null; }
-                    ui.ShowMessage(escaped ? GameText.Get("battle.escaped") : GameText.Get("battle.escape_failed"));
+                    ui.ShowMessage(escaped ? "Escaped! Returning to the map." : "Couldn't escape!");
                 }
                 else if (pendingAction == BattleAction.Defend)
                 {
                     actor.Defend();
                     if (audioController != null) audioController.Play(BattleSound.Defend);
                     int reduction = Mathf.RoundToInt((1f - Mathf.Clamp01(rules.defendMultiplier)) * 100f);
-                    ui.ShowMessage(GameText.Get("battle.defend", actor.LocalizedName, reduction));
-                }
-                else if (pendingAction == BattleAction.Items)
-                {
-                    var itemTarget = pendingItem.target == BattleTarget.Self ? actor : target;
-                    if (BattleAbilities.TryUseItem(actor, itemTarget, pendingItem, out int amount))
-                    {
-                        if (audioController != null) audioController.Play(BattleSound.Potion);
-                        string resource=pendingItem.manaRestoration>0?"MP":"HP";
-                        ui.ShowMessage(GameText.Get("battle.item_used", actor.LocalizedName, pendingItem.LocalizedName, amount, resource));
-                        ui.ShowFeedback(itemTarget == Player, "+" + amount + " "+resource, pendingItem.effectColor,false);
-                        if (vfx != null) vfx.Play(itemTarget == Player, pendingItem.visualEffect, pendingItem.effectColor, true);
-                    }
+                    ui.ShowMessage(actor.displayName + " defends. Physical damage reduced by " + reduction + "%.");
                 }
                 else if (pendingAction == BattleAction.Magic)
                 {
-                    var spellTarget = pendingSpell.target == BattleTarget.Self ? actor : target;
-                    if (BattleAbilities.TryCast(actor, spellTarget, pendingSpell, rules, out int amount))
+                    if (BattleAbilities.TryCast(actor, target, pendingSpell, rules, out int amount))
                     {
-                        bool healing = pendingSpell.effect == BattleEffect.RestoreHealth;
-                        if (audioController != null) audioController.Play(healing ? BattleSound.Heal : BattleSound.Fire);
-                        hit = !healing;
-                        ui.ShowMessage(healing ? GameText.Get("battle.spell_heal",actor.LocalizedName,pendingSpell.LocalizedName,amount) : GameText.Get("battle.spell_damage",actor.LocalizedName,pendingSpell.LocalizedName,amount));
-                        ui.ShowFeedback(spellTarget == Player, (healing ? "+" : "−") + amount + (healing ? " HP" : " " + pendingSpell.LocalizedName), pendingSpell.effectColor,false);
-                        if (vfx != null) vfx.Play(spellTarget == Player, pendingSpell.visualEffect, pendingSpell.effectColor, healing);
+                        if (audioController != null) audioController.Play(BattleSound.Fire);
+                        hit = true;
+                        ui.ShowMessage(actor.displayName + " casts " + pendingSpell.displayName + ": " + amount + " damage.");
+                        ui.ShowFeedback(target == Player, "−" + amount + " " + pendingSpell.displayName, pendingSpell.effectColor, false);
+                        if (vfx != null) vfx.Play(target == Player, pendingSpell.visualEffect, pendingSpell.effectColor, false);
                     }
                 }
                 else
@@ -132,16 +116,16 @@ public sealed class BattleManager : MonoBehaviour
                     if (result.Missed)
                     {
                         if (audioController != null) audioController.Play(BattleSound.Miss);
-                        ui.ShowMessage(GameText.Get("battle.missed", actor.LocalizedName));
-                        ui.ShowFeedback(target == Player, GameText.Get("battle.miss"), Color.white);
+                        ui.ShowMessage(actor.displayName + " attacks: MISS.");
+                        ui.ShowFeedback(target == Player, "MISS", Color.white);
                     }
                     else
                     {
                         target.Health.TakeDamage(result.Damage);
                         hit = true; criticalHit = result.Critical;
                         if (audioController != null) audioController.Play(result.Critical ? BattleSound.Critical : BattleSound.Hit);
-                        ui.ShowMessage((result.Critical ? GameText.Get("battle.critical")+" " : "") + GameText.Get("battle.attack", actor.LocalizedName, target.LocalizedName, result.Damage));
-                        ui.ShowFeedback(target == Player, (result.Critical ? GameText.Get("battle.critical")+"\n" : "") + "−" + result.Damage,
+                        ui.ShowMessage((result.Critical ? "CRITICAL! " : "") + actor.displayName + " attacks " + target.displayName + ": " + result.Damage + " damage.");
+                        ui.ShowFeedback(target == Player, (result.Critical ? "CRITICAL!\n" : "") + "−" + result.Damage,
                             result.Critical ? new Color(1f, 0.82f, 0.2f) : new Color(1f, 0.4f, 0.4f));
                     }
                 }
@@ -165,11 +149,10 @@ public sealed class BattleManager : MonoBehaviour
             if(presentation!=null)yield return presentation.Finish(BattleState.Victory,rules.actionDelay);
             State = BattleState.Victory;
             if (audioController != null) audioController.Play(BattleSound.Victory);
-            transition.TryGrantVictoryExperience(out int gained);
             ui.RefreshStats(Player, Enemy, Round);
-            ui.ShowVictoryResults(gained, Player);
-            ui.ShowMessage(GameText.Get("battle.victory_message"));
-            ui.ShowMenu(new[] { GameText.Get("menu.return_map") }, new System.Action[] {
+            ui.ShowVictoryResults(Player);
+            ui.ShowMessage("Victory! The skeleton is defeated.");
+            ui.ShowMenu(new[] { "Return to Map" }, new System.Action[] {
                 () => { if (transition.ReturnAfterVictory()) ui.SetCommandsEnabled(false); } });
         }
         else
@@ -178,9 +161,9 @@ public sealed class BattleManager : MonoBehaviour
             State = BattleState.Defeat;
             if (audioController != null) audioController.Play(BattleSound.Defeat);
             ui.RefreshStats(Player, Enemy, Round);
-            ui.ShowMessage(GameText.Get("battle.defeat_message"));
+            ui.ShowMessage("Defeat. Your journey ends here.");
             ui.ShowDefeatResults();
-            ui.ShowMenu(new[] { GameText.Get("menu.new_game"), GameText.Get("menu.main") }, new System.Action[] {
+            ui.ShowMenu(new[] { "New Game", "Main Menu" }, new System.Action[] {
                 () => { ui.SetCommandsEnabled(false); transition.RestartGame(); },
                 () => { ui.SetCommandsEnabled(false); transition.ReturnToMainMenu(); } });
         }
@@ -209,9 +192,9 @@ public sealed class BattleManager : MonoBehaviour
     public bool ShowMainMenu()
     {
         if (!CanChoose) return false;
-        ui.ShowMessage(GameText.Get("battle.your_turn"));
-        ui.ShowMenu(new[] {GameText.Get("command.attack"), GameText.Get("command.magic"), GameText.Get("command.items"), GameText.Get("command.defend"), GameText.Get("command.flee")}, new Action[] {
-            () => TryPlayerAction(BattleAction.Attack), () => OpenMagicMenu(), () => OpenItemsMenu(),
+        ui.ShowMessage("Your turn.");
+        ui.ShowMenu(new[] { "Attack", "Magic", "Defend", "Flee" }, new Action[] {
+            () => TryPlayerAction(BattleAction.Attack), () => OpenMagicMenu(),
             () => TryPlayerAction(BattleAction.Defend), () => TryPlayerAction(BattleAction.Flee) });
         return true;
     }
@@ -224,13 +207,13 @@ public sealed class BattleManager : MonoBehaviour
         {
             if (spell == null) continue;
             var entry = spell;
-            names.Add(GameText.Get("battle.spell_entry", entry.LocalizedName, entry.mpCost));
+            names.Add(entry.displayName + "   " + entry.mpCost + " MP");
             actions.Add(() => TryPlayerSpell(entry));
             enabled.Add(BattleAbilities.CanCast(Player, entry.target == BattleTarget.Self ? Player : Enemy, entry));
         }
-        if (names.Count == 0) ui.ShowMessage(GameText.Get("battle.no_spells"));
-        else ui.ShowMessage(GameText.Get("battle.choose_spell"));
-        names.Add(GameText.Get("menu.back")); actions.Add(() => ShowMainMenu()); enabled.Add(true);
+        if (names.Count == 0) ui.ShowMessage("No spells available.");
+        else ui.ShowMessage("Choose a spell. Esc to go back.");
+        names.Add("Back"); actions.Add(() => ShowMainMenu()); enabled.Add(true);
         ui.ShowMenu(names.ToArray(), actions.ToArray(), enabled.ToArray(), () => ShowMainMenu());
         return true;
     }
@@ -240,37 +223,6 @@ public sealed class BattleManager : MonoBehaviour
         if (!CanChoose || spell == null || Player.spells == null || Array.IndexOf(Player.spells, spell) < 0 ||
             !BattleAbilities.CanCast(Player, spell.target == BattleTarget.Self ? Player : Enemy, spell) || !gate.TryConsume()) return false;
         pendingSpell = spell; pendingAction = BattleAction.Magic;
-        State = BattleState.Resolving; ui.SetCommandsEnabled(false);
-        return true;
-    }
-
-    public bool OpenItemsMenu()
-    {
-        if (!CanChoose) return false;
-        var names = new List<string>(); var actions = new List<Action>(); var enabled = new List<bool>();
-        bool anyAvailable = false;
-        if (Player.Inventory != null)
-        {
-            foreach (var item in Player.Inventory.Definitions)
-            {
-                var entry = item;
-                names.Add(GameText.Get("item.quantity", entry.LocalizedName, Player.Inventory.Count(entry)));
-                actions.Add(() => TryPlayerItem(entry));
-                bool canUse = BattleAbilities.CanUseItem(Player, entry.target == BattleTarget.Self ? Player : Enemy, entry);
-                enabled.Add(canUse); anyAvailable |= canUse;
-            }
-        }
-        ui.ShowMessage(anyAvailable ? GameText.Get("battle.choose_item") : GameText.Get("battle.no_items"));
-        names.Add(GameText.Get("menu.back")); actions.Add(() => ShowMainMenu()); enabled.Add(true);
-        ui.ShowMenu(names.ToArray(), actions.ToArray(), enabled.ToArray(), () => ShowMainMenu());
-        return true;
-    }
-
-    public bool TryPlayerItem(BattleConsumable item)
-    {
-        if (!CanChoose || item == null || !BattleAbilities.CanUseItem(Player, item.target == BattleTarget.Self ? Player : Enemy, item) ||
-            !gate.TryConsume()) return false;
-        pendingItem = item; pendingAction = BattleAction.Items;
         State = BattleState.Resolving; ui.SetCommandsEnabled(false);
         return true;
     }

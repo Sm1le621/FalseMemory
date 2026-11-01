@@ -2,42 +2,47 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Inventory/InventoryTooltip.cs.
+Исходник: `Assets/Scripts/Inventory/InventoryTooltip.cs`.
 
-Одна неперехватывающая мышь hover-панель для предметов сумки и экипировки.
+Всплывающая подсказка предмета в окне инвентаря: имя, тип, бонусы, описание, цены. Показывается при наведении на слот сумки или экипировки; боевые значения не меняет.
 
 ## 2. Как работает
 
-Show запоминает источник, читает живой предмет/количество, строит текст и размер. LateUpdate следует за мышью. Position ограничивает панель Canvas; при пустом источнике, закрытии или drag подсказка скрывается.
+`Show(InventorySlotView, position)` или `Show(EquipmentSlotView, position)` запоминает источник и позицию, затем вызывает `RefreshContent`. Метод проверяет, что окно открыто и не идёт перетаскивание, получает `ItemData` и количество, формирует описание через `ItemPresentation.Description`, задаёт ширину/высоту панели и включает её. `LateUpdate` следует за курсором, пока подсказка видима. `Hide` скрывает панель; если передан другой вызывающий объект, скрытие игнорируется.
 
 ## 3. Методы и функции
 
-`Show(InventorySlotView,position)` и `Show(EquipmentSlotView,position)` void выбирают источник и вызывают RefreshContent. `Hide(caller=null)` void: без caller скрывает всё, с caller только его подсказку — поздний Exit другой ячейки не закрывает новую. `RefreshContent()` void проверяет владельца/IsOpen/dragIcon, читает State либо EquipmentSlotView.Item; null → Hide. Назначает текст/рамку, ширину≤320/высоту по GetPreferredValues с ограничением Canvas, включает/поднимает panel и вызывает Position.
-
-`LateUpdate()` Unity callback при видимой панели читает Mouse.current.position (без мыши сохраняет последний pointer), скрывает закрытое окно, вызывает Position. `Position(screenPosition)` void переводит экранную точку в локальные координаты родителя, смещает22 вправо/вниз и ограничивает RectTransform с отступом8. `IsVisible` readonly → panel.activeSelf.
+- `Show(InventorySlotView slot, Vector2 position)` — показать подсказку для слота сумки.
+- `Show(EquipmentSlotView slot, Vector2 position)` — показать подсказку для слота экипировки.
+- `Hide(Object caller = null)` — скрыть; `caller` защищает от скрытия чужим обработчиком.
+- `RefreshContent()` — получает предмет, строит текст, вычисляет размер и позицию.
+- `LateUpdate()` — Unity callback; обновляет позицию по курсору.
+- `Position(Vector2 screenPosition)` — переводит экранную точку в локальную и ограничивает панель границами родителя.
+- `IsVisible` — bool.
 
 ## 4. Переменные и Inspector
 
-owner — окно; panel — InventoryTooltip RectTransform; content — TMP; rarityBorder — Outline. source — private Unity Object текущего View, pointer — последний экранный Vector2. Размеры/отступы в коде. TMP16, авторазмер минимум12, Ellipsis для чрезмерно длинного контента; ссылки назначены сценой.
+- `owner` — `InventoryWindow`, который проверяет открытость и drag.
+- `panel` — RectTransform подсказки; `content` — TMP-текст; `border` — необязательный `Outline`.
+- `source` — текущий слот; `pointer` — последняя позиция курсора.
 
 ## 5. Связи
 
-ItemPresentation, InventoryWindow, InventoryState, EquipmentController, Mouse Input System. Компонент на InventoryCanvas (остаётся активным); визуальный child выключается отдельно.
+Работает с `InventoryWindow`, `InventorySlotView`, `EquipmentSlotView`, `ItemPresentation` и `InventoryState`. Цвет рамки задаётся в коде. Не зависит от боевых расчётов.
 
 ## 6. Пример
 
-Наведите Potion3: имя, Common, расходник, до30HP и цены. Переместите мышь к правому краю — панель сдвигается внутрь экрана; уход/перенос/закрытие скрывает её.
+Наведение на Potion показывает `Potion`, `Consumable`, `Restores up to 30 HP`, описание и цену. При начале перетаскивания подсказка скрывается, чтобы не перекрывать drag icon.
 
 ## 7. Настройка в Unity
 
-Сохранён в `SampleScene/InventoryCanvas` (создавался один раз через удалённый ныне `BuildFantasyLayout`); panel anchor(.5,.5), pivot(0,1), дочерний text растянут с16 отступами. Все tooltip Graphics имеют raycastTarget=false.
+Назначь `owner`, `panel`, `content` и при необходимости `border`. Панель должна быть дочерней у Canvas/RectTransform окна. Не включай у панели raycast target, иначе она будет мешать наведению.
 
-## 8. Ограничения и расширение
+## 8. Возможные проблемы
 
-Ориентирован на Screen Space Overlay существующего Canvas. Touch/gamepad и клавиатурное открытие tooltip не добавлены. Очень длинный авторский текст сокращается многоточием; для обычных описаний данные показываются целиком. Не создавать второй tooltip на каждый слот.
+Без `owner` подсказка не проверит открытость окна. Если `panel` или `content` не назначены, будут ошибки. Подсказка не выходит за границы родителя, но при очень длинном тексте высота ограничивается. `border` необязателен.
 
 ## 9. История изменений
 
-2026-10-12 — hover сумки/экипировки, живое обновление и ограничение экраном; реальная мышь проверена Play Mode тестом.
-
-2026-10-25 — уточнено: объект уже сохранён в сцене, редакторный `BuildFantasyLayout` удалён.
+- 2026-10-31 — документ приведён к упрощённой модели: без редкости и категорийных вкладок.
+- 2026-10-12 — базовая подсказка инвентаря.

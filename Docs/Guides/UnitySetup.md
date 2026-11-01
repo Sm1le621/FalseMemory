@@ -1,65 +1,60 @@
 # Настройка существующего проекта в Unity
 
-5.1: Player.BattleUnit.growthRules=Assets/Settings/Progression/DefaultCharacterGrowth.asset; Enemy без профиля. Кривая/рост настраиваются в этом ассете вне Play. Health.maxHealth/Unit.maxMP — стартовая база, CurrentExperience — накопленный EXP. [ProgressionSystem](../Systems/ProgressionSystem.md).
-
-Native pixel art: [EnemyVisuals](../Systems/EnemyVisuals.md). Enemy→BattleUnit.visualAnimations=Skeleton64, SpriteRenderer/battleSprite=Idle-00; EnemySpriteAnimation рядом с существующими AI/Collider/Rigidbody. BattleUI.impactSprite=Hit64/Impact; FireVisual/HealVisual.frames имеют8 кадров. Новые текстуры64×64, Point, Uncompressed, без mipmaps, PPU100. Старый skeleton-topdown-64 сохранён.
-
-Открывай корень FalseMemory, содержащий Assets, Packages и ProjectSettings. Текущая проверенная версия Editor —6000.6.2f1. Новую сцену для проверки боя создавать не нужно.
+Актуально на **2026-10-31**. Открывайте корень `FalseMemory`, содержащий `Assets`, `Packages` и `ProjectSettings`. Проверенная версия Editor — **6000.6.2f1**. Создавать новую сцену для проверки боя не нужно.
 
 ## Сцены
 
-В Build Profiles → Scene List должны быть включены MainMenu, SampleScene и BattleScene. MainMenu запускает новую игру; SampleScene содержит мир и участников; BattleScene загружается дополнительно координатором BattleTransition. Прямой Play в BattleScene без встречи показывает вспомогательное меню, а не полноценный бой.
+В Build Profiles → Scene List включены `MainMenu`, `SampleScene` и `BattleScene`. `MainMenu` запускает новую игру; `SampleScene` содержит мир и участников; `BattleScene` загружается аддитивно координатором `BattleTransition`. Прямой Play в `BattleScene` без встречи показывает вспомогательное меню.
 
 ## Player в SampleScene
 
-- PlayerController: Rigidbody2D, физический Collider2D, SpriteRenderer; Animator необязателен, bool isMoving нужен для ходьбы.
-- Тег Player; Health с Max Health100 и ссылками мирового Slider/HPText. Slider не интерактивен.
-- BattleUnit: Level1, EXP0, Max MP30, MATK12/MDEF8, Fire и Heal в Spells; crit0.1/miss0.05.
-- BattleInventory: одна стопка Definition=Potion, Count3. Количество хранится здесь, не в общем SO.
+- `PlayerController`: `Rigidbody2D`, физический `Collider2D`, `SpriteRenderer`, тег `Player`. Animator необязателен; в покое показывается статичный спрайт `Idle1.ase`, при движении включается `Player_Walk`. Idle-клипа нет.
+- `Health`: Max Health 100, ссылки на мировой `Slider` и `HPText`. Полоса не интерактивна.
+- `ManaHUD`: ссылки на `ManaSlider`, `MPText` и `BattleUnit` игрока. Компонент живёт на объекте `Health`, читает `CurrentMP/MaxMP` и сам ресурсы не меняет.
+- `BattleUnit`: Max MP 30, MATK 12, MDEF 8, Fire в Spells, crit 0.1/miss 0.05. Полей Level/EXP/Reward больше нет.
+- `BattleInventory`: `startingItems` = Iron Sword ×1, Leather Armor ×1, Potion ×3. Модель `State` создаётся один раз; количество хранится в ней, не в ScriptableObject.
+- `EquipmentController`, `InventoryWindow`, `WorldInputGate`, `WorldItemUseController` — на том же Player.
 
-Current Health и Current MP до первого запуска не задают сохранённый прогресс: Start/Awake заполняют их максимумами. Для временных тестов меняй текущие значения только в Play Mode.
+Current Health/MP до запуска не являются сохранением: `Start`/`Awake` заполняют их максимумами. Для временных проверок меняйте текущие значения только в Play Mode.
 
 ## Enemy и переход
 
-Enemy содержит Rigidbody2D, триггер обнаружения для EnemyAI и физический Collider2D тела для BattleEncounter, Health60, BattleUnit ATK12/DEF5/SPD7/MDEF3/Reward20. Старый EnemyAttack выключен; наличие Encounter также исключает его контактный урон.
+`Enemy` содержит `Rigidbody2D`, триггер обнаружения для `EnemyAI`, физический `Collider2D` для `BattleEncounter`, `Health` 60 и `BattleUnit` ATK 12/DEF 5/SPD 7/MDEF 3. `EnemyAttack` выключен; наличие `BattleEncounter` дополнительно исключает контактный урон. `BattleUnit.visualAnimations` = `Skeleton64`, idle-кадров в наборе нет.
 
-Единственный BattleTransition имеет Rules=DefaultBattleRules и имена BattleScene/MainMenu. Он сохраняет исходные объекты мира; копировать Player/Enemy в BattleScene не нужно. CameraFollow мировой камеры ссылается на Player.
+Единственный `BattleTransition` содержит Rules = `DefaultBattleRules` и имена сцен `BattleScene`/`MainMenu`. Он сохраняет исходные объекты мира; копировать Player/Enemy в `BattleScene` не нужно. `CameraFollow` ссылается на Player.
 
 ## Боевой UI
 
-BattleManager.ui ссылается на BattleUI. В UI назначены сообщения, характеристики, раунд, портреты, пять кнопок/пять подписей, AbilityGlow/AbilityAmount и BattleResults/VictoryResultText. BattleHUD, BattlePresentation, BattleVFXController и BattleAudioController подключены к прежнему BattleManager. HUD содержит три неинтерактивные полосы, группы проявления и пять commandIcons. Портреты имеют pivot=(0.5,0.5), масштаб отражает спрайт без перемещения. Canvas Scale With Screen Size960×540, Match Height=1, Pixel Perfect=true; центральный BattleContent шириной960. Команды используют BattlePixelFont с fallback для кириллицы. Сохранённое оформление уже построено объектами сцены: Editor-методов BuildLayout/BuildCommandIcons больше нет, панели и полосы правятся вручную в `BattleContent`.
+`BattleManager.ui` ссылается на `BattleUI`. В UI назначены сообщения, характеристики, раунд, портреты, четыре кнопки команд (Attack, Magic, Defend, Flee) и Back, панель результата. `BattleHUD`, `BattlePresentation`, `BattleVFXController` и `BattleAudioController` подключены к `BattleManager`. HUD содержит HP/MP/Enemy HP, группы проявления и иконки команд; полосы не интерактивны.
 
-Для Fire/Heal назначены FireVisual/HealVisual в поле visualEffect заклинаний; длительность0.45, частицы12. В AudioController назначен DefaultBattleAudio и существующий AudioSource: Spatial Blend0, Ignore Listener Volume=false. BattleMixer/Master подключён, все AudioClip пока пусты — назначайте подходящие звуки в профиль. Общая громкость меню сохраняет прежнее управление AudioListener.volume.
-Presentation: Attack0.4, Hit0.18, Outcome0.35, Message0.75, Enemy Think0.5, Allow Fast Forward=true, множитель3. Space ускоряет движения/паузы, не игровой урон; отключить можно в Inspector. DefaultBattleRules.actionDelay остаётся0.8, fadeDuration назначено0.5; стоимость заклинаний и параметры участников сохраняются.
-## Инвентарь мира и подбор
-На Player общий BattleInventory, InventoryWindow, WorldInputGate и PlayerInteractor. InventoryCanvas содержит30 ячеек/описания и две мировые подсказки; I/Escape закрывают окно. Количество менять через State, стартовые seed только до инициализации. TestLoot слева/ниже старта содержит семь предметов из WorldItemPickup prefab; триггеры/иконки/количества/уникальные worldId назначены MCP. Подойти и нажать E; при нехватке места вещь остаётся. Для новых размещений задайте уникальный ID, не перемещайте существующие кусты.
-## Экипировка
-На Player EquipmentController, семь слотов окна и итоговые Stats. Базовые ATK/DEF остаются15/8; вещи добавляют бонусы через Effective*. Выбрать → Экипировать, либо подходящий правый слот. Клик надетого слота при пустом/несовместимом выборе снимает вещь; полная сумка безопасно отклоняет снятие. ItemData задаёт Fits/requiredLevel/bonuses.
+Canvas боя: Scale With Screen Size 960×540, Match Height = 1, Pixel Perfect = true. Оформление сохранено объектами сцены; Editor-методов `BuildLayout` больше нет. Тексты английские и заданы прямо в TMP-компонентах сцены.
+
+`Fire` использует `FireVisual`; `HealVisual` остаётся ассетом, но заклинание Heal удалено и профиль ни одним заклинанием не используется. В `BattleAudioController` назначен `DefaultBattleAudio` и существующий AudioSource: Spatial Blend 0, Ignore Listener Volume = false. Клипы пока пусты — назначайте свои в профиль.
+
+`BattlePresentation`: Attack 0.4, Hit 0.18, Outcome 0.35, Message 0.75, Enemy Think 0.5, Allow Fast Forward = true, множитель 3. Space ускоряет движения и паузы, не игровой урон. `DefaultBattleRules.actionDelay` = 0.8, `fadeDuration` = 0.5.
+
+## Инвентарь и экипировка
+
+`InventoryCanvas` содержит 30 ячеек, описание, кнопки Use/Equip/Close, подсказку и два слота экипировки: `EquipmentWeapon` (`slot = Weapon`) и `EquipmentChest` (`slot = Chest`). У каждого `EquipmentSlotView` должны быть назначены `owner`, `icon`, `background`, `border` (компонент `Outline`) и `slotLabel`. Модели персонажа, портрета и лишних слотов больше нет.
+
+`I`/`Escape` открывают и закрывают окно; `WorldInputGate` блокирует движение. Перетаскивание, обмен и разделение работают мышью. Экипировка передаёт владение в `EquipmentState`; базовые ATK 15/DEF 8 не меняются, `EffectiveAttack/EffectiveDefense` добавляют бонусы. Снятие при полной сумке безопасно отклоняется.
+
+Стартовые предметы задаются в `BattleInventory.startingItems`. Не меняйте seed после создания `State` в Play Mode. Iron Sword даёт ATK +5, Leather Armor — DEF +4, Potion восстанавливает до 30 HP и расходуется по одному.
+
 ## Использование предметов
-WorldItemUseController уже на Player. Выбрать Potion/Ether → Использовать; общий эффект с боем, ограничения ItemData.useLocations/requiredLevel. Potion до30HP, Ether до20MP, расход1; даже полный ресурс допускает расход с amount0 как прежний Potion. В бою Items/Ether — один ход, голубой профиль EtherVisual. Изменяемое количество в State, не SO.
-## Оформление и отладка полного запаса
-InventoryWindow resourcesLabel/modalBackdrop назначены. Шапка читает HPMP; фон закрывает старый HUD только при открытии и скрывается при закрытии. PlayerInteractor очищает уведомления при gate. Pickup_BoneStressTest по умолчанию inactive, только отдельный ручной Play-тест;2871 Bone заполняют29 стопок99 плюс стартовый Potion3. Уникальный worldId задан, не включать его в сохранённой сцене для обычной игры.
+
+`WorldItemUseController` уже на Player. Выберите Potion → Use. Ограничения задаются `ItemData.useLocations`; Potion разрешён в мире и бою, но в бою отдельной вкладки Items нет — предмет применяется из инвентаря вне боя. Изменяемое количество хранится в `InventoryState`, не в ScriptableObject.
+
 ## Добавление данных
 
-Create → FalseMemory → Battle Spell создаёт заклинание с поддерживаемым эффектом; назначь его в Spells игрока. Battle Consumable создаёт лечебный предмет; добавь его определение в стопку Inventory. Battle Rules — общие коэффициенты. Новые типы эффектов требуют программирования; изменение чисел существующего эффекта — настройки данных.
+- `Create → FalseMemory → Item` — обычный предмет; для расходуемого используйте `Battle Consumable`.
+- `Create → FalseMemory → Battle Spell` — заклинание с поддерживаемым эффектом; назначьте его в `BattleUnit.spells`.
+- `Create → FalseMemory → Battle Rules` — общие коэффициенты боя.
+
+Новые категории предметов, слоты экипировки или типы эффектов требуют изменения кода; числа существующих эффектов настраиваются в ассетах.
 
 ## Unity MCP
 
-Выбирай открытый FalseMemory по списку instances, читай editor/state и Console. Если Editor компилирует, дождись завершения перед назначением новых компонентов. Ошибка соединения означает недоступность инструмента, а не успешное выполнение команды. При нескольких Editor явно выбирай экземпляр. Сцены после необходимых изменений сохраняются через MCP; чтение сцены не равно сохранению.
+Выбирайте открытый экземпляр FalseMemory, читайте editor state и Console. Если Editor компилирует, дождитесь завершения перед назначением компонентов. Ошибка соединения означает недоступность инструмента, а не успешное выполнение. После изменений сцену нужно явно сохранить; чтение сцены не равно сохранению.
 
-Подробнее: [архитектура](../Architecture.md), [документация компонентов](../README.md#описания-скриптов), [тесты](TestingGuide.md).
-
-## Переработанный инвентарь
-
-Оформление инвентаря уже сохранено объектами SampleScene (редакторный BuildFantasyLayout удалён). InventoryCanvas: reference1200×780/Expand/PixelPerfect/sorting60; InventoryPanel1140×720; слева CharacterPanel/PortraitFrame/CharacterPortrait/CharacterName, вокруг восемь Equipment-кнопок с EquipmentSlotView; справа BagPanel/BagTitle/прежние30 Slot. Tooltip-компонент на том же Canvas, отдельный child InventoryTooltip с TMP Content (raycast=false). Все ссылки сохранены, окно и tooltip закрыты вне игры. Исходный герой/импорт не менялись.
-
-ItemData → rarity определяет только цвет; Gloves=Armor с equipmentSlot Gloves, maxStack автоматически1. В наборе пока нет такой вещи, слот пустой. Не менять enum-индексы прежних аксессуаров. Настройки/ручная проверка в [InventoryRedesign](../InventoryRedesign.md).
-
-
-## English и редактирование текста
-
-Игровой интерфейс English en-US. Unity → FalseMemory → Localization → English Text: поиск ключа, правка Value, Save table; новый ключ через Add entry. Таблица Resources/Localization/GameText_en-US и SharedData рядом,136 записей. Static TMP получает LocalizedLabel/key; динамические поля управляются прежними контроллерами через GameText. ItemData id+.name/.description; Unit/Spell localizationId назначены в сцене/ассетах. Меню использует `Assets/Settings/UI/PixelFont.asset` (PressStart2P, dynamic, Point); исходный PressStart2P не меняется. Полная инструкция [LocalizationSystem](../Systems/LocalizationSystem.md).
-
-2026-10-25 — раздел боевого UI обновлён под сценовое оформление; ссылки на удалённые `BuildLayout`/`PixelUi` убраны. Полная схема сцен: [SceneComposition](../Systems/SceneComposition.md).
-
-2026-10-25 — инвентарь открывается без построения кодом; все объекты и ссылки сохранены в сцене.
+Подробнее: [архитектура](../Architecture.md), [документация компонентов](../README.md#описания-скриптов), [тесты](TestingGuide.md), [состав сцен](../Systems/SceneComposition.md).

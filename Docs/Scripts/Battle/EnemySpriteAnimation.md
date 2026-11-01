@@ -2,38 +2,46 @@
 
 ## 1. Название и назначение
 
-Исходник: Assets/Scripts/Battle/EnemySpriteAnimation.cs.
+Исходник: `Assets/Scripts/Battle/EnemySpriteAnimation.cs`.
 
-Компонент мирового Enemy: показывает кадры и отражение по фактическому перемещению, читая здоровье. Не двигает объект и не наносит урон.
+Меняет спрайт врага в мире: ходьба, получение урона и смерть. Физика, AI и боевые расчёты остаются у `EnemyAI`, `BattleEncounter` и `BattleUnit`. В покое показывается один статичный `battleSprite`; IDLE-анимации нет.
 
 ## 2. Как работает
 
-Отслеживает изменение позиции между кадрами и HP; живой объект показывает Move/Idle, после уменьшения HP кратко Hurt, погибший — конечную Death. Карта скрывается существующим Transition, поэтому её анимация также прекращается.
+`Awake` получает `SpriteRenderer` и `BattleUnit`. `OnEnable` запоминает позицию и HP, сбрасывает таймеры. В `LateUpdate` компонент сравнивает текущую позицию с предыдущей, накапливает время и следит за HP: при уменьшении включает короткую позу `Hurt`, при нуле — `Death`, иначе при движении проигрывает `Move`, а в покое ставит `battleSprite`. При движении влево спрайт отражается, если `faceMovement` включён.
 
 ## 3. Методы и функции
 
-`Awake()` получает SpriteRenderer/BattleUnit. `OnEnable()` сбрасывает previousPosition/previousHP/clock и таймеры. `LateUpdate()` читает displacement/HP, обновляет clock, выбирает pose/кадр; при движении по X отражает SpriteRenderer. Возвращаемых значений нет; изменяются только Sprite/flipX и внутренние таймеры.
+- `Awake()` — Unity callback; кеширует `SpriteRenderer` и `BattleUnit`.
+- `OnEnable()` — сбрасывает предыдущую позицию/HP и таймеры.
+- `LateUpdate()` — Unity callback; определяет движение, урон, смерть и обновляет спрайт.
+- `visualAnimations.At(...)` / `Loop(...)` — берут кадр позы с fallback на `battleSprite`.
 
 ## 4. Переменные и Inspector
 
-movementThreshold=0.001 (≥0); hurtDuration=0.16 (Inspector0.05…0.5), deathDuration=0.4 (0.1…1), faceMovement=true. Эти значения назначены по умолчанию на Enemy. visual/unit/previousPosition/previousHP/clock/hurtUntil/deathStarted — внутреннее состояние.
+- `movementThreshold` — минимальное смещение для анимации ходьбы (≥0, 0.001).
+- `hurtDuration` — длительность позы урона (0.05…0.5, 0.16).
+- `deathDuration` — длительность проигрывания смерти (0.1…1, 0.4).
+- `faceMovement` — отражать спрайт по направлению движения.
+- `visual`, `unit`, `previousPosition`, `previousHP`, `clock`, `hurtUntil`, `deathStarted` — внутреннее состояние.
 
 ## 5. Связи
 
-Требует SpriteRenderer и BattleUnit; последний требует Health. Читает Unit.visualAnimations/battleSprite; EnemyAI и Rigidbody2D управляют движением независимо.
+Требуются `SpriteRenderer` и `BattleUnit`. `BattleUnit.visualAnimations` содержит кадры `Move/Attack/Hurt/Death`; `battleSprite` — статичный fallback. Компонент не управляет `EnemyAI` и не запускает бой.
 
 ## 6. Пример
 
-EnemyAI переместил скелета влево → SpriteRenderer получает Move и flipX=true. При остановке — Idle; позиция/скорость не изменяются этим скриптом.
+Скелет идёт к игроку — проигрывается `Move` и спрайт отражается влево. После попадания на 0.16 с показывается `Hurt`. При HP 0 проигрывается `Death`; после победы объект выключается `BattleTransition`.
 
 ## 7. Настройка в Unity
 
-Прикреплён через MCP к существующему Enemy SampleScene. Назначить профиль в BattleUnit. Сохранять Collider2D/Rigidbody2D/EnemyAI и масштаб исходного объекта.
+Добавь компонент на Enemy со `SpriteRenderer` и `BattleUnit`. Назначь `battleSprite` и `SpriteAnimationSet` в `BattleUnit`. Убедись, что кадры импортированы как Sprite 2D с Point filtering. Не добавляй IDLE-клипы — их нет в наборе.
 
 ## 8. Возможные проблемы
 
-Нет четырёх направлений, blend-tree или Animator Controller. Движение определяется displacement, краткие паузы между физическими шагами могут переключать pose; художественную плавность принимает владелец. Скрипт не возрождает и не удаляет объект.
+Без `visualAnimations` используется только статичный спрайт. Смерть определяется по уменьшению HP; прямое изменение спрайта другим компонентом может перезаписаться. Порог движения слишком мал для физического дрожания — при необходимости увеличь `movementThreshold`. Компонент не анимирует бой на портретах.
 
 ## 9. История изменений
 
-2026-10-12 — создан в задаче native 64px Skeleton/Fire/Heal/Hit и интеграции кадров; текущие проверки — [PixelVisuals](../../PixelVisuals.md).
+- 2026-10-31 — удалена IDLE-анимация; в покое используется статичный кадр; набор поз сокращён.
+- 2026-10-12 — базовая анимация врага.

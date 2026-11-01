@@ -18,7 +18,7 @@ public sealed class WorldItemUseController : MonoBehaviour
     }
     public bool CanUse(int index)
     {
-        if(!isActiveAndEnabled || unit==null || window==null || !window.IsOpen || index<0 || index>=30 ||
+        if(!isActiveAndEnabled || unit==null || window==null || !window.IsOpen || index<0 || index>=InventoryState.Capacity ||
             (BattleTransition.Instance!=null && BattleTransition.Instance.EncounterActive))return false;
         var item=unit.Inventory.State.GetSlot(index).Item as BattleConsumable;
         return BattleAbilities.CanUseItem(unit,unit,item,ItemUseLocation.Exploration);
@@ -29,7 +29,8 @@ public sealed class WorldItemUseController : MonoBehaviour
         var item=(BattleConsumable)unit.Inventory.State.GetSlot(index).Item;
         lastUseFrame=Time.frameCount;
         bool ok=BattleAbilities.TryUseItem(unit,unit,item,out int amount,ItemUseLocation.Exploration);
-        window.ShowMessage(ok?GameText.Get("inventory.item_used", item.LocalizedName, amount, item.manaRestoration>0?"MP":"HP"):GameText.Get("inventory.unavailable"));window.Refresh();return ok;
+        window.ShowMessage(ok?$"{item.displayName}: +{amount} {(item.manaRestoration>0?"MP":"HP")}":"This item cannot be used now.");
+        window.Refresh();return ok;
     }
     private void HandleUse(int index)=>TryUse(index);
 }

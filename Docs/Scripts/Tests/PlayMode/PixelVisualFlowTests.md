@@ -1,39 +1,41 @@
-# PixelVisualFlowTests / BattleFlowTests partial
+# PixelVisualFlowTests
 
 ## 1. Название и назначение
 
-Исходник: Assets/Tests/PlayMode/PixelVisualFlowTests.cs.
+Исходник: `Assets/Tests/PlayMode/PixelVisualFlowTests.cs`.
 
-Сценарные Play Mode проверки кадров скелета и pixel VFX при настоящем боевом применении.
+Partial `BattleFlowTests`: кадры скелета в мире/бою и пиксельный Fire VFX при настоящем боевом применении.
 
 ## 2. Как работает
 
-Использует общий Setup/Cleanup BattleFlowTests, реальные SampleScene/BattleScene, сохранённые ссылки на участников. Карту Transition скрывает, поэтому поиск Player после входа заменён использованием заранее сохранённой ссылки.
+Использует общий `Setup`/`Cleanup`, реальные `SampleScene`/`BattleScene` и сохранённые ссылки на Enemy/Player. Проверяет `SpriteRenderer`, `BattleUI.enemyPortrait`, `SpriteAnimationSet` и `BattleVFXController`.
 
 ## 3. Методы и функции
 
-`WorldSkeletonMovesAndBattleUsesAttackHurtAndDeathFrames()` проверяет Move/масштаб/два коллайдера, физическую Attack→Hurt/Attack, единственный урон, последний Death-кадр и завершение. `AnimatedFireHealAndDisabledVfxDoNotDuplicateEffectsOrResources()` проверяет повторную команду, Fire19/8MP, Heal/6MP, отсутствие прямоугольного magic glow, очистку при disable и продолжение хода. Unity lifecycle тестов задаёт общий fixture.
+- `WorldSkeletonMovesAndBattleUsesAttackHurtAndDeathFrames()` — Move при смещении, масштаб (2,2,1), два коллайдера, Attack→Hurt→Death, последний кадр смерти и alpha 0.
+- `AnimatedFireAndDisabledVfxDoNotDuplicateEffectsOrResources()` — повторная команда отклоняется, Fire 19/8 MP, кадры 0…7, частицы очищаются, отключённый VFX не блокирует Defend.
 
 ## 4. Переменные и Inspector
 
-Параметров Inspector нет; attackDuration0.8 изменяется только на runtime-компоненте теста для наблюдения кадров. Scene-профили/правила восстанавливаются общим Cleanup.
+`attackDuration = 0.8` задаётся только на runtime-компоненте. Inspector отсутствует; сцена/профили не сохраняются.
 
 ## 5. Связи
 
-BattleFlowTests helpers, BattleManager/Presentation/VFXController, EnemySpriteAnimation, SpriteAnimationSet, Health/MP.
+`BattleFlowTests`, `EnemySpriteAnimation`, `SpriteAnimationSet`, `BattlePresentation`, `BattleVFXController`, `BattleUI`, `Health`/`BattleUnit`.
 
 ## 6. Пример
 
-После Fire targetHP41 и MP22; повторная команда отклонена. Отключение VFX при Heal скрывает частицы/кадр, но не блокирует бой.
+Скелет смещается вправо → кадр Move. В бою после удара показывается Hurt, затем Attack врага. Fire проигрывает 8 кадров, MP 30→22, HP врага 60→41.
 
 ## 7. Настройка в Unity
 
-Test Runner → Play Mode → FalseMemory.Battle.PlayModeTests. К GameObject не прикрепляется.
+Test Runner → PlayMode; нужны реальные `Skeleton64.asset`, `FireVisual.asset` и настроенные портреты/VFX в `BattleScene`.
 
-## 8. Возможные проблемы
+## 8. Ограничения и проверки
 
-Первый прогон39/40 выявил ошибку поиска скрытого Player в новом тесте; исправлена ссылка, игровая система не переписывалась. Оценка красоты, standalone и четырёх направлений не входят в сценарии.
+Проверяет наличие/смену кадров и отсутствие побочных эффектов, не художественное качество. 2026-10-31: PlayMode 36/36.
 
 ## 9. История изменений
 
-2026-10-12 — создан в задаче native 64px Skeleton/Fire/Heal/Hit и интеграции кадров; текущие проверки — [PixelVisuals](../../../PixelVisuals.md).
+- 2026-10-31 — удалены проверки Heal/Idle; Fire остаётся единственным боевым VFX.
+- 2026-10-12 — базовая документация.

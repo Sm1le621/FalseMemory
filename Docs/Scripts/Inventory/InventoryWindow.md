@@ -2,76 +2,58 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Inventory/InventoryWindow.cs.
+Исходник: `Assets/Scripts/Inventory/InventoryWindow.cs` (частичный класс, остальные части в этой же папке).
 
-Существующий Player управляет окном общего инвентаря6×5.
+Окно инвентаря в исследовании: 30 слотов, выбор, drag & drop, использование зелий, экипировка Weapon/Chest, золото, HP/MP и подсказки. Окно не создаёт второго персонажа и работает с теми же `BattleInventory`, `BattleUnit`, `EquipmentController`, что и бой.
 
 ## 2. Как работает
 
-Открытие I, закрытие I/Escape; стрелки выбирают. Событие State.Changed обновляет30 views только после изменения/выбора. UI не хранит количества; использование делегируется UseRequested/WorldItemUseController.
+`Awake` получает `BattleInventory`, `WorldInputGate`, `BattleUnit`, привязывает слоты и кнопки, затем закрывает окно. `OnEnable` подписывается на `InventoryState.Changed`; `OnDisable` отписывается и закрывает окно. В `Update` клавиша `I` открывает/закрывает инвентарь, Escape закрывает, стрелки перемещают выбор. Открытие запрещено во время активной встречи и для мёртвого персонажа.
+
+`Open` включает панель и захватывает ввод через `WorldInputGate`, `Close` отпускает его. `Refresh` рисует слоты, описание выбранного предмета, золото, занятость сумки, доступность Use/Equip и состояние двух слотов экипировки. Перетаскивание вызывает `InventoryState.TryMoveOrMerge`; при неудаче показывается сообщение. Модели персонажа, редкости и разделения предметов по категориям в окне нет.
 
 ## 3. Методы и функции
 
-OnEnable/OnDisable дополнительно подписываются/отписываются ProgressChanged. OnProgressChanged при открытом окне вызывает Refresh и показывает character.level_up, если получены уровни. Update использует character.header_progress: имя/уровень/total EXP/Next или Maximum Level; без профиля сохраняет прежний заголовок.
-
-2026-10-12 — актуальная локализация: Update/Refresh/RefreshResources формируют подписи имени/уровня/EXP/HPMP/сумки/Gold/выбора/характеристик через GameText.Get с аргументами. SplitSelected/DropOn/первоначальные editor builders читают централизованные ключи. State и события не меняются.
-
-`RefreshResources()` читает HP/maxHP/MP/maxMP и меняет строку только при изменении четырёх чисел. Update вызывает его в открытом окне и показывает имя/уровень/EXP. Refresh дополнительно обновляет занятость сумки, портрет и EquipmentSlotView, затем текущую подсказку. Close/BeginDrag скрывают tooltip. details показывает краткие сведения выбранного предмета; полное описание находится в hover.
-
-Редакторные методы `Build*` и файл `InventoryWindow.Layout.cs` удалены: все объекты инвентаря сохранены в `SampleScene/InventoryCanvas`, повторная перестройка кодом не требуется.
-4.6: Refresh также читает реальные HP/MP в resourcesLabel. Open/Close показывают/скрывают собственный `modalBackdrop`; настройки мирового HUD не меняются. `Resources` и `InventoryBackdrop` — сохранённые объекты сцены, ссылки назначены в Inspector.
-`RequestEquip()` вызывает EquipRequested(index,null); `ClickEquipmentSlot(slot)` вызывает EquipRequested при выбранной совместимой вещи, иначе UnequipRequested для снятия. `Refresh` читает восемь надетых вещей/итоговые характеристики/доступность. Семь кнопок экипировки, `EquipmentStats`, `Equip` и `message` сохранены в сцене. Awake связывает столько сохранённых UnityAction, сколько назначено кнопок (сейчас 8); OnDestroy снимает те же listeners.
-
-Unity `Awake` получает Inventory/gate/unit, Bind30 ячеек и button listeners, закрывает окно. `OnEnable` подписывает Refresh, `OnDisable` отписывает и закрывает/освобождает ввод, `OnDestroy` удаляет listeners. `Update` читает I/Escape/стрелки без изменения Input Actions.
-
-`Open()` bool проверяет готовую panel/живого unit/исследование, открывает/блокирует ввод; `Close()` void скрывает/освобождает/EndDrag. `Select(index)` принимает0..29 и обновляет; `Refresh()` читает слот/Gold/описание/доступность. `SplitSelected()` делит пополам в первое пустое место, иначе сообщение. `RequestUse()` вызывает UseRequested(index), если открыто; `ShowMessage(text)` обновляет строку.
-
-`BeginDrag(index,position)` запоминает только индекс/ghost, `MoveDrag(screenPosition)` переводит координаты в Canvas; `DropOn(destination)` bool вызывает TryMoveOrMerge ровно раз/EndDrag/Select; `EndDrag()` очищает ghost, не мутирует модель.
-
-Canvas, панель, 30 `InventorySlotView`, подписи, кнопки, `DragIcon` и все ссылки сохранены в `SampleScene`; код построения удалён вместе с `InventoryWindow.Layout.cs`.
+- `Awake()` — Unity callback; кеширует компоненты, привязывает слоты/кнопки, закрывает окно.
+- `OnEnable()` / `OnDisable()` / `OnDestroy()` — управляют подпиской на события и listeners.
+- `Update()` — читает `I`, Escape и стрелки; обновляет ресурсы при открытом окне.
+- `Open()` → `bool`; включает панель, захватывает ввод, обновляет содержимое. Возвращает `false` при недоступном контексте.
+- `Close()` — скрывает подсказку, завершает drag, выключает панель и отпускает ввод.
+- `Select(int index)` — выбирает слот 0…29 и обновляет окно.
+- `Refresh()` — отрисовывает слоты/описание/золото/сумку, доступность кнопок и экипировку.
+- `RefreshResources()` — обновляет строку `HP x / y    MP x / y` только при изменении значений.
+- `RequestUse()` / `RequestEquip()` — поднимают события `UseRequested`/`EquipRequested`.
+- `ClickEquipmentSlot(EquipmentSlot slot)` — экипирует выбранный подходящий предмет или снимает предмет из слота.
+- `ShowMessage(string text)` — выводит сообщение окна.
+- `BeginDrag`, `MoveDrag`, `DropOn`, `EndDrag` — drag & drop и объединение стаков.
+- `UseRequested`, `CanUseSelection`, `EquipRequested`, `UnequipRequested` — события/делегаты для контроллеров.
+- `IsOpen`, `SelectedIndex`, `Inventory` — публичное состояние.
 
 ## 4. Переменные и Inspector
 
-Новых Inspector-полей нет. Три строки в прежнем characterLabel, параметры/геометрия не заменены.
-
-tooltip — InventoryTooltip на существующем Canvas; characterPortrait — Image существующего спрайта героя; characterLabel — имя/уровень/EXP; bagLabel — занятость30 ячеек. shownHP/shownMaxHP/shownMP/shownMaxMP — приватный кеш отображения, старт−1. Не владеет ресурсами.
-resourcesLabel — readonly отображение Health/BattleUnit, modalBackdrop — необязательный полноэкранный Image. Оба назначены MCP, закрытый фон inactive. Не владеют ресурсами.
-CanUseSelection Func<int,bool> — необязательный runtime predicate; Refresh учитывает его для кнопки использования. Статический запас/Inspector-количество не создаются.
-equipButton/equipmentButtons[8]/equipmentStats — UI-ссылки. EquipRequested Action<int,EquipmentSlot?> и UnequipRequested Action<EquipmentSlot> — команды без владения. equipmentClicks — private runtime массив callback для правильной отписки.
-
-panel, slots[30], details/goldLabel/message, split/use/close Button, dragIcon обязательны; SelectedIndex/Inventory/IsOpen readonly; dragging приватный transient. UseRequested Action<int> — обработчик применения; без подписчика кнопка disabled; с4.5 подключён WorldItemUseController.
+- `panel` — корень окна; `slots` — 30 `InventorySlotView`; `details` — описание; `goldLabel`, `bagLabel`, `message`, `resourcesLabel` — тексты.
+- `useButton`, `closeButton`, `equipButton` — кнопки действий.
+- `equipmentButtons` — две кнопки слотов Weapon/Chest; `equipmentStats` — строка `ATK/DEF`.
+- `dragIcon` — изображение перетаскиваемого предмета; `modalBackdrop` — затемнение; `tooltip` — подсказка.
+- `gate` — `WorldInputGate`; `unit` — `BattleUnit`; `dragging`, `equipmentClicks`, `shownHP/MP` — внутреннее состояние.
 
 ## 5. Связи
 
-BattleUnit.ProgressChanged; CharacterGrowthRules косвенно через readonly свойства Unit. Модальное открытие всё ещё запрещено до завершения Transition.
-
-GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
-
-BattleInventory.State, BattleUnit, WorldInputGate, InventorySlotView, существующий EventSystem. Canvas Scale With Screen Size1200×780/Expand, PixelPerfect, sorting60.
+Требуются `BattleInventory`, `WorldInputGate`, `BattleUnit` и `InventoryWindow` на Player. `EquipmentController` обрабатывает экипировку, `WorldItemUseController` — использование, `InventoryTooltip` — подсказки, `ItemPresentation` — текст. `InventoryState` владеет слотами и золотом. Окно не работает во время `BattleTransition.EncounterActive`.
 
 ## 6. Пример
 
-Potion3 → Разделить½ →2/1; drag в пустой/на другой/на Potion переносит/обменивает/сливает, итог3.
+Нажатие `I` открывает окно. Выбор Potion и `Use` вызывает `WorldItemUseController`, HP восстанавливается, сообщение показывает `Potion: +30 HP`. Выбор Iron Sword и `Equip` отправляет предмет в слот Weapon, `ATK` в строке экипировки увеличивается. Перетаскивание зелья на другой слот объединяет стаки, если позволяет `maxStack`.
 
 ## 7. Настройка в Unity
 
-Уже добавлен на Player; `InventoryCanvas` — отдельный root `SampleScene`. Все ссылки сохранены в сцене. Экипировка подключена 4.4; использование расходуемых подключено 4.5 через общую Abilities.
+Компонент находится на Player. Назначь панель, 30 слотов, две кнопки экипировки, тексты, кнопки Use/Close/Equip, drag icon, backdrop и tooltip. В `InventoryWindow.equipmentButtons` должно быть ровно два элемента; `EquipmentSlotView.slot` — Weapon/Chest. Проверь, что `WorldInputGate` есть на Player.
 
-## 8. Ограничения и расширение
+## 8. Возможные проблемы
 
-Не работает в BattleScene: мир скрыт, Open отвергает активную встречу. Не паузит время/врагов. Callback-подписчик обязан проверять реальные условия использования. Курсор/ощущения окончательно проверить владельцу.
+Без `WorldInputGate` окно не сможет корректно блокировать движение. Если массив слотов короче 30, часть сумки не отобразится. Открытие во время боя запрещено. При полном инвентаре снятие экипировки отклоняется. Drag & drop не работает между разными типами предметов. Нет модели персонажа, редкости и отдельных вкладок — это ожидаемое упрощение.
 
 ## 9. История изменений
 
-2026-10-12 —5.1: кривая EXP/производный рост/Level Up при прежнем владельце HP. [Проверки](../../ProgressionStage5.md).
-
-2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
-
-2026-10-12 — RPG-панель персонажа, восемь слотов, сумка и hover; живое чтение HP/MP, прежние события/модель сохранены.
-2026-10-12 — 4.6: HPMP шапка/фон открытого окна, сохранённые ссылки/доступность.
-2026-10-12 — 4.5: predicate использования для разрешённого контекста/уровня.
-2026-10-12 — 4.4: семь слотов/Stats/Equip/Unequip и корректные listeners.
-
-2026-10-12 — 4.2: окно, ввод, drag-and-drop и события.
-
-- 2026-10-25 — удалены Editor-методы `Build*` и файл `InventoryWindow.Layout.cs`; инвентарь остаётся объектами `SampleScene`.
+- 2026-10-31 — окно упрощено: 30 слотов, только Weapon/Chest, без модели, редкости, вкладок и подбора; тексты английские.
+- 2026-10-12 — базовая версия окна инвентаря.

@@ -2,45 +2,46 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleConsumable.cs.
+Исходник: `Assets/Scripts/Battle/BattleConsumable.cs`.
 
-Прежний SO расходуемого наследует ItemData. Один предмет в мире и бою.
+ScriptableObject расходуемого предмета. Наследует `ItemData`, поэтому имя, описание, иконка, цены, стаки и место использования задаются как у любого предмета, а здесь добавляются эффект и визуал. Один и тот же ассет используется в мире и в бою.
 
 ## 2. Как работает
 
-Статическое имя/ID/цены/иконка/лимит наследуются; target/healing/manaRestoration/effectColor определяют эффект. Runtime количество отдельно.
+`BattleAbilities.CanUseItem` проверяет категорию `Consumable`, маску `useLocations`, цель и наличие предмета в инвентаре. Допускается ровно один положительный эффект: лечение HP **или** восстановление MP. `TryUseItem` списывает одну единицу и вызывает `Health.Heal` либо `BattleUnit.RestoreMP`. Количество хранится не в ассете, а в `InventoryState`.
 
 ## 3. Методы и функции
 
-Собственных методов/callbacks нет; наследуемые IsEquipment/StackLimit/CanSell/Fits в ItemData. Эффект вызывает BattleAbilities.
+Собственных методов и Unity-callbacks нет. Используются унаследованные `IsEquipment`, `StackLimit`, `CanSell`, `Fits` и поле `category` из `ItemData`. Применение эффекта выполняет `BattleAbilities`.
 
 ## 4. Переменные и Inspector
 
-target Self/Enemy; healing≥0 (код30), manaRestoration≥0 (код0), effectColor зелёный. Potion прежние имя/30HP/GUID, item.potion/лимит99/цены30/15. Ether healing0/manaRestoration20, item.ether/цены50/25. С4.5 MP-эффект подключён общей логикой; visualEffect — необязательный BattleVFXProfile, EtherVisual голубой Orbit.
+- `target` — `Self` или `Opponent`; зелья обычно `Self`.
+- `healing` — восстановление HP, `≥ 0`; по умолчанию 30.
+- `manaRestoration` — восстановление MP, `≥ 0`; по умолчанию 0.
+- `visualEffect` — необязательный `BattleVFXProfile`.
+- `effectColor` — цвет всплывающего числа, по умолчанию зелёный.
+- Унаследованные поля: `id`, `displayName`, `description`, `icon`, `category`, `stackable`, `maxStack`, цены, `useLocations`.
+- Текущий `Potion`: лечение 30 HP, `maxStack` 99, цены 30/15. Отдельного MP-зелья в стартовом инвентаре нет.
 
 ## 5. Связи
 
-ItemData, InventoryState, BattleAbilities/Manager/UI. Прежняя ссылка/ассет Potion не заменены.
+`BattleInventory`/`InventoryState` хранят количество. `BattleAbilities` проверяет и применяет эффект. `WorldItemUseController` вызывает использование из окна инвентаря. `InventoryWindow`, `InventoryTooltip` и `ItemPresentation` читают описание. `BattleManager` больше не открывает боевое меню Items, поэтому зелья применяются только вне боя.
 
 ## 6. Пример
 
-Определение Potion не хранит владение3/2; это делает общий State.
+Potion с `healing = 30`, `target = Self`, `useLocations = Anywhere`. При HP 40/100 использование списывает одну единицу, восстанавливает 30 HP и показывает `Potion: +30 HP`. Если HP 95/100, восстанавливается только 5, а предмет всё равно расходуется.
 
 ## 7. Настройка в Unity
 
-Create → FalseMemory → Battle Consumable, задать имя/ID/категорию Consumable/цель/эффект. Не компонент. Ether healing0/manaRestoration20.
+Создай ассет через `Assets → Create → FalseMemory → Battle Consumable`, заполни унаследованные поля и задай ровно один эффект. Компонент к GameObject не прикрепляется. Ссылку добавь в стартовые записи `BattleInventory` или выдавай кодом.
 
-## 8. Ограничения и расширение
+## 8. Возможные проблемы
 
-Не воскрешает. Ether20MP подключён миру/бою; поддерживается один положительный HP либо MP эффект, смешанные/нулевые отвергаются. SO не должен хранить количество.
+Предмет с одновременно заполненными `healing` и `manaRestoration` отклоняется. Нулевой или отрицательный эффект тоже не сработает. Мёртвого персонажа нельзя вылечить. `visualEffect` влияет только на отображение. Ассет не хранит текущее количество и не сохраняется на диск.
 
 ## 9. История изменений
-2026-10-12 — 4.5: Ether/ограничения подключены и поле visualEffect для профиля расходуемого.
 
-2026-10-12 — 4.1: наследование ItemData и данные Ether, Potion сохранён.
-
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
-
-- 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
-
-- 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
+- 2026-10-31 — удалён `Ether`; документ приведён к текущей модели: Potion с одним эффектом, без боевого меню Items.
+- 2026-10-12 — 4.5: подключены ограничения использования и `visualEffect`.
+- 2026-10-12 — 4.1: наследование `ItemData`, данные Potion сохранены.

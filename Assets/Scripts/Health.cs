@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Подключаем пространство имен TextMeshPro
+using TMPro;
 
 public class Health : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class Health : MonoBehaviour
 
     [Header("UI References")]
     public Slider hpSlider;
-    public TMP_Text hpText; // Ссылка на текст с цифрами
+    public TMP_Text hpText;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class Health : MonoBehaviour
         UpdateUI();
     }
 
-    // Shared by healing spells and consumables. Returns actual restored HP.
+    // Shared by healing consumables. Returns actual restored HP.
     public int Heal(int amount)
     {
         if (amount <= 0 || currentHealth <= 0) return 0;
@@ -32,12 +32,6 @@ public class Health : MonoBehaviour
         currentHealth = (int)System.Math.Min(System.Math.Max(0, maxHealth), (long)currentHealth + amount);
         UpdateUI();
         return System.Math.Max(0, currentHealth - before);
-    }
-
-    // Growth changes capacity while preserving the existing resource and HUD owner.
-    public void SetMaximumHealth(int maximum)
-    {
-        maxHealth=System.Math.Max(1,maximum);currentHealth=Mathf.Clamp(currentHealth,0,maxHealth);UpdateUI();
     }
 
     void UpdateUI()

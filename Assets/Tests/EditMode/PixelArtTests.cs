@@ -19,21 +19,24 @@ public sealed class PixelArtTests
             Assert.That(importer.spriteImportMode,Is.EqualTo(SpriteImportMode.Single),path);
         }
     }
-    [Test] public void SkeletonAndSpellsHaveCompleteAnimationReferences()
+    [Test] public void SkeletonHasNoIdlePoseAndFireHasCompleteFrames()
     {
         var set=AssetDatabase.LoadAssetAtPath<SpriteAnimationSet>("Assets/Settings/Battle/Visuals/Skeleton64.asset");Assert.That(set,Is.Not.Null);
         foreach(SpritePose pose in System.Enum.GetValues(typeof(SpritePose)))
         {var frames=set.Frames(pose);Assert.That(frames,Is.Not.Empty,pose.ToString());foreach(var frame in frames)Assert.That(frame,Is.Not.Null);}
-        foreach(var name in new[]{"Fire","Heal"})
-        {var profile=AssetDatabase.LoadAssetAtPath<BattleVFXProfile>("Assets/Settings/Battle/VFX/"+name+"Visual.asset");Assert.That(profile.frames.Length,Is.EqualTo(8));foreach(var frame in profile.frames)Assert.That(frame,Is.Not.Null);Assert.That(profile.duration,Is.InRange(0.1f,1f));}
+        Assert.That(System.Enum.GetNames(typeof(SpritePose)),Does.Not.Contain("Idle"));
+        var fire=AssetDatabase.LoadAssetAtPath<BattleVFXProfile>("Assets/Settings/Battle/VFX/FireVisual.asset");
+        Assert.That(fire,Is.Not.Null);Assert.That(fire.frames.Length,Is.EqualTo(8));
+        foreach(var frame in fire.frames)Assert.That(frame,Is.Not.Null);
+        Assert.That(fire.duration,Is.InRange(0.1f,1f));
     }
     [Test] public void FiniteFramesClampAndLoopIsStableWithMissingFrames()
     {
         var set=AssetDatabase.LoadAssetAtPath<SpriteAnimationSet>("Assets/Settings/Battle/Visuals/Skeleton64.asset");
         Assert.That(set.At(SpritePose.Death,-1),Is.SameAs(set.death[0]));Assert.That(set.At(SpritePose.Death,2),Is.SameAs(set.death[3]));
-        Assert.That(set.Loop(SpritePose.Idle,0.5f),Is.SameAs(set.idle[1]));Assert.That(set.Loop(SpritePose.Move,0.125f),Is.SameAs(set.move[1]));
+        Assert.That(set.Loop(SpritePose.Move,0.125f),Is.SameAs(set.move[1]));
         var copy=Object.Instantiate(set);
-        try{copy.attack=null;Assert.That(copy.At(SpritePose.Attack,0.5f,set.idle[0]),Is.SameAs(set.idle[0]));copy.move=new Sprite[]{null};Assert.That(copy.Loop(SpritePose.Move,99,set.idle[0]),Is.SameAs(set.idle[0]));}
+        try{copy.attack=null;Assert.That(copy.At(SpritePose.Attack,0.5f,set.death[0]),Is.SameAs(set.death[0]));copy.move=new Sprite[]{null};Assert.That(copy.Loop(SpritePose.Move,99,set.death[0]),Is.SameAs(set.death[0]));}
         finally{Object.DestroyImmediate(copy);}
     }
 }

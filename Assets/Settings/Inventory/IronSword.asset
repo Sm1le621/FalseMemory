@@ -17,17 +17,12 @@ MonoBehaviour:
   description: A plain iron sword, worn but reliable.
   icon: {fileID: 21300000, guid: 130119ea6764f7941ab1510a78f6f914, type: 3}
   category: 1
-  rarity: 2
   stackable: 0
   maxStack: 99
   buyPrice: 100
   sellPrice: 50
-  requiredLevel: 1
   useLocations: 3
-  equipmentSlot: 2
+  equipmentSlot: 0
   bonuses:
     attack: 5
     defense: 0
-    magicAttack: 0
-    magicDefense: 0
-    speed: 0

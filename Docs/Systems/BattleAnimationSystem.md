@@ -1,12 +1,46 @@
-# Анимации боя
+# Анимации боя и мира
 
-2026-10-12 — Enemy получил общий SpriteAnimationSet Skeleton64: Idle2/Move4/Attack3/Hurt2/Death4, кадры64×64. EnemySpriteAnimation показывает состояние по позиции/Health, не меняя AI/физику. BattlePresentation проигрывает те же кадры на Image: Idle2FPS, Attack до контакта/возврат, Hurt при попадании и Death при исходе. Герой сохраняет прежние движения. Применение урона/MP остаётся в Manager, Animation Events не используются. [Кадры/проверки](../PixelVisuals.md), [EnemyVisuals](EnemyVisuals.md).
+## 1. Назначение
 
-BattlePresentation отображает исходные портреты через RectTransform/Image: Attack — выпад и возврат, попадание — вспышка/реакция, крит — усиленная реакция. Defend показывает голубой ромб до следующего собственного хода. MISS не вызывает удара/отдачи. BattleUI поднимает число и плавно скрывает его за feedbackDuration; крит отличается цветом и размером.
+Показ поз персонажей в мире и на боевых портретах без изменения боевых ресурсов. IDLE-анимации нет: в покое используется статичный `battleSprite`.
 
-Manager закрывает gate до Windup, повторно проверяет жизнь обоих участников после ожидания, применяет расчёт один раз и вызывает Recover. Анимации не содержат изменений HP/MP/предметов/EXP. Без компонента/Animator действие продолжает работать. Настройки attackDuration/hitDuration/lungeDistance/reactionDistance назначены в BattleScene; pace связан с существующим actionDelay, чтобы ускоренные тесты не ждали штатные задержки.
+## 2. Общая логика
 
-Темп: attackDuration0.4 (подготовка0.2 и возврат0.2), hitDuration0.18, outcome0.35, сообщение0.75, выбор врага0.5 секунды при actionDelay0.8. Для ускорения удерживать Space: визуальные движения/эти паузы×3, без выбора команды, повторного урона/расхода и изменения Time.timeScale. allowFastForward можно выключить на Presentation; отдельные VFX/числа/затемнения завершаются в своём темпе. Финальный Play Mode проверяет ветки MISS и ускорение.
-Расширение: назначить новые согласованные PNG/Aseprite-кадры через SpriteAnimationSet, оставив игровое применение в Manager. [BattlePresentation](../Scripts/Battle/BattlePresentation.md), [BattleUI](../Scripts/Battle/BattleUI.md). Проверки смерти во время windup и отсутствующего визуала добавлены в PlayMode; художественное качество оценивается вручную.
+`SpriteAnimationSet` хранит кадры `Move/Attack/Hurt/Death`. `EnemySpriteAnimation` в мире выбирает позу по смещению, HP и смерти. `BattlePresentation` проигрывает те же кадры на портретах `BattleUI`: выпад Attack, Hurt при попадании, Death при исходе, Move при побеге. `BattleManager` закрывает gate до Windup, повторно проверяет жизнь и применяет эффект один раз.
 
-2026-10-25 — символы защиты `PlayerGuard`/`EnemyGuard` сохранены в `BattleScene`; Editor-метод `BuildGuards` удалён. Анимации по-прежнему управляются `SpriteAnimationSet` + `EnemySpriteAnimation`/`BattlePresentation`, Animator не вводился. Схема объектов: [SceneComposition](SceneComposition.md).
+## 3. Основные компоненты
+
+- `SpriteAnimationSet` — ScriptableObject кадров.
+- `EnemySpriteAnimation` — мир.
+- `BattlePresentation` — боевые портреты.
+- `BattleUI` — всплывающие числа и портреты.
+- `BattleManager` — порядок и применение действий.
+
+## 4. Взаимодействие скриптов
+
+`BattleUnit.visualAnimations` даёт кадры, `battleSprite` — fallback. `EnemySpriteAnimation` читает `Health` и позицию. `BattlePresentation.Bind` получает участников от `BattleManager`/`BattleUI`. Анимация не вызывает `TakeDamage`, не тратит MP и не меняет очередь.
+
+## 5. Последовательность событий
+
+Движение в мире → Move; урон → Hurt; HP 0 → Death. В бою: Windup → расчёт → Recover/Hurt → Finish при победе/поражении/побеге. MISS не вызывает отдачи; при смерти во время замаха действие отменяется.
+
+## 6. Настраиваемые параметры
+
+`attackDuration` 0.4, `hitDuration` 0.18, `outcomeDuration` 0.35, `messageDuration` 0.75, `enemyThinkDuration` 0.5, `lungeDistance` 42, `reactionDistance` 8. `framesPerSecond` в наборе — 8. Space ускоряет визуал ×3, не меняя `Time.timeScale`.
+
+## 7. Использование в Unity
+
+Кадры лежат в `Assets/Art/Enemies/Skeleton64` и импортированы как Sprite 2D 64×64, Point, без mipmaps, PPU 100. Набор — `Assets/Settings/Battle/Visuals/Skeleton64.asset`; он назначен в `BattleUnit.visualAnimations`. Портреты и щиты сохранены в `BattleScene`.
+
+## 8. Расширение
+
+Новый набор создаётся через `Create → FalseMemory → Sprite Animation Set`; новые кадры генерируются `PixelBattleAssetBuilder`. Новые позы потребуют расширения enum и всех потребителей. Не добавляй Idle-клипы.
+
+## 9. Ограничения и проверки
+
+Один фронтальный набор с отражением; нет четырёх направлений и Animator Controller. Анимации не содержат игровых событий. PlayMode проверяет Move/Attack/Hurt/Death, отсутствие IDLE, ускорение, MISS и смерть во время замаха. Художественная оценка — за владельцем.
+
+## История
+
+- 2026-10-31 — удалена IDLE-анимация, позы сокращены до Move/Attack/Hurt/Death.
+- 2026-10-12 — базовые пиксельные анимации.

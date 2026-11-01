@@ -1,165 +1,121 @@
 # Документация FalseMemory
 
-FalseMemory — 2D Pixel Art RPG в стиле Dark Fantasy на Unity 6. Документы написаны для владельца без опыта C# и описывают текущую рабочую копию на **2026-10-25**.
+FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Документация описывает текущую рабочую копию на **2026-10-31** и написана по-русски для владельца без опыта C#.
 
-Начните с [архитектуры](Architecture.md), затем откройте нужную систему или скрипт. Постоянные правила находятся в [AGENTS.md](../AGENTS.md); их нужно читать перед каждой новой задачей.
+Начните с [архитектуры](Architecture.md), затем откройте нужную систему или описание скрипта. Постоянные правила проекта находятся в [AGENTS.md](../AGENTS.md).
+
+## Текущее состояние игры
+
+- Три сцены: `MainMenu`, `SampleScene` (мир), `BattleScene` (пошаговый бой).
+- Инвентарь: 30 слотов, Gold, предметы трёх категорий — `Consumable`, `Weapon`, `Armor`.
+- Экипировка: два слота — `Weapon` и `Chest`; бонусы только `attack` и `defense`.
+- Стартовый набор: Iron Sword ×1, Leather Armor ×1, Potion ×3.
+- Боевые команды: Attack, Magic, Defend, Flee. Отдельной вкладки Items нет; Potion применяется из инвентаря вне боя.
+- Магия: Fire; заклинание Heal удалено. MP показан в бою и отдельной полосой в мире (`ManaHUD`).
+- Локализация, уровни/EXP, редкость предметов и подбор предметов с земли удалены. Игровой текст в сценах — английский.
+- У скелета и игрока нет idle-анимации: в покое показывается статичный кадр, Animator работает только при движении.
 
 ## Общие документы
 
-- [Прокачка5.1](ProgressionStage5.md) — EXP/уровни/рост и текущие проверки.
-
-- [Skeleton64 и pixel VFX](PixelVisuals.md) — реальные64px кадры, подключение, проверки и ограничения.
-
-- [Английская локализация](EnglishLocalization.md) — восстановленная работа, текущие тесты/кадры и ручная приёмка.
-
-- [Переработка инвентаря](InventoryRedesign.md) — персонаж/экипировка/сумка, редкости, hover, результаты и ручная проверка.
-- [Roadmap](Roadmap.md) — статусы этапов4–10 и ручные границы.
-- [MasterDevelopmentPlan](MasterDevelopmentPlan.md) — полный план владельца.
-- [Этап4](InventoryStage4.md) — интеграция/результаты.
-
-
-- [Этап 3 — полировка](BattleStage3.md) — изменения представления боя и результаты проверок.
-
 - [Architecture — структура и связи](Architecture.md).
 - [Changelog — значимые изменения](Changelog.md).
-- [Testing — результаты, покрытие и ручная проверка](Testing.md).
+- [Testing — результаты и ограничения проверок](Testing.md).
 - [Настройка Unity](Guides/UnitySetup.md).
 - [Рабочий процесс Git](Guides/GitWorkflow.md).
 - [Руководство тестирования](Guides/TestingGuide.md).
-- [Отчёт этапа 1](BattleStage1.md) — исторический отчёт до расширения; параметры этапа 2 смотрите в актуальных системах.
-- [Отчёт этапа 2](BattleStage2.md) — реализация, список файлов, ограничения и подробная инструкция Play Mode.
+- [Недостающие спрайты](Art/RequiredSprites.md).
+
+Исторические отчёты предыдущих этапов сохранены, но могут описывать уже удалённые механики: [этап 1](BattleStage1.md), [этап 2](BattleStage2.md), [этап 3](BattleStage3.md), [InventoryStage4](InventoryStage4.md), [InventoryRedesign](InventoryRedesign.md), [PixelVisuals](PixelVisuals.md), [EnglishLocalization](EnglishLocalization.md), [ProgressionStage5](ProgressionStage5.md). Актуальное поведение определяется текущим кодом и документами систем.
 
 ## Игровые системы
 
 - [Состав сцен](Systems/SceneComposition.md) — объекты, компоненты и связи MainMenu/SampleScene/BattleScene.
-- [Недостающие спрайты](Art/RequiredSprites.md) — список графики, которой пока нет (игрок, частицы, иконки, рамки).
-
-- [Прокачка](Systems/ProgressionSystem.md) — первые уровни и growth.
-
-- [Визуал врагов](Systems/EnemyVisuals.md) — общий набор кадров мира/боя.
-
-- [Локализация](Systems/LocalizationSystem.md) — английские Unity StringTables и GameText.
-- [Экипировка](Systems/EquipmentSystem.md) — восемь слотов/бонусы/безопасный обмен.
-- [Взаимодействие E](Systems/InteractionSystem.md) — общий контракт и подбор.
-
-- [Звук боя](Systems/AudioSystem.md).
-
-- [Эффекты магии](Systems/BattleVFXSystem.md).
-
-- [Анимации боя](Systems/BattleAnimationSystem.md).
-
-- [Интерфейс боя](Systems/BattleUISystem.md).
-
 - [Пошаговые сражения](Systems/CombatSystem.md).
-- [Здоровье и HUD](Systems/HealthSystem.md).
+- [Интерфейс боя](Systems/BattleUISystem.md).
 - [Магия и MP](Systems/MagicSystem.md).
-- [Расходуемые предметы](Systems/InventorySystem.md).
+- [Здоровье и HUD](Systems/HealthSystem.md).
+- [Инвентарь и предметы](Systems/InventorySystem.md).
+- [Экипировка](Systems/EquipmentSystem.md).
+- [Блокировка ввода и использование предметов](Systems/InteractionSystem.md).
 - [Поведение противника](Systems/EnemyAISystem.md).
+- [Визуал врагов](Systems/EnemyVisuals.md).
+- [Анимации боя](Systems/BattleAnimationSystem.md).
+- [Эффекты магии](Systems/BattleVFXSystem.md).
+- [Звук боя](Systems/AudioSystem.md).
 - [Исследование мира и камера](Systems/ExplorationSystem.md).
 - [Главное меню и настройки](Systems/MenuSystem.md).
-- [Опыт и состояние игровой сессии](Systems/SessionProgressSystem.md).
+- [Состояние игровой сессии](Systems/SessionProgressSystem.md).
 
-Полноценного SaveSystem, партийного боя и классов пока нет; level-up подключён в5.1; они не документируются как готовые системы. PlayerPrefs уже сохраняет настройки меню, но не RPG-прогресс.
+Полноценного SaveSystem, партийного боя, классов, квестов, диалогов и торговли пока нет. `PlayerPrefs` сохраняет только настройки меню.
 
 ## Описания скриптов
 
-- [CharacterGrowthRules](Scripts/Battle/CharacterGrowthRules.md).
-- [CharacterGrowthTests](Scripts/Tests/EditMode/CharacterGrowthTests.md).
-- [CharacterGrowthFlowTests](Scripts/Tests/PlayMode/CharacterGrowthFlowTests.md).
+Всего в `Assets` **59 собственных C#-файлов**: 42 runtime, 15 тестовых, 1 Editor-инструмент и 1 служебный Welcome. У каждого проектного скрипта есть отдельное описание в `Docs/Scripts`; частичные тестовые классы объединяют несколько файлов.
 
-После5.1 —72 собственных C# (49 runtime,20 test,2 Editor,1 Welcome); предыдущие числа ниже исторические.
+### Бой
 
-После native pixel visual подэтапа —69 собственных C# (48 runtime,18 test,2 Editor,1 Welcome); у каждого отдельное описание. Результаты ниже о предыдущих этапах исторические.
+- [BattleAbilities](Scripts/Battle/BattleAbilities.md)
+- [BattleAudioController](Scripts/Battle/BattleAudioController.md)
+- [BattleAudioProfile](Scripts/Battle/BattleAudioProfile.md)
+- [BattleCalculator](Scripts/Battle/BattleCalculator.md)
+- [BattleConsumable](Scripts/Battle/BattleConsumable.md)
+- [BattleEncounter](Scripts/Battle/BattleEncounter.md)
+- [BattleHUD](Scripts/Battle/BattleHUD.md)
+- [BattleInventory](Scripts/Battle/BattleInventory.md)
+- [BattleManager](Scripts/Battle/BattleManager.md)
+- [BattlePresentation](Scripts/Battle/BattlePresentation.md)
+- [BattleRandom](Scripts/Battle/BattleRandom.md)
+- [BattleRules](Scripts/Battle/BattleRules.md)
+- [BattleScreenFade](Scripts/Battle/BattleScreenFade.md)
+- [BattleSpell](Scripts/Battle/BattleSpell.md)
+- [BattleTransition](Scripts/Battle/BattleTransition.md)
+- [BattleTurnOrder](Scripts/Battle/BattleTurnOrder.md)
+- [BattleUI](Scripts/Battle/BattleUI.md)
+- [BattleUnit](Scripts/Battle/BattleUnit.md)
+- [BattleVFXController](Scripts/Battle/BattleVFXController.md)
+- [BattleVFXProfile](Scripts/Battle/BattleVFXProfile.md)
+- [EnemyBattleAI](Scripts/Battle/EnemyBattleAI.md)
+- [EnemySpriteAnimation](Scripts/Battle/EnemySpriteAnimation.md)
+- [SpriteAnimationSet](Scripts/Battle/SpriteAnimationSet.md)
 
-- [SpriteAnimationSet](Scripts/Battle/SpriteAnimationSet.md).
-- [EnemySpriteAnimation](Scripts/Battle/EnemySpriteAnimation.md).
-- [PixelBattleAssetBuilder](Scripts/Editor/PixelBattleAssetBuilder.md).
-- [PixelArtTests](Scripts/Tests/EditMode/PixelArtTests.md).
-- [PixelVisualFlowTests](Scripts/Tests/PlayMode/PixelVisualFlowTests.md).
+### Инвентарь и экипировка
 
-- [GameText](Scripts/Localization/GameText.md) — ключи, форматирование, fallback.
-- [LocalizedLabel](Scripts/Localization/LocalizedLabel.md) — привязка статической TMP-подписи.
-- [GameTextEditor](Scripts/Editor/GameTextEditor.md) — редактирование English в Unity без программирования.
-- [LocalizationTests](Scripts/Tests/EditMode/LocalizationTests.md) — таблица/ключи/форматы.
-- [LocalizationFlowTests](Scripts/Tests/PlayMode/LocalizationFlowTests.md) — английские меню/бой/подсказки.
+- [EquipmentController](Scripts/Inventory/EquipmentController.md)
+- [EquipmentSlotView](Scripts/Inventory/EquipmentSlotView.md)
+- [EquipmentState](Scripts/Inventory/EquipmentState.md)
+- [InventorySlotView](Scripts/Inventory/InventorySlotView.md)
+- [InventoryState](Scripts/Inventory/InventoryState.md)
+- [InventoryTooltip](Scripts/Inventory/InventoryTooltip.md)
+- [InventoryWindow](Scripts/Inventory/InventoryWindow.md)
+- [ItemData](Scripts/Inventory/ItemData.md)
+- [ItemPresentation](Scripts/Inventory/ItemPresentation.md)
+- [WorldInputGate](Scripts/Inventory/WorldInputGate.md)
+- [WorldItemUseController](Scripts/Inventory/WorldItemUseController.md)
 
-- [InventoryTooltip](Scripts/Inventory/InventoryTooltip.md) — одна ограниченная экраном hover-панель.
-- [EquipmentSlotView](Scripts/Inventory/EquipmentSlotView.md) — надетые предметы/цвета/hover.
-- [ItemPresentation](Scripts/Inventory/ItemPresentation.md) — текст/палитра редкостей.
-- [ItemPresentationTests](Scripts/Tests/EditMode/ItemPresentationTests.md) — редкости/совместимость/текст.
-- [InventoryPresentationFlowTests](Scripts/Tests/PlayMode/InventoryPresentationFlowTests.md) — реальная мышь/hover/границы.
-- [WorldItemUseController](Scripts/Inventory/WorldItemUseController.md) — общий эффект/предикат и защита кадра.
-- [EquipmentState](Scripts/Inventory/EquipmentState.md) — владение/обмен/бонусы.
-- [EquipmentController](Scripts/Inventory/EquipmentController.md) — связка Player/UI.
-- [EquipmentTests](Scripts/Tests/EditMode/EquipmentTests.md) — слоты/полнота/границы.
-- [PlayerInteractor](Scripts/Inventory/PlayerInteractor.md) — E/подсказки.
-- [WorldItemPickup](Scripts/Inventory/WorldItemPickup.md) — атомарный подбор.
-- [InventoryWindow](Scripts/Inventory/InventoryWindow.md) — окно6×5.
-- [InventorySlotView](Scripts/Inventory/InventorySlotView.md) — pointer/drag.
-- [WorldInputGate](Scripts/Inventory/WorldInputGate.md) — блокировка ввода окнами.
-- [InventoryFlowTests](Scripts/Tests/PlayMode/InventoryFlowTests.md) — окно/ввод/drag.
-- [ItemData](Scripts/Inventory/ItemData.md) — статические определения.
-- [InventoryState](Scripts/Inventory/InventoryState.md) — общий запас30 слотов/Gold.
-- [InventoryTests](Scripts/Tests/EditMode/InventoryTests.md) — граничные операции.
+### Мир, интерфейс и служебные
 
+- [CameraFollow](Scripts/CameraFollow.md)
+- [EnemyAI](Scripts/EnemyAI.md)
+- [EnemyAttack](Scripts/EnemyAttack.md)
+- [Health](Scripts/Health.md)
+- [PlayerController](Scripts/PlayerController.md)
+- [MainMenuController](Scripts/UI/MainMenuController.md)
+- [ManaHUD](Scripts/UI/ManaHUD.md)
+- [SettingsMenu](Scripts/UI/SettingsMenu.md)
+- [PixelBattleAssetBuilder](Scripts/Editor/PixelBattleAssetBuilder.md)
+- [Welcome2DScript](Scripts/Welcome/Welcome2DScript.md)
 
-- [BattleScreenFade](Scripts/Battle/BattleScreenFade.md) — временный экран перехода, включая Restart/Main Menu.
+### Тесты
 
-- [BattleAudioProfile](Scripts/Battle/BattleAudioProfile.md) — ссылки собственных звуков.
-- [BattleAudioController](Scripts/Battle/BattleAudioController.md) — безопасное воспроизведение событий.
-
-- [BattleVFXProfile](Scripts/Battle/BattleVFXProfile.md) — данные художественного эффекта.
-- [BattleVFXController](Scripts/Battle/BattleVFXController.md) — лёгкие эффекты без изменений ресурсов.
-
-- [BattlePresentation](Scripts/Battle/BattlePresentation.md) — визуальные позы и реакция портретов.
-
-- [BattleHUD](Scripts/Battle/BattleHUD.md) — оформление, полосы и предупреждение HP.
-- [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md) — проверки представления боя.
-
-Историческая статистика после подэтапа4.6 — **53 C#-файла в Assets**:40 игровых,12 тестовых и1 служебный. После рефакторинга 2026-10-25 — **69 C#-файлов**:46 в `Assets/Scripts`, 20 тестовых, 2 Editor-инструмента и 1 Welcome; у каждого есть отдельное описание в `Docs/Scripts`. Частичные тестовые классы объединяют несколько файлов. Скрипты внешних пакетов и Library сюда не входят.
-
-- [BattleAbilities](Scripts/Battle/BattleAbilities.md) — `Assets/Scripts/Battle/BattleAbilities.cs`.
-- [BattleCalculator](Scripts/Battle/BattleCalculator.md) — `Assets/Scripts/Battle/BattleCalculator.cs`.
-- [BattleConsumable](Scripts/Battle/BattleConsumable.md) — `Assets/Scripts/Battle/BattleConsumable.cs`.
-- [BattleEncounter](Scripts/Battle/BattleEncounter.md) — `Assets/Scripts/Battle/BattleEncounter.cs`.
-- [BattleInventory](Scripts/Battle/BattleInventory.md) — `Assets/Scripts/Battle/BattleInventory.cs`.
-- [BattleManager](Scripts/Battle/BattleManager.md) — `Assets/Scripts/Battle/BattleManager.cs`.
-- [BattleRandom](Scripts/Battle/BattleRandom.md) — `Assets/Scripts/Battle/BattleRandom.cs`.
-- [BattleRules](Scripts/Battle/BattleRules.md) — `Assets/Scripts/Battle/BattleRules.cs`.
-- [BattleSpell](Scripts/Battle/BattleSpell.md) — `Assets/Scripts/Battle/BattleSpell.cs`.
-- [BattleTransition](Scripts/Battle/BattleTransition.md) — `Assets/Scripts/Battle/BattleTransition.cs`.
-- [BattleTurnOrder](Scripts/Battle/BattleTurnOrder.md) — `Assets/Scripts/Battle/BattleTurnOrder.cs`.
-- [BattleUI](Scripts/Battle/BattleUI.md) — `Assets/Scripts/Battle/BattleUI.cs`.
-- [BattleUnit](Scripts/Battle/BattleUnit.md) — `Assets/Scripts/Battle/BattleUnit.cs`.
-- [EnemyBattleAI](Scripts/Battle/EnemyBattleAI.md) — `Assets/Scripts/Battle/EnemyBattleAI.cs`.
-- [CameraFollow](Scripts/CameraFollow.md) — `Assets/Scripts/CameraFollow.cs`.
-- [EnemyAI](Scripts/EnemyAI.md) — `Assets/Scripts/EnemyAI.cs`.
-- [EnemyAttack](Scripts/EnemyAttack.md) — `Assets/Scripts/EnemyAttack.cs`.
-- [Health](Scripts/Health.md) — `Assets/Scripts/Health.cs`.
-- [PlayerController](Scripts/PlayerController.md) — `Assets/Scripts/PlayerController.cs`.
-- [MainMenuController](Scripts/UI/MainMenuController.md) — `Assets/Scripts/UI/MainMenuController.cs`.
-- [SettingsMenu](Scripts/UI/SettingsMenu.md) — `Assets/Scripts/UI/SettingsMenu.cs`.
-- [BattleAbilityTests](Scripts/Tests/EditMode/BattleAbilityTests.md) — `Assets/Tests/EditMode/BattleAbilityTests.cs`.
-- [BattleCoreTests](Scripts/Tests/EditMode/BattleCoreTests.md) — `Assets/Tests/EditMode/BattleCoreTests.cs`.
-- [BattleExperienceTests](Scripts/Tests/EditMode/BattleExperienceTests.md) — `Assets/Tests/EditMode/BattleExperienceTests.cs`.
-- [BattleFleeTests](Scripts/Tests/EditMode/BattleFleeTests.md) — `Assets/Tests/EditMode/BattleFleeTests.cs`.
-- [BattleItemTests](Scripts/Tests/EditMode/BattleItemTests.md) — `Assets/Tests/EditMode/BattleItemTests.cs`.
-- [BattleRandomTests](Scripts/Tests/EditMode/BattleRandomTests.md) — `Assets/Tests/EditMode/BattleRandomTests.cs`.
-- [BattleFlowTests](Scripts/Tests/PlayMode/BattleFlowTests.md) — `Assets/Tests/PlayMode/BattleFlowTests.cs`.
-- [BattleStage2FlowTests](Scripts/Tests/PlayMode/BattleStage2FlowTests.md) — `Assets/Tests/PlayMode/BattleStage2FlowTests.cs`.
-- [Welcome2DScript](Scripts/Welcome/Welcome2DScript.md) — `Assets/Welcome/Welcome2DScript.cs`.
+- EditMode: [BattleAbilityTests](Scripts/Tests/EditMode/BattleAbilityTests.md), [BattleCoreTests](Scripts/Tests/EditMode/BattleCoreTests.md), [BattleFleeTests](Scripts/Tests/EditMode/BattleFleeTests.md), [BattleItemTests](Scripts/Tests/EditMode/BattleItemTests.md), [BattleRandomTests](Scripts/Tests/EditMode/BattleRandomTests.md), [EquipmentTests](Scripts/Tests/EditMode/EquipmentTests.md), [InventoryTests](Scripts/Tests/EditMode/InventoryTests.md), [ItemPresentationTests](Scripts/Tests/EditMode/ItemPresentationTests.md), [PixelArtTests](Scripts/Tests/EditMode/PixelArtTests.md).
+- PlayMode: [BattleFlowTests](Scripts/Tests/PlayMode/BattleFlowTests.md), [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md), [BattleStage2FlowTests](Scripts/Tests/PlayMode/BattleStage2FlowTests.md), [InventoryFlowTests](Scripts/Tests/PlayMode/InventoryFlowTests.md), [InventoryPresentationFlowTests](Scripts/Tests/PlayMode/InventoryPresentationFlowTests.md), [PixelVisualFlowTests](Scripts/Tests/PlayMode/PixelVisualFlowTests.md).
 
 ## Как пользоваться
 
-В документах скриптов девять разделов: назначение, работа, методы, Inspector, связи, пример, отдельная настройка в Unity, проблемы/проверки и история изменений. В системах — общая последовательность и инструкция подключения/расширения.
+Документ скрипта содержит девять разделов: назначение, работу, методы, Inspector, связи, пример, настройку в Unity, возможные проблемы и историю. Документы систем описывают общую логику, компоненты, последовательность событий, параметры, подключение, расширение и ограничения.
 
-Не путайте значения по умолчанию в C# с назначенными значениями сцены: Inspector может их переопределять. Настройки изменяйте в Editor осознанно; временные проверки HP/MP/шансов выполняйте только в Play Mode.
+Значения по умолчанию в C# могут отличаться от назначенных в сценах и ассетах. Настройки меняйте в Editor осознанно; временные проверки HP/MP/шансов выполняйте только в Play Mode и не сохраняйте в ассеты.
 
-## Состояние Git этой документации
+## Git
 
-Первоначальная документация сохранена коммитом `bd17fa0`, дополнения постоянных правил и руководства — `0f609a1`. Реализация этапа 2 сохранена коммитом 07a1a34; этап 3 развивается семью локальными коммитами. Актуальные результаты и изменения приведены в BattleStage3.md, исторические проверки этапа2 — 40 Edit Mode и 17 Play Mode. Новые игровые системы в задаче главного промпта повторно не создавались. Push не выполнялся.
-
-Рефакторинг сценовой композиции задокументирован в [Changelog](Changelog.md) и [SceneComposition](Systems/SceneComposition.md). Локальные коммиты обязательны после успешно проверенных задач; push выполняется исключительно по явной команде владельца. Если перед задачей есть сторонние изменения, добавляются только относящиеся к текущей задаче пути.
-
-
-Актуально на 2026-10-25: 69 собственных C#-файлов и 69 отдельных описаний (46 runtime, 20 тестовых, 2 Editor-инструмента, 1 Welcome). Меню, инвентарь, боевой UI и VFX сохранены объектами сцен; `MainMenuBootstrap`, `PixelUi`, `InventoryWindow.Layout` и Editor-методы `Build*` удалены. Игровой язык English en-US; Docs/отчёты русские. Предыдущие отчёты и кадры сохраняются как история, не подтверждение текущего интерфейса.
+Локальные коммиты обязательны после успешно проверенных задач. Push выполняется только по явной команде владельца. Актуальные результаты проверок — в [Testing.md](Testing.md); история изменений — в [Changelog.md](Changelog.md).

@@ -2,62 +2,47 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Tests/PlayMode/BattlePresentationFlowTests.cs. Часть BattleFlowTests: проверяет представление поверх настоящего боя.
+Исходник: `Assets/Tests/PlayMode/BattlePresentationFlowTests.cs`.
+
+Partial `BattleFlowTests`: проверяет визуальную постановку, звук, VFX и HUD поверх настоящего боя, не меняя ресурсы.
 
 ## 2. Как работает
 
-Использует Setup/Cleanup и BeginBattle из других частей класса, загружает существующие сцены, проверяет HUD без изменения исходных ассетов.
+Использует общий `Setup`/`Cleanup` и `BeginBattle` из `BattleStage2FlowTests`. Работает с реальными `BattleScene`, компонентами `BattlePresentation`, `BattleVFXController`, `BattleAudioController` и `BattleHUD`.
 
 ## 3. Методы и функции
 
-2026-10-12 — актуальная локализация: Текстовые ожидания приведены к английскому UI (New Game/Main Menu/Back/No items available/Inventory full/DEFEAT/описания HPMP/цен). Проверки состояния, количества, урона, ресурсов и поведения сохранены.
+- `SpaceSpeedsPresentationWithoutChoosingOrDuplicatingActions()` — Space даёт `VisualDelta ×3`, не выбирает команду; MP/инвентарь/Time.timeScale не меняются.
+- `MissShowsTextWithoutHitReactionOrDamage()` — MISS без glow/отдачи, HP врага неизменен; успешный ответ врага даёт одно попадание.
+- `AssignedClipUsesMixerAndRespectsExistingVolume()` — временный клип идёт через `PlayOneShot`, Mixer и `AudioListener.volume`.
+- `PresentationEntranceAndOutcomesKeepTransitionLockedAndShowResults()` — повторные `TryBegin` отклоняются, при поражении показывается DEFEAT и блокируются действия.
+- `MissingAudioClipsAreSafeAndListenerVolumeIsRespected()` — все звуковые события без клипов возвращают false и не ломают бой.
+- `MagicVFXFinishesAndMissingVFXNeverBlocksResourceRules()` — Fire запускает один эффект, частицы очищаются; без VFX Defend работает.
+- `TargetDeathDuringWindupCancelsDamageAndManaSpend()` — смерть цели во время замаха отменяет урон и расход MP.
+- `MissingPresentationDoesNotBlockOrDuplicatePhysicalAction()` — без `BattlePresentation` проходит один удар и один ход.
+- `HUDAnimatesReadOnlyBarsWithoutChangingResources()` — HP/MP-полосы неинтерактивны, анимируются, `LOW HP` и `HP 20 / 100` корректны.
 
-- `SpaceSpeedsPresentationWithoutChoosingOrDuplicatingActions()` — синтетическое удержание Space проверяет VisualDelta×3, отключение ускорения, отсутствие самостоятельной команды, единственный Attack/ответ и неизменные MP/EXP/предметы/Time.timeScale/позицию портрета. UnityTest IEnumerator, устройство удаляется finally.
-- `MissShowsTextWithoutHitReactionOrDamage()` — гарантированный промах показывает MISS, не включает glow/реакцию и не уменьшает HP врага; только успешный ответ врага увеличивает счётчик реакции. UnityTest IEnumerator.
-- `AssignedClipUsesMixerAndRespectsExistingVolume()` — временный профиль и тихий тестовый AudioClip проверяют PlayOneShot-путь, Mixer и громкость; данные уничтожаются finally, исходный профиль не меняется. Не подтверждает слышимость художественных клипов. UnityTest IEnumerator.
-- `PresentationEntranceAndOutcomesKeepTransitionLockedAndShowResults()` — пять повторных TryBegin отклоняются, после появления alpha=1; смерть показывает Game Over/нулевую alpha героя и блокирует Attack. UnityTest IEnumerator.
+## 4. Переменные и Inspector
 
-- `MissingAudioClipsAreSafeAndListenerVolumeIsRespected()` — все 15 событий с пустыми клипами возвращают false; AudioListener.volume сохраняется, source 2D и ignoreListenerVolume=false; Attack/ответ дают прежние HP. UnityTest IEnumerator, не подтверждает слышимость будущего контента.
-
-- `MagicVFXFinishesAndMissingVFXNeverBlocksResourceRules()` — Fire запускает ровно один эффект/частицы, затем они исчезают; после обнуления vfx Heal по-прежнему расходует 6 MP и сохраняет прежний цикл/HP. UnityTest IEnumerator.
-
-- `TargetDeathDuringWindupCancelsDamageAndManaSpend()` — ждёт IsAnimating, убивает цель во время подготовки Fire, проверяет 30 MP, единственные 20 EXP и завершение анимации.
-- `MissingPresentationDoesNotBlockOrDuplicatePhysicalAction()` — обнуляет необязательную ссылку, дважды отправляет Attack и проверяет один урон/один ход. Оба UnityTest IEnumerator.
-
-`HUDAnimatesReadOnlyBarsWithoutChangingResources()` — UnityTest IEnumerator: после начала боя уменьшает HP/MP, ждёт плавности, проверяет числа, значения трёх Slider, LOW HP и возврат меню без расхода/смены хода. При несоответствии Assert завершает тест ошибкой. Общие методы описаны в BattleFlowTests/BattleStage2FlowTests.
-
-## 4. Переменные
-
-Локальные player/enemy/manager/hud — объекты тестовой сессии. Ожидаются 20 HP и 22 MP; ожидание 0.35 секунды больше barDuration=0.22. Inspector отсутствует.
+Используются runtime-настройки `attackDuration`, `allowFastForward`, временный `BattleAudioProfile`/клип. Inspector отсутствует; исходные ассеты не сохраняются.
 
 ## 5. Связи
 
-FalseMemory.Battle.PlayModeTests, NUnit, Unity Test Framework, BattleManager/UI/HUD и настоящий Health.
+`BattleFlowTests`, `BattlePresentation`, `BattleVFXController`, `BattleAudioController`, `BattleHUD`, `BattleUI`, `BattleManager`, Input System.
 
 ## 6. Пример
 
-Run All → ресурсы 100/30 становятся 20/22 → полосы 0.2 и 22/30 → открытие/закрытие Magic оставляет тот же ход.
+Fire по скелету: MP 30→22, эффект проигрывается один раз, частицы исчезают, затем враг отвечает. При отключённом VFX урон и MP остаются прежними.
 
 ## 7. Настройка в Unity
 
-К GameObject не прикреплять. Запуск через Test Runner PlayMode или Unity MCP run_tests; дождаться итогового get_test_job.
+Test Runner → PlayMode; нужны реальные `BattleScene` и `SampleScene`. Звуковые тесты используют временные клипы и не требуют назначенных художественных звуков.
 
-## 8. Ограничения
+## 8. Ограничения и проверки
 
-Численные/сценарные проверки не заменяют оценку красоты интерфейса и реальное прослушивание звуков. Изменения HP делаются в тестовой сессии, сцена не сохраняется.
+Не подтверждает слышимость/красоту клипов и эффектов. Проверяет отсутствие побочного изменения ресурсов. 2026-10-31: PlayMode 36/36.
 
 ## 9. История изменений
 
-2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
-
-- 2026-10-11 — 3.7: ускорение/однократность, визуальный MISS и путь назначенного клипа.
-
-- 2026-10-11 — 3.5: проверка входа, исхода и блокировки перехода.
-
-- 2026-10-11 — 3.4: проверка пустых аудио-ссылок/совместимости громкости.
-
-- 2026-10-11 — 3.3: проверка завершения/отсутствия VFX.
-
-- 2026-10-11 — 3.2: проверки отсутствующего визуала и смерти в windup.
-
-- 2026-10-11 — подэтап 3.1: проверка анимации полос и независимости отображения от игровых ресурсов.
+- 2026-10-31 — удалены Heal/EXP-ожидания; добавлены проверки MP-полосы и статичных кадров.
+- 2026-10-12 — базовая документация.

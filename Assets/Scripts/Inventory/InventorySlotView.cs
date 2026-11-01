@@ -7,7 +7,7 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPo
 {
     public Image background, icon;
     public TextMeshProUGUI quantity;
-    public Outline rarityBorder;
+    public Outline border;
     private bool hovered, selected;
     private ItemData item;
     public InventoryWindow Owner {get;private set;}
@@ -22,7 +22,7 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPo
     private void RefreshColors()
     {
         background.color=ItemPresentation.CellColor(item,selected || hovered);
-        if(rarityBorder!=null){rarityBorder.effectColor=item!=null?ItemPresentation.RarityColor(item.rarity):new Color32(73,66,56,255);rarityBorder.effectDistance=selected?new Vector2(2,-2):new Vector2(1,-1);}
+        if(border!=null){border.effectColor=selected?new Color32(214,178,110,255):new Color32(73,66,56,255);border.effectDistance=selected?new Vector2(2,-2):new Vector2(1,-1);}
     }
     private void OnDisable(){hovered=false;RefreshColors();if(Owner!=null && Owner.tooltip!=null)Owner.tooltip.Hide(this);}
     public void OnPointerEnter(PointerEventData e){hovered=true;RefreshColors();if(Owner!=null && Owner.tooltip!=null)Owner.tooltip.Show(this,e.position);}

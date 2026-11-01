@@ -10,7 +10,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
     public RectTransform panel;
     public InventorySlotView[] slots;
     public TextMeshProUGUI details, goldLabel, message;
-    public Button splitButton, useButton, closeButton;
+    public Button useButton, closeButton;
     public Image dragIcon;
     public Button equipButton;
     public Button[] equipmentButtons;
@@ -18,8 +18,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
     public TextMeshProUGUI resourcesLabel;
     public Image modalBackdrop;
     public InventoryTooltip tooltip;
-    public Image characterPortrait;
-    public TextMeshProUGUI characterLabel, bagLabel;
+    public TextMeshProUGUI bagLabel;
     public event Action<int> UseRequested;
     public Func<int,bool> CanUseSelection;
     public event Action<int,EquipmentSlot?> EquipRequested;
@@ -37,7 +36,6 @@ public sealed partial class InventoryWindow : MonoBehaviour
     {
         Inventory=GetComponent<BattleInventory>();gate=GetComponent<WorldInputGate>();unit=GetComponent<BattleUnit>();
         for(int i=0;i<(slots?.Length ?? 0);i++)slots[i].Bind(this,i);
-        if(splitButton!=null)splitButton.onClick.AddListener(SplitSelected);
         if(useButton!=null)useButton.onClick.AddListener(RequestUse);
         if(closeButton!=null)closeButton.onClick.AddListener(Close);
         if(equipButton!=null)equipButton.onClick.AddListener(RequestEquip);
@@ -49,12 +47,10 @@ public sealed partial class InventoryWindow : MonoBehaviour
         }
         Close();
     }
-    private void OnEnable(){if(Application.isPlaying && Inventory!=null)Inventory.State.Changed+=Refresh;if(unit!=null)unit.ProgressChanged+=OnProgressChanged;}
-    private void OnDisable(){if(Inventory!=null)Inventory.State.Changed-=Refresh;if(unit!=null)unit.ProgressChanged-=OnProgressChanged;Close();}
-    private void OnProgressChanged(){if(!IsOpen)return;Refresh();if(unit.LevelsGainedLastAward>0)ShowMessage(GameText.Get("character.level_up",unit.level));}
+    private void OnEnable(){if(Application.isPlaying && Inventory!=null)Inventory.State.Changed+=Refresh;}
+    private void OnDisable(){if(Inventory!=null)Inventory.State.Changed-=Refresh;Close();}
     private void OnDestroy()
     {
-        if(splitButton!=null)splitButton.onClick.RemoveListener(SplitSelected);
         if(useButton!=null)useButton.onClick.RemoveListener(RequestUse);
         if(closeButton!=null)closeButton.onClick.RemoveListener(Close);
         if(equipButton!=null)equipButton.onClick.RemoveListener(RequestEquip);
@@ -62,8 +58,6 @@ public sealed partial class InventoryWindow : MonoBehaviour
     }
     private void Update()
     {
-        if(IsOpen && characterLabel!=null)characterLabel.text=GameText.Get(unit.growthRules!=null?"character.header_progress":"character.header", unit.LocalizedName, unit.level, unit.CurrentExperience,
-            unit.AtMaximumLevel?GameText.Get("character.max_level"):GameText.Get("character.next_experience",unit.ExperienceToNextLevel));
         if(IsOpen)RefreshResources();
         var keyboard=Keyboard.current;if(keyboard==null)return;
         if(keyboard.iKey.wasPressedThisFrame){if(IsOpen)Close();else Open();return;}
@@ -71,14 +65,14 @@ public sealed partial class InventoryWindow : MonoBehaviour
         if(keyboard.escapeKey.wasPressedThisFrame){Close();return;}
         int offset=keyboard.leftArrowKey.wasPressedThisFrame?-1:keyboard.rightArrowKey.wasPressedThisFrame?1:
             keyboard.upArrowKey.wasPressedThisFrame?-6:keyboard.downArrowKey.wasPressedThisFrame?6:0;
-        if(offset!=0)Select(Mathf.Clamp(SelectedIndex+offset,0,29));
+        if(offset!=0)Select(Mathf.Clamp(SelectedIndex+offset,0,InventoryState.Capacity-1));
     }
     public bool Open()
     {
         if(panel==null || !isActiveAndEnabled || unit==null || !unit.IsAlive ||
             (BattleTransition.Instance!=null && BattleTransition.Instance.EncounterActive))return false;
         if(modalBackdrop!=null)modalBackdrop.gameObject.SetActive(true);
-        panel.gameObject.SetActive(true);gate.Acquire(this);message.text="";Refresh();return true;
+        panel.gameObject.SetActive(true);gate.Acquire(this);if(message!=null)message.text="";Refresh();return true;
     }
     public void Close()
     {
@@ -86,31 +80,28 @@ public sealed partial class InventoryWindow : MonoBehaviour
         EndDrag();if(panel!=null)panel.gameObject.SetActive(false);
         if(modalBackdrop!=null)modalBackdrop.gameObject.SetActive(false);if(gate!=null)gate.Release(this);
     }
-    public void Select(int index){if(!IsOpen || index<0 || index>=30)return;SelectedIndex=index;Refresh();}
+    public void Select(int index){if(!IsOpen || index<0 || index>=InventoryState.Capacity)return;SelectedIndex=index;Refresh();}
     public void Refresh()
     {
         if(!IsOpen || Inventory==null)return;
         for(int i=0;i<(slots?.Length ?? 0);i++)slots[i].Render(Inventory.State.GetSlot(i),i==SelectedIndex);
         var selected=Inventory.State.GetSlot(SelectedIndex);var item=selected.Item;
-        goldLabel.text=GameText.Get("inventory.gold", Inventory.State.Gold);
+        if(goldLabel!=null)goldLabel.text=$"GOLD {Inventory.State.Gold}";
         RefreshResources();
-        details.text=selected.IsEmpty?GameText.Get("inventory.empty"):
-            GameText.Get("inventory.selected",item.LocalizedName,selected.Count,ItemPresentation.TypeName(item),GameText.Get("rarity."+item.rarity.ToString().ToLowerInvariant()),ItemPresentation.BonusText(item));
-        if(bagLabel!=null){int occupied=0;for(int i=0;i<InventoryState.Capacity;i++)if(!Inventory.State.GetSlot(i).IsEmpty)occupied++;bagLabel.text=GameText.Get("inventory.bag", occupied, InventoryState.Capacity);}
-        if(characterPortrait!=null){characterPortrait.sprite=unit.battleSprite;characterPortrait.color=unit.spriteColor;characterPortrait.gameObject.SetActive(unit.battleSprite!=null);}
-        splitButton.interactable=!selected.IsEmpty && selected.Count>1 && item.stackable && Inventory.State.FirstEmptySlot()>=0;
-        useButton.interactable=!selected.IsEmpty && item is BattleConsumable && UseRequested!=null && (CanUseSelection==null || CanUseSelection(SelectedIndex));
+        if(details!=null)details.text=selected.IsEmpty?"Select an item.":ItemPresentation.Description(item,selected.Count);
+        if(bagLabel!=null){int occupied=0;for(int i=0;i<InventoryState.Capacity;i++)if(!Inventory.State.GetSlot(i).IsEmpty)occupied++;bagLabel.text=$"BAG   {occupied} / {InventoryState.Capacity}";}
+        if(useButton!=null)useButton.interactable=!selected.IsEmpty && item is BattleConsumable && UseRequested!=null && (CanUseSelection==null || CanUseSelection(SelectedIndex));
         var equipment=GetComponent<EquipmentController>();
-        if(equipButton!=null)equipButton.interactable=!selected.IsEmpty && item.IsEquipment && item.requiredLevel<=unit.level && EquipRequested!=null;
+        if(equipButton!=null)equipButton.interactable=!selected.IsEmpty && item.IsEquipment && EquipRequested!=null;
         for(int i=0;i<(equipmentButtons?.Length ?? 0);i++)
         {
             var slot=(EquipmentSlot)i;var worn=equipment!=null?equipment.State.GetSlot(slot):null;
             var view=equipmentButtons[i].GetComponent<EquipmentSlotView>();
             if(view!=null)view.Render(worn);
-            else equipmentButtons[i].GetComponentInChildren<TextMeshProUGUI>().text=slot+": "+(worn!=null?worn.LocalizedName:"—");
-            equipmentButtons[i].interactable=equipment!=null && (worn!=null || (item!=null && item.Fits(slot) && item.requiredLevel<=unit.level));
+            else equipmentButtons[i].GetComponentInChildren<TextMeshProUGUI>().text=slot+": "+(worn!=null?worn.displayName:"—");
+            equipmentButtons[i].interactable=equipment!=null && (worn!=null || (item!=null && item.Fits(slot)));
         }
-        if(equipmentStats!=null)equipmentStats.text=GameText.Get("character.attributes", unit.EffectiveAttack, unit.EffectiveDefense, unit.EffectiveMagicAttack, unit.EffectiveMagicDefense, unit.Speed);
+        if(equipmentStats!=null && unit!=null)equipmentStats.text=$"ATK {unit.EffectiveAttack}     DEF {unit.EffectiveDefense}";
         if(tooltip!=null)tooltip.RefreshContent();
     }
     private void RefreshResources()
@@ -119,14 +110,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
         int hp=unit.Health.currentHealth,maxHP=unit.Health.maxHealth,mp=unit.CurrentMP,maxMP=unit.MaxMP;
         if(hp==shownHP && maxHP==shownMaxHP && mp==shownMP && maxMP==shownMaxMP)return;
         shownHP=hp;shownMaxHP=maxHP;shownMP=mp;shownMaxMP=maxMP;
-        resourcesLabel.text=GameText.Get("resources.hp_mp", hp, maxHP, mp, maxMP);
-    }
-    public void SplitSelected()
-    {
-        if(!IsOpen)return;var source=Inventory.State.GetSlot(SelectedIndex);
-        int destination=Inventory.State.FirstEmptySlot();
-        bool ok=destination>=0 && Inventory.State.TrySplit(SelectedIndex,destination,source.Count/2);
-        ShowMessage(ok?GameText.Get("inventory.split_success"):GameText.Get("inventory.split_failed"));
+        resourcesLabel.text=$"HP {hp} / {maxHP}    MP {mp} / {maxMP}";
     }
     private void RequestUse(){if(IsOpen)UseRequested?.Invoke(SelectedIndex);}
     private void RequestEquip(){if(IsOpen)EquipRequested?.Invoke(SelectedIndex,null);}
@@ -154,7 +138,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
     {
         if(!IsOpen || dragging<0)return false;
         bool ok=Inventory.State.TryMoveOrMerge(dragging,destination);EndDrag();
-        if(ok)Select(destination);else ShowMessage(GameText.Get("inventory.move_failed"));return ok;
+        if(ok)Select(destination);else ShowMessage("Cannot move this item. Check the slot and stack limit.");return ok;
     }
     public void EndDrag(){dragging=-1;if(dragIcon!=null)dragIcon.gameObject.SetActive(false);}
 

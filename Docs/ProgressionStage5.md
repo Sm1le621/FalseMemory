@@ -1,5 +1,7 @@
 # FalseMemory — подэтап5.1: EXP и уровни
 
+> **Исторический документ.** Система EXP, уровней и роста удалена 2026-10-31. Актуальные ресурсы и их сохранение в сессии — [SessionProgressSystem](Systems/SessionProgressSystem.md), [HealthSystem](Systems/HealthSystem.md).
+
 2026-10-12. Статус5.1 **Tested**, этап5 In Progress. Исходный HEAD визуального подэтапа a9a9117. Предыдущая ручная граница4 уже принята владельцем, поэтому разработка продолжена после Skeleton64/VFX.
 
 ## Выполнено
@@ -16,7 +18,7 @@ DefaultCharacterGrowth: cap99, первый переход100, шаг стоим
 
 Через MCP создан Assets/Settings/Progression/DefaultCharacterGrowth.asset, назначен Player.BattleUnit.growthRules и сохранена существующая SampleScene. BattleScene не перестраивалась. Native English StringTable/SharedData получили5 устойчивых ключей, сейчас141 запись. Русская документация и английский UI сохранены. Изменений Prefab/дополнительных зависимостей нет.
 
-[ProgressionSystem](Systems/ProgressionSystem.md) описывает формулы и настройку. Обновлены документы всех7 созданных/изменённых скриптов, Health/Inventory/Combat/Localization systems, README/Architecture/Changelog/Roadmap и руководства.
+`ProgressionSystem` (удалена) описывает формулы и настройку. Обновлены документы всех7 созданных/изменённых скриптов, Health/Inventory/Combat/Localization systems, README/Architecture/Changelog/Roadmap и руководства.
 
 ## Проверки
 

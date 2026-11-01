@@ -25,7 +25,7 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.ui.enemyPortrait.sprite,Is.SameAs(set.death[3]));Assert.That(manager.ui.enemyPortrait.color.a,Is.Zero);
         Assert.That(manager.presentation.IsAnimating,Is.False);
     }
-    [UnityTest] public IEnumerator AnimatedFireHealAndDisabledVfxDoNotDuplicateEffectsOrResources()
+    [UnityTest] public IEnumerator AnimatedFireAndDisabledVfxDoNotDuplicateEffectsOrResources()
     {
         var player=Player();yield return BeginBattle(player,Enemy());var manager=Manager();var vfx=manager.vfx;
         Assert.That(manager.TryPlayerSpell(Fire(player)),Is.True);Assert.That(manager.TryPlayerSpell(Fire(player)),Is.False);
@@ -34,11 +34,9 @@ public sealed partial class BattleFlowTests
         Assert.That(player.CurrentMP,Is.EqualTo(22));Assert.That(manager.Enemy.Health.currentHealth,Is.EqualTo(41));
         yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);yield return WaitUntil(()=>!vfx.HasAnimatedFrame);
         Assert.That(vfx.ActiveParticles,Is.Zero);Assert.That(vfx.EffectsPlayed,Is.EqualTo(1));
-        player.Health.TakeDamage(20);Assert.That(manager.TryPlayerSpell(Heal(player)),Is.True);
-        yield return WaitUntil(()=>vfx.HasAnimatedFrame);Assert.That(player.CurrentMP,Is.EqualTo(16));
-        vfx.enabled=false;Assert.That(vfx.HasAnimatedFrame,Is.False);Assert.That(vfx.ActiveParticles,Is.Zero);
-        yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);Assert.That(player.Health.currentHealth,Is.EqualTo(96));
-        Assert.That(vfx.EffectsPlayed,Is.EqualTo(2));Assert.That(manager.TryPlayerAction(BattleAction.Defend),Is.True);
-        yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);Assert.That(player.CurrentMP,Is.EqualTo(16));
+        player.Health.TakeDamage(20);manager.vfx.enabled=false;Assert.That(vfx.HasAnimatedFrame,Is.False);Assert.That(vfx.ActiveParticles,Is.Zero);
+        Assert.That(manager.TryPlayerAction(BattleAction.Defend),Is.True);
+        yield return WaitUntil(()=>manager.State==BattleState.AwaitingPlayer);Assert.That(player.CurrentMP,Is.EqualTo(22));
+        Assert.That(vfx.EffectsPlayed,Is.EqualTo(1));
     }
 }

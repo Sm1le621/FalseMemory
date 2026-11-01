@@ -1,5 +1,7 @@
 # FalseMemory — Skeleton64 и pixel VFX
 
+> **Исторический документ.** Описывает IDLE-кадры и лечение, которые позже удалены; актуальные анимации — [BattleAnimationSystem](Systems/BattleAnimationSystem.md), [EnemyVisuals](Systems/EnemyVisuals.md), [BattleVFXSystem](Systems/BattleVFXSystem.md).
+
 2026-10-12. Ветка stas_megamosk_build, исходный HEAD80326aa. Владелец в новом задании подтвердил ручную проверку предыдущего состояния: этап4/переработка инвентаря/локализация приняты. Новая графика технически проверена; художественную приёмку не подменяем тестами.
 
 ## Результат

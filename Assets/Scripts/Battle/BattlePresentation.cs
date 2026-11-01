@@ -22,7 +22,6 @@ public sealed class BattlePresentation : MonoBehaviour
     private Vector3 playerScale, enemyScale;
     private BattleUnit player, enemy;
     private bool bound;
-    private float idleClock;
     private bool playerAttacking,enemyAttacking;
     public int HitEffectsPlayed { get; private set; }
     public bool IsAnimating { get; private set; }
@@ -49,16 +48,16 @@ public sealed class BattlePresentation : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(bound && !IsAnimating){idleClock+=Time.unscaledDeltaTime;IdleFrame(true);IdleFrame(false);}
+        if(bound && !IsAnimating){StaticFrame(true);StaticFrame(false);}
         if (playerGuard != null) playerGuard.gameObject.SetActive(player != null && player.IsAlive && player.IsDefending);
         if (enemyGuard != null) enemyGuard.gameObject.SetActive(enemy != null && enemy.IsAlive && enemy.IsDefending);
     }
 
-    private void IdleFrame(bool onPlayer)
+    // Standing units use a single static frame; there is no idle animation.
+    private void StaticFrame(bool onPlayer)
     {
         var unit=onPlayer?player:enemy;var portrait=ui!=null?(onPlayer?ui.playerPortrait:ui.enemyPortrait):null;
-        if(unit!=null && unit.IsAlive && portrait!=null && unit.visualAnimations!=null)
-            portrait.sprite=unit.visualAnimations.Loop(SpritePose.Idle,idleClock,unit.battleSprite);
+        if(unit!=null && unit.IsAlive && portrait!=null)portrait.sprite=unit.battleSprite;
     }
     private void PoseFrame(bool onPlayer,SpritePose pose,float progress)
     {
@@ -145,7 +144,7 @@ public sealed class BattlePresentation : MonoBehaviour
     {
         IsAnimating = false;
         playerAttacking=enemyAttacking=false;
-        IdleFrame(true);IdleFrame(false);
+        StaticFrame(true);StaticFrame(false);
         if(!bound || ui==null) return;
         if(ui.playerPortrait!=null) {ui.playerPortrait.rectTransform.anchoredPosition=playerHome;ui.playerPortrait.rectTransform.localScale=playerScale;ui.playerPortrait.color=player!=null&&player.IsAlive?player.spriteColor:new Color(0.3f,0.3f,0.3f,0.3f);}
         if(ui.enemyPortrait!=null) {ui.enemyPortrait.rectTransform.anchoredPosition=enemyHome;ui.enemyPortrait.rectTransform.localScale=enemyScale;ui.enemyPortrait.color=enemy!=null&&enemy.IsAlive?enemy.spriteColor:new Color(0.3f,0.3f,0.3f,0.3f);}

@@ -2,7 +2,7 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleEncounter.cs.
+**Исходный файл:** Assets/Scripts/Battle/BattleEncounter.cs.
 
 Запуск боя при физическом касании игроком врага.
 

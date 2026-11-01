@@ -1,25 +1,45 @@
-# Визуал врагов FalseMemory
+# Визуал врагов
 
-## Назначение и данные
+## 1. Назначение
 
-2026-10-12 — существующий Enemy SampleScene использует Skeleton64: original native PNG64×64, тёмные кости/ржавая броня/бордовая ткань/меч/щит. Старый Assets/skeleton-topdown-64.png и его импорт сохранены. Источник новых рисунков — Assets/Editor/PixelBattleAssetBuilder.cs, напрямую заполняющий RGBA на сетке64; увеличенный AI-референс не является игровым исходником.
+Внешний вид скелета в мире и бою: нативные PNG 64×64, кадры движения/атаки/урона/смерти и отражение по направлению. IDLE-кадров нет.
 
-## Последовательность и компоненты
+## 2. Общая логика
 
-EnemyAI/Rigidbody2D определяют реальную позицию. EnemySpriteAnimation читает displacement и Health, выбирает Idle/Move/Hurt/Death и flipX. BattleUnit.visualAnimations ссылается на SpriteAnimationSet; battleSprite — Idle-00 fallback. Transition прячет исходную карту во время боя. BattlePresentation проигрывает этот же набор на UI.enemyPortrait по конечному progress; применение действий остаётся в Manager. Ни один новый визуальный компонент не пишет ресурсы/скорость/коллайдеры.
+`EnemySpriteAnimation` читает позицию и `Health`, выбирает `Move` при движении, `Hurt` после урона, `Death` при HP 0 и `battleSprite` в покое. `BattlePresentation` проигрывает те же кадры на портрете. Визуальные компоненты не меняют AI, физику и боевые ресурсы.
 
-## Пути и настройка
+## 3. Основные компоненты
 
-Assets/Art/Enemies/Skeleton64: Idle2, Move4, Attack3, Hurt2, Death4, отдельные PNG64×64. Assets/Settings/Battle/Visuals/Skeleton64.asset — массивы и FPS8/Idle2. Importer: Sprite Single, Point, Uncompressed, no mipmaps, PPU100, центрированный pivot. Enemy сохраняет scale(2,2,1), прежнюю позицию/Rigidbody/два CircleCollider2D (тело radius0.32). Ссылки SpriteRenderer/Unit назначены на существующем объекте через MCP; BattleUI.previewEnemySprite также обновлён и сцены фактически сохранены.
+- `SpriteAnimationSet` (`Skeleton64.asset`) — Move 4, Attack 3, Hurt 2, Death 4.
+- `EnemySpriteAnimation` — мир.
+- `BattlePresentation` — бой.
+- `PixelBattleAssetBuilder` — генерация исходников.
 
-## Как заменить позже
+## 4. Взаимодействие скриптов
 
-Открыть PNG в pixel-art редакторе и сохранять размер64×64/pivot; .meta/GUID не удалять. Для нового набора создать отдельные ресурсы и SpriteAnimationSet, заполнить5 массивов и назначить Unit.visualAnimations/battleSprite и SpriteRenderer. Действующие шаблоны Generate/GenerateImpact отвергают существующие пути; не удалять ассеты ради повторной генерации. Новый вариант программного рецепта должен использовать новые пути. В инспекторе менять FPS, не урон. UI-кадры не требуют Animator Controller/Animation Events.
+`BattleUnit.visualAnimations` ссылается на набор, `battleSprite` — fallback. `EnemySpriteAnimation` работает со `SpriteRenderer`; `BattlePresentation` — с `BattleUI.enemyPortrait`. `BattleTransition` скрывает врага вместе с миром на время боя.
 
-## Расширение и ограничения
+## 5. Последовательность событий
 
-Сейчас один фронтальный набор с отражением; полноценные четыре направления отсутствуют. Герой сохраняет исходные кадры/анимации мира. В бою применяются кадры врага и прежние движения RectTransform; новой боевой логики нет. World Heal/Fire не добавлялись. Death после победы не создаёт новый труп/лут — старый Transition отключает Enemy. Нативный PNG является основным форматом, превью1920×1080 его не заменяет. Художественную читаемость/стиль и ощущение темпа принимает владелец, standalone ещё не проверен.
+Движение → Move; попадание → Hurt 0.16 с; HP 0 → Death; победа → объект выключается. В бою Attack/Hurt/Death показываются на портрете, в мире — на SpriteRenderer.
 
-## Проверки
+## 6. Настраиваемые параметры
 
-[PixelVisuals](../PixelVisuals.md): фактические размеры/палитра/альфа32 PNG, фильтры/ссылки Edit Mode, Move/Attack/Hurt/Death/коллизия/ресурсы Play Mode, реальные кадры Game View. Индивидуальные скрипты: [SpriteAnimationSet](../Scripts/Battle/SpriteAnimationSet.md), [EnemySpriteAnimation](../Scripts/Battle/EnemySpriteAnimation.md), [BattlePresentation](../Scripts/Battle/BattlePresentation.md).
+Кадры 64×64, PPU 100, Point, без mipmaps и компрессии. `framesPerSecond = 8`. `movementThreshold = 0.001`, `hurtDuration = 0.16`, `deathDuration = 0.4`, `faceMovement = true`. Enemy сохраняет масштаб (2,2,1) и два коллайдера.
+
+## 7. Использование в Unity
+
+Кадры находятся в `Assets/Art/Enemies/Skeleton64`, набор — в `Assets/Settings/Battle/Visuals/Skeleton64.asset`. Назначь `BattleUnit.battleSprite`/`visualAnimations` и `SpriteRenderer`. Для нового врага создай отдельный набор, не перезаписывай существующие PNG.
+
+## 8. Расширение
+
+Новые кадры генерируются `PixelBattleAssetBuilder` или рисуются вручную на сетке 64×64. Полноценные четыре направления отсутствуют; при необходимости потребуется новый набор и логика выбора направления. Не добавляй Idle-клипы.
+
+## 9. Ограничения и проверки
+
+Один фронтальный набор с отражением; смерть не создаёт труп/лут. Арт оценивается владельцем. EditMode проверяет 32 PNG, размеры, импорт и отсутствие Idle; PlayMode — Move/Attack/Hurt/Death, коллизии и сохранение ресурсов.
+
+## История
+
+- 2026-10-31 — удалены IDLE-кадры и упоминания Idle; набор сокращён до Move/Attack/Hurt/Death.
+- 2026-10-12 — базовый пиксельный визуал скелета.

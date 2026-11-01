@@ -2,50 +2,44 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Tests/PlayMode/InventoryFlowTests.cs.
+Исходник: `Assets/Tests/PlayMode/InventoryFlowTests.cs`.
 
-Дополнительная часть BattleFlowTests для окна/мыши/ввода.
+Partial `BattleFlowTests`: настоящий ввод мышью/клавиатурой, drag & drop, использование предметов, экипировка и сохранение инвентаря после боя.
 
 ## 2. Как работает
 
-Использует прежние Setup/Cleanup реальной SampleScene. Создаёт/удаляет синтетическую клавиатуру и только тестовые данные.
+Использует общий `Setup`/`Cleanup` и реальную `SampleScene`. Создаёт синтетические Mouse/Keyboard через Input System, вызывает UI-события и проверяет модель/компоненты. Временные устройства и предметы удаляются.
 
 ## 3. Методы и функции
 
-2026-10-12 — актуальная локализация: Текстовые ожидания приведены к английскому UI (New Game/Main Menu/Back/No items available/Inventory full/DEFEAT/описания HPMP/цен). Проверки состояния, количества, урона, ресурсов и поведения сохранены.
-`RealMouseRaycastDragsAndCancelsThroughInputSystem` UnityTest IEnumerator: добавляет Mouse, вычисляет screen-центры через helper `SlotScreenCenter(slot)` → Vector2, отправляет настоящие MouseState position/buttons/delta в Input System, не вызывает handlers сам. Проверяет перенос0→9 и отмену вне экрана без потери3 Potion/ghost; finally удаляет устройство/закрывает. Тест I/Escape теперь также проверяет backdrop.
-`SharedInventoryEquipmentAndEtherSurviveBattleVictoryAndWorldReturn` UnityTest IEnumerator: окно/Potion/Ether/повтор кадра, Sword/Armor/Helmet, настоящая BattleScene, Attack15/ответ1, HPMP-предметы/Fire/победа/возврат. Итог97HP/30MP/Potion1/Ether0/EXP20 и те же InventoryState/экипировка/позиция/мировой HUD. `WorldUseRestrictionsDisableButtonsWithoutConsumingItems` UnityTest: разрешённость только Battle/нехватка уровня, disabled кнопка и отказ без qty/HP.
-`EquipmentButtonsApplyAndRemoveBonusesWithoutChangingBaseStatsOrResources` UnityTest IEnumerator: реальные сценовые определения/кнопки, пять циклов меча, Armor/Helmet; ATK20/DEF14, база15/8, HP100/MP30, одиночное владение и Stats.
-`PickupERejectsFullInventoryThenCollectsExactlyOnceAndRespectsModalInput` — UnityTest IEnumerator: временный trigger ближе остальных,29 нестакаемых вещей+Potion заполняют30 слотов; E при окне не действует, E при полном запасе оставляет предмет; освобождение слота даёт2 вещи, десять повторных вызовов отказ. Реальный Input System/Physics2D-поиск, временные устройства/объекты очищаются finally.
-
-`InventoryKeysBlockMovementAndEscapeRestoresIt` UnityTest IEnumerator: I+D открывает/останавливает тело, Escape+D закрывает/возобновляет;30 slots/gate. `InventoryPointerHandlersMoveSwapMergeAndCancelWithoutDuplication` проверяет split/drag/swap/merge/cancel/метку количества с исходным Potion. `DragSlot(window,source,target)` private void вызывает настоящие EventSystem handlers begin/drop/end через ExecuteEvents. Не полная симуляция мышиного raycast.
+- `RealMouseRaycastDragsAndCancelsThroughInputSystem()` — настоящий MouseState: перенос Potion 2→9, отмена за экраном без потери 3 предметов.
+- `SharedInventoryEquipmentAndManaSurviveBattleVictoryAndWorldReturn()` — Potion, Sword, Armor; Attack/Fire; победа и возврат с теми же `InventoryState`, экипировкой, HP 78/MP 22/позицией.
+- `WorldUseRestrictionsDisableButtonsWithoutConsumingItems()` — предмет с `useLocations = Battle` недоступен в мире; после Anywhere используется.
+- `EquipmentButtonsApplyAndRemoveBonusesWithoutChangingBaseStatsOrResources()` — пять циклов Equip/Unequip меча, затем броня; ATK 20/DEF 12, базы 15/8, HP/MP не меняются.
+- `InventoryKeysBlockMovementAndEscapeRestoresIt()` — `I` открывает окно и блокирует тело, Escape закрывает и возобновляет движение; 30 слотов/backdrop.
+- `InventoryPointerHandlersMoveSwapMergeAndCancelWithoutDuplication()` — handlers begin/drop/end: перенос, обмен, слияние, отмена drag.
 
 ## 4. Переменные и Inspector
 
-Локальные player/window/keyboard/material; временный material удаляется finally, устройство тоже. Inspector отсутствует.
+Локальные `player`, `window`, `keyboard`, `mouse`, временный `material`. Inspector отсутствует; реальные ассеты не сохраняются.
 
 ## 5. Связи
 
-FalseMemory.Battle.PlayModeTests/Runtime/InputSystem/EventSystem и общие fixtures BattleFlowTests.
+`BattleFlowTests`, `InventoryWindow`, `InventoryState`, `WorldItemUseController`, `EquipmentController`, `WorldInputGate`, `BattleTransition`, Input System/EventSystem.
 
 ## 6. Пример
 
-Сценарий переносит Potion и материал, итоговые количества сохраняются.
+Открытие окна: `I` + D — тело не двигается. Перенос зелья на слот 9 сохраняет количество 3. После победы меч остаётся надетым, ATK 20.
 
 ## 7. Настройка в Unity
 
-Не прикреплять; PlayMode/Test Runner или MCP с именем сборки. Проверить итоговое total>0.
+Test Runner → PlayMode; нужны `SampleScene` с Player и настроенным инвентарём. Синтетические устройства создаются тестом.
 
-## 8. Ограничения и расширение
+## 8. Ограничения и проверки
 
-Отдельный DragSlot вызывает handlers напрямую; новый Mouse-сценарий проходит настоящий Input System/UI-raycast. В набор также входят подбор/экипировка/общие предметы/бой/возврат. Человеческое удобство/мышь на рабочем месте/звук/standalone оцениваются отдельно.
+Проверяет реальный UI-ввод, но не человеческое удобство. Не тестирует подбор предметов — его больше нет. 2026-10-31: PlayMode 36/36.
 
 ## 9. История изменений
 
-2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
-2026-10-12 — 4.6: настоящий mouse/raycast/drop/cancel и backdrop.
-2026-10-12 — 4.5: два сценария общей сессии/ресурсов и ограничений.
-2026-10-12 — 4.4: сценарий кнопок экипировки/повторных бонусов.
-2026-10-12 — 4.3: реальный E/полный запас/резерв/повторные вызовы.
-
-2026-10-12 — 4.2: два сценария окна/ввода/handlers.
+- 2026-10-31 — удалены Ether/Helmet/EXP и сценарий подбора; ожидания HP/MP приведены к текущим.
+- 2026-10-12 — базовая документация.

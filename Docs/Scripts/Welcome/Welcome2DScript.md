@@ -2,7 +2,7 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Welcome/Welcome2DScript.cs.
+**Исходный файл:** Assets/Welcome/Welcome2DScript.cs.
 
 Служебный ScriptableObject шаблона Unity 2D; не игровая система FalseMemory.
 

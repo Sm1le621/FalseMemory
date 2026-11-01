@@ -8,7 +8,7 @@ public sealed class InventoryTooltip : MonoBehaviour
     public InventoryWindow owner;
     public RectTransform panel;
     public TextMeshProUGUI content;
-    public Outline rarityBorder;
+    public Outline border;
     private Object source;
     private Vector2 pointer;
     public bool IsVisible=>panel!=null && panel.gameObject.activeSelf;
@@ -23,7 +23,8 @@ public sealed class InventoryTooltip : MonoBehaviour
         if(bag!=null){var entry=owner.Inventory.State.GetSlot(bag.Index);item=entry.Item;count=entry.Count;}
         var equipment=source as EquipmentSlotView;if(equipment!=null)item=equipment.Item;
         if(item==null){Hide();return;}
-        content.text=ItemPresentation.Description(item,count);rarityBorder.effectColor=ItemPresentation.RarityColor(item.rarity);
+        content.text=ItemPresentation.Description(item,count);
+        if(border!=null)border.effectColor=new Color32(150,133,101,255);
         var parent=panel.parent as RectTransform;
         float width=Mathf.Min(320,parent.rect.width-24);
         float height=Mathf.Min(content.GetPreferredValues(content.text,width-32,0).y+32,parent.rect.height-24);

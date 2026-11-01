@@ -2,7 +2,7 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/EnemyAI.cs.
+**Исходный файл:** Assets/Scripts/EnemyAI.cs.
 
 Преследование Player скелетом на карте.
 

@@ -2,71 +2,56 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleUnit.cs.
+Исходник: `Assets/Scripts/Battle/BattleUnit.cs`.
 
-Характеристики участника боя и состояние MP/EXP. HP принадлежит отдельному Health; IBattleParticipant позволяет очереди читать Speed/IsAlive.
+Данные участника боя: имя, физические и магические характеристики, MP, заклинания, внешний вид и состояние защиты. HP остаётся в отдельном `Health`; `IBattleParticipant` позволяет очереди читать `Speed` и `IsAlive`. Уровней, опыта и роста характеристик нет.
 
 ## 2. Как работает
 
-Awake заполняет MP единожды. Менеджер начинает ход и сбрасывает Defend, действия расходуют MP или дают опыт. Исходный объект мира используется в бою.
+`Awake` один раз заполняет `currentMP` значением `maxMP`. В начале своего хода `BattleManager` вызывает `BeginTurn`, который снимает защиту; команда `Defend` включает её до следующего хода. Магия проверяет и списывает MP через `TrySpendMP`; зелья восстановления вызывают `RestoreMP`. `EffectiveAttack`/`EffectiveDefense` складывают базовые значения с бонусами надетой экипировки, магические характеристики пока равны базовым. При переходе в бой и обратно вызывается `ResetBattleState`, который только снимает защиту и не сбрасывает MP.
 
 ## 3. Методы и функции
 
-AddExperience теперь сохраняет насыщенный cumulative EXP, вычисляет достижимый уровень, LevelsGainedLastAward, ApplyHealthGrowth и событие ProgressChanged. awardingExperience отклоняет рекурсивные награды и сбрасывается finally. EnsureGrowthBaseline запоминает стартовый maxHP; ApplyHealthGrowth передаёт Health вычисленный максимум, сохраняя текущий HP. Awake готовит baseline/максимум/полный стартовый MP. Effective*/Speed = прежняя база + LevelBonuses + EquipmentBonuses; публичные base-поля не увеличиваются.
+- `Awake()` — Unity callback; `currentMP = maxMP`. При повторном включении объекта не вызывается.
+- `TrySpendMP(int cost)` → `bool`; живой участник с достаточным MP списывает стоимость. Отрицательная стоимость отклоняется.
+- `RestoreMP(int amount)` → `int`; восстанавливает MP до максимума и возвращает фактически добавленное количество.
+- `BeginTurn()` — снимает `IsDefending` в начале хода.
+- `Defend()` — включает `IsDefending` до следующего `BeginTurn`.
+- `ResetBattleState()` — снимает защиту при входе/выходе из боя; HP/MP/инвентарь не трогает.
+- `Health` → `Health`; `Inventory` → `BattleInventory`; `Equipment` → `EquipmentController`.
+- `EffectiveAttack`/`EffectiveDefense` — база плюс бонусы экипировки с насыщением `int.MaxValue`.
+- `EffectiveMagicAttack`/`EffectiveMagicDefense` — текущие базовые `magicAttack`/`magicDefense`.
+- `Speed` → `speed`; `IsAlive` → `Health.currentHealth > 0`.
+- `MaxMP` → `maxMP`; `CurrentMP` → `currentMP`, ограниченный диапазоном `0..MaxMP`.
 
-2026-10-12 — native pixel visuals: EnemySpriteAnimation и BattlePresentation используют одни и те же данные кадров; Unit сам их не проигрывает.
+## 4. Переменные и Inspector
 
-2026-10-12 — актуальная локализация: localizationId — ключ unit.player/unit.skeleton, LocalizedName → GameText.Content(localizationId+".name",displayName). Это только имя; уровни/EXP/характеристики/Health не меняются.
-`Equipment` получает EquipmentController того же объекта; private `EquipmentBonuses` читает его State либо нулевые. `EffectiveAttack/EffectiveDefense/EffectiveMagicAttack/EffectiveMagicDefense` → int: неотрицательная база+соответствующий бонус с насыщением int.MaxValue. `Speed` учитывает speed-бонус. Без Equipment прежние значения. Базовые поля/HP/MP не меняются.
+- `displayName` — подпись в сообщениях и характеристиках.
+- `attack`, `defense`, `speed` — базовые физические характеристики, `≥ 0`.
+- `maxMP` — максимум маны; `currentMP` — сериализованное текущее значение, при старте заполняется максимумом.
+- `magicAttack`, `magicDefense` — магические характеристики, `≥ 0`.
+- `spells` — массив `BattleSpell`; сейчас у игрока Fire, у скелета пусто.
+- `criticalChance`, `missChance` — шансы 0…1.
+- `battleSprite`, `visualAnimations`, `spriteColor`, `flipInBattle` — внешний вид в бою и мире.
+- В текущей сцене у игрока MP 30, MATK 12, MDEF 8; у скелета ATK 12, DEF 5, SPD 7, MDEF 3.
 
-- `Awake()` — Unity: currentMP=MaxMP; void, не повторяется при скрытии мира.
-- `TrySpendMP(int cost)` — при живом участнике и доступной стоимости ≥0 списывает MP, возвращает bool успеха.
-- `RestoreMP(int amount)` — живому восстанавливает до MaxMP, возвращает фактически добавленное; отрицательное/0 даёт 0.
-- `AddExperience(int amount)` — живому добавляет неотрицательный опыт до int.MaxValue; возвращает добавленное, не повышает level.
-- `BeginTurn()` — очередь начинает ход: снимает Defend. `Defend()` — включает защиту. `ResetBattleState()` — снимает защиту при переходах; void.
-- Свойства `Health`/`Inventory` получают компоненты, `Speed`/`MaxMP`/`CurrentMP`/`CurrentExperience` ограничивают читаемые значения, `IsAlive` проверяет HP>0, `IsDefending` хранит защиту.
+## 5. Связи
 
-## 4. Переменные и параметры Inspector
+Требуется `Health` (через `RequireComponent`). `BattleInventory` и `EquipmentController` необязательны, но нужны для предметов и экипировки. `BattleManager`, `BattleAbilities`, `BattleCalculator`, `BattleUI`, `BattleHUD`, `EnemySpriteAnimation` и `BattlePresentation` читают данные компонента. `ManaHUD` и `InventoryWindow` показывают MP.
 
-growthRules — необязательный CharacterGrowthRules; на Player назначен DefaultCharacterGrowth, на Enemy null. baseMaximumHealth/awardingExperience внутренние; LevelBonuses getter. ProgressChanged событие; LevelsGainedLastAward/ExperienceToNextLevel/AtMaximumLevel readonly. CurrentExperience по-прежнему общий накопленный EXP, maxMP — база; MaxMP теперь включает рост.
+## 6. Пример
 
-visualAnimations — новый необязательный SpriteAnimationSet; в Enemy назначен Skeleton64, в Player отсутствует. battleSprite остаётся исходным/fallback Sprite; боевые характеристики/идентификаторы не менялись.
-
-localizationId — новое serialized string-поле: spell.fire/spell.heal у заклинаний, unit.player/unit.skeleton у участников сцены. LocalizedName readonly читает таблицу, displayName остаётся английским fallback. Ни ID, ни боевые параметры это поле не меняет.
-
-displayName — подпись; level≥1; attack/defense/speed≥0 (код 15/8/10). maxMP/currentMP/magicAttack/magicDefense≥0; currentMP сериализован, Awake перезаписывает. spells — список BattleSpell. criticalChance/missChance 0…1 (0.1/0.05). currentExperience/experienceReward≥0; battleSprite/spriteColor/flipInBattle — внешний вид. Сцена Player: MP30, MATK12, MDEF8; Enemy: ATK12 DEF5 SPD7 MDEF3 Reward20.
-
-## 5. Связи с другими системами
-
-Health.SetMaximumHealth обновляет тот же HUD; InventoryWindow подписывается на ProgressChanged, BattleUI показывает Level Up после награды.
-
-GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
-
-RequireComponent Health. Inventory необязателен, но нужен для предметов. Player/Enemy в SampleScene; BattleManager, Transition, UI, Abilities и очередь читают его.
-
-## 6. Пример работы
-
-Fire → TrySpendMP(8): 30→22. Возврат в мир не запускает Awake вновь, остаётся 22 MP.
+Fire стоит 8 MP. При старте у игрока 30 MP; после `TrySpendMP(8)` остаётся 22. Возврат на карту не запускает `Awake` заново, поэтому 22 MP сохраняются до конца сессии. Зелье восстановления MP возвращает фактически добавленное значение и не превышает максимум.
 
 ## 7. Настройка в Unity
 
-На существующих Player/Enemy с Health. Настрой характеристики, battleSprite/цвет/flip, Max MP, Spells, шансы и Reward. Player использует Fire/Heal и Max MP30; Enemy Reward20. Current MP задаётся Awake из Max MP, поэтому исходную ману меняй через максимум. Количество предметов задаётся отдельным BattleInventory.
+Компонент находится на Player и Enemy рядом с `Health`. Настрой базовые характеристики, максимум MP, заклинания, шансы и внешний вид. Стартовый MP задаётся через `maxMP`: `currentMP` перезаписывается в `Awake`. Количество предметов задаётся в `BattleInventory`, экипировка — в слотах `EquipmentController`.
 
-## 8. Возможные проблемы и проверки
+## 8. Возможные проблемы
 
-Новый экземпляр/перезагрузка карты сбрасывает MP. Прямая запись сериализованных полей может обойти ограничения; Inspector-атрибуты не полная защита. Нет level-up. MP/EXP/защита и сохранение сессии проверены тестами.
+Новый экземпляр объекта или перезагрузка сцены сбрасывает MP к максимуму. Прямая запись сериализованных полей обходит ограничения Inspector. Без `Health` компонент не добавится. `spells` может быть `null` в старых сценах — менеджер это проверяет. Нет сохранения между запусками игры, повышения уровня и магических бонусов от экипировки.
 
 ## 9. История изменений
 
-2026-10-12 —5.1: кривая EXP/производный рост/Level Up при прежнем владельце HP. [Проверки](../../ProgressionStage5.md).
-
-2026-10-12 — кадры Skeleton64/Fire/Heal/Hit подключены к существующему представлению; игровые ресурсы не перенесены в анимации. [Текущие проверки](../../PixelVisuals.md).
-
-2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
-- 2026-10-12 — 4.4: readonly итоговые характеристики экипировки, без накопления/лечения. С4.5 менеджер/магия читают эти свойства; цены/формулы сохранены.
-
-- 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
-
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
-
-- 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
+- 2026-10-31 — удалены EXP, уровни, `CharacterGrowthRules` и `localizationId`; магические характеристики больше не растут от уровня; добавлено пояснение о MP и защите.
+- 2026-10-12 — базовая версия с ростом и строками; запись историческая.

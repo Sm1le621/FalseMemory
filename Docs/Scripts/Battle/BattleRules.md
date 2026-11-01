@@ -2,7 +2,7 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleRules.cs.
+**Исходный файл:** Assets/Scripts/Battle/BattleRules.cs.
 
 ScriptableObject общих коэффициентов боя; позволяет менять баланс без переписывания менеджера.
 

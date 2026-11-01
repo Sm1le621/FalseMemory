@@ -2,48 +2,42 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** `Assets/Scripts/UI/MainMenuController.cs`.
+Исходник: `Assets/Scripts/UI/MainMenuController.cs`.
 
-Обработчики кнопок главного меню. Компонент живёт на объекте `Menu` в сцене `MainMenu`; UI и все ссылки заранее сохранены в сцене.
+Кнопки главного меню: начать игру, открыть настройки, выйти. Текст интерфейса задан в сцене на английском; локализации и `GameText` нет.
 
 ## 2. Как работает
 
-При загрузке `MainMenu` объект `Menu` активен, компонент уже содержит имя игровой сцены и ссылку на `SettingsMenu`. Кнопки `StartButton`/`SettingsButton`/`ExitButton` вызывают его методы через persistent `onClick` в сцене. Кода создания UI и `Awake` у компонента нет.
+`OnStart` проверяет имя игровой сцены и загружает её через `SceneManager.LoadScene`. Пустое имя даёт ошибку в Console. `OnSettings` показывает назначенную панель `SettingsMenu`. `OnExit` в редакторе останавливает Play Mode, в сборке вызывает `Application.Quit`.
 
 ## 3. Методы и функции
 
-- `OnStart()` — проверяет, что `gameSceneName` не пустое; при пустом значении пишет `Debug.LogError`, иначе `SceneManager.LoadScene(gameSceneName)` с Single-загрузкой. Возвращает void.
-- `OnSettings()` — при назначенном `settingsMenu` вызывает `Show()`; без ссылки пишет `Debug.LogError`.
-- `OnExit()` — в редакторе останавливает Play (`UnityEditor.EditorApplication.isPlaying = false`), в сборке вызывает `Application.Quit()`.
+- `OnStart()` — загружает `gameSceneName`; void.
+- `OnSettings()` — вызывает `settingsMenu.Show()`; void.
+- `OnExit()` — завершает игру/Play Mode; void.
 
-## 4. Переменные и параметры Inspector
+## 4. Переменные и Inspector
 
-- `gameSceneName` — сериализованная строка, значение сцены `SampleScene`; сцена должна быть в Build Scenes.
-- `settingsMenu` — сериализованная ссылка на компонент `SettingsMenu` объекта `Menu`.
+- `gameSceneName` — имя сцены, по умолчанию `SampleScene`; должно быть в Build Settings.
+- `settingsMenu` — ссылка на компонент панели настроек.
 
-Оба поля приватные `[SerializeField]`; назначаются в сцене, а не кодом.
+## 5. Связи
 
-## 5. Связи с другими системами
+Компонент находится в `MainMenu` и вызывается `Button.onClick`. `SettingsMenu` управляет громкостью и полноэкранным режимом. Загрузка игры переходит в `SampleScene`.
 
-`SettingsMenu.Show()` открывает панель настроек. `SceneManager` загружает `SampleScene`. `BattleTransition.ReturnToMainMenu()` возвращает игрока в эту сцену после поражения; `MainMenuController` при этом уже находится в сохранённой сцене.
+## 6. Пример
 
-## 6. Пример работы
-
-Поражение в бою → `MainMenu` → кнопка `StartButton` (persistent `OnStart`) → свежая `SampleScene`. Кнопка `SettingsButton` открывает `SettingsDim`, `ExitButton` завершает приложение.
+Нажатие `New Game` загружает `SampleScene`. Нажатие `Settings` открывает панель, где можно изменить громкость и полноэкранный режим. `Exit` в редакторе останавливает игру.
 
 ## 7. Настройка в Unity
 
-Компонент находится на объекте `Menu` сцены `MainMenu`. Проверьте в Inspector: `Game Scene Name = SampleScene`, `Settings Menu` указывает на компонент `SettingsMenu` того же объекта. У кнопок в `Button.onClick` должны быть persistent-вызовы `MainMenuController.OnStart`, `OnSettings`, `OnExit`. Отдельно прикреплять компонент не нужно.
+Добавь компонент на объект меню, назначь `settingsMenu` и проверь `gameSceneName`. Сцена должна быть добавлена в Build Settings. Кнопки привязываются к методам через `onClick` в Inspector.
 
-## 8. Возможные проблемы и проверки
+## 8. Возможные проблемы
 
-- Пустое `Game Scene Name` даёт ошибку в Console и не грузит сцену.
-- `Settings Menu` не назначен — кнопка Settings пишет ошибку.
-- `SampleScene` отсутствует в Build Scenes — `LoadScene` завершится ошибкой.
-- Кнопки должны иметь именно persistent-события в сцене: тест вызывает `onClick.Invoke()`.
+Если сцена не добавлена в Build Settings, `LoadScene` выдаст ошибку. Без `settingsMenu` кнопка настроек пишет ошибку. В редакторе `OnExit` не закрывает редактор, а останавливает Play Mode — это ожидаемо.
 
 ## 9. История изменений
 
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии.
-- 2026-10-11 — добавлена инструкция настройки в Unity.
-- 2026-10-25 — меню перенесено в сцену: удалён `Initialize`, поля назначаются в сцене; `MainMenuBootstrap` удалён. Проверено EditMode/PlayMode-тестами и чтением YAML сцены.
+- 2026-10-31 — удалены `LocalizedLabel`/`GameText`; тексты меню хранятся в сцене.
+- 2026-10-11 — базовая документация меню.

@@ -2,50 +2,53 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Inventory/ItemData.cs.
+Исходник: `Assets/Scripts/Inventory/ItemData.cs`.
 
-Статическое определение предмета: ID, данные, категории и бонусы. Не количество/владение.
+ScriptableObject-определение предмета: идентификатор, имя, описание, иконка, категория, стаки, цены, места использования, слот экипировки и бонусы ATK/DEF. Редкости и модели персонажа нет.
 
 ## 2. Как работает
 
-ItemData один для мира/боя. BattleConsumable наследует поля. Экипировка всегда по1 в слоте; остальные по StackLimit.
+Ассет создаётся через `FalseMemory/Item`. Категория определяет поведение: `Consumable` можно использовать, `Weapon`/`Armor` — экипировать. `StackLimit` равен 1 для экипировки и нестакуемых предметов, иначе `maxStack`. `Fits(slot)` проверяет совместимость: оружие — только Weapon, броня — указанный слот (в текущей игре Chest). `ItemStatBonus` хранит только `attack`/`defense` и умеет безопасно складываться.
 
 ## 3. Методы и функции
 
-2026-10-12 — актуальная локализация: LocalizedName/LocalizedDescription → GameText.Content(id+".name"/".description", исходное английское поле). Существующие id/GUID/поля сохранены; редкость и бонусы не меняются.
+- `ItemStatBonus.operator +` — покомпонентное сложение бонусов.
+- `ItemStatBonus.Sum(int a, int b)` — неотрицательная сумма с насыщением `int.MaxValue`.
+- `IsEquipment` — true для Weapon/Armor.
+- `StackLimit` — 1 для экипировки/нестакуемых, иначе `maxStack`.
+- `CanSell` — `sellPrice > 0`.
+- `Fits(EquipmentSlot slot)` — совместимость предмета со слотом.
 
-`IsEquipment` → bool по категории; `StackLimit` →1 для экипировки/нестакаемых, иначе maxStack≥1; `CanSell` → bool, QuestItem запрещён; `Fits(slot)` → bool: Weapon, Armor Head/Chest/Legs/Boots/Gloves, Accessory1/2. ItemStatBonus `operator +` и `Sum(a,b)` складывают неотрицательные бонусы с насыщением int.MaxValue. Unity callbacks нет.
+Перечисления: `ItemCategory { Consumable, Weapon, Armor }`, `EquipmentSlot { Weapon, Chest }`, `ItemUseLocation { None, Exploration, Battle, Anywhere }`.
 
 ## 4. Переменные и Inspector
 
-LocalizedName/LocalizedDescription — readonly свойства через id+.name/.description; исходные английские поля остаются fallback. В Inspector новый запас не появляется, id/GUID/параметры сохранены.
-
-rarity — ItemRarity: Common (по умолчанию и для прежних ассетов без поля), Uncommon, Rare, Epic, Legendary, Mythic. Меняет только представление. Sword/Ether назначены Rare, Staff/LeatherArmor Uncommon, Helmet/Bone/Potion Common. EquipmentSlot.Gloves добавлен со значением7; Accessory1/2 сохраняют5/6.
-
-id — уникальный стабильный string; displayName/description/icon; category Consumable/Weapon/Armor/Accessory/Material/QuestItem; stackable=true,maxStack99≥1; buyPrice/sellPrice≥0; requiredLevel≥1; useLocations None/Exploration/Battle/Anywhere; equipmentSlot для Armor; bonuses Attack/Defense/MagicAttack/MagicDefense/Speed. Количество не хранится.
+- `id` — строковый идентификатор для проверки конфликтов (не локализационный ключ).
+- `displayName`, `description`, `icon` — отображение.
+- `category` — категория; по умолчанию Consumable.
+- `stackable`, `maxStack` — стаки; `maxStack ≥ 1`.
+- `buyPrice`, `sellPrice` — цены, `≥ 0`.
+- `useLocations` — маска мест использования.
+- `equipmentSlot` — слот для брони; для оружия всегда Weapon.
+- `bonuses` — только `attack`/`defense`.
 
 ## 5. Связи
 
-GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
-
-InventoryState хранит ссылки/количества, BattleConsumable добавляет эффект. Значки временные, исходная графика не менялась.
+Наследник `BattleConsumable` добавляет лечение/восстановление MP и цель. `InventoryState` хранит ссылки на ассеты, `EquipmentState` — надетые предметы. `InventoryWindow`, `ItemPresentation`, `InventoryTooltip` и `BattleAbilities` читают поля. `BattleInventory` хранит количество.
 
 ## 6. Пример
 
-В двух слотах Potion10 и5 — один SO, два runtime количества.
+Iron Sword: `category = Weapon`, `bonuses.attack = 5`, `stackable = false`. `StackLimit` равен 1, `Fits(Weapon)` — true, `Fits(Chest)` — false. Leather Armor: `category = Armor`, `equipmentSlot = Chest`, `bonuses.defense = 3`.
 
 ## 7. Настройка в Unity
 
-Create → FalseMemory → Item; для расходуемого Battle Consumable. Назначить уникальный ID. К GameObject не прикрепляется. Подготовлены Potion, Ether, Iron Sword, Wooden Staff, Leather Armor, Iron Helmet, Bone.
+Создай ассет через `Assets → Create → FalseMemory → Item` (или `Battle Consumable` для зелья). Заполни `id`, имя, описание, иконку и параметры. Для экипировки выбери Weapon/Armor и слот. Не добавляй поля редкости: их больше нет.
 
-## 8. Ограничения и расширение
+## 8. Возможные проблемы
 
-Пустой ID разрешён для временных тестовых объектов; проектные данные проверяются отдельно. Конфликтующий ID другой ссылки State отвергает. Нет классов/роста/SaveSystem. Бонусы/ограничения подключены к миру и бою. Редкость пока не влияет на баланс.
+Два разных ассета с одинаковым непустым `id` конфликтуют при добавлении в инвентарь. `maxStack` меньше 1 нежелателен. Оружие игнорирует `equipmentSlot` и всегда идёт в Weapon. Нет редкости, веса и ограничений по классу. Изменение ассета влияет на все ссылки сразу.
 
 ## 9. История изменений
 
-2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
-
-2026-10-12 — переработка UI: шесть редкостей и Gloves без перенумерации прежних слотов и изменения баланса.
-
-2026-10-12 — 4.1: общие определения и совместимость Potion.
+- 2026-10-31 — удалены редкость, модель персонажа и лишние характеристики; остались ATK/DEF и слоты Weapon/Chest.
+- 2026-10-12 — базовая модель предметов.

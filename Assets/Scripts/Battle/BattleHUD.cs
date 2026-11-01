@@ -45,12 +45,12 @@ public sealed class BattleHUD : MonoBehaviour
         SetBar(enemyHPBar, enemy.Health.currentHealth, enemy.Health.maxHealth);
         if (resourceText != null)
             resourceText.text = (player.Inventory != null ? player.Inventory.Summary + "   |   " : "") +
-                GameText.Get("battle.exp",player.CurrentExperience) + (player.IsDefending ? "   |   "+GameText.Get("battle.defending") : "");
+                (player.IsDefending ? "DEFENDING" : "");
         bool low = player.IsAlive && player.Health.currentHealth <= player.Health.maxHealth * lowHealthThreshold;
         if (lowHealthText != null)
         {
             lowHealthText.gameObject.SetActive(low);
-            lowHealthText.text = GameText.Get("battle.low_hp");
+            lowHealthText.text = "LOW HP";
         }
         if (hpBar != null && hpBar.fillRect != null)
             hpBar.fillRect.GetComponent<Image>().color = low ? new Color32(222, 96, 89, 255) : new Color32(86, 168, 121, 255);
@@ -67,7 +67,7 @@ public sealed class BattleHUD : MonoBehaviour
 
     public void MenuChanged(bool submenu)
     {
-        if (menuTitle != null) menuTitle.text = submenu ? GameText.Get("battle.submenu") : GameText.Get("battle.commands");
+        if (menuTitle != null) menuTitle.text = submenu ? "SPELLS" : "COMMANDS";
         if (menuGroup == null || !isActiveAndEnabled) return;
         if (menuRoutine != null) StopCoroutine(menuRoutine);
         menuRoutine = StartCoroutine(RevealMenu());
@@ -115,7 +115,7 @@ public sealed class BattleHUD : MonoBehaviour
         if(iconTransform!=null)
         {
             string caption=label.text.TrimStart(' ','>');
-            int icon=caption.StartsWith("Attack")?0:caption.StartsWith("Magic")||caption.StartsWith("Fire")||caption.StartsWith("Heal")?1:caption.StartsWith("Items")||caption.StartsWith("Potion")?2:caption.StartsWith("Defend")?3:caption.StartsWith("Flee")?4:-1;
+            int icon=caption.StartsWith("Attack")?0:caption.StartsWith("Magic")||caption.StartsWith("Fire")?1:caption.StartsWith("Defend")?3:caption.StartsWith("Flee")?4:-1;
             var image=iconTransform.GetComponent<Image>();image.sprite=icon>=0 && commandIcons!=null && icon<commandIcons.Length?commandIcons[icon]:null;
             image.gameObject.SetActive(image.sprite!=null);image.color=label.color;
         }

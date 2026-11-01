@@ -2,38 +2,46 @@
 
 ## 1. Название и назначение
 
-Исходник: F:/LLM/UUU/Miri/FalseMemory/Assets/Tests/EditMode/InventoryTests.cs.
+Исходник: `Assets/Tests/EditMode/InventoryTests.cs`.
 
-Семь граничных Edit Mode сценариев модели.
+Восемь EditMode-сценариев модели инвентаря: 30 слотов, нестакуемые предметы, перенос/обмен/слияние, откат отклонённых операций, удаление из стопок и золото.
 
 ## 2. Как работает
 
-Setup создаёт два временных ItemData с разными ID/лимитом10, Cleanup уничтожает тестовые SO. Assert проверяет итог/отказы.
+`SetUp` создаёт `InventoryState` и два `ItemData` с разными `id` и `maxStack = 10`; `TearDown` уничтожает ScriptableObject. Все операции выполняются в памяти.
 
 ## 3. Методы и функции
 
-`Setup`/`Cleanup` — NUnit lifecycle. `ThirtySlotsFillAndRejectWithoutPartialAddition` —299+2 отказ/+1 успех/полный запас. `NonStackableAndEquipmentUseOneSlotEach` —30 оружий по1. `MoveSwapMergeAndSplitPreserveQuantities` — перенос/обмен/полная стопка/деление/частичное слияние. `RejectedTransactionsDoNotRaiseEventsOrMutate` — неверные количества/индексы/события. `RemovalAcrossStacksIsAtomicAndFreesSlots` —16 из15 отказ/удаление12. `ConflictingStableIdIsRejected` — одинаковый ID двух ссылок. `GoldHasOneBalanceAndRejectsUnderflowAndOverflow` — нехватка/отрицательный/предел int. Методы void, Unity callbacks нет.
+- `ThirtySlotsFillAndRejectWithoutPartialAddition()` — 299 + 2 отклоняется без частичного добавления, затем +1 успешно, полный запас 300.
+- `NonStackableAndEquipmentUseOneSlotEach()` — 30 оружий занимают 30 отдельных слотов.
+- `MoveAndSwapPreserveQuantities()` — перенос, обмен, слияние, пустые слоты и `from == to`.
+- `MergeTransfersOnlyWhatFitsIntoTheTargetStack()` — переносится только свободное место стопки.
+- `RejectedTransactionsDoNotRaiseEventsOrMutate()` — `null`, отрицательные количества и неверные индексы не меняют состояние и не вызывают `Changed`.
+- `RemovalAcrossStacksIsAtomicAndFreesSlots()` — удаление 16 из 15 отклоняется; 12 удаляется атомарно, слоты освобождаются.
+- `ConflictingStableIdIsRejected()` — два разных ассета с одинаковым непустым `id` не сосуществуют.
+- `GoldHasOneBalanceAndRejectsUnderflowAndOverflow()` — отрицательное/избыточное золото отклоняется.
 
 ## 4. Переменные и Inspector
 
-item/other/inventory — временные данные, лимит10,30 слотов; Inspector отсутствует.
+`item`, `other`, `inventory` — временные данные; лимит стопки 10, ёмкость 30. Inspector отсутствует.
 
 ## 5. Связи
 
-NUnit, FalseMemory.Battle.EditModeTests, Runtime и InventoryState/ItemData.
+NUnit, `InventoryState`, `InventorySlot`, `ItemData`. Окно/экипировка/использование проверяются отдельными тестами.
 
 ## 6. Пример
 
-Run All проверяет невозможность частичного добавления при недостатке места.
+Добавление 15 предметов создаёт две стопки (10 и 5); перенос на слот 8 заполняет его до 10, а остаток остаётся в исходном слоте.
 
 ## 7. Настройка в Unity
 
-Не прикреплять. MCP run_tests EditMode с указанной сборкой/Test Runner; проверить итоговое total>0.
+Компонент не прикрепляется; Test Runner → EditMode.
 
-## 8. Ограничения и расширение
+## 8. Ограничения и проверки
 
-Не доказывает работу курсора/окна/подбора/экипировки. Предыдущий Passed не подтверждает новую копию.
+Проверяется модель, не drag & drop и не UI. Операции деления стопки больше нет. 2026-10-31: тесты прошли в составе EditMode 59/59.
 
 ## 9. История изменений
 
-2026-10-12 — 4.1: семь сценариев.
+- 2026-10-31 — удалены проверки split/редкости; документ сверен с текущим `InventoryState`.
+- 2026-10-12 — базовая документация.

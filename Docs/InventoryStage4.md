@@ -1,5 +1,7 @@
 # FalseMemory — этап4: инвентарь и предметы
 
+> **Исторический документ.** Описывает состояние до упрощения 2026-10-31: восемь слотов, редкости и подбор предметов позже удалены. Актуальное состояние — [InventorySystem](Systems/InventorySystem.md) и [EquipmentSystem](Systems/EquipmentSystem.md).
+
 2026-10-12. Исходная точка b06c760/main, рабочая копия чистая. План сохранён в MasterDevelopmentPlan.md, статусы в Roadmap.md. Unity MCP подтверждает SampleScene/Player/BattleInventory/Potion3, сцены/боевые компоненты прежние. Console в начале без ошибок/предупреждений.
 
 ## 4.1 — общий инвентарь30 слотов

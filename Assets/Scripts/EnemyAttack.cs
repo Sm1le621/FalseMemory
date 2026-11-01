@@ -23,7 +23,7 @@ public class EnemyAttack : MonoBehaviour
                 {
                     playerHealth.TakeDamage(damage);
                     nextAttackTime = Time.time + attackCooldown;
-                    Debug.Log($"Враг ударил игрока! Урон: {damage}");
+                    Debug.Log($"Enemy hit the player for {damage} damage.");
                 }
             }
         }

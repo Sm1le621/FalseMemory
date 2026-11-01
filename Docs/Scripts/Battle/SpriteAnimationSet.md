@@ -2,38 +2,45 @@
 
 ## 1. Название и назначение
 
-Исходник: Assets/Scripts/Battle/SpriteAnimationSet.cs.
+Исходник: `Assets/Scripts/Battle/SpriteAnimationSet.cs`.
 
-ScriptableObject с пятью наборами кадров: Idle, Move, Attack, Hurt, Death. Общие данные для мира и боевого Image; ресурсов не меняет.
+ScriptableObject с кадрами анимации для мира и боя: движение, атака, получение урона и смерть. Позы `Idle` больше нет.
 
 ## 2. Как работает
 
-Вызывающий выбирает pose. Для конечной анимации передаёт progress 0…1, для циклической — elapsed seconds. Пустой набор/пустой кадр возвращает fallback.
+Ассет хранит четыре массива `Sprite`. `Frames(pose)` возвращает нужный массив. `At(pose, progress, fallback)` выбирает кадр по прогрессу 0…1 (последний кадр для 1), `Loop(pose, seconds, fallback)` циклически выбирает кадр по времени и `framesPerSecond`. Если массив пуст или кадр равен `null`, возвращается fallback — обычно `BattleUnit.battleSprite`.
 
 ## 3. Методы и функции
 
-`Frames(pose)` возвращает соответствующий Sprite[]. `At(pose,progress,fallback)` ограничивает progress и выбирает кадр, включая последний при progress≥1. `Loop(pose,seconds,fallback)` выбирает индекс по времени, FPS и остатку деления; отрицательное время считается нулём. Unity callbacks отсутствуют.
+- `Frames(SpritePose pose)` → `Sprite[]`; выбирает массив по позе.
+- `At(SpritePose pose, float progress, Sprite fallback = null)` → `Sprite`; кадр по прогрессу, без зацикливания.
+- `Loop(SpritePose pose, float seconds, Sprite fallback = null)` → `Sprite`; циклический кадр по времени.
+
+Перечисление `SpritePose`: `Move`, `Attack`, `Hurt`, `Death`.
 
 ## 4. Переменные и Inspector
 
-idle/move/attack/hurt/death — массивы спрайтов. framesPerSecond по умолчанию8, Inspector1…24; idleFramesPerSecond2, Inspector1…8. В Skeleton64 назначены2/4/3/2/4 кадра и FPS8/Idle2. Выбор Loop дополнительно ограничивает rate1…24.
+- `move`, `attack`, `hurt`, `death` — массивы кадров; могут быть пустыми.
+- `framesPerSecond` — скорость цикла, 1…24, по умолчанию 8.
+- В `Skeleton64.asset` заполнены Move/Attack/Hurt/Death; IDLE-кадры удалены.
 
 ## 5. Связи
 
-BattleUnit.visualAnimations хранит ссылку. EnemySpriteAnimation и BattlePresentation читают тот же набор; battleSprite остаётся fallback.
+Используется `EnemySpriteAnimation` и `BattlePresentation`. Ссылка хранится в `BattleUnit.visualAnimations`. `battleSprite` остаётся статичным fallback. Ассеты кадров создаются `PixelBattleAssetBuilder`.
 
 ## 6. Пример
 
-Скелет на карте чередует два Idle-кадра с частотой2FPS; во время боя Attack заканчивается третьим кадром перед применением урона.
+У скелета 4 кадра `Move`. `Loop(Move, 0.5f)` при 8 fps выбирает кадр 0; `At(Hurt, 0.5f)` выбирает средний кадр из двух. Если массив `Hurt` пуст, показывается `battleSprite`.
 
 ## 7. Настройка в Unity
 
-Create → FalseMemory → Sprite Animation Set; назначить Sprite[] и ссылку BattleUnit.visualAnimations. Не прикрепляется к GameObject. Текущий ассет Assets/Settings/Battle/Visuals/Skeleton64.asset.
+Создай ассет через `Assets → Create → FalseMemory → Sprite Animation Set`, заполни массивы и назначь в `BattleUnit.visualAnimations`. Кадры должны быть 64×64, Point filtering, без mipmaps. Для нового врага можно использовать отдельный ассет.
 
 ## 8. Возможные проблемы
 
-Смена профиля не изменяет AI/коллайдеры. Нужны согласованные размеры/pivot/PPU; разные холсты вызывают прыжки силуэта. Набор героя пока не добавлен.
+Пустые массивы не ошибка — используется fallback. `At` при `progress = 1` берёт последний кадр, `Loop` никогда не выходит за границы. Отрицательное время в `Loop` трактуется как 0. Набор не содержит IDLE, поэтому не пытайся запросить `SpritePose.Idle` — такого значения нет.
 
 ## 9. История изменений
 
-2026-10-12 — создан в задаче native 64px Skeleton/Fire/Heal/Hit и интеграции кадров; текущие проверки — [PixelVisuals](../../PixelVisuals.md).
+- 2026-10-31 — удалена поза `Idle`; остались Move/Attack/Hurt/Death.
+- 2026-10-12 — базовый набор анимаций.

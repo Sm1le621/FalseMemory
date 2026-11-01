@@ -2,54 +2,49 @@
 
 ## 1. Название и назначение
 
-**Исходный файл:** F:/LLM/UUU/Miri/FalseMemory/Assets/Scripts/Battle/BattleSpell.cs.
+Исходник: `Assets/Scripts/Battle/BattleSpell.cs`.
 
-ScriptableObject определения заклинания и перечисления его эффекта/цели.
+ScriptableObject с описанием заклинания: имя, стоимость MP, эффект, цель, сила, цвет и визуальный профиль. Сейчас поддерживается только магический урон; лечебных заклинаний нет.
 
 ## 2. Как работает
 
-Не содержит выполнения: меню читает подпись/стоимость, BattleAbilities проверяет и применяет данные.
+Ассет создаётся через меню `FalseMemory/Battle Spell`. `BattleManager.OpenMagicMenu` читает `displayName` и `mpCost`, `BattleAbilities.CanCast` проверяет стоимость/цель/эффект, `TryCast` считает урон по `power` и `magicAttack/magicDefense`. `effectColor` и `visualEffect` используются только для отображения.
 
 ## 3. Методы и функции
 
-2026-10-12 — актуальная локализация: localizationId — стабильный ключ (назначены spell.fire/spell.heal), LocalizedName → GameText.Content(localizationId+".name",displayName). Старое serialized displayName сохранено как английский fallback, параметры/ссылки не меняются.
+Собственных методов нет. Поля читаются другими системами:
 
-Методов/Unity callbacks нет. CreateAssetMenu FalseMemory/Battle Spell. BattleEffect: MagicDamage, RestoreHealth; BattleTarget: Opponent, Self.
+- `displayName` — подпись в меню и сообщениях.
+- `mpCost` — стоимость, `≥ 0`.
+- `effect` — `BattleEffect.MagicDamage`.
+- `target` — `Opponent` или `Self`.
+- `power` — базовая сила, `≥ 0`.
+- `effectColor` — цвет всплывающего числа.
+- `visualEffect` — необязательный `BattleVFXProfile`.
 
-## 4. Переменные и параметры Inspector
+Перечисления `BattleEffect` и `BattleTarget` объявлены в этом же файле.
 
-localizationId — новое serialized string-поле: spell.fire/spell.heal у заклинаний, unit.player/unit.skeleton у участников сцены. LocalizedName readonly читает таблицу, displayName остаётся английским fallback. Ни ID, ни боевые параметры это поле не меняет.
+## 4. Переменные и Inspector
 
-Этап 3.3: visualEffect — необязательный BattleVFXProfile; только оформление. Fire/Heal имеют назначенные FireVisual/HealVisual. Отсутствие ссылки не меняет CanCast/TryCast.
+Все перечисленные поля редактируются в ассете. Значения по умолчанию: имя `Fire`, стоимость 8, эффект `MagicDamage`, цель `Opponent`, сила 10, оранжевый цвет. В текущем проекте используется `Assets/Settings/Battle/Spells/Fire.asset`; ассет `Heal` удалён.
 
-displayName — строка, код Fire. mpCost≥0, код 8. effect — код MagicDamage; target — код Opponent. power≥0, код 10. effectColor — Color, код оранжевый. Fire.asset: эти значения; Heal.asset: цена 6, RestoreHealth, Self, power25, зелёный.
+## 5. Связи
 
-## 5. Связи с другими системами
+`BattleUnit.spells` хранит ссылки на ассеты. `BattleAbilities` проверяет и применяет заклинание, `BattleCalculator.MagicalDamage` считает урон, `BattleUI` показывает имя/цену, `BattleVFXController` — визуал, `BattleAudioController` — звук Fire по действию.
 
-GameText и английская Unity StringTable; детали [LocalizationSystem](../../Systems/LocalizationSystem.md).
+## 6. Пример
 
-Assets/Settings/Battle/Spells/Fire.asset и Heal.asset назначены Player.BattleUnit.spells. BattleManager показывает, BattleAbilities применяет, UI отображает effectColor.
-
-## 6. Пример работы
-
-Копия Heal с power50 и mpCost12 → более сильное лечение при добавлении в Spells без правки BattleManager.
+Fire: 8 MP, сила 10. При MATK 12 и MDEF 3 расчёт даёт урон, который показывается над врагом; MP игрока уменьшается на 8. Если MP меньше 8, пункт меню недоступен.
 
 ## 7. Настройка в Unity
 
-Это ScriptableObject, не компонент GameObject. Для новой способности Create → FalseMemory → Battle Spell. Настрой имя, MP Cost, Effect, Target, Power, Effect Color; добавь ассет в Player.BattleUnit.Spells. Готовые Fire/Heal находятся в Assets/Settings/Battle/Spells.
+Создай ассет через `Assets → Create → FalseMemory → Battle Spell`, заполни поля и добавь ссылку в `BattleUnit.spells`. Для нового визуального эффекта назначь `BattleVFXProfile`. Не добавляй лечебный эффект без расширения enum и `BattleAbilities`.
 
-## 8. Возможные проблемы и проверки
+## 8. Возможные проблемы
 
-Новый тип эффекта требует расширения BattleAbilities; несколько союзников пока не поддержаны. Неверное сочетание цели/эффекта не является отдельной проверкой дизайна. Fire/Heal проверены тестами; произвольные новые заклинания не реализованы.
+`null` в массиве заклинаний пропускается менеджером. Отрицательная стоимость или сила нежелательны, хотя Inspector ограничивает значения. `Self`-заклинание с уроном может навредить самому кастеру — проверяй цель. Ассет не хранит состояние: MP и урон меняются только у участников.
 
 ## 9. История изменений
 
-2026-10-12 — английский игровой текст, централизованные ключи/параметры; русская техническая документация сохранена.
-
-- 2026-10-11 — 3.3: независимая ссылка visualEffect.
-
-- 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
-
-- 2026-10-11 — добавлена отдельная инструкция настройки в Unity по главному промпту; игровое поведение не менялось.
-
-- 2026-10-11 — изменения этапа 2 сохранены в локальном Git после повторной проверки: 40 тестов Edit Mode и 17 тестов Play Mode прошли. Поведение этого файла описано выше; в задаче главного промпта его код повторно не переписывался.
+- 2026-10-31 — удалён `RestoreHealth`; остался только `MagicDamage`, ассет Heal удалён.
+- 2026-10-12 — базовая модель заклинаний.
