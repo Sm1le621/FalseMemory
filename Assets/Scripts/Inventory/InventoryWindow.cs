@@ -9,7 +9,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
 {
     public RectTransform panel;
     public InventorySlotView[] slots;
-    public TextMeshProUGUI details, goldLabel, message;
+    public TextMeshProUGUI details, message;
     public Button useButton, closeButton;
     public Image dragIcon;
     public Button equipButton;
@@ -86,7 +86,6 @@ public sealed partial class InventoryWindow : MonoBehaviour
         if(!IsOpen || Inventory==null)return;
         for(int i=0;i<(slots?.Length ?? 0);i++)slots[i].Render(Inventory.State.GetSlot(i),i==SelectedIndex);
         var selected=Inventory.State.GetSlot(SelectedIndex);var item=selected.Item;
-        if(goldLabel!=null)goldLabel.text=$"GOLD {Inventory.State.Gold}";
         RefreshResources();
         if(details!=null)details.text=selected.IsEmpty?"Select an item.":ItemPresentation.Description(item,selected.Count);
         if(bagLabel!=null){int occupied=0;for(int i=0;i<InventoryState.Capacity;i++)if(!Inventory.State.GetSlot(i).IsEmpty)occupied++;bagLabel.text=$"BAG   {occupied} / {InventoryState.Capacity}";}

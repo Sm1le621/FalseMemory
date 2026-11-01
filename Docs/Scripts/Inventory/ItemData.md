@@ -4,7 +4,7 @@
 
 Исходник: `Assets/Scripts/Inventory/ItemData.cs`.
 
-ScriptableObject-определение предмета: идентификатор, имя, описание, иконка, категория, стаки, цены, места использования, слот экипировки и бонусы ATK/DEF. Редкости и модели персонажа нет.
+ScriptableObject-определение предмета: идентификатор, имя, описание, иконка, категория, стаки, места использования, слот экипировки и бонусы ATK/DEF. Цен и валюты нет; редкости и модели персонажа тоже нет.
 
 ## 2. Как работает
 
@@ -16,7 +16,6 @@ ScriptableObject-определение предмета: идентификат
 - `ItemStatBonus.Sum(int a, int b)` — неотрицательная сумма с насыщением `int.MaxValue`.
 - `IsEquipment` — true для Weapon/Armor.
 - `StackLimit` — 1 для экипировки/нестакуемых, иначе `maxStack`.
-- `CanSell` — `sellPrice > 0`.
 - `Fits(EquipmentSlot slot)` — совместимость предмета со слотом.
 
 Перечисления: `ItemCategory { Consumable, Weapon, Armor }`, `EquipmentSlot { Weapon, Chest }`, `ItemUseLocation { None, Exploration, Battle, Anywhere }`.
@@ -27,7 +26,6 @@ ScriptableObject-определение предмета: идентификат
 - `displayName`, `description`, `icon` — отображение.
 - `category` — категория; по умолчанию Consumable.
 - `stackable`, `maxStack` — стаки; `maxStack ≥ 1`.
-- `buyPrice`, `sellPrice` — цены, `≥ 0`.
 - `useLocations` — маска мест использования.
 - `equipmentSlot` — слот для брони; для оружия всегда Weapon.
 - `bonuses` — только `attack`/`defense`.
@@ -50,5 +48,6 @@ Iron Sword: `category = Weapon`, `bonuses.attack = 5`, `stackable = false`. `Sta
 
 ## 9. История изменений
 
+- 2026-11-01 — удалены `buyPrice`, `sellPrice` и `CanSell`; стоимость предметов больше не хранится и не показывается.
 - 2026-10-31 — удалены редкость, модель персонажа и лишние характеристики; остались ATK/DEF и слоты Weapon/Chest.
 - 2026-10-12 — базовая модель предметов.

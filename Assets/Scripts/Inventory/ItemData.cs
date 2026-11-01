@@ -27,13 +27,11 @@ public class ItemData : ScriptableObject
     public ItemCategory category=ItemCategory.Consumable;
     public bool stackable=true;
     [Min(1)] public int maxStack=99;
-    [Min(0)] public int buyPrice, sellPrice;
     public ItemUseLocation useLocations=ItemUseLocation.Anywhere;
     public EquipmentSlot equipmentSlot=EquipmentSlot.Chest;
     public ItemStatBonus bonuses;
     public bool IsEquipment => category==ItemCategory.Weapon || category==ItemCategory.Armor;
     public int StackLimit => IsEquipment || !stackable ? 1 : Math.Max(1,maxStack);
-    public bool CanSell => sellPrice>0;
     public bool Fits(EquipmentSlot slot) => category==ItemCategory.Weapon ? slot==EquipmentSlot.Weapon :
         category==ItemCategory.Armor && equipmentSlot==slot;
 }

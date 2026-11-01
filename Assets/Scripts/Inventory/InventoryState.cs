@@ -20,19 +20,7 @@ public sealed class InventoryState
     public const int Capacity=30;
     private static readonly InventorySlot Empty=new InventorySlot(null,0);
     [SerializeField] private InventorySlot[] slots=new InventorySlot[Capacity];
-    [SerializeField] private int gold;
-    public int Gold => gold;
     public event Action Changed;
-    public bool TryAddGold(int amount)
-    {
-        if(amount<=0 || (long)gold+amount>int.MaxValue)return false;
-        gold+=amount;Changed?.Invoke();return true;
-    }
-    public bool TrySpendGold(int amount)
-    {
-        if(amount<=0 || amount>gold)return false;
-        gold-=amount;Changed?.Invoke();return true;
-    }
     public IEnumerable<ItemData> Definitions
     {
         get { var seen=new HashSet<ItemData>();foreach(var slot in slots)if(slot!=null && !slot.IsEmpty && seen.Add(slot.Item))yield return slot.Item; }

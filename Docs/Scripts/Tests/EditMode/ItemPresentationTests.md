@@ -4,7 +4,7 @@
 
 Исходник: `Assets/Tests/EditMode/ItemPresentationTests.cs`.
 
-Три EditMode-проверки текста и совместимости предметов: только ATK/DEF, экранирование TMP-разметки, эффекты зелий, цены и слоты.
+Три EditMode-проверки текста и совместимости предметов: только ATK/DEF, экранирование TMP-разметки, эффекты зелий и слоты. Цены больше не проверяются, потому что удалены из модели.
 
 ## 2. Как работает
 
@@ -13,7 +13,7 @@
 ## 3. Методы и функции
 
 - `WeaponAndArmorDescribeOnlyAttackAndDefenseBonuses()` — оружие показывает `Weapon`/`ATK +5` без DEF; броня — `Chest`/`DEF +4` без ATK; `StackLimit` оружия 1.
-- `TooltipHidesEmptyFieldsEscapesMarkupAndReportsRealConsumableEffect()` — количество ×3, `Restores up to 30 HP`, экранирование `<size=...>`, отсутствие пустых цен; затем MP 20, Buy 50/Sell 25.
+- `TooltipHidesEmptyFieldsEscapesMarkupAndReportsRealConsumableEffect()` — количество ×3, `Restores up to 30 HP`, экранирование `<size=...>`, отсутствие `Buy:`/`Sell:`; затем MP 20 и `Restores up to 20 MP`.
 - `ArmorFitsOnlyItsConfiguredChestSlot()` — броня подходит только к Chest, оружие — только к Weapon; `Description(null)` пуст.
 
 ## 4. Переменные и Inspector
@@ -26,7 +26,7 @@ NUnit, `ItemPresentation`, `ItemData`, `BattleConsumable`, `EquipmentSlot`, `Ite
 
 ## 6. Пример
 
-`Description` для Potion ×3 содержит `×3` и `Restores up to 30 HP`, но не содержит `Buy:` при нулевой цене. Для MP-зелья выводится `Restores up to 20 MP`.
+`Description` для Potion ×3 содержит `×3` и `Restores up to 30 HP`, но не содержит `Buy:`/`Sell:`. Для MP-зелья выводится `Restores up to 20 MP`.
 
 ## 7. Настройка в Unity
 
@@ -34,9 +34,10 @@ NUnit, `ItemPresentation`, `ItemData`, `BattleConsumable`, `EquipmentSlot`, `Ite
 
 ## 8. Ограничения и проверки
 
-Проверяется текст/совместимость, не реальный tooltip и не вёрстка. Редкости и Gloves больше нет. 2026-10-31: тесты прошли в составе EditMode 59/59.
+Проверяется текст/совместимость, не реальный tooltip и не вёрстка. Редкости и Gloves больше нет. 2026-11-01: тесты прошли в составе EditMode 58/58.
 
 ## 9. История изменений
 
+- 2026-11-01 — удалены проверки цен `Buy:`/`Sell:`; EditMode 58/58.
 - 2026-10-31 — удалены проверки шести редкостей и Gloves; остались ATK/DEF и два слота.
 - 2026-10-12 — базовая документация.

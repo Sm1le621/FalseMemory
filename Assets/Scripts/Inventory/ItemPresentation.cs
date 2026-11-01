@@ -43,8 +43,6 @@ public static class ItemPresentation
         var lines=new List<string>{"<b>"+Escape(item.displayName)+"</b>"+(count>1?"  ×"+count:""),TypeName(item)};
         string bonuses=BonusText(item);if(bonuses.Length>0)lines.Add(bonuses);
         if(!string.IsNullOrWhiteSpace(item.description))lines.Add("\n"+Escape(item.description));
-        if(item.buyPrice>0)lines.Add($"Buy: {item.buyPrice} gold");
-        if(item.CanSell)lines.Add($"Sell: {item.sellPrice} gold");
         return string.Join("\n",lines);
     }
     private static string Escape(string text)=>string.IsNullOrEmpty(text)?"":text.Replace("<","‹").Replace(">","›");

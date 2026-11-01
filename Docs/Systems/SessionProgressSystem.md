@@ -12,7 +12,7 @@
 
 - `BattleTransition` — сохранение мира и возврат.
 - `Health`, `BattleUnit` — HP/MP.
-- `BattleInventory`, `InventoryState` — предметы и золото.
+- `BattleInventory`, `InventoryState` — предметы.
 - `EquipmentController`/`EquipmentState` — надетые предметы.
 - `BattleManager` — боевые изменения.
 

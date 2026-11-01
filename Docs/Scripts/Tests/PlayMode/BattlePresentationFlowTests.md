@@ -12,7 +12,7 @@ Partial `BattleFlowTests`: проверяет визуальную постан�
 
 ## 3. Методы и функции
 
-- `SpaceSpeedsPresentationWithoutChoosingOrDuplicatingActions()` — Space даёт `VisualDelta ×3`, не выбирает команду; MP/инвентарь/Time.timeScale не меняются.
+- `SpaceSpeedsPresentationWithoutChoosingOrDuplicatingActions()` — Space даёт `VisualDelta ×3`, не выбирает команду; MP и Time.timeScale не меняются.
 - `MissShowsTextWithoutHitReactionOrDamage()` — MISS без glow/отдачи, HP врага неизменен; успешный ответ врага даёт одно попадание.
 - `AssignedClipUsesMixerAndRespectsExistingVolume()` — временный клип идёт через `PlayOneShot`, Mixer и `AudioListener.volume`.
 - `PresentationEntranceAndOutcomesKeepTransitionLockedAndShowResults()` — повторные `TryBegin` отклоняются, при поражении показывается DEFEAT и блокируются действия.
@@ -40,9 +40,10 @@ Test Runner → PlayMode; нужны реальные `BattleScene` и `SampleSc
 
 ## 8. Ограничения и проверки
 
-Не подтверждает слышимость/красоту клипов и эффектов. Проверяет отсутствие побочного изменения ресурсов. 2026-10-31: PlayMode 36/36.
+Не подтверждает слышимость/красоту клипов и эффектов. Проверяет отсутствие побочного изменения ресурсов. 2026-11-01: PlayMode 36/36.
 
 ## 9. История изменений
 
+- 2026-11-01 — из сценария Space убрана проверка `BattleInventory.Summary`; счётчик предметов больше не выводится в бою.
 - 2026-10-31 — удалены Heal/EXP-ожидания; добавлены проверки MP-полосы и статичных кадров.
 - 2026-10-12 — базовая документация.

@@ -248,6 +248,5 @@ public sealed class BattleUI : MonoBehaviour
         unit.displayName + "\nHP " + unit.Health.currentHealth + " / " + unit.Health.maxHealth +
         "   MP " + unit.CurrentMP + " / " + unit.MaxMP +
         "\nATK " + unit.EffectiveAttack + "   DEF " + unit.EffectiveDefense + "   SPD " + unit.Speed +
-        (unit.Inventory!=null ? "\n" + unit.Inventory.Summary : "") +
         (unit.IsDefending ? "\nDEFENDING" : "");
 }

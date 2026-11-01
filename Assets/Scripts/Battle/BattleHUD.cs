@@ -44,8 +44,7 @@ public sealed class BattleHUD : MonoBehaviour
         SetBar(mpBar, player.CurrentMP, player.MaxMP);
         SetBar(enemyHPBar, enemy.Health.currentHealth, enemy.Health.maxHealth);
         if (resourceText != null)
-            resourceText.text = (player.Inventory != null ? player.Inventory.Summary + "   |   " : "") +
-                (player.IsDefending ? "DEFENDING" : "");
+            resourceText.text = player.IsDefending ? "DEFENDING" : "";
         bool low = player.IsAlive && player.Health.currentHealth <= player.Health.maxHealth * lowHealthThreshold;
         if (lowHealthText != null)
         {

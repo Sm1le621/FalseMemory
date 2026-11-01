@@ -1,6 +1,6 @@
 # Состав сцен и взаимодействие объектов
 
-Актуально на **2026-10-31**. Документ описывает сохранённые объекты трёх сцен, компоненты и связи. Источник истины для UI, текста и эффектов — сцены, а не код, создающий объекты в рантайме.
+Актуально на **2026-11-01**. Документ описывает сохранённые объекты трёх сцен, компоненты и связи. Источник истины для UI, текста и эффектов — сцены, а не код, создающий объекты в рантайме.
 
 ## 1. Общее правило
 
@@ -62,7 +62,7 @@ BattleTransition          BattleTransition
     Fade                  Image (alpha 0, raycastTarget=false)
 InventoryCanvas           Canvas + CanvasScaler + GraphicRaycaster
   InventoryBackdrop       Image (модальное затемнение)
-  InventoryPanel          Image + Outline; BagPanel, Title, BagTitle, Gold,
+  InventoryPanel          Image + Outline; BagPanel, Title, BagTitle,
                           Slot0…Slot29, Details, Resources, Message, Use/Close/Equip,
                           EquipmentWeapon, EquipmentChest, EquipmentStats
   InventoryTooltip        Image + TMP Content
@@ -109,7 +109,7 @@ BattleManager              BattleManager, BattleUI, BattleHUD, BattlePresentatio
 Связи:
 
 - `BattleUI` содержит тексты, портреты, четыре кнопки команд и подписи, Back, `BattleResults`, `AbilityGlow/AbilityAmount`, `BattleHUD`, `BattleAudioController`.
-- `BattleHUD` содержит три `Slider` (HP/MP игрока, HP врага), `SessionResources`, `LowHealth`, `MenuTitle`, `Controls`, `CommandRows` и `CanvasGroup` меню.
+- `BattleHUD` содержит три `Slider` (HP/MP игрока, HP врага), `SessionResources`, `LowHealth`, `MenuTitle`, `Controls`, `CommandRows` и `CanvasGroup` меню. `SessionResources` показывает только `DEFENDING`; счётчик предметов не выводится.
 - `BattlePresentation` двигает портреты, читает `SpriteAnimationSet` (`Skeleton64`) и `BattleUnit`, показывает `PlayerGuard`/`EnemyGuard`.
 - `BattleVFXController` использует `PixelSpellFrame` и 24 `BattleParticle*`; профили `FireVisual`/`HealVisual` — ScriptableObject. `HealVisual` остаётся, но заклинания Heal больше нет.
 - `BattleManager` — единственный владелец хода, урона, MP, предметов и исхода; UI/анимации только отображают результат. Наград EXP нет.
@@ -134,7 +134,12 @@ BattleManager              BattleManager, BattleUI, BattleHUD, BattlePresentatio
 
 ## 7. Проверки
 
-- EditMode **59/59**, PlayMode **36/36** (2026-10-31), 0 failed/skipped.
-- MCP: Missing Script = 0; `ManaHUD` ссылки заполнены; `equipmentButtons.Length == 2`; `slots.Length == 30`; `border` назначен; в `BattleScene` нет Items/Heal/LV/EXP.
+- EditMode **58/58**, PlayMode **36/36** (2026-11-01), 0 failed/skipped.
+- MCP: Missing Script = 0; `ManaHUD` ссылки заполнены; `equipmentButtons.Length == 2`; `slots.Length == 30`; `border` назначен; в `BattleScene` нет Items/Heal/LV/EXP; объект `Gold` и ссылка `goldLabel` удалены из `SampleScene`.
 - PlayMode покрывает меню/настройки, инвентарь, экипировку, MP-полосу, вход в бой, позы, VFX, победу/поражение/побег и HUD.
 - Ручная визуальная оценка меню, полосы MP и эффектов остаётся за владельцем.
+
+## История
+
+- 2026-11-01 — из `InventoryPanel` удалён объект `Gold`; `SessionResources` в бою показывает только `DEFENDING`.
+- 2026-10-31 — сцены приведены к текущей композиции без Build-кода.

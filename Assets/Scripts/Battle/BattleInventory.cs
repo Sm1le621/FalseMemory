@@ -47,7 +47,6 @@ public sealed class BattleInventory : MonoBehaviour
     }
 
     public bool TryAdd(ItemData definition,int amount) => State.TryAdd(definition,amount);
-    public string Summary => string.Join("  ", Definitions.Select(d => d.displayName + " x" + Count(d)));
 }
 
 [Serializable] public sealed class StartingItem

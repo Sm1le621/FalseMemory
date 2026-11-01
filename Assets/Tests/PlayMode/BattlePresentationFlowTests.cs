@@ -27,7 +27,7 @@ public sealed partial class BattleFlowTests
             yield return new WaitForSecondsRealtime(0.2f);
             Assert.That(enemy.Health.currentHealth,Is.EqualTo(50));Assert.That(player.Health.currentHealth,Is.EqualTo(96));
             Assert.That(player.CurrentMP,Is.EqualTo(30));
-            Assert.That(player.Inventory.Summary,Does.Contain("3"));Assert.That(manager.Round,Is.EqualTo(2));
+            Assert.That(manager.Round,Is.EqualTo(2));
             Assert.That(portrait.anchoredPosition,Is.EqualTo(home));Assert.That(Time.timeScale,Is.EqualTo(timeScale));
         }
         finally { InputSystem.RemoveDevice(keyboard); }

@@ -10,7 +10,7 @@
 
 `Awake` отключает у `InputSystemUIInputModule` обработку move/submit/cancel, чтобы клавиатура не срабатывала дважды, и подписывает кнопки на `Invoke`. `Update` вручную читает стрелки/WASD, Enter и Escape, пока меню активно. `ShowMenu` сохраняет подписи, действия, доступность и необязательный обработчик возврата, сбрасывает выбор и блокирует приём на один кадр.
 
-`RenderMenu` активирует только нужные кнопки, ставит маркер `>` у выбранной строки, задаёт цвет и `interactable`. Если назначен `BattleHUD`, оформление делегируется ему. `ShowUnits` применяет портреты и сразу обновляет характеристики. `RefreshStats` выводит HP/MP, ATK/DEF/SPD, содержимое инвентаря и состояние защиты. Победа и поражение показывают отдельное окно результата.
+`RenderMenu` активирует только нужные кнопки, ставит маркер `>` у выбранной строки, задаёт цвет и `interactable`. Если назначен `BattleHUD`, оформление делегируется ему. `ShowUnits` применяет портреты и сразу обновляет характеристики. `RefreshStats` выводит HP/MP, ATK/DEF/SPD и состояние защиты. Победа и поражение показывают отдельное окно результата.
 
 ## 3. Методы и функции
 
@@ -30,7 +30,7 @@
 - `ApplyPortrait`/`PointSprite` — назначают спрайт, цвет, отражение и при необходимости создают Point-копию текстуры через GPU.
 - `OnDestroy()` — освобождает временные спрайты и текстуры.
 - `RefreshStats(BattleUnit player, BattleUnit enemy, int round)` — обновляет оба блока характеристик и номер раунда.
-- `Stats(BattleUnit unit)` — private static; собирает строку `HP`, `MP`, `ATK/DEF/SPD`, инвентарь и `DEFENDING`.
+- `Stats(BattleUnit unit)` — private static; собирает строку `HP`, `MP`, `ATK/DEF/SPD` и `DEFENDING`.
 
 ## 4. Переменные и Inspector
 
@@ -46,7 +46,7 @@
 
 ## 5. Связи
 
-Компонент находится на `BattleManager` в `BattleScene`. Использует `BattleUnit`, `Health`, `BattleInventory`, `BattleHUD`, `BattleAudioController` и TMP/uGUI/Input System. `BattleManager` вызывает меню, сообщения и обновление; `BattlePresentation` двигает портреты, но не меняет боевые значения. `BattleHUD` читает те же HP/MP.
+Компонент находится на `BattleManager` в `BattleScene`. Использует `BattleUnit`, `Health`, `BattleHUD`, `BattleAudioController` и TMP/uGUI/Input System. `BattleManager` вызывает меню, сообщения и обновление; `BattlePresentation` двигает портреты, но не меняет боевые значения. `BattleHUD` читает те же HP/MP.
 
 ## 6. Пример
 
@@ -62,6 +62,7 @@
 
 ## 9. История изменений
 
+- 2026-11-01 — из блока характеристик убран счётчик предметов; остаются HP/MP, ATK/DEF/SPD и `DEFENDING`.
 - 2026-10-31 — удалены Items и Heal, характеристики без LV/EXP; результат победы не содержит опыта; меню сокращено до четырёх команд.
 - 2026-10-12 — английские строки и пиксельные эффекты; запись историческая, `GameText` удалён.
 - 2026-10-11 — оформление HUD, всплывающие числа и окно результата.

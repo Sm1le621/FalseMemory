@@ -28,8 +28,8 @@ public sealed class ItemPresentationTests
             var text=ItemPresentation.Description(item,3);
             Assert.That(text,Does.Contain("×3").And.Contain("Restores up to 30 HP"));
             Assert.That(text,Does.Not.Contain("<size=").And.Not.Contain("Buy:").And.Not.Contain("Sell:").And.Not.Contain("MATK"));
-            item.healing=0;item.manaRestoration=20;item.buyPrice=50;item.sellPrice=25;
-            Assert.That(ItemPresentation.Description(item,1),Does.Contain("Restores up to 20 MP").And.Contain("Buy: 50").And.Contain("Sell: 25").And.Not.Contain(" HP"));
+            item.healing=0;item.manaRestoration=20;
+            Assert.That(ItemPresentation.Description(item,1),Does.Contain("Restores up to 20 MP").And.Not.Contain("Buy:").And.Not.Contain("Sell:").And.Not.Contain(" HP"));
         }
         finally {Object.DestroyImmediate(item);}
     }

@@ -1,5 +1,15 @@
 # История значимых изменений FalseMemory
 
+## 2026-11-01 — удаление золота, цен и счётчика зелий
+
+**Удалено:** баланс золота в `InventoryState` (`gold`, `Gold`, `TryAddGold`, `TrySpendGold`), цены предметов в `ItemData` (`buyPrice`, `sellPrice`, `CanSell`) и строки `Buy:`/`Sell:` в `ItemPresentation.Description`. Из `SampleScene` удалён объект `Gold`, из `InventoryWindow` — поле `goldLabel` и вывод `GOLD`. В `BattleHUD` и `BattleUI` убран вывод содержимого инвентаря (`Potion xN`); в бою остаётся только статус `DEFENDING`. Свойство `BattleInventory.Summary` удалено как неиспользуемое.
+
+**Изменено:** ассеты `Potion`, `IronSword`, `LeatherArmor` очищены от сериализованных цен. Документация инвентаря, боевого UI, состава сцен и архитектуры приведена к текущему коду; золото и торговля отмечены как отсутствующие.
+
+**Проверки:** EditMode **58/58**, PlayMode **36/36**, 0 failed/skipped; Console без ошибок и предупреждений. MCP: `SampleScene` сохранена после удаления `Gold`, Missing Script = 0, ссылки `InventoryWindow` и `BattleHUD` корректны. Ручная визуальная оценка инвентаря и боя остаётся за владельцем.
+
+**Ограничения:** торговли, валюты, дисковых сохранений и покупки/продажи нет; standalone-сборка отдельно не проверялась.
+
 ## 2026-10-31 — упрощение игры и MP-полоса
 
 **Удалено:** локализация (`GameText`, `LocalizedLabel`, Unity StringTables, Addressables, пакет `com.unity.localization`, ссылки в asmdef), уровни/EXP/growth (`CharacterGrowthRules`, `level`, `currentExperience`, `experienceReward`, `ProgressChanged`), редкость предметов (`rarity`, `ItemRarity`), подбор предметов (`PlayerInteractor`, `WorldItemPickup`, `IWorldInteractable`), заклинание Heal и вкладка Items в боевом меню. Idle-анимации игрока и скелета удалены: в покое показывается статичный кадр, Animator включается только при движении.

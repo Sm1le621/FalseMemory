@@ -19,8 +19,6 @@ MonoBehaviour:
   category: 1
   stackable: 0
   maxStack: 99
-  buyPrice: 100
-  sellPrice: 50
   useLocations: 3
   equipmentSlot: 0
   bonuses:

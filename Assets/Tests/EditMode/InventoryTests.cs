@@ -70,10 +70,4 @@ public sealed class InventoryTests
         inventory.TryAdd(item,1);other.id=item.id;
         Assert.That(inventory.TryAdd(other,1),Is.False);Assert.That(inventory.Count(item),Is.EqualTo(1));
     }
-    [Test] public void GoldHasOneBalanceAndRejectsUnderflowAndOverflow()
-    {
-        Assert.That(inventory.TrySpendGold(1),Is.False);Assert.That(inventory.TryAddGold(-1),Is.False);
-        Assert.That(inventory.TryAddGold(int.MaxValue),Is.True);Assert.That(inventory.TryAddGold(1),Is.False);
-        Assert.That(inventory.TrySpendGold(int.MaxValue),Is.True);Assert.That(inventory.Gold,Is.Zero);
-    }
 }

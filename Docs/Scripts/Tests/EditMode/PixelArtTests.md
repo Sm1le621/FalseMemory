@@ -34,7 +34,7 @@ UnityEditor, `SpriteAnimationSet`, `BattleVFXProfile`, `PixelBattleAssetBuilder`
 
 ## 8. Ограничения и проверки
 
-Проверяются размеры/импорт/ссылки, не художественное качество. Набор содержит Move/Attack/Hurt/Death без Idle. 2026-10-31: тесты прошли в составе EditMode 59/59.
+Проверяются размеры/импорт/ссылки, не художественное качество. Набор содержит Move/Attack/Hurt/Death без Idle. 2026-11-01: тесты прошли в составе EditMode 58/58.
 
 ## 9. История изменений
 
