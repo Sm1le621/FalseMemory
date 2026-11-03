@@ -109,7 +109,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
         int hp=unit.Health.currentHealth,maxHP=unit.Health.maxHealth,mp=unit.CurrentMP,maxMP=unit.MaxMP;
         if(hp==shownHP && maxHP==shownMaxHP && mp==shownMP && maxMP==shownMaxMP)return;
         shownHP=hp;shownMaxHP=maxHP;shownMP=mp;shownMaxMP=maxMP;
-        resourcesLabel.text=$"HP {hp} / {maxHP}    MP {mp} / {maxMP}";
+        resourcesLabel.text=$"HP {hp} / {maxHP}\nMP {mp} / {maxMP}";
     }
     private void RequestUse(){if(IsOpen)UseRequested?.Invoke(SelectedIndex);}
     private void RequestEquip(){if(IsOpen)EquipRequested?.Invoke(SelectedIndex,null);}
