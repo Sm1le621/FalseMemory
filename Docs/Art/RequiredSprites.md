@@ -36,7 +36,7 @@ IDLE-кадры не нужны: в покое `PlayerController` показыв
 
 ## 4. Иконки команд (16×16, 4 штуки)
 
-`BattleHUD.commandIcons` пуст; сейчас `CommandIcon` — белый квадрат.
+В `BattleScene` массив `BattleHUD.commandIcons` содержит четыре назначенных спрайта в порядке Attack/Magic/Defend/Flee; `CommandIcon` показывает выбранный значок.
 
 - `icon-attack` — меч;
 - `icon-defend` — щит;

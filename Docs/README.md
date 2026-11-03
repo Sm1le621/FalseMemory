@@ -1,6 +1,6 @@
 # Документация FalseMemory
 
-FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Документация описывает текущую рабочую копию на **2026-11-01** и написана по-русски для владельца без опыта C#.
+FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Документация описывает текущую рабочую копию на **2026-11-02** и написана по-русски для владельца без опыта C#.
 
 Начните с [архитектуры](Architecture.md), затем откройте нужную систему или описание скрипта. Постоянные правила проекта находятся в [AGENTS.md](../AGENTS.md).
 
@@ -13,7 +13,7 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 - Боевые команды: Attack, Magic, Defend, Flee. Отдельной вкладки Items нет; Potion применяется из инвентаря вне боя.
 - Магия: Fire; заклинание Heal удалено. MP показан в бою и отдельной полосой в мире (`ManaHUD`).
 - Локализация, уровни/EXP, редкость предметов, золото/торговля и подбор предметов с земли удалены. Игровой текст в сценах — английский.
-- У скелета и игрока нет idle-анимации: в покое показывается статичный кадр, Animator работает только при движении.
+- У скелета нет idle-анимации: в покое показывается статичный кадр. Player в покое показывает `Idle1.ase` с выключенным Animator; при движении включаются состояния `Player_Walk`/`Player_Run`, управляемые параметром `isMoving`.
 
 ## Общие документы
 
@@ -50,7 +50,7 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 
 ## Описания скриптов
 
-Всего в `Assets` **59 собственных C#-файлов**: 42 runtime, 15 тестовых, 1 Editor-инструмент и 1 служебный Welcome. У каждого проектного скрипта есть отдельное описание в `Docs/Scripts`; частичные тестовые классы объединяют несколько файлов.
+Всего в `Assets` **59 собственных C#-файлов**: 42 runtime, 16 тестовых и 1 Editor-инструмент. У каждого проектного скрипта есть отдельное описание в `Docs/Scripts`; частичные тестовые классы объединяют несколько файлов. Служебный шаблон Unity Welcome удалён.
 
 ### Бой
 
@@ -103,12 +103,11 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 - [ManaHUD](Scripts/UI/ManaHUD.md)
 - [SettingsMenu](Scripts/UI/SettingsMenu.md)
 - [PixelBattleAssetBuilder](Scripts/Editor/PixelBattleAssetBuilder.md)
-- [Welcome2DScript](Scripts/Welcome/Welcome2DScript.md)
 
 ### Тесты
 
 - EditMode: [BattleAbilityTests](Scripts/Tests/EditMode/BattleAbilityTests.md), [BattleCoreTests](Scripts/Tests/EditMode/BattleCoreTests.md), [BattleFleeTests](Scripts/Tests/EditMode/BattleFleeTests.md), [BattleItemTests](Scripts/Tests/EditMode/BattleItemTests.md), [BattleRandomTests](Scripts/Tests/EditMode/BattleRandomTests.md), [EquipmentTests](Scripts/Tests/EditMode/EquipmentTests.md), [InventoryTests](Scripts/Tests/EditMode/InventoryTests.md), [ItemPresentationTests](Scripts/Tests/EditMode/ItemPresentationTests.md), [PixelArtTests](Scripts/Tests/EditMode/PixelArtTests.md).
-- PlayMode: [BattleFlowTests](Scripts/Tests/PlayMode/BattleFlowTests.md), [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md), [BattleStage2FlowTests](Scripts/Tests/PlayMode/BattleStage2FlowTests.md), [InventoryFlowTests](Scripts/Tests/PlayMode/InventoryFlowTests.md), [InventoryPresentationFlowTests](Scripts/Tests/PlayMode/InventoryPresentationFlowTests.md), [PixelVisualFlowTests](Scripts/Tests/PlayMode/PixelVisualFlowTests.md).
+- PlayMode: [BattleFlowTests](Scripts/Tests/PlayMode/BattleFlowTests.md), [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md), [BattleStage2FlowTests](Scripts/Tests/PlayMode/BattleStage2FlowTests.md), [InventoryFlowTests](Scripts/Tests/PlayMode/InventoryFlowTests.md), [InventoryPresentationFlowTests](Scripts/Tests/PlayMode/InventoryPresentationFlowTests.md), [PixelVisualFlowTests](Scripts/Tests/PlayMode/PixelVisualFlowTests.md), [PlayerMovementFlowTests](Scripts/Tests/PlayMode/PlayerMovementFlowTests.md).
 
 ## Как пользоваться
 

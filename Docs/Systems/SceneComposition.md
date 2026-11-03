@@ -76,7 +76,7 @@ InventoryCanvas           Canvas + CanvasScaler + GraphicRaycaster
 - `InventoryWindow` получает ссылки на панель, 30 слотов, тексты, кнопки, `DragIcon`, `InventoryTooltip`, `InventoryBackdrop`, `EquipmentStats` и массив из двух кнопок экипировки.
 - `EquipmentWeapon.slot = Weapon`, `EquipmentChest.slot = Chest`; у обоих `EquipmentSlotView` назначен `border` (`Outline`), `icon`, `background`, `slotLabel` и `owner`.
 - `ManaHUD` живёт на объекте `Health`, ссылается на `ManaSlider`, `MPText` и `BattleUnit` игрока. HP-текст/полоса и MP-текст/полоса читают те же `Health`/`BattleUnit`.
-- `PlayerController` в покое показывает `idleSprite = Idle1.ase`; Animator включается только при движении и содержит `Player_Walk`. Idle-клипа нет.
+- `PlayerController` в покое показывает `idleSprite = Idle1.ase` и выключает Animator. При движении Animator включается, получает `isMoving = true` и переходит между `Player_Walk`/`Player_Run` в `Assets/Player.controller`; структура контроллера существует в рабочей копии и не перестраивалась этой задачей.
 - `EnemySpriteAnimation` читает позицию и `Health`, меняя только `SpriteRenderer` по `SpriteAnimationSet` (`Skeleton64`); idle-кадров в наборе нет.
 - Объектов `TestLoot`, `InteractionPrompt`, `PickupNotification`, `CharacterPanel`, портрета и лишних слотов экипировки больше нет.
 
@@ -134,12 +134,13 @@ BattleManager              BattleManager, BattleUI, BattleHUD, BattlePresentatio
 
 ## 7. Проверки
 
-- EditMode **58/58**, PlayMode **36/36** (2026-11-01), 0 failed/skipped.
+- EditMode **58/58**, PlayMode **37/37** (2026-11-02), 0 failed/skipped.
 - MCP: Missing Script = 0; `ManaHUD` ссылки заполнены; `equipmentButtons.Length == 2`; `slots.Length == 30`; `border` назначен; в `BattleScene` нет Items/Heal/LV/EXP; объект `Gold` и ссылка `goldLabel` удалены из `SampleScene`.
 - PlayMode покрывает меню/настройки, инвентарь, экипировку, MP-полосу, вход в бой, позы, VFX, победу/поражение/побег и HUD.
 - Ручная визуальная оценка меню, полосы MP и эффектов остаётся за владельцем.
 
 ## История
 
+- 2026-11-02 — PlayerController выставляет `isMoving`; из боевой сцены удалены неиспользуемые `preview*Sprite` и слот иконки Items. Служебный шаблон Welcome и пустой `PlayerAnimatorController.controller` удалены.
 - 2026-11-01 — из `InventoryPanel` удалён объект `Gold`; `SessionResources` в бою показывает только `DEFENDING`.
 - 2026-10-31 — сцены приведены к текущей композиции без Build-кода.

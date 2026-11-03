@@ -18,8 +18,6 @@ public sealed class BattleUI : MonoBehaviour
     public Image enemyPortrait;
     public Button[] commandButtons;
     public TextMeshProUGUI[] commandLabels;
-    public Sprite previewPlayerSprite;
-    public Sprite previewEnemySprite;
     public Image feedbackGlow;
     public Sprite impactSprite;
     public TextMeshProUGUI feedbackText;

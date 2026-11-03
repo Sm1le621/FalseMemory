@@ -28,7 +28,7 @@
 - `hpBar`, `mpBar`, `enemyHPBar` — неинтерактивные полосы.
 - `resourceText` — строка `DEFENDING` при защите игрока; счётчик предметов не выводится; `lowHealthText` — предупреждение; `menuTitle` — заголовок меню.
 - `content` — RectTransform содержимого; `menuGroup`, `screenGroup`, `resultGroup` — CanvasGroup для анимаций.
-- `commandIcons` — пять спрайтов в порядке Attack/Magic/(резерв)/Defend/Flee; отсутствующий значок скрывается.
+- `commandIcons` — четыре спрайта в порядке Attack/Magic/Defend/Flee; отсутствующий значок скрывается.
 - `revealDuration` (0…1, по умолчанию 0.22), `barDuration` (≥0, 0.22), `menuDuration` (≥0, 0.12), `lowHealthThreshold` (0…1, 0.25).
 - `player`, `enemy`, `initialized`, `menuRoutine` — внутреннее состояние.
 
@@ -50,6 +50,7 @@
 
 ## 9. История изменений
 
+- 2026-11-02 — из `commandIcons` удалён неиспользуемый слот Items; массив содержит четыре значка Attack/Magic/Defend/Flee.
 - 2026-11-01 — из `resourceText` убран счётчик предметов (`Potion xN`); остаётся только `DEFENDING`.
 - 2026-10-31 — из строки ресурсов убраны EXP/уровни; меню и значки соответствуют четырём командам без Items.
 - 2026-10-12 — английские строки, пиксельные значки и плавные полосы; запись историческая.

@@ -1,14 +1,15 @@
 # Проверки текущего проекта
 
-Актуально на **2026-11-01**, рабочая копия после удаления золота, цен и счётчика предметов из боя.
+Актуально на **2026-11-02**, рабочая копия после исправления ходьбы Player и удаления мёртвого кода.
 
 ## Итог последней проверки
 
 - **EditMode: 58/58 passed**, 0 failed, 0 skipped. Результат: `Logs/EditModeResults.xml`.
-- **PlayMode: 36/36 passed**, 0 failed, 0 skipped. Результат: `Logs/PlayModeResults.xml`.
+- **PlayMode: 37/37 passed**, 0 failed, 0 skipped. Результат: `Logs/PlayModeResults.xml`.
 - Компиляция Unity завершается без ошибок.
-- Console после прогонов: 0 ошибок, 0 предупреждений.
-- Проверены сцены через MCP: в `SampleScene` и `BattleScene` нет Missing Script; ссылки `ManaHUD` заполнены; `InventoryWindow.equipmentButtons.Length == 2`; `slots.Length == 30`; у обоих `EquipmentSlotView` назначен `border`; в `BattleScene` нет Items/Heal/LV/EXP и счётчика предметов; объект `Gold` и ссылка `goldLabel` удалены из `SampleScene`.
+- Console после финальных прогонов: 0 ошибок, 0 предупреждений (кроме служебных Info-сообщений MCP/Unity AI).
+- Проверены сцены через MCP: `missingScripts = 0` в `SampleScene`, `BattleScene` и `MainMenu`; Player Animator использует `Player.controller` с параметром `isMoving`; `BattleUI.commandButtons/Labels` — 5/5; `BattleHUD.commandIcons` — 4; в `BattleScene` нет `previewPlayerSprite`/`previewEnemySprite`; ссылок на удалённые `PlayerAnimatorController`, `WorldItemPickup` и `Welcome` нет.
+- Отдельная диагностическая MCP-команда с одновременной аддитивной загрузкой трёх сцен вызвала служебные ошибки «More than one global light»; это артефакт проверки сцен, а не игрового кода. Сцены после проверки закрыты; финальные EditMode/PlayMode прогоны этих ошибок не содержат.
 
 Тесты запускались в текущей рабочей копии через `TestRunnerApi`; это не ссылка на результаты прошлых этапов.
 
@@ -32,7 +33,7 @@
 - Инвентарь: открытие/закрытие, выбор, drag настоящей мышью, tooltip, границы экрана.
 - Экипировка: два слота, замена, снятие, сохранение после боя.
 - Мировой HUD: HP и MP-полоса `ManaHUD` читают те же ресурсы и не меняют их.
-- Анимации скелета и игрока: движение, Attack/Hurt/Death, отсутствие idle-клипа.
+- Анимации скелета и игрока: движение, Attack/Hurt/Death; отдельный сценарий проверяет `isMoving`, переход Player в `Player_Walk` и возврат `Idle1.ase`.
 - VFX и звук: эффект завершается, пустые ссылки не блокируют правила и не меняют ресурсы.
 
 ## Что тесты не доказывают
@@ -45,8 +46,8 @@
 ## Ручная проверка после упрощения
 
 1. `MainMenu` → New Game: открывается `SampleScene`, кнопки New Game/Settings/Exit работают, настройки сохраняются.
-2. В мире: ходьба, камера, HP-полоса и MP-полоса; при движении проигрывается walk-анимация, в покое — статичный кадр без idle.
-3. `I` открывает инвентарь: 30 ячеек, Iron Sword, Leather Armor, Potion ×3; есть только слоты Weapon и Chest, ATK/DEF и никакой редкости, модели персонажа, золота и цен.
+2. В мире: ходьба, камера, HP-полоса и MP-полоса; при движении Animator переходит в `Player_Walk`/`Player_Run`, в покое выключается и показывает статичный `Idle1.ase`.
+3. `I` открывает инвентарь: 30 ячеек, Iron Sword, Leather Armor, Potion ×3; если открыть его на ходу, анимация ходьбы останавливается; есть только слоты Weapon и Chest, ATK/DEF и никакой редкости, модели персонажа, золота и цен.
 4. Экипировать Iron Sword → ATK 20; Leather Armor → DEF 12. Снять обратно, проверить возврат в сумку. Использовать Potion при повреждённом HP.
 5. Коснуться скелета: в бою только Attack, Magic, Defend, Flee и Back. Fire тратит MP; Heal и Items отсутствуют. Счётчик зелий в бою не показывается; `DEFENDING` появляется только при защите. Победа/поражение/побег возвращают мир.
 6. После боя проверить, что HP/MP, инвентарь, экипировка и позиция сохранились; полосы HP/MP в мире совпадают с боевыми значениями.
@@ -54,6 +55,7 @@
 
 ## История проверок
 
+- 2026-11-02 — после исправления ходьбы и удаления мёртвого кода: EditMode 58/58, PlayMode 37/37, Console после финальных прогонов без ошибок и предупреждений; XML-результаты в `Logs/EditModeResults.xml` и `Logs/PlayModeResults.xml`.
 - 2026-11-01 — после удаления золота, цен и счётчика зелий: EditMode 58/58, PlayMode 36/36, Console без ошибок и предупреждений; XML-результаты в `Logs/EditModeResults.xml` и `Logs/PlayModeResults.xml`.
 - 2026-11-01 — финальный прогон после удаления неиспользуемых звуковых событий `Heal`/`Potion`: EditMode 59/59, PlayMode 36/36, Console без ошибок и предупреждений; XML-результаты в `Logs/EditModeResults.xml` и `Logs/PlayModeResults.xml`.
 - 2026-10-31 — упрощение: удалены локализация, EXP/уровни, редкость, подбор, Heal и вкладка Items; добавлена MP-полоса. EditMode 59/59, PlayMode 36/36, Console чист.

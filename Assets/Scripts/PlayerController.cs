@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(SpriteRenderer))]
 public class PlayerController : MonoBehaviour
 {
+    private static readonly int IsMovingParameter = Animator.StringToHash("isMoving");
+
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 4f;
 
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Vector2 moveInput;
     private WorldInputGate inputGate;
+    private bool hasIsMovingParameter;
 
     private void Start()
     {
@@ -23,6 +26,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         inputGate = GetComponent<WorldInputGate>();
+        hasIsMovingParameter = HasParameter(IsMovingParameter);
         ShowIdle();
     }
 
@@ -31,7 +35,7 @@ public class PlayerController : MonoBehaviour
         if (inputGate != null && inputGate.IsBlocked)
         {
             moveInput = Vector2.zero;
-            ShowIdle();
+            SetWalking(false);
             return;
         }
 
@@ -59,11 +63,26 @@ public class PlayerController : MonoBehaviour
     }
 
     // The Animator only runs while walking; standing still shows a static sprite.
+    // isMoving drives the Idle/Walk/Run states that already exist in Player.controller.
     private void SetWalking(bool walking)
     {
-        if (animator != null) animator.enabled = walking;
+        if (animator != null)
+        {
+            if (hasIsMovingParameter) animator.SetBool(IsMovingParameter, walking);
+            animator.enabled = walking;
+        }
         if (walking) return;
         ShowIdle();
+    }
+
+    private bool HasParameter(int parameterHash)
+    {
+        if (animator == null) return false;
+        foreach (var parameter in animator.parameters)
+        {
+            if (parameter.nameHash == parameterHash) return true;
+        }
+        return false;
     }
 
     private void ShowIdle()

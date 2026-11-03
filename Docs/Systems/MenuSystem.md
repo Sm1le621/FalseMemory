@@ -42,7 +42,7 @@ MainMenu → `SettingsMenu.Start` скрывает панель → New Game з�
 
 ## 9. Ограничения и проверки
 
-Настройки — локальные `PlayerPrefs`, не сохранение HP/MP. Смена громкости/fullscreen и Exit в standalone вручную не проверялись. PlayMode проверяет меню, настройки, возврат из поражения и запуск новой игры; EditMode 59/59 и PlayMode 36/36 пройдены 2026-10-31. Визуальная оценка — за владельцем.
+Настройки — локальные `PlayerPrefs`, не сохранение HP/MP. Смена громкости/fullscreen и Exit в standalone вручную не проверялись. PlayMode проверяет меню, настройки, возврат из поражения и запуск новой игры; EditMode 58/58 и PlayMode 37/37 пройдены 2026-11-02. Визуальная оценка — за владельцем.
 
 См. также [SceneComposition](SceneComposition.md), [MainMenuController](../Scripts/UI/MainMenuController.md), [SettingsMenu](../Scripts/UI/SettingsMenu.md).
 

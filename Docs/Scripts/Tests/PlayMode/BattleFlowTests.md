@@ -4,7 +4,7 @@
 
 Исходник: `Assets/Tests/PlayMode/BattleFlowTests.cs`.
 
-Базовая PlayMode-fixture боя на реальных сценах `SampleScene`/`BattleScene` и четыре сценария: вход по контакту, победа, поражение и удержание Enter. Остальные сценарии находятся в partial-файлах `BattleStage2FlowTests`, `BattlePresentationFlowTests`, `InventoryFlowTests`, `InventoryPresentationFlowTests` и `PixelVisualFlowTests`.
+Базовая PlayMode-fixture боя на реальных сценах `SampleScene`/`BattleScene` и четыре сценария: вход по контакту, победа, поражение и удержание Enter. Остальные сценарии находятся в partial-файлах `BattleStage2FlowTests`, `BattlePresentationFlowTests`, `InventoryFlowTests`, `InventoryPresentationFlowTests`, `PixelVisualFlowTests` и `PlayerMovementFlowTests`.
 
 ## 2. Как работает
 
@@ -19,6 +19,7 @@
 - `DefeatStopsTurnsAndOffersRestartAndMenu()` — HP 1, поражение, блокировка действий, New Game/Main Menu, сброс сцены.
 - `HeldEnterConsumesOneActionAndDoesNotAttackOnNextTurn()` — удержание Enter не даёт второго хода.
 - `DefeatCanReturnToMainMenuAndStartNewGame()` — поражение → меню → `OnStart` → свежие HP 100.
+- `WalkInputDrivesExistingAnimatorStatesAndRestoresIdleSprite()` — вынесен в `PlayerMovementFlowTests`; проверяет `isMoving`, `Player_Walk` и возврат `Idle1.ase`.
 
 ## 4. Переменные и Inspector
 
@@ -38,9 +39,10 @@ NUnit, Unity Test Framework, Input System, `BattleTransition`, `BattleManager`, 
 
 ## 8. Ограничения и проверки
 
-Проверяется поведение в PlayMode, но не художественный вид и не standalone-сборка. Синтетический ввод требует настроек Input System, которые восстанавливаются. 2026-10-31: PlayMode 36/36, 0 failed.
+Проверяется поведение в PlayMode, но не художественный вид и не standalone-сборка. Синтетический ввод требует настроек Input System, которые восстанавливаются. 2026-11-02: PlayMode 37/37, 0 failed.
 
 ## 9. История изменений
 
+- 2026-11-02 — добавлен partial-файл `PlayerMovementFlowTests` с проверкой `isMoving`/`Player_Walk`; PlayMode 37/37.
 - 2026-10-31 — удалены проверки EXP/Items/Heal; ожидания HP/MP приведены к текущей модели.
 - 2026-10-11 — базовая документация.

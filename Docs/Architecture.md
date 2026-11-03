@@ -1,6 +1,6 @@
 # Архитектура FalseMemory
 
-Актуально на **2026-11-01**. Документ описывает текущую рабочую копию: упрощённый инвентарь без золота и цен, бой без EXP и вкладки Items, английский текст прямо в сценах и сценовую композицию UI.
+Актуально на **2026-11-02**. Документ описывает текущую рабочую копию: упрощённый инвентарь без золота и цен, бой без EXP и вкладки Items, английский текст прямо в сценах и сценовую композицию UI.
 
 ## Структура проекта
 
@@ -13,7 +13,6 @@
 - `Assets/Settings/Inventory/` — `IronSword`, `LeatherArmor`.
 - `Assets/Tests/EditMode/` и `Assets/Tests/PlayMode/` — расчёты и интеграционные проверки.
 - `Assets/Editor/` — Editor-only инструмент сборки пиксельных боевых ассетов.
-- `Assets/Welcome/` — служебный шаблон Unity 2D.
 - `Docs/` — документация; `AGENTS.md` — постоянные правила.
 - `Library/`, `Temp/`, `Obj/`, `Logs/`, `Builds/`, `.vs/` — генерируемые данные, исключены `.gitignore`.
 
@@ -21,7 +20,7 @@
 
 **MainMenu** содержит сохранённые Canvas, фон, три кнопки, панель настроек и EventSystem. `MainMenuController` запускает `SampleScene`, открывает настройки или завершает приложение. `SettingsMenu` хранит громкость и fullscreen в `PlayerPrefs`.
 
-**SampleScene** — мир. `Player` имеет `PlayerController`, `Health`, `BattleUnit`, `BattleInventory`, `InventoryWindow`, `EquipmentController`, `WorldItemUseController`, `WorldInputGate`, физические и визуальные компоненты. `Enemy` имеет `EnemyAI`, `Health`, `BattleUnit`, `BattleEncounter`; старый `EnemyAttack` выключен. Камера использует `CameraFollow`. Мировой HUD (`Health`) содержит HP-полосу и добавленную MP-полосу `ManaHUD`. `BattleTransition` — отдельный координатор встречи.
+**SampleScene** — мир. `Player` имеет `PlayerController`, `Health`, `BattleUnit`, `BattleInventory`, `InventoryWindow`, `EquipmentController`, `WorldItemUseController`, `WorldInputGate`, физические и визуальные компоненты. Animator Player использует `Assets/Player.controller`; в текущей рабочей копии контроллер содержит `Player_Idle`/`Player_Walk`/`Player_Run` и bool `isMoving`, а `PlayerController` выставляет этот параметр при движении. `Enemy` имеет `EnemyAI`, `Health`, `BattleUnit`, `BattleEncounter`; старый `EnemyAttack` выключен. Камера использует `CameraFollow`. Мировой HUD (`Health`) содержит HP-полосу и добавленную MP-полосу `ManaHUD`. `BattleTransition` — отдельный координатор встречи.
 
 **BattleScene** содержит собственную камеру, освещение, EventSystem, `BattleManager` и `BattleUI` с сохранённым Canvas. Бой отображает тех же `Player`/`Enemy` из мира и не копирует здоровье игрока. `BattleHUD` оформляет характеристики, полосы и меню, не изменяя ресурсы. Canvas использует Scale With Screen Size 960×540, match 1.
 
@@ -57,7 +56,7 @@
 
 ## Сборки и зависимости
 
-`FalseMemory.Runtime.asmdef` объединяет `Assets/Scripts` и ссылается на `Unity.InputSystem`, `Unity.TextMeshPro`, `UnityEngine.UI`. EditMode и PlayMode имеют отдельные тестовые asmdef со ссылкой на Runtime; EditMode ограничен платформой Editor. Welcome имеет собственную сборку Unity 2D. Пакеты Unity Localization и Addressables удалены.
+`FalseMemory.Runtime.asmdef` объединяет `Assets/Scripts` и ссылается на `Unity.InputSystem`, `Unity.TextMeshPro`, `UnityEngine.UI`. EditMode и PlayMode имеют отдельные тестовые asmdef со ссылкой на Runtime; EditMode ограничен платформой Editor. Пакеты Unity Localization и Addressables удалены.
 
 Установлены Input System, TMP/uGUI, URP, 2D-инструменты, Test Framework и Unity MCP. Точные версии фиксируются `Packages/manifest.json` и lock-файлом.
 
@@ -67,6 +66,6 @@ UI, текст, эффекты и затемнение заранее сохра
 
 ## Проверенное и известные границы
 
-На 2026-11-01 прошли **58/58 EditMode** и **36/36 PlayMode**; Console без ошибок. Тесты используют настоящий `SceneManager`, физический контакт и синтетический Input System; часть кнопок вызывается через `onClick.Invoke`, что не заменяет ручную проверку курсора.
+На 2026-11-02 прошли **58/58 EditMode** и **37/37 PlayMode**; Console без ошибок. Тесты используют настоящий `SceneManager`, физический контакт и синтетический Input System; часть кнопок вызывается через `onClick.Invoke`, что не заменяет ручную проверку курсора.
 
 Известные ограничения: бой один на один; враг не обходит стены; камера без ограничений карты; Health напрямую связан с UI; клавиатура не переназначается; gamepad не добавлен; нет партий, классов, статусов, квестов, диалогов, торговли и дисковых сохранений. Данные сессии живут, пока исходная карта загружена. Сборка вне Editor и художественная оценка владельцем остаются отдельными проверками.

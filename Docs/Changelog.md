@@ -1,5 +1,17 @@
 # История значимых изменений FalseMemory
 
+## 2026-11-02 — исправление ходьбы Player и удаление мёртвого кода
+
+**Исправлено:** `PlayerController.SetWalking` теперь выставляет bool `isMoving` перед включением Animator. В рабочей копии `Assets/Player.controller` уже содержит `Player_Idle` (default), `Player_Walk`, `Player_Run` и переходы по `isMoving`; структура контроллера не перестраивалась. При отсутствии параметра код не пишет его и сохраняет прежнее включение Animator без предупреждений. При блокировке ввода (открыт инвентарь) контроллер вызывает `SetWalking(false)`, поэтому ходьба не продолжается за окном.
+
+**Удалено:** неиспользуемые поля `BattleUI.previewPlayerSprite`/`previewEnemySprite` и их сериализованные ссылки в `BattleScene`; неиспользуемый счётчик `BattleAudioController.EventsRequested`; слот Items из `BattleHUD.commandIcons` (теперь четыре значка Attack/Magic/Defend/Flee); пустой `Assets/PlayerAnimatorController.controller`; служебный шаблон `Assets/Welcome/`; legacy-префаб `Assets/Prefabs/WorldItemPickup.prefab` с уже удалённым скриптом. Неиспользуемые исходные PNG/ASE-файлы владельца не удалялись.
+
+**Добавлено:** PlayMode-тест `WalkInputDrivesExistingAnimatorStatesAndRestoresIdleSprite` в `Assets/Tests/PlayMode/PlayerMovementFlowTests.cs`: проверяет `isMoving`, переход в `Player_Walk` и возврат `Idle1.ase`.
+
+**Проверки:** EditMode **58/58**, PlayMode **37/37**, 0 failed/skipped; Console без ошибок и предупреждений (кроме служебных сообщений Unity AI). Компиляция успешна.
+
+**Ограничения:** `Assets/Player.controller` остаётся незакоммиченным изменением владельца и в этот коммит не включён; документация описывает рабочую копию. Ручная визуальная оценка скорости и читаемости кадров ходьбы остаётся за владельцем. Push не выполнялся.
+
 ## 2026-11-01 — удаление золота, цен и счётчика зелий
 
 **Удалено:** баланс золота в `InventoryState` (`gold`, `Gold`, `TryAddGold`, `TrySpendGold`), цены предметов в `ItemData` (`buyPrice`, `sellPrice`, `CanSell`) и строки `Buy:`/`Sell:` в `ItemPresentation.Description`. Из `SampleScene` удалён объект `Gold`, из `InventoryWindow` — поле `goldLabel` и вывод `GOLD`. В `BattleHUD` и `BattleUI` убран вывод содержимого инвентаря (`Potion xN`); в бою остаётся только статус `DEFENDING`. Свойство `BattleInventory.Summary` удалено как неиспользуемое.

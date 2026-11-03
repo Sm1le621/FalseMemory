@@ -8,7 +8,7 @@
 
 ## Player в SampleScene
 
-- `PlayerController`: `Rigidbody2D`, физический `Collider2D`, `SpriteRenderer`, тег `Player`. Animator необязателен; в покое показывается статичный спрайт `Idle1.ase`, при движении включается `Player_Walk`. Idle-клипа нет.
+- `PlayerController`: `Rigidbody2D`, физический `Collider2D`, `SpriteRenderer`, тег `Player`. Animator необязателен; в покое показывается статичный спрайт `Idle1.ase`, при движении включается Animator и выставляется `isMoving`. В рабочей копии `Assets/Player.controller` содержит `Player_Idle`/`Player_Walk`/`Player_Run`; структура контроллера не перестраивалась. Если параметра `isMoving` нет, контроллер не пишет его и использует прежнее состояние движения.
 - `Health`: Max Health 100, ссылки на мировой `Slider` и `HPText`. Полоса не интерактивна.
 - `ManaHUD`: ссылки на `ManaSlider`, `MPText` и `BattleUnit` игрока. Компонент живёт на объекте `Health`, читает `CurrentMP/MaxMP` и сам ресурсы не меняет.
 - `BattleUnit`: Max MP 30, MATK 12, MDEF 8, Fire в Spells, crit 0.1/miss 0.05. Полей Level/EXP/Reward больше нет.

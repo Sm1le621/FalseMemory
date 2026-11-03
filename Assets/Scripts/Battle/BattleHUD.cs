@@ -114,7 +114,7 @@ public sealed class BattleHUD : MonoBehaviour
         if(iconTransform!=null)
         {
             string caption=label.text.TrimStart(' ','>');
-            int icon=caption.StartsWith("Attack")?0:caption.StartsWith("Magic")||caption.StartsWith("Fire")?1:caption.StartsWith("Defend")?3:caption.StartsWith("Flee")?4:-1;
+            int icon=caption.StartsWith("Attack")?0:caption.StartsWith("Magic")||caption.StartsWith("Fire")?1:caption.StartsWith("Defend")?2:caption.StartsWith("Flee")?3:-1;
             var image=iconTransform.GetComponent<Image>();image.sprite=icon>=0 && commandIcons!=null && icon<commandIcons.Length?commandIcons[icon]:null;
             image.gameObject.SetActive(image.sprite!=null);image.color=label.color;
         }

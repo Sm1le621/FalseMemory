@@ -4,28 +4,32 @@
 
 Исходник: `Assets/Scripts/PlayerController.cs`.
 
-Движение Player по карте, направление спрайта и переключение между статичным кадром покоя и анимацией ходьбы. В покое Animator выключен и показывается `idleSprite`; IDLE-клипа нет.
+Движение Player по карте, направление спрайта и переключение между статичным кадром покоя и анимацией движения. В покое Animator выключен и показывается `idleSprite`; при движении включается Animator и выставляется параметр `isMoving`, который переводит `Player.controller` в состояния `Player_Walk`/`Player_Run`.
 
 ## 2. Как работает
 
-`Start` получает `Rigidbody2D`, `Animator`, `SpriteRenderer` и необязательный `WorldInputGate`, затем показывает статичный кадр. `Update` при заблокированном вводе обнуляет движение и показывает покой. Иначе читает WASD/стрелки, нормализует вектор, включает Animator только при движении и обновляет отражение спрайта. `FixedUpdate` перемещает тело через `MovePosition`; при блокировке останавливает скорость. Диагональ не ускоряет персонажа.
+`Start` получает `Rigidbody2D`, `Animator`, `SpriteRenderer` и необязательный `WorldInputGate`, проверяет наличие параметра `isMoving` и показывает статичный кадр. `Update` при заблокированном вводе обнуляет движение, выключает Animator и показывает покой. Иначе читает WASD/стрелки, нормализует вектор, вызывает `SetWalking` и обновляет отражение спрайта. `SetWalking` записывает `isMoving`, включает Animator только при движении, а при остановке выключает его и возвращает `idleSprite`. `FixedUpdate` перемещает тело через `MovePosition`; при блокировке останавливает скорость. Диагональ не ускоряет персонажа.
+
+Если в текущем Animator Controller нет параметра `isMoving`, контроллер не пытается его записать: Animator всё равно включается при движении и выключается в покое, поэтому старый контроллер с одним состоянием движения продолжает работать без предупреждений.
 
 ## 3. Методы и функции
 
-- `Start()` — Unity callback; кеширует компоненты и вызывает `ShowIdle`.
-- `Update()` — каждый кадр читает ввод, вызывает `SetWalking` и `HandleSpriteFlipping`.
+- `Start()` — Unity callback; кеширует компоненты, проверяет параметр Animator и вызывает `ShowIdle`.
+- `Update()` — каждый кадр читает ввод, вызывает `SetWalking` и `HandleSpriteFlipping`; при блокировке ввода выключает Animator и показывает `idleSprite`.
 - `FixedUpdate()` — шаг физики; двигает `Rigidbody2D` или обнуляет скорость при блокировке.
-- `SetWalking(bool walking)` — включает/выключает Animator; при остановке показывает `idleSprite`.
+- `SetWalking(bool walking)` — записывает `isMoving`, включает/выключает Animator; при остановке показывает `idleSprite`.
+- `HasParameter(int parameterHash)` → `bool`; ищет параметр по хешу в `Animator.parameters`, чтобы не писать в отсутствующий параметр.
 - `ShowIdle()` — назначает статичный спрайт покоя.
 - `HandleSpriteFlipping()` — по горизонтальному вводу вызывает `SetFacingDirection`.
 - `SetFacingDirection(bool lookRight)` — учитывает `defaultFacingRight` и меняет `flipX`.
 
 ## 4. Переменные и Inspector
 
+- `IsMovingParameter` — статический хеш строки `isMoving`; не отображается в Inspector.
 - `moveSpeed` — скорость движения, по умолчанию 4; ограничения `Min` нет.
 - `defaultFacingRight` — исходное направление, по умолчанию true.
 - `idleSprite` — статичный спрайт покоя; в `SampleScene` назначен `Idle1.ase`.
-- `rb`, `animator`, `spriteRenderer`, `moveInput`, `inputGate` — внутреннее состояние.
+- `rb`, `animator`, `spriteRenderer`, `moveInput`, `inputGate`, `hasIsMovingParameter` — внутреннее состояние.
 
 ## 5. Связи
 
@@ -33,18 +37,19 @@
 
 ## 6. Пример
 
-Зажата D: `moveInput = (1,0)`, Animator включается, проигрывается `Player_Walk`, спрайт смотрит вправо. Клавиша отпущена — Animator выключается и показывается `Idle1.ase`. При открытом инвентаре ввод игнорируется, скорость тела равна нулю.
+Зажата D: `moveInput = (1,0)`, `isMoving = true`, Animator включается и переходит в `Player_Walk`, затем контроллер чередует `Player_Walk`/`Player_Run`, создавая двухкадровый цикл; спрайт смотрит вправо. Клавиша отпущена — `isMoving = false`, Animator выключается и показывается `Idle1.ase`. При открытом инвентаре ввод игнорируется, скорость тела равна нулю, Animator выключается и показывается `Idle1.ase`.
 
 ## 7. Настройка в Unity
 
-На Player в `SampleScene` должны быть `Rigidbody2D`, `Collider2D`, `SpriteRenderer` и, при необходимости, `Animator` с клипом ходьбы. Назначь `idleSprite`. В `Player.controller` оставлен только `Player_Walk`; клипы `Player_Idle`/`Player_Run` удалены. Проверка: Play → фокус Game View → WASD/стрелки.
+На Player в `SampleScene` должны быть `Rigidbody2D`, `Collider2D`, `SpriteRenderer` и, при необходимости, `Animator` с контроллером `Assets/Player.controller`. Назначь `idleSprite`. В контроллере должны быть состояния `Player_Idle` (default), `Player_Walk`, `Player_Run` и bool-параметр `isMoving`; переходы уже настроены, перестраивать их не требуется. Если параметра нет, контроллер работает в режиме одного состояния движения. Проверка: Play → фокус Game View → WASD/стрелки.
 
 ## 8. Возможные проблемы
 
-Без `Rigidbody2D` движение не сработает. Нужен фокус Game View; геймпад и переназначение клавиш не поддерживаются. Если `idleSprite` не назначен, после остановки останется последний кадр Animator. Не добавляй IDLE-клип обратно: контроллер намеренно выключает Animator в покое.
+Без `Rigidbody2D` движение не сработает. Нужен фокус Game View; геймпад и переназначение клавиш не поддерживаются. Если `idleSprite` не назначен, после остановки останется последний кадр Animator. Если в контроллере переименовать `isMoving`, код перестанет переключать состояния, но движение и включение Animator сохранятся. Не добавляй второй Animator или дублирующий параметр движения.
 
 ## 9. История изменений
 
+- 2026-11-02 — `SetWalking` выставляет bool `isMoving` перед включением Animator; добавлена безопасная проверка наличия параметра. При блокировке ввода Animator теперь выключается и показывается idle. Структура `Player.controller` не изменялась.
 - 2026-10-31 — Animator включается только при движении, в покое показывается `Idle1.ase`; из контроллера удалены Idle/Run.
 - 2026-10-12 — добавлена блокировка ввода через `WorldInputGate`.
 - 2026-10-11 — базовая документация движения.
