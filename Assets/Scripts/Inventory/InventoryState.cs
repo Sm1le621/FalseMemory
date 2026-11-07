@@ -2,101 +2,331 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Один слот інвентаря: який предмет і скільки штук.
+// Слот незмінний: щоб змінити кількість, створюється новий слот.
 [Serializable]
 public sealed class InventorySlot
 {
     [SerializeField] private ItemData item;
     [SerializeField] private int count;
-    public ItemData Item => item;
-    public int Count => count;
-    public bool IsEmpty => item==null || count<=0;
-    internal InventorySlot(ItemData definition,int amount) { item=definition;count=amount; }
+
+    public ItemData Item
+    {
+        get { return item; }
+    }
+
+    public int Count
+    {
+        get { return count; }
+    }
+
+    // Порожній, якщо немає предмета або кількість 0
+    public bool IsEmpty
+    {
+        get { return item == null || count <= 0; }
+    }
+
+    // internal - створювати слоти може тільки код цієї збірки
+    internal InventorySlot(ItemData definition, int amount)
+    {
+        item = definition;
+        count = amount;
+    }
 }
 
-// One serializable session model, independent of scene lifetime and UI.
+// Інвентар на 30 слотів. Не залежить від сцени і від UI.
 [Serializable]
 public sealed class InventoryState
 {
-    public const int Capacity=30;
-    private static readonly InventorySlot Empty=new InventorySlot(null,0);
-    [SerializeField] private InventorySlot[] slots=new InventorySlot[Capacity];
+    // Кількість слотів
+    public const int Capacity = 30;
+
+    // Спільний "порожній" слот, щоб не повертати null
+    private static readonly InventorySlot Empty = new InventorySlot(null, 0);
+
+    // null у масиві = порожній слот
+    [SerializeField] private InventorySlot[] slots = new InventorySlot[Capacity];
+
+    // Подія "інвентар змінився"
     public event Action Changed;
+
+    // Всі різні предмети в інвентарі (кожен по одному разу), по порядку слотів
     public IEnumerable<ItemData> Definitions
     {
-        get { var seen=new HashSet<ItemData>();foreach(var slot in slots)if(slot!=null && !slot.IsEmpty && seen.Add(slot.Item))yield return slot.Item; }
+        get
+        {
+            List<ItemData> result = new List<ItemData>();
+            HashSet<ItemData> seen = new HashSet<ItemData>();
+
+            foreach (InventorySlot slot in slots)
+            {
+                if (slot != null && !slot.IsEmpty)
+                {
+                    // Add повертає false, якщо такий предмет уже був
+                    if (seen.Add(slot.Item))
+                    {
+                        result.Add(slot.Item);
+                    }
+                }
+            }
+            return result;
+        }
     }
+
+    // Слот за номером (порожній слот замість null)
     public InventorySlot GetSlot(int index)
     {
-        if(!Valid(index))throw new ArgumentOutOfRangeException(nameof(index));
-        return slots[index] ?? Empty;
+        if (!Valid(index))
+        {
+            throw new ArgumentOutOfRangeException(nameof(index));
+        }
+
+        if (slots[index] == null)
+        {
+            return Empty;
+        }
+        return slots[index];
     }
+
+    // Скільки всього штук цього предмета (у всіх слотах)
     public int Count(ItemData item)
     {
-        if(item==null)return 0;
-        long total=0;foreach(var slot in slots)if(slot!=null && slot.Item==item)total+=slot.Count;
-        return (int)Math.Min(int.MaxValue,total);
+        if (item == null)
+        {
+            return 0;
+        }
+
+        // long - щоб не було переповнення
+        long total = 0;
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot != null && slot.Item == item)
+            {
+                total = total + slot.Count;
+            }
+        }
+
+        if (total > int.MaxValue)
+        {
+            return int.MaxValue;
+        }
+        return (int)total;
     }
+
+    // Чи є в інвентарі ІНШИЙ предмет з таким самим id (так не можна)
     private bool Conflicts(ItemData item)
     {
-        if(string.IsNullOrWhiteSpace(item.id))return false;
-        foreach(var other in Definitions)if(other!=item && other.id==item.id)return true;
+        if (string.IsNullOrWhiteSpace(item.id))
+        {
+            return false;
+        }
+
+        foreach (ItemData other in Definitions)
+        {
+            if (other != item && other.id == item.id)
+            {
+                return true;
+            }
+        }
         return false;
     }
-    public bool CanAdd(ItemData item,int amount)
+
+    // Чи влізе amount штук предмета
+    public bool CanAdd(ItemData item, int amount)
     {
-        if(item==null || amount<=0 || Conflicts(item))return false;
-        long space=0;
-        foreach(var slot in slots)
-            if(slot==null || slot.IsEmpty)space+=item.StackLimit;
-            else if(slot.Item==item)space+=Math.Max(0,item.StackLimit-slot.Count);
-        return space>=amount;
-    }
-    public bool TryAdd(ItemData item,int amount)
-    {
-        if(!CanAdd(item,amount))return false;
-        int remaining=amount;
-        for(int i=0;i<Capacity && remaining>0;i++)
+        if (item == null || amount <= 0 || Conflicts(item))
         {
-            var slot=GetSlot(i);if(slot.Item!=item || slot.IsEmpty)continue;
-            int add=Math.Min(remaining,Math.Max(0,item.StackLimit-slot.Count));
-            slots[i]=new InventorySlot(item,slot.Count+add);remaining-=add;
+            return false;
         }
-        for(int i=0;i<Capacity && remaining>0;i++)if(GetSlot(i).IsEmpty)
+
+        // Рахуємо, скільки місця є всього
+        long space = 0;
+        foreach (InventorySlot slot in slots)
         {
-            int add=Math.Min(remaining,item.StackLimit);slots[i]=new InventorySlot(item,add);remaining-=add;
+            if (slot == null || slot.IsEmpty)
+            {
+                // Порожній слот вміщає цілу стопку
+                space = space + item.StackLimit;
+            }
+            else if (slot.Item == item)
+            {
+                // Неповна стопка того ж предмета
+                space = space + Math.Max(0, item.StackLimit - slot.Count);
+            }
         }
-        Changed?.Invoke();return true;
+        return space >= amount;
     }
-    public bool TryRemove(ItemData item,int amount)
+
+    // Додати предмет. Або додається ВСЕ, або нічого
+    public bool TryAdd(ItemData item, int amount)
     {
-        if(item==null || amount<=0 || Count(item)<amount)return false;
-        for(int i=0;i<Capacity && amount>0;i++)
+        if (!CanAdd(item, amount))
         {
-            var slot=GetSlot(i);if(slot.Item!=item)continue;
-            int take=Math.Min(amount,slot.Count);int left=slot.Count-take;
-            slots[i]=left==0?null:new InventorySlot(item,left);amount-=take;
+            return false;
         }
-        Changed?.Invoke();return true;
-    }
-    public bool TryMoveOrMerge(int from,int to)
-    {
-        if(!Valid(from) || !Valid(to) || from==to || GetSlot(from).IsEmpty)return false;
-        var source=GetSlot(from);var target=GetSlot(to);
-        if(!target.IsEmpty && source.Item==target.Item && source.Item.stackable)
+
+        int remaining = amount;
+
+        // 1) Спочатку доповнюємо вже існуючі стопки
+        for (int i = 0; i < Capacity && remaining > 0; i++)
         {
-            int transfer=Math.Min(source.Count,Math.Max(0,target.Item.StackLimit-target.Count));
-            if(transfer==0)return false;
-            slots[to]=new InventorySlot(target.Item,target.Count+transfer);
-            slots[from]=source.Count==transfer?null:new InventorySlot(source.Item,source.Count-transfer);
+            InventorySlot slot = GetSlot(i);
+            if (slot.Item != item || slot.IsEmpty)
+            {
+                continue;
+            }
+
+            int add = Math.Min(remaining, Math.Max(0, item.StackLimit - slot.Count));
+            slots[i] = new InventorySlot(item, slot.Count + add);
+            remaining = remaining - add;
         }
-        else {slots[to]=source;slots[from]=target.IsEmpty?null:target;}
-        Changed?.Invoke();return true;
+
+        // 2) Те, що лишилось, кладемо в порожні слоти
+        for (int i = 0; i < Capacity && remaining > 0; i++)
+        {
+            if (GetSlot(i).IsEmpty)
+            {
+                int add = Math.Min(remaining, item.StackLimit);
+                slots[i] = new InventorySlot(item, add);
+                remaining = remaining - add;
+            }
+        }
+
+        if (Changed != null)
+        {
+            Changed.Invoke();
+        }
+        return true;
     }
-    internal bool TryExchangeSingle(int index,ItemData expected,ItemData replacement)
+
+    // Забрати amount штук. Якщо стільки немає - нічого не забираємо
+    public bool TryRemove(ItemData item, int amount)
     {
-        if(!Valid(index) || GetSlot(index).Item!=expected || GetSlot(index).Count!=1 ||
-            (replacement!=null && (replacement.StackLimit!=1 || Conflicts(replacement))))return false;
-        slots[index]=replacement==null?null:new InventorySlot(replacement,1);Changed?.Invoke();return true;
+        if (item == null || amount <= 0 || Count(item) < amount)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < Capacity && amount > 0; i++)
+        {
+            InventorySlot slot = GetSlot(i);
+            if (slot.Item != item)
+            {
+                continue;
+            }
+
+            int take = Math.Min(amount, slot.Count);
+            int left = slot.Count - take;
+
+            if (left == 0)
+            {
+                // Стопка закінчилась - слот стає порожнім
+                slots[i] = null;
+            }
+            else
+            {
+                slots[i] = new InventorySlot(item, left);
+            }
+            amount = amount - take;
+        }
+
+        if (Changed != null)
+        {
+            Changed.Invoke();
+        }
+        return true;
     }
-    private static bool Valid(int index) => index>=0 && index<Capacity;
+
+    // Перенести предмет з from у to: об'єднати стопки або поміняти місцями
+    public bool TryMoveOrMerge(int from, int to)
+    {
+        if (!Valid(from) || !Valid(to) || from == to || GetSlot(from).IsEmpty)
+        {
+            return false;
+        }
+
+        InventorySlot source = GetSlot(from);
+        InventorySlot target = GetSlot(to);
+
+        if (!target.IsEmpty && source.Item == target.Item && source.Item.stackable)
+        {
+            // Той самий предмет - доливаємо в цільову стопку, скільки влізе
+            int transfer = Math.Min(source.Count, Math.Max(0, target.Item.StackLimit - target.Count));
+            if (transfer == 0)
+            {
+                // Цільова стопка вже повна
+                return false;
+            }
+
+            slots[to] = new InventorySlot(target.Item, target.Count + transfer);
+
+            if (source.Count == transfer)
+            {
+                slots[from] = null;
+            }
+            else
+            {
+                slots[from] = new InventorySlot(source.Item, source.Count - transfer);
+            }
+        }
+        else
+        {
+            // Різні предмети (або порожньо) - міняємо місцями
+            slots[to] = source;
+            if (target.IsEmpty)
+            {
+                slots[from] = null;
+            }
+            else
+            {
+                slots[from] = target;
+            }
+        }
+
+        if (Changed != null)
+        {
+            Changed.Invoke();
+        }
+        return true;
+    }
+
+    // Замінити один предмет expected у слоті index на replacement (або на порожнечу).
+    // Використовується екіпіровкою, коли міняємо зброю.
+    internal bool TryExchangeSingle(int index, ItemData expected, ItemData replacement)
+    {
+        if (!Valid(index))
+        {
+            return false;
+        }
+        if (GetSlot(index).Item != expected || GetSlot(index).Count != 1)
+        {
+            return false;
+        }
+        // Замінник має бути "поштучним" і без конфлікту id
+        if (replacement != null && (replacement.StackLimit != 1 || Conflicts(replacement)))
+        {
+            return false;
+        }
+
+        if (replacement == null)
+        {
+            slots[index] = null;
+        }
+        else
+        {
+            slots[index] = new InventorySlot(replacement, 1);
+        }
+
+        if (Changed != null)
+        {
+            Changed.Invoke();
+        }
+        return true;
+    }
+
+    // Чи існує слот з таким номером
+    private static bool Valid(int index)
+    {
+        return index >= 0 && index < Capacity;
+    }
 }

@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Кнопки головного меню: Start, Settings, Exit.
+// Методи викликаються з кнопок (OnClick в інспекторі).
 public class MainMenuController : MonoBehaviour
 {
+    // Яку сцену завантажити при натисканні Start
     [SerializeField] private string gameSceneName = "SampleScene";
     [SerializeField] private SettingsMenu settingsMenu;
 
+    // Кнопка Start
     public void OnStart()
     {
         if (string.IsNullOrWhiteSpace(gameSceneName))
@@ -17,6 +21,7 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene(gameSceneName);
     }
 
+    // Кнопка Settings
     public void OnSettings()
     {
         if (settingsMenu == null)
@@ -28,8 +33,11 @@ public class MainMenuController : MonoBehaviour
         settingsMenu.Show();
     }
 
+    // Кнопка Exit
     public void OnExit()
     {
+        // #if - це умова для компілятора.
+        // У редакторі зупиняємо Play Mode, а в зібраній грі - закриваємо програму
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

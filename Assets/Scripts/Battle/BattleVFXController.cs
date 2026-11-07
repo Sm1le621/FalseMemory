@@ -2,76 +2,247 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Plays an effect through scene-authored images; nothing is created or destroyed here.
+// Програє візуальні ефекти (вогонь, лікування) поверх портретів.
+// Використовує вже готові картинки зі сцени - тут нічого не створюється і не видаляється.
 [DisallowMultipleComponent]
 public sealed class BattleVFXController : MonoBehaviour
 {
     public BattleUI ui;
-    public BattleVFXProfile fireProfile, healProfile;
+    // Ефекти за замовчуванням (якщо в заклинання/предмета немає свого)
+    public BattleVFXProfile fireProfile;
+    public BattleVFXProfile healProfile;
+
+    // Картинка для покадрової анімації
     [SerializeField] private Image frameImage;
+    // Картинки-частинки
     [SerializeField] private Image[] particles = System.Array.Empty<Image>();
+
+    // Поточний ефект (корутина)
     private Coroutine effect;
-    public int CurrentFrame {get;private set;}=-1;
-    public bool HasAnimatedFrame => frameImage!=null && frameImage.isActiveAndEnabled && frameImage.sprite!=null;
+
+    // Номер поточного кадру (-1 = анімації немає)
+    public int CurrentFrame { get; private set; } = -1;
+
+    // Чи показується зараз кадр анімації
+    public bool HasAnimatedFrame
+    {
+        get { return frameImage != null && frameImage.isActiveAndEnabled && frameImage.sprite != null; }
+    }
+
+    // Скільки ефектів програно (для тестів)
     public int EffectsPlayed { get; private set; }
+    // Скільки частинок зараз видно
     public int ActiveParticles { get; private set; }
 
-    public void Play(bool onPlayer,BattleVFXProfile profile,Color fallback,bool healing)
+    // Запустити ефект на гравці (onPlayer = true) або на ворогу
+    public void Play(bool onPlayer, BattleVFXProfile profile, Color fallback, bool healing)
     {
-        if(!isActiveAndEnabled || ui==null) return;
-        var portrait=onPlayer?ui.playerPortrait:ui.enemyPortrait;if(portrait==null)return;
-        if(effect!=null)StopCoroutine(effect);Clear();
-        profile=profile!=null?profile:(healing?healProfile:fireProfile);
-        effect=StartCoroutine(Animate(portrait,profile,fallback,healing));EffectsPlayed++;
-    }
-    private IEnumerator Animate(Image portrait,BattleVFXProfile profile,Color fallback,bool healing)
-    {
-        int available=particles!=null?particles.Length:0;
-        int count=Mathf.Min(profile!=null?Mathf.Clamp(profile.particleCount,4,24):12,available);
-        float duration=profile!=null?Mathf.Clamp(profile.duration,0,2):0.45f;
-        float radius=profile!=null?Mathf.Clamp(profile.radius,0,100):42f;
-        float size=profile!=null?Mathf.Clamp(profile.particleSize,1,24):8f;
-        Color color=profile!=null?profile.color:fallback;
-        var shape=profile!=null?profile.shape:(healing?BattleVFXShape.Orbit:BattleVFXShape.Rising);
-        bool animated=profile!=null && profile.frames!=null && profile.frames.Length>0 && frameImage!=null;
-        if(animated)
+        if (!isActiveAndEnabled || ui == null)
         {
-            frameImage.color=Color.white;frameImage.rectTransform.sizeDelta=Vector2.one*Mathf.Clamp(profile.frameSize,32,256);
-            frameImage.transform.SetAsLastSibling();frameImage.gameObject.SetActive(true);
+            return;
         }
-        Vector2 center=portrait.rectTransform.anchoredPosition+Vector2.Scale(portrait.rectTransform.rect.size,new Vector2(0.5f,0.5f)-portrait.rectTransform.pivot);
-        for(int i=0;i<count;i++){particles[i].sprite=profile!=null?profile.particleSprite:null;particles[i].gameObject.SetActive(true);}
-        ActiveParticles=count;
-        for(float t=0;t<duration;t+=Time.unscaledDeltaTime)
+
+        Image portrait;
+        if (onPlayer)
         {
-            float progress=t/duration;
-            if(animated)
+            portrait = ui.playerPortrait;
+        }
+        else
+        {
+            portrait = ui.enemyPortrait;
+        }
+        if (portrait == null)
+        {
+            return;
+        }
+
+        // Зупиняємо попередній ефект
+        if (effect != null)
+        {
+            StopCoroutine(effect);
+        }
+        Clear();
+
+        // Якщо профіль не передали - беремо стандартний
+        if (profile == null)
+        {
+            if (healing)
             {
-                CurrentFrame=Mathf.Min(profile.frames.Length-1,Mathf.FloorToInt(progress*profile.frames.Length));
-                frameImage.sprite=profile.frames[CurrentFrame];
-                frameImage.enabled=frameImage.sprite!=null;
-                frameImage.rectTransform.anchoredPosition=portrait.rectTransform.anchoredPosition+
-                    Vector2.Scale(portrait.rectTransform.rect.size,Vector2.one*0.5f-portrait.rectTransform.pivot);
+                profile = healProfile;
             }
-            for(int i=0;i<count;i++)
+            else
             {
-                float angle=i*Mathf.PI*2/count+progress*(shape==BattleVFXShape.Orbit?2.5f:0);
-                Vector2 offset=new Vector2(Mathf.Cos(angle),Mathf.Sin(angle))*radius*(shape==BattleVFXShape.Burst?progress:1f);
-                if(shape==BattleVFXShape.Rising)offset=new Vector2((i%5-2)*radius/2.5f, -30f+progress*(75f+i%3*12f));
-                var p=particles[i];p.rectTransform.anchoredPosition=center+offset;
-                p.rectTransform.sizeDelta=Vector2.one*size*(0.5f+0.5f*Mathf.Sin(progress*Mathf.PI));
-                p.rectTransform.localRotation=Quaternion.Euler(0,0,shape==BattleVFXShape.Orbit?45f:0f);
-                Color current=color;current.a=Mathf.Sin(progress*Mathf.PI);p.color=current;
+                profile = fireProfile;
             }
+        }
+
+        effect = StartCoroutine(Animate(portrait, profile, fallback, healing));
+        EffectsPlayed = EffectsPlayed + 1;
+    }
+
+    private IEnumerator Animate(Image portrait, BattleVFXProfile profile, Color fallback, bool healing)
+    {
+        // Скільки частинок є в сцені
+        int available = 0;
+        if (particles != null)
+        {
+            available = particles.Length;
+        }
+
+        // Беремо налаштування з профілю, а якщо його немає - стандартні значення
+        int wantedCount = 12;
+        float duration = 0.45f;
+        float radius = 42f;
+        float size = 8f;
+        Color color = fallback;
+        BattleVFXShape shape;
+        if (healing)
+        {
+            shape = BattleVFXShape.Orbit;
+        }
+        else
+        {
+            shape = BattleVFXShape.Rising;
+        }
+
+        if (profile != null)
+        {
+            wantedCount = Mathf.Clamp(profile.particleCount, 4, 24);
+            duration = Mathf.Clamp(profile.duration, 0, 2);
+            radius = Mathf.Clamp(profile.radius, 0, 100);
+            size = Mathf.Clamp(profile.particleSize, 1, 24);
+            color = profile.color;
+            shape = profile.shape;
+        }
+
+        // Не більше, ніж є частинок у сцені
+        int count = Mathf.Min(wantedCount, available);
+
+        // Чи є покадрова анімація
+        bool animated = profile != null && profile.frames != null && profile.frames.Length > 0 && frameImage != null;
+        if (animated)
+        {
+            frameImage.color = Color.white;
+            frameImage.rectTransform.sizeDelta = Vector2.one * Mathf.Clamp(profile.frameSize, 32, 256);
+            // Поверх усього
+            frameImage.transform.SetAsLastSibling();
+            frameImage.gameObject.SetActive(true);
+        }
+
+        // Центр портрета
+        Vector2 center = portrait.rectTransform.anchoredPosition +
+            Vector2.Scale(portrait.rectTransform.rect.size, new Vector2(0.5f, 0.5f) - portrait.rectTransform.pivot);
+
+        // Вмикаємо потрібну кількість частинок
+        for (int i = 0; i < count; i++)
+        {
+            if (profile != null)
+            {
+                particles[i].sprite = profile.particleSprite;
+            }
+            else
+            {
+                particles[i].sprite = null;
+            }
+            particles[i].gameObject.SetActive(true);
+        }
+        ActiveParticles = count;
+
+        for (float t = 0; t < duration; t = t + Time.unscaledDeltaTime)
+        {
+            float progress = t / duration;
+
+            // Покадрова анімація
+            if (animated)
+            {
+                CurrentFrame = Mathf.Min(profile.frames.Length - 1, Mathf.FloorToInt(progress * profile.frames.Length));
+                frameImage.sprite = profile.frames[CurrentFrame];
+                frameImage.enabled = frameImage.sprite != null;
+                frameImage.rectTransform.anchoredPosition = portrait.rectTransform.anchoredPosition +
+                    Vector2.Scale(portrait.rectTransform.rect.size, Vector2.one * 0.5f - portrait.rectTransform.pivot);
+            }
+
+            // Рух частинок
+            for (int i = 0; i < count; i++)
+            {
+                // Кут частинки на колі (при Orbit ще й крутиться)
+                float spin = 0;
+                if (shape == BattleVFXShape.Orbit)
+                {
+                    spin = 2.5f;
+                }
+                float angle = i * Mathf.PI * 2 / count + progress * spin;
+
+                // При Burst частинки розлітаються від центру
+                float spread = 1f;
+                if (shape == BattleVFXShape.Burst)
+                {
+                    spread = progress;
+                }
+                Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius * spread;
+
+                // При Rising частинки стоять рядами і піднімаються вгору
+                if (shape == BattleVFXShape.Rising)
+                {
+                    offset = new Vector2((i % 5 - 2) * radius / 2.5f, -30f + progress * (75f + i % 3 * 12f));
+                }
+
+                Image p = particles[i];
+                p.rectTransform.anchoredPosition = center + offset;
+                // Частинка росте і зменшується
+                p.rectTransform.sizeDelta = Vector2.one * size * (0.5f + 0.5f * Mathf.Sin(progress * Mathf.PI));
+
+                // При Orbit частинки повернуті на 45 градусів (ромбики)
+                float rotation = 0f;
+                if (shape == BattleVFXShape.Orbit)
+                {
+                    rotation = 45f;
+                }
+                p.rectTransform.localRotation = Quaternion.Euler(0, 0, rotation);
+
+                // Плавна поява і зникнення
+                Color current = color;
+                current.a = Mathf.Sin(progress * Mathf.PI);
+                p.color = current;
+            }
+
             yield return null;
         }
-        Clear();effect=null;
+
+        Clear();
+        effect = null;
     }
+
+    // Сховати всі частинки і кадр анімації
     private void Clear()
     {
-        if(particles!=null)foreach(var p in particles)if(p!=null)p.gameObject.SetActive(false);
-        if(frameImage!=null)frameImage.gameObject.SetActive(false);
-        ActiveParticles=0;CurrentFrame=-1;
+        if (particles != null)
+        {
+            foreach (Image p in particles)
+            {
+                if (p != null)
+                {
+                    p.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        if (frameImage != null)
+        {
+            frameImage.gameObject.SetActive(false);
+        }
+
+        ActiveParticles = 0;
+        CurrentFrame = -1;
     }
-    private void OnDisable(){if(effect!=null)StopCoroutine(effect);effect=null;Clear();}
+
+    private void OnDisable()
+    {
+        if (effect != null)
+        {
+            StopCoroutine(effect);
+        }
+        effect = null;
+        Clear();
+    }
 }
