@@ -40,7 +40,7 @@ public static class ItemPresentation
     {
         if(item==null)return "";
         // Assets are content, not TMP markup. Do not allow names/descriptions to alter layout.
-        var lines=new List<string>{"<b>"+Escape(item.displayName)+"</b>"+(count>1?"  ×"+count:""),TypeName(item)};
+        var lines=new List<string>{Escape(item.displayName)+(count>1?"  ×"+count:""),TypeName(item)};
         string bonuses=BonusText(item);if(bonuses.Length>0)lines.Add(bonuses);
         if(!string.IsNullOrWhiteSpace(item.description))lines.Add("\n"+Escape(item.description));
         return string.Join("\n",lines);
