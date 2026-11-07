@@ -1,13 +1,24 @@
 using UnityEngine;
 
+// "Мозок" ворога в бою: вирішує, атакувати чи захищатись.
 public static class EnemyBattleAI
 {
-    // Called exclusively by BattleManager during this enemy's scheduled turn.
+    // Викликається тільки з BattleManager, коли настає хід ворога.
+    // Ця версія використовує звичайний рандом Unity.
     public static BattleAction Choose(BattleRules rules)
-        => Choose(rules, UnityBattleRandom.Instance);
+    {
+        return Choose(rules, UnityBattleRandom.Instance);
+    }
 
+    // Ця версія приймає своє джерело випадкових чисел (зручно для тестів)
     public static BattleAction Choose(BattleRules rules, IBattleRandom random)
     {
-        return BattleCalculator.ChanceSucceeds(rules.enemyDefendChance, random.Next01()) ? BattleAction.Defend : BattleAction.Attack;
+        bool defend = BattleCalculator.ChanceSucceeds(rules.enemyDefendChance, random.Next01());
+
+        if (defend)
+        {
+            return BattleAction.Defend;
+        }
+        return BattleAction.Attack;
     }
 }

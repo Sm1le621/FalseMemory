@@ -1,17 +1,38 @@
 using UnityEngine;
 
+// Як рухаються частинки: піднімаються вгору, крутяться по колу або розлітаються
 public enum BattleVFXShape { Rising, Orbit, Burst }
 
-[CreateAssetMenu(menuName="FalseMemory/Battle VFX Profile")]
+// Налаштування одного візуального ефекту (вогонь, лікування...)
+[CreateAssetMenu(menuName = "FalseMemory/Battle VFX Profile")]
 public sealed class BattleVFXProfile : ScriptableObject
 {
     public BattleVFXShape shape;
     public Color color = Color.white;
+
+    // Картинка однієї частинки
     public Sprite particleSprite;
-    public Sprite[] frames=System.Array.Empty<Sprite>();
-    [Range(32f,256f)] public float frameSize=128f;
-    [Range(0f,2f)] public float duration=0.45f;
-    [Range(4,24)] public int particleCount=12;
-    [Range(1f,24f)] public float particleSize=8f;
-    [Range(0f,100f)] public float radius=42f;
+
+    // Кадри анімації (якщо є - показуються поверх портрета)
+    public Sprite[] frames = System.Array.Empty<Sprite>();
+
+    // Розмір кадру анімації
+    [Range(32f, 256f)]
+    public float frameSize = 128f;
+
+    // Скільки секунд триває ефект
+    [Range(0f, 2f)]
+    public float duration = 0.45f;
+
+    // Кількість частинок
+    [Range(4, 24)]
+    public int particleCount = 12;
+
+    // Розмір частинки
+    [Range(1f, 24f)]
+    public float particleSize = 8f;
+
+    // Радіус розльоту частинок
+    [Range(0f, 100f)]
+    public float radius = 42f;
 }

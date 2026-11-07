@@ -1,49 +1,147 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Presentation only: item text and colors never change combat values.
+// Як показувати предмети: кольори клітинок і тексти описів.
+// Тільки вигляд - на бій це ніяк не впливає.
 public static class ItemPresentation
 {
-    public static Color CellColor(ItemData item,bool highlighted)
+    // Колір фону клітинки
+    public static Color CellColor(ItemData item, bool highlighted)
     {
-        Color dark=new Color32(27,27,31,255);
-        Color filled=new Color32(89,77,63,255);
-        Color empty=new Color32(60,55,48,255);
-        return Color.Lerp(dark,item!=null?filled:empty,highlighted?0.55f:0.25f);
+        Color dark = new Color32(27, 27, 31, 255);
+        Color filled = new Color32(89, 77, 63, 255);
+        Color empty = new Color32(60, 55, 48, 255);
+
+        Color baseColor;
+        if (item != null)
+        {
+            baseColor = filled;
+        }
+        else
+        {
+            baseColor = empty;
+        }
+
+        // Підсвічена клітинка - світліша
+        float amount = 0.25f;
+        if (highlighted)
+        {
+            amount = 0.55f;
+        }
+
+        return Color.Lerp(dark, baseColor, amount);
     }
-    public static string SlotName(EquipmentSlot slot) => slot==EquipmentSlot.Weapon?"Weapon":"Chest";
+
+    // Назва слота
+    public static string SlotName(EquipmentSlot slot)
+    {
+        if (slot == EquipmentSlot.Weapon)
+        {
+            return "Weapon";
+        }
+        return "Chest";
+    }
+
+    // Назва типу предмета
     public static string TypeName(ItemData item)
     {
-        if(item==null)return "";
-        switch(item.category)
+        if (item == null)
         {
-            case ItemCategory.Weapon:return "Weapon";
-            case ItemCategory.Armor:return SlotName(item.equipmentSlot);
-            default:return "Consumable";
+            return "";
+        }
+
+        switch (item.category)
+        {
+            case ItemCategory.Weapon:
+                return "Weapon";
+            case ItemCategory.Armor:
+                return SlotName(item.equipmentSlot);
+            default:
+                return "Consumable";
         }
     }
+
+    // Текст бонусів, наприклад "ATK +5  •  DEF +4"
     public static string BonusText(ItemData item)
     {
-        if(item==null)return "";
-        var parts=new List<string>();var b=item.bonuses;
-        Add(parts,"ATK",b.attack);Add(parts,"DEF",b.defense);
-        var consumable=item as BattleConsumable;
-        if(consumable!=null)
+        if (item == null)
         {
-            if(consumable.healing>0)parts.Add($"Restores up to {consumable.healing} HP");
-            if(consumable.manaRestoration>0)parts.Add($"Restores up to {consumable.manaRestoration} MP");
+            return "";
         }
-        return string.Join("  •  ",parts);
+
+        List<string> parts = new List<string>();
+        ItemStatBonus b = item.bonuses;
+        Add(parts, "ATK", b.attack);
+        Add(parts, "DEF", b.defense);
+
+        // Для витратних предметів - що вони відновлюють
+        BattleConsumable consumable = item as BattleConsumable;
+        if (consumable != null)
+        {
+            if (consumable.healing > 0)
+            {
+                parts.Add("Restores up to " + consumable.healing + " HP");
+            }
+            if (consumable.manaRestoration > 0)
+            {
+                parts.Add("Restores up to " + consumable.manaRestoration + " MP");
+            }
+        }
+
+        return string.Join("  •  ", parts);
     }
-    private static void Add(List<string> parts,string name,int value){if(value>0)parts.Add($"{name} +{value}");}
-    public static string Description(ItemData item,int count)
+
+    // Додати "NAME +value", тільки якщо значення більше 0
+    private static void Add(List<string> parts, string name, int value)
     {
-        if(item==null)return "";
-        // Assets are content, not TMP markup. Do not allow names/descriptions to alter layout.
-        var lines=new List<string>{Escape(item.displayName)+(count>1?"  ×"+count:""),TypeName(item)};
-        string bonuses=BonusText(item);if(bonuses.Length>0)lines.Add(bonuses);
-        if(!string.IsNullOrWhiteSpace(item.description))lines.Add("\n"+Escape(item.description));
-        return string.Join("\n",lines);
+        if (value > 0)
+        {
+            parts.Add(name + " +" + value);
+        }
     }
-    private static string Escape(string text)=>string.IsNullOrEmpty(text)?"":text.Replace("<","‹").Replace(">","›");
+
+    // Повний опис для підказки
+    public static string Description(ItemData item, int count)
+    {
+        if (item == null)
+        {
+            return "";
+        }
+
+        List<string> lines = new List<string>();
+
+        // Назва предмета звичайним текстом (без тегів TMP) і кількість, якщо більше 1
+        string title = Escape(item.displayName);
+        if (count > 1)
+        {
+            title = title + "  ×" + count;
+        }
+        lines.Add(title);
+
+        lines.Add(TypeName(item));
+
+        string bonuses = BonusText(item);
+        if (bonuses.Length > 0)
+        {
+            lines.Add(bonuses);
+        }
+
+        if (!string.IsNullOrWhiteSpace(item.description))
+        {
+            lines.Add("\n" + Escape(item.description));
+        }
+
+        return string.Join("\n", lines);
+    }
+
+    // Назви та описи - це просто текст, а не теги TMP.
+    // Замінюємо < і > на схожі символи, щоб ніхто не зламав розмітку
+    private static string Escape(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return "";
+        }
+        return text.Replace("<", "‹").Replace(">", "›");
+    }
 }
