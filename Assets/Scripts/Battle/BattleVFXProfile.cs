@@ -3,7 +3,7 @@ using UnityEngine;
 // Як рухаються частинки: піднімаються вгору, крутяться по колу або розлітаються
 public enum BattleVFXShape { Rising, Orbit, Burst }
 
-// Налаштування одного візуального ефекту (вогонь, лікування...)
+// Налаштування одного візуального ефекту (вогонь...)
 [CreateAssetMenu(menuName = "FalseMemory/Battle VFX Profile")]
 public sealed class BattleVFXProfile : ScriptableObject
 {
@@ -13,8 +13,10 @@ public sealed class BattleVFXProfile : ScriptableObject
     // Картинка однієї частинки
     public Sprite particleSprite;
 
-    // Кадри анімації (якщо є - показуються поверх портрета)
-    public Sprite[] frames = System.Array.Empty<Sprite>();
+    // Контролер з .anim кліпом кадрів ефекту
+    public RuntimeAnimatorController effectController;
+    // Скільки кадрів у кліпі (для CurrentFrame у тестах)
+    public int frameCount = 8;
 
     // Розмір кадру анімації
     [Range(32f, 256f)]

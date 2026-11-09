@@ -4,43 +4,42 @@
 
 Исходник: `Assets/Scripts/Battle/SpriteAnimationSet.cs`.
 
-ScriptableObject с кадрами анимации для мира и боя: движение, атака, получение урона и смерть. Позы `Idle` больше нет.
+ScriptableObject со ссылками на готовые Animator-контролеры персонажа. Сами кадры лежат в `.anim` AnimationClip; ассет больше не хранит массивы `Sprite`. Позы `Idle` по-прежнему нет.
 
 ## 2. Как работает
 
-Ассет хранит четыре массива `Sprite`. `Frames(pose)` возвращает нужный массив. `At(pose, progress, fallback)` выбирает кадр по прогрессу 0…1 (последний кадр для 1), `Loop(pose, seconds, fallback)` циклически выбирает кадр по времени и `framesPerSecond`. Если массив пуст или кадр равен `null`, возвращается fallback — обычно `BattleUnit.battleSprite`.
+В ассете два поля: `worldController` для анимации в мире (кадры применяются к `SpriteRenderer`) и `portraitController` для боевого портрета (кадры применяются к UI `Image`). `EnemySpriteAnimation` и `BattlePresentation` берут нужный контролер и просят `SpriteClipPlayer` показать состояние `Move`, `Attack`, `Hurt` или `Death` на нужном прогрессе.
 
 ## 3. Методы и функции
 
-- `Frames(SpritePose pose)` → `Sprite[]`; выбирает массив по позе.
-- `At(SpritePose pose, float progress, Sprite fallback = null)` → `Sprite`; кадр по прогрессу, без зацикливания.
-- `Loop(SpritePose pose, float seconds, Sprite fallback = null)` → `Sprite`; циклический кадр по времени.
-
-Перечисление `SpritePose`: `Move`, `Attack`, `Hurt`, `Death`.
+Собственных методов нет. Перечисление `SpritePose` (`Move`, `Attack`, `Hurt`, `Death`) остаётся общим списком имён состояний. Имена состояний в контролерах совпадают с именами значений `SpritePose`.
 
 ## 4. Переменные и Inspector
 
-- `move`, `attack`, `hurt`, `death` — массивы кадров; могут быть пустыми.
-- `framesPerSecond` — скорость цикла, 1…24, по умолчанию 8.
-- В `Skeleton64.asset` заполнены Move/Attack/Hurt/Death; IDLE-кадры удалены.
+- `worldController` — Animator-контролер для мира; содержит клипы `Move` (цикл), `Hurt`, `Death`.
+- `portraitController` — Animator-контролер для портрета в бою; содержит клипы `Attack`, `Hurt`, `Death`.
+- В `Skeleton64.asset` назначены `SkeletonWorld.controller` и `SkeletonPortrait.controller`.
+
+Старые поля `move`, `attack`, `hurt`, `death` и `framesPerSecond` в коде отсутствуют. В YAML-файле ассета могут остаться старые строки — Unity игнорирует их и удалит при следующем сохранении.
 
 ## 5. Связи
 
-Используется `EnemySpriteAnimation` и `BattlePresentation`. Ссылка хранится в `BattleUnit.visualAnimations`. `battleSprite` остаётся статичным fallback. Ассеты кадров создаются `PixelBattleAssetBuilder`.
+Используется `EnemySpriteAnimation` и `BattlePresentation`. Ссылка хранится в `BattleUnit.visualAnimations`. `battleSprite` остаётся статичным fallback, если контролер не назначен. Кліпы и контролеры собирает редакторский `SpriteAnimationAssetBuilder`, кадры рисует `PixelBattleAssetBuilder`.
 
 ## 6. Пример
 
-У скелета 4 кадра `Move`. `Loop(Move, 0.5f)` при 8 fps выбирает кадр 0; `At(Hurt, 0.5f)` выбирает средний кадр из двух. Если массив `Hurt` пуст, показывается `battleSprite`.
+У скелета `Move` — 4 кадра, `Attack` — 3, `Hurt` — 2, `Death` — 4. В мире `SpriteClipPlayer.Loop(..., "Move")` крутит ходьбу, а в бою `Sample(..., "Hurt", progress)` показывает нужный кадр по прогрессу фазы.
 
 ## 7. Настройка в Unity
 
-Создай ассет через `Assets → Create → FalseMemory → Sprite Animation Set`, заполни массивы и назначь в `BattleUnit.visualAnimations`. Кадры должны быть 64×64, Point filtering, без mipmaps. Для нового врага можно использовать отдельный ассет.
+Создай ассет через `Assets → Create → FalseMemory → Sprite Animation Set` и назначь оба контролера. Для нового врага сделай отдельный набор и отдельные контролеры через `FalseMemory → Animation → Rebuild sprite animations`. Кадры должны быть 64×64, Point filtering, без mipmaps.
 
 ## 8. Возможные проблемы
 
-Пустые массивы не ошибка — используется fallback. `At` при `progress = 1` берёт последний кадр, `Loop` никогда не выходит за границы. Отрицательное время в `Loop` трактуется как 0. Набор не содержит IDLE, поэтому не пытайся запросить `SpritePose.Idle` — такого значения нет.
+Если контролер не назначен, используется статичный `battleSprite`. Имена состояний должны совпадать с `SpritePose`, иначе `SpriteClipPlayer` не найдёт состояние. Animator добавляется в игре автоматически, поэтому не нужно вручную вешать его на Enemy или портрет. Не пытайся запросить `SpritePose.Idle` — такого значения нет.
 
 ## 9. История изменений
 
+- 2026-11-10 — ассет переведён на `.anim`-клипы и Animator-контролеры; массивы кадров удалены.
 - 2026-10-31 — удалена поза `Idle`; остались Move/Attack/Hurt/Death.
 - 2026-10-12 — базовый набор анимаций.

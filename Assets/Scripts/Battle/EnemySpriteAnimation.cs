@@ -2,6 +2,7 @@ using UnityEngine;
 
 // Анімація ворога у СВІТІ (не в бою): ходьба, біль, смерть.
 // Тут тільки картинка: фізика, AI і бій працюють в інших скриптах.
+// Кадри беруться з .anim кліпів через Animator, який додається у грі.
 [RequireComponent(typeof(SpriteRenderer), typeof(BattleUnit))]
 [DisallowMultipleComponent]
 public sealed class EnemySpriteAnimation : MonoBehaviour
@@ -20,6 +21,7 @@ public sealed class EnemySpriteAnimation : MonoBehaviour
 
     private SpriteRenderer visual;
     private BattleUnit unit;
+    private Animator animator;
     // Де ворог був у минулому кадрі
     private Vector3 previousPosition;
     // Скільки HP було в минулому кадрі
@@ -35,6 +37,7 @@ public sealed class EnemySpriteAnimation : MonoBehaviour
     {
         visual = GetComponent<SpriteRenderer>();
         unit = GetComponent<BattleUnit>();
+        animator = SpriteClipPlayer.GetAnimator(gameObject);
     }
 
     private void OnEnable()
@@ -76,6 +79,14 @@ public sealed class EnemySpriteAnimation : MonoBehaviour
 
         SpriteAnimationSet set = unit.visualAnimations;
 
+        // Якщо контролера немає - показуємо звичайний статичний спрайт
+        if (set.worldController == null)
+        {
+            SpriteClipPlayer.Stop(animator);
+            visual.sprite = unit.battleSprite;
+            return;
+        }
+
         // 1) Ворог мертвий - показуємо смерть
         if (hp <= 0)
         {
@@ -84,7 +95,7 @@ public sealed class EnemySpriteAnimation : MonoBehaviour
                 deathStarted = clock;
             }
             float deathProgress = (clock - deathStarted) / Mathf.Max(0.1f, deathDuration);
-            visual.sprite = set.At(SpritePose.Death, deathProgress, unit.battleSprite);
+            SpriteClipPlayer.Sample(animator, set.worldController, "Death", deathProgress);
             return;
         }
 
@@ -94,7 +105,7 @@ public sealed class EnemySpriteAnimation : MonoBehaviour
         if (clock < hurtUntil)
         {
             float hurtProgress = 1 - (hurtUntil - clock) / Mathf.Max(0.05f, hurtDuration);
-            visual.sprite = set.At(SpritePose.Hurt, hurtProgress, unit.battleSprite);
+            SpriteClipPlayer.Sample(animator, set.worldController, "Hurt", hurtProgress);
             return;
         }
 
@@ -110,10 +121,11 @@ public sealed class EnemySpriteAnimation : MonoBehaviour
         // Коли стоїть - один статичний кадр (анімації "стоїть" немає)
         if (moving)
         {
-            visual.sprite = set.Loop(SpritePose.Move, clock, unit.battleSprite);
+            SpriteClipPlayer.Loop(animator, set.worldController, "Move");
         }
         else
         {
+            SpriteClipPlayer.Stop(animator);
             visual.sprite = unit.battleSprite;
         }
     }

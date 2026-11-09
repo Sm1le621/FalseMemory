@@ -24,6 +24,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 225decfe924ca0a40a2f3ce1a465c42e, type: 3}
   - {fileID: 21300000, guid: 13a4a7a243b3f944895ed27793a774b0, type: 3}
   - {fileID: 21300000, guid: 3d2c1a979df2fac4e88abe406f259be3, type: 3}
+  effectController: {fileID: 9100000, guid: f78fdf31284bfd6329329b3fc65c0939, type: 2}
+  frameCount: 8
   frameSize: 128
   duration: 0.6
   particleCount: 12

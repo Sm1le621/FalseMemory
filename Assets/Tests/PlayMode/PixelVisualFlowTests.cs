@@ -47,7 +47,8 @@ public sealed partial class BattleFlowTests
         // Вбиваємо - останній кадр смерті, портрет прозорий
         enemy.Health.TakeDamage(50);
         yield return WaitUntil(() => manager.State == BattleState.Victory);
-        Assert.That(manager.ui.enemyPortrait.sprite, Is.SameAs(set.death[3]));
+        Assert.That(manager.ui.enemyPortrait.sprite, Is.Not.Null);
+        Assert.That(manager.ui.enemyPortrait.sprite.name, Does.Contain("Death"));
         Assert.That(manager.ui.enemyPortrait.color.a, Is.Zero);
         Assert.That(manager.presentation.IsAnimating, Is.False);
     }

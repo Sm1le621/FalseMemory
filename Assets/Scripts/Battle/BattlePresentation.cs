@@ -48,6 +48,9 @@ public sealed class BattlePresentation : MonoBehaviour
 
     private BattleUnit player;
     private BattleUnit enemy;
+    // Animator-и портретів. Додаються у грі, тому сцени не змінюються.
+    private Animator playerPortraitAnimator;
+    private Animator enemyPortraitAnimator;
     // true - вже запам'ятали позиції портретів
     private bool bound;
     // Хто зараз атакує (щоб показувати кадри атаки)
@@ -166,6 +169,11 @@ public sealed class BattlePresentation : MonoBehaviour
 
         if (unit != null && unit.IsAlive && portrait != null)
         {
+            // Вимкнути Animator, інакше він переб'є статичний спрайт
+            if (unit.visualAnimations != null)
+            {
+                SpriteClipPlayer.Stop(GetPortraitAnimator(onPlayer));
+            }
             portrait.sprite = unit.battleSprite;
         }
     }
@@ -178,8 +186,39 @@ public sealed class BattlePresentation : MonoBehaviour
 
         if (unit != null && portrait != null && unit.visualAnimations != null)
         {
-            portrait.sprite = unit.visualAnimations.At(pose, progress, unit.battleSprite);
+            SpriteClipPlayer.Sample(
+                GetPortraitAnimator(onPlayer),
+                unit.visualAnimations.portraitController,
+                pose.ToString(),
+                progress);
         }
+    }
+
+    // Animator портрета; створюється один раз при першій анімації
+    private Animator GetPortraitAnimator(bool onPlayer)
+    {
+        if (onPlayer)
+        {
+            if (playerPortraitAnimator == null)
+            {
+                Image portrait = GetPortrait(true);
+                if (portrait != null)
+                {
+                    playerPortraitAnimator = SpriteClipPlayer.GetAnimator(portrait.gameObject);
+                }
+            }
+            return playerPortraitAnimator;
+        }
+
+        if (enemyPortraitAnimator == null)
+        {
+            Image portrait = GetPortrait(false);
+            if (portrait != null)
+            {
+                enemyPortraitAnimator = SpriteClipPlayer.GetAnimator(portrait.gameObject);
+            }
+        }
+        return enemyPortraitAnimator;
     }
 
     // Перша половина дії: замах / підготовка

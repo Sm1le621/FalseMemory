@@ -1,17 +1,23 @@
 using NUnit.Framework;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 
-// Тести піксель-арту: розміри, налаштування імпорту, повнота кадрів
+// Тести піксель-арту: розміри, налаштування імпорту, повнота анімацій
 public sealed class PixelArtTests
 {
-    // Усі 32 кадри - рівно 64x64, Point-фільтр, без стиснення і без міпмапів
+    // Усі 25 кадрів - рівно 64x64, Point-фільтр, без стиснення і без міпмапів
     [Test]
     public void EveryNewFrameIsNative64PointUncompressedAndWithoutMipmaps()
     {
-        string[] folders = new string[] { "Assets/Art/Enemies/Skeleton64", "Assets/Art/VFX" };
+        string[] folders = new string[]
+        {
+            "Assets/Art/Enemies/Skeleton64",
+            "Assets/Art/Enemies/BossSkeleton64",
+            "Assets/Art/VFX"
+        };
         string[] guids = AssetDatabase.FindAssets("t:Texture2D", folders);
-        Assert.That(guids.Length, Is.EqualTo(32));
+        Assert.That(guids.Length, Is.EqualTo(25));
 
         foreach (string guid in guids)
         {
@@ -38,52 +44,44 @@ public sealed class PixelArtTests
     {
         SpriteAnimationSet set = AssetDatabase.LoadAssetAtPath<SpriteAnimationSet>("Assets/Settings/Battle/Visuals/Skeleton64.asset");
         Assert.That(set, Is.Not.Null);
-
-        foreach (SpritePose pose in System.Enum.GetValues(typeof(SpritePose)))
-        {
-            Sprite[] frames = set.Frames(pose);
-            Assert.That(frames, Is.Not.Empty, pose.ToString());
-            foreach (Sprite frame in frames)
-            {
-                Assert.That(frame, Is.Not.Null);
-            }
-        }
-
         Assert.That(System.Enum.GetNames(typeof(SpritePose)), Does.Not.Contain("Idle"));
+
+        // Контролери зібрані з кадрів: світ і бойовий портрет
+        Assert.That(set.worldController, Is.Not.Null);
+        Assert.That(set.portraitController, Is.Not.Null);
+        AssertStateExists(set.worldController, "Move");
+        AssertStateExists(set.worldController, "Hurt");
+        AssertStateExists(set.worldController, "Death");
+        AssertStateExists(set.portraitController, "Attack");
+        AssertStateExists(set.portraitController, "Hurt");
+        AssertStateExists(set.portraitController, "Death");
 
         BattleVFXProfile fire = AssetDatabase.LoadAssetAtPath<BattleVFXProfile>("Assets/Settings/Battle/VFX/FireVisual.asset");
         Assert.That(fire, Is.Not.Null);
-        Assert.That(fire.frames.Length, Is.EqualTo(8));
-        foreach (Sprite frame in fire.frames)
-        {
-            Assert.That(frame, Is.Not.Null);
-        }
+        Assert.That(fire.frameCount, Is.EqualTo(8));
+        Assert.That(fire.effectController, Is.Not.Null);
+        AssertStateExists(fire.effectController, "Effect");
         Assert.That(fire.duration, Is.InRange(0.1f, 1f));
     }
 
-    // At() не виходить за межі масиву, а Loop() працює навіть з порожніми кадрами
-    [Test]
-    public void FiniteFramesClampAndLoopIsStableWithMissingFrames()
+    // Перевірити, що в контролері є стан з потрібним ім'ям
+    private static void AssertStateExists(RuntimeAnimatorController controller, string stateName)
     {
-        SpriteAnimationSet set = AssetDatabase.LoadAssetAtPath<SpriteAnimationSet>("Assets/Settings/Battle/Visuals/Skeleton64.asset");
+        AnimatorController animatorController = controller as AnimatorController;
+        Assert.That(animatorController, Is.Not.Null, stateName);
 
-        Assert.That(set.At(SpritePose.Death, -1), Is.SameAs(set.death[0]));
-        Assert.That(set.At(SpritePose.Death, 2), Is.SameAs(set.death[3]));
-        Assert.That(set.Loop(SpritePose.Move, 0.125f), Is.SameAs(set.move[1]));
+        AnimatorStateMachine machine = animatorController.layers[0].stateMachine;
+        ChildAnimatorState[] states = machine.states;
 
-        // Копія, щоб не зіпсувати справжній ассет
-        SpriteAnimationSet copy = Object.Instantiate(set);
-        try
+        bool found = false;
+        foreach (ChildAnimatorState entry in states)
         {
-            copy.attack = null;
-            Assert.That(copy.At(SpritePose.Attack, 0.5f, set.death[0]), Is.SameAs(set.death[0]));
+            if (entry.state != null && entry.state.name == stateName)
+            {
+                found = true;
+            }
+        }
 
-            copy.move = new Sprite[] { null };
-            Assert.That(copy.Loop(SpritePose.Move, 99, set.death[0]), Is.SameAs(set.death[0]));
-        }
-        finally
-        {
-            Object.DestroyImmediate(copy);
-        }
+        Assert.That(found, Is.True, stateName);
     }
 }

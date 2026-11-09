@@ -2,21 +2,22 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Програє візуальні ефекти (вогонь, лікування) поверх портретів.
-// Використовує вже готові картинки зі сцени - тут нічого не створюється і не видаляється.
+// Програє візуальні ефекти (вогонь) поверх портретів.
+// Кадри ефекту лежать у .anim кліпі, частинки рухаються кодом.
 [DisallowMultipleComponent]
 public sealed class BattleVFXController : MonoBehaviour
 {
     public BattleUI ui;
-    // Ефекти за замовчуванням (якщо в заклинання/предмета немає свого)
+    // Ефект за замовчуванням (якщо в заклинання немає свого)
     public BattleVFXProfile fireProfile;
-    public BattleVFXProfile healProfile;
 
     // Картинка для покадрової анімації
     [SerializeField] private Image frameImage;
     // Картинки-частинки
     [SerializeField] private Image[] particles = System.Array.Empty<Image>();
 
+    // Animator картинки ефекту (додається у грі)
+    private Animator frameAnimator;
     // Поточний ефект (корутина)
     private Coroutine effect;
 
@@ -34,8 +35,16 @@ public sealed class BattleVFXController : MonoBehaviour
     // Скільки частинок зараз видно
     public int ActiveParticles { get; private set; }
 
+    private void Awake()
+    {
+        if (frameImage != null)
+        {
+            frameAnimator = SpriteClipPlayer.GetAnimator(frameImage.gameObject);
+        }
+    }
+
     // Запустити ефект на гравці (onPlayer = true) або на ворогу
-    public void Play(bool onPlayer, BattleVFXProfile profile, Color fallback, bool healing)
+    public void Play(bool onPlayer, BattleVFXProfile profile, Color fallback)
     {
         if (!isActiveAndEnabled || ui == null)
         {
@@ -66,21 +75,14 @@ public sealed class BattleVFXController : MonoBehaviour
         // Якщо профіль не передали - беремо стандартний
         if (profile == null)
         {
-            if (healing)
-            {
-                profile = healProfile;
-            }
-            else
-            {
-                profile = fireProfile;
-            }
+            profile = fireProfile;
         }
 
-        effect = StartCoroutine(Animate(portrait, profile, fallback, healing));
+        effect = StartCoroutine(Animate(portrait, profile, fallback));
         EffectsPlayed = EffectsPlayed + 1;
     }
 
-    private IEnumerator Animate(Image portrait, BattleVFXProfile profile, Color fallback, bool healing)
+    private IEnumerator Animate(Image portrait, BattleVFXProfile profile, Color fallback)
     {
         // Скільки частинок є в сцені
         int available = 0;
@@ -95,15 +97,7 @@ public sealed class BattleVFXController : MonoBehaviour
         float radius = 42f;
         float size = 8f;
         Color color = fallback;
-        BattleVFXShape shape;
-        if (healing)
-        {
-            shape = BattleVFXShape.Orbit;
-        }
-        else
-        {
-            shape = BattleVFXShape.Rising;
-        }
+        BattleVFXShape shape = BattleVFXShape.Rising;
 
         if (profile != null)
         {
@@ -119,7 +113,7 @@ public sealed class BattleVFXController : MonoBehaviour
         int count = Mathf.Min(wantedCount, available);
 
         // Чи є покадрова анімація
-        bool animated = profile != null && profile.frames != null && profile.frames.Length > 0 && frameImage != null;
+        bool animated = profile != null && profile.effectController != null && frameImage != null;
         if (animated)
         {
             frameImage.color = Color.white;
@@ -152,11 +146,12 @@ public sealed class BattleVFXController : MonoBehaviour
         {
             float progress = t / duration;
 
-            // Покадрова анімація
+            // Покадрова анімація з .anim кліпа
             if (animated)
             {
-                CurrentFrame = Mathf.Min(profile.frames.Length - 1, Mathf.FloorToInt(progress * profile.frames.Length));
-                frameImage.sprite = profile.frames[CurrentFrame];
+                int frameCount = Mathf.Max(1, profile.frameCount);
+                CurrentFrame = Mathf.Min(frameCount - 1, Mathf.FloorToInt(progress * frameCount));
+                SpriteClipPlayer.Sample(frameAnimator, profile.effectController, "Effect", progress);
                 frameImage.enabled = frameImage.sprite != null;
                 frameImage.rectTransform.anchoredPosition = portrait.rectTransform.anchoredPosition +
                     Vector2.Scale(portrait.rectTransform.rect.size, Vector2.one * 0.5f - portrait.rectTransform.pivot);
@@ -229,6 +224,7 @@ public sealed class BattleVFXController : MonoBehaviour
 
         if (frameImage != null)
         {
+            SpriteClipPlayer.Stop(frameAnimator);
             frameImage.gameObject.SetActive(false);
         }
 

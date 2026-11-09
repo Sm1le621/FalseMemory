@@ -29,4 +29,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 69a6d316ea256604eb146799f77670df, type: 3}
   - {fileID: 21300000, guid: 4e96144f9417e9a4383b3f9791bc9d10, type: 3}
   - {fileID: 21300000, guid: 505866a88fabb1b4eb5bb3fcc4581265, type: 3}
+  worldController: {fileID: 9100000, guid: 85b3fc02f741e190cace41dfcdc61b2a, type: 2}
+  portraitController: {fileID: 9100000, guid: e590afda834a90d03bece650d5252353, type: 2}
   framesPerSecond: 8
