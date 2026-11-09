@@ -142,7 +142,6 @@ public sealed class BattleTransition : MonoBehaviour
         // Вимикаємо керування і AI на час бою
         Pause(player.GetComponent<PlayerController>());
         Pause(enemy.GetComponent<EnemyAI>());
-        Pause(enemy.GetComponent<EnemyAttack>());
 
         StopBody(player);
         StopBody(enemy);

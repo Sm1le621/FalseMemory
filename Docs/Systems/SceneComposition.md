@@ -54,7 +54,7 @@ Player                    SpriteRenderer, Rigidbody2D, Collider2D, Health, Battl
 Grid/Tilemap
 Bushs, Borders
 Enemy                     SpriteRenderer, Rigidbody2D, 2 Collider2D, Health, BattleUnit,
-                          EnemyAI, EnemyAttack (выключен), BattleEncounter,
+                          EnemyAI, BattleEncounter, EnemySpriteAnimation,
                           EnemySpriteAnimation
 Health                    Slider + Fill/HPText, ManaSlider + Fill/MPText, ManaHUD
 EventSystem
@@ -78,7 +78,7 @@ InventoryCanvas           Canvas + CanvasScaler + GraphicRaycaster
 - `EquipmentWeapon.slot = Weapon`, `EquipmentChest.slot = Chest`; у обоих `EquipmentSlotView` назначен `border` (`Outline`), `icon`, `background`, `slotLabel` и `owner`.
 - `ManaHUD` живёт на объекте `Health`, ссылается на `ManaSlider`, `MPText` и `BattleUnit` игрока. HP-текст/полоса и MP-текст/полоса читают те же `Health`/`BattleUnit`.
 - `PlayerController` в покое показывает `idleSprite = Idle1.ase` и выключает Animator. При движении Animator включается, получает `isMoving = true` и переходит между `Player_Walk`/`Player_Run` в `Assets/Player.controller`; структура контроллера существует в рабочей копии и не перестраивалась этой задачей.
-- `EnemySpriteAnimation` читает позицию и `Health`, меняя только `SpriteRenderer` по `SpriteAnimationSet` (`Skeleton64`); idle-кадров в наборе нет.
+- `EnemySpriteAnimation` читает позицию и `Health`, меняя только `SpriteRenderer` через клипы `SpriteAnimationSet` (`Skeleton64`); Animator добавляется в рантайме, idle-кадров в наборе нет.
 - Объектов `TestLoot`, `InteractionPrompt`, `PickupNotification`, `CharacterPanel`, портрета и лишних слотов экипировки больше нет.
 - Вход в пещеру/дверь — объект с `BoxCollider2D` (`Is Trigger`) и `SceneTransition`; `targetSceneName = Dungeon`, `useSpawnPosition = true`, `spawnPosition = (0,0)`. В рабочей копии объект сохранён в `SampleScene.unity`.
 - `SceneTransition` не загружает сцену напрямую: он создаёт `SceneTransitionManager` и передаёт ему имя сцены и точку появления. Подробно — [SceneTransitionSystem](SceneTransitionSystem.md).
@@ -131,8 +131,8 @@ BattleManager              BattleManager, BattleUI, BattleHUD, BattlePresentatio
 
 - `BattleUI` содержит тексты, портреты, четыре кнопки команд и подписи, Back, `BattleResults`, `AbilityGlow/AbilityAmount`, `BattleHUD`, `BattleAudioController`.
 - `BattleHUD` содержит три `Slider` (HP/MP игрока, HP врага), `SessionResources`, `LowHealth`, `MenuTitle`, `Controls`, `CommandRows` и `CanvasGroup` меню. `SessionResources` показывает только `DEFENDING`; счётчик предметов не выводится.
-- `BattlePresentation` двигает портреты, читает `SpriteAnimationSet` (`Skeleton64`) и `BattleUnit`, показывает `PlayerGuard`/`EnemyGuard`.
-- `BattleVFXController` использует `PixelSpellFrame` и 24 `BattleParticle*`; профили `FireVisual`/`HealVisual` — ScriptableObject. `HealVisual` остаётся, но заклинания Heal больше нет.
+- `BattlePresentation` двигает портреты, показывает клипы `SpriteAnimationSet` (`Skeleton64`) через Animator и `BattleUnit`, отображает `PlayerGuard`/`EnemyGuard`.
+- `BattleVFXController` использует `PixelSpellFrame` и 24 `BattleParticle*`; профиль `FireVisual` — ScriptableObject с клипом `Effect`. `HealVisual` и кадры Heal удалены.
 - `BattleManager` — единственный владелец хода, урона, MP, предметов и исхода; UI/анимации только отображают результат. Наград EXP нет.
 
 ## 6. Полный поток
@@ -150,7 +150,7 @@ BattleManager              BattleManager, BattleUI, BattleHUD, BattlePresentatio
 - Текст и подписи — прямо в TMP-компонентах сцены, по-английски.
 - Позиции/размеры/цвета UI — в сцене, без Build-кода.
 - Новые VFX — новый `BattleVFXProfile`; частицы/кадр уже есть в `VFXLayer`.
-- Новые позы/кадры — `SpriteAnimationSet` и PNG 64×64.
+- Новые позы/кадры — PNG 64×64, затем `SpriteAnimationAssetBuilder` собирает клипы и контролеры для `SpriteAnimationSet`.
 - Новые команды боя — кнопка в `CommandRows`, ссылка в `BattleUI.commandButtons/commandLabels`, обработка в `BattleManager`.
 - Новый предмет — ScriptableObject `ItemData`/`BattleConsumable`, добавить в `startingItems` или получить по сюжету (подбора с земли нет).
 

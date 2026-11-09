@@ -5007,7 +5007,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: FalseMemory.Runtime::BattleVFXController
   ui: {fileID: 1312204532}
   fireProfile: {fileID: 11400000, guid: 50bbdb9fdb40ef34cb2b130b1d0e7a76, type: 2}
-  healProfile: {fileID: 11400000, guid: 90bc4cd280d693041a136634db341cc0, type: 2}
   frameImage: {fileID: 999649182}
   particles:
   - {fileID: 1883626667}

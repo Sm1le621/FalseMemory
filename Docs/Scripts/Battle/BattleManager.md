@@ -34,7 +34,7 @@
 
 ## 5. Связи
 
-Требуются `BattleUI` и активный `BattleTransition` в сцене мира. `BattleUI` принимает ввод, `BattleHUD`/`BattlePresentation`/`BattleVFXController` показывают бой, `BattleAudioController` проигрывает звуки. `BattleCalculator` считает урон и шансы, `BattleAbilities` проверяет и применяет магию, `BattleTurnOrder` строит очередь, `EnemyBattleAI` выбирает действие врага. HP принадлежит `Health`, MP — `BattleUnit`, предметы — `BattleInventory`.
+Требуются `BattleUI` и активный `BattleTransition` в сцене мира. `BattleUI` принимает ввод, `BattleHUD`/`BattlePresentation`/`BattleVFXController` показывают бой, `BattleAudioController` проигрывает звуки. После успешного заклинания менеджер вызывает `vfx.Play(target == Player, spell.visualEffect, spell.effectColor)`. `BattleCalculator` считает урон и шансы, `BattleAbilities` проверяет и применяет магию, `BattleTurnOrder` строит очередь, `EnemyBattleAI` выбирает действие врага. HP принадлежит `Health`, MP — `BattleUnit`, предметы — `BattleInventory`.
 
 ## 6. Пример
 
@@ -50,6 +50,7 @@
 
 ## 9. История изменений
 
+- 2026-11-10 — вызов `BattleVFXController.Play` приведён к сигнатуре без параметра `healing`.
 - 2026-10-31 — документ приведён к упрощённой версии: четыре команды без Items, магия только с уроном, без EXP/уровней/наград; победа просто завершает бой.
 - 2026-10-12 — английский игровой текст и строковые ключи; запись историческая, `GameText` удалён.
 - 2026-10-11 — визуальные паузы, окно результата, звук и VFX; основы боя сохранены.

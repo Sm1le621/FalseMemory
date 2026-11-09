@@ -14,13 +14,13 @@
 
 - `PlayerController`, `Rigidbody2D`, `Collider2D`, `SpriteRenderer`, `Animator`.
 - `WorldInputGate`, `InventoryWindow`.
-- `EnemyAI`, `EnemyAttack`, `BattleEncounter`, `EnemySpriteAnimation`.
+- `EnemyAI`, `BattleEncounter`, `EnemySpriteAnimation`.
 - `BattleTransition`, `CameraFollow`.
 - `SceneTransition`, `SceneTransitionManager`.
 
 ## 4. Взаимодействие скриптов
 
-`InventoryWindow.Open` захватывает `WorldInputGate`; `Close` отпускает. `BattleEncounter` вызывает `BattleTransition`; тот выключает `PlayerController`, `EnemyAI` и `EnemyAttack`, а после боя восстанавливает. `EnemySpriteAnimation` читает позицию и HP, но не управляет AI и боем. `SceneTransition` проверяет состояние `BattleTransition` и передаёт переход менеджеру.
+`InventoryWindow.Open` захватывает `WorldInputGate`; `Close` отпускает. `BattleEncounter` вызывает `BattleTransition`; тот выключает `PlayerController` и `EnemyAI`, а после боя восстанавливает. `EnemySpriteAnimation` читает позицию и HP и показывает клипы, но не управляет AI и боем. `SceneTransition` проверяет состояние `BattleTransition` и передаёт переход менеджеру.
 
 ## 5. Последовательность событий
 
@@ -44,6 +44,7 @@ NPC/сундуки/диалоги отсутствуют; для них потр
 
 ## История
 
+- 2026-11-10 — удалён устаревший `EnemyAttack`; визуал врага работает через `.anim`-клипы.
 - 2026-11-09 — добавлен переход в `Dungeon` через `SceneTransition`/`SceneTransitionManager`; Player и HP/MP HUD переносятся без копирования.
 - 2026-11-02 — параметр `isMoving` теперь выставляется при движении; в рабочей копии Player.controller использует `Player_Idle`/`Player_Walk`/`Player_Run`, в покое по-прежнему показывается статичный `Idle1.ase`.
 - 2026-10-31 — удалены подбор предметов, `PlayerInteractor`, `WorldItemPickup` и IDLE-анимация; инвентарь стал единственным источником предметов.

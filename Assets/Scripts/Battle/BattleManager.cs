@@ -233,7 +233,7 @@ public sealed class BattleManager : MonoBehaviour
 
                         if (vfx != null)
                         {
-                            vfx.Play(target == Player, pendingSpell.visualEffect, pendingSpell.effectColor, false);
+                            vfx.Play(target == Player, pendingSpell.visualEffect, pendingSpell.effectColor);
                         }
                     }
                 }

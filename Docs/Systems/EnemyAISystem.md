@@ -6,19 +6,18 @@
 
 ## 2. Общая логика
 
-`EnemyAI` реагирует на игрока в радиусе обнаружения и двигается к нему. `BattleEncounter` запускает бой физическим касанием. На время боя `BattleTransition` выключает `EnemyAI` и `EnemyAttack`; после побега возвращает управление с временной защитой. `EnemyBattleAI` с шансом `enemyDefendChance` выбирает Defend, иначе Attack.
+`EnemyAI` реагирует на игрока в радиусе обнаружения и двигается к нему. `BattleEncounter` запускает бой физическим касанием. На время боя `BattleTransition` выключает `EnemyAI`; после побега возвращает управление с временной защитой. `EnemyBattleAI` с шансом `enemyDefendChance` выбирает Defend, иначе Attack.
 
 ## 3. Основные компоненты
 
 - `EnemyAI` — преследование.
 - `BattleEncounter` — запуск встречи.
-- `EnemyAttack` — устаревший контактный урон (пропускается при `BattleEncounter`).
 - `EnemyBattleAI` — боевое решение.
 - `BattleTransition`, `BattleRules`.
 
 ## 4. Взаимодействие скриптов
 
-`BattleTransition.TryBegin` выключает `EnemyAI`/`EnemyAttack` и останавливает тело. `BattleManager` вызывает `EnemyBattleAI.Choose(rules, random)` в ход врага. `EnemySpriteAnimation` отражает движение и показывает Hurt/Death, не влияя на AI.
+`BattleTransition.TryBegin` выключает `EnemyAI` и останавливает тело. `BattleManager` вызывает `EnemyBattleAI.Choose(rules, random)` в ход врага. `EnemySpriteAnimation` отражает движение и показывает клипы Hurt/Death через Animator, не влияя на AI.
 
 ## 5. Последовательность событий
 
@@ -30,7 +29,7 @@
 
 ## 7. Использование в Unity
 
-Enemy требует `Rigidbody2D`, коллайдер обнаружения и физический `Collider2D`, `Health`, `BattleUnit`, `BattleEncounter`. Тег Player должен совпадать. `EnemyAttack` в текущей сцене выключен.
+Enemy требует `Rigidbody2D`, коллайдер обнаружения и физический `Collider2D`, `Health`, `BattleUnit`, `BattleEncounter`. Тег Player должен совпадать. Устаревший `EnemyAttack` удалён из проекта.
 
 ## 8. Расширение
 
@@ -42,5 +41,6 @@ Enemy требует `Rigidbody2D`, коллайдер обнаружения и
 
 ## История
 
+- 2026-11-10 — удалён `EnemyAttack`; анимация врага переведена на `.anim`-клипы.
 - 2026-10-31 — убраны упоминания награды EXP; AI по-прежнему выбирает только Attack/Defend.
 - 2026-10-11 — базовая документация AI.

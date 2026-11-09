@@ -13,7 +13,7 @@
 - `Health` — единственный владелец HP.
 - `BattleUnit` — боевые характеристики и MP, требует `Health`.
 - `BattleHUD`, `BattleUI`, `ManaHUD`, `InventoryWindow` — отображение.
-- `BattleAbilities`, `EnemyAttack`, `BattleManager` — источники урона/лечения.
+- `BattleAbilities`, `BattleManager`, `WorldItemUseController` — источники урона/лечения.
 
 ## 4. Взаимодействие скриптов
 
@@ -41,5 +41,6 @@
 
 ## История
 
+- 2026-11-10 — из списка источников урона удалён устаревший `EnemyAttack`.
 - 2026-10-31 — удалён `SetMaximumHealth`, HP больше не растёт от уровней.
 - 2026-10-11 — базовая система HP.

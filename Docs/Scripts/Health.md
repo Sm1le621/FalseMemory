@@ -28,7 +28,7 @@
 
 ## 5. Связи
 
-`BattleUnit` требует `Health` через `[RequireComponent(typeof(Health))]`. `BattleAbilities`, `BattleManager`, `EnemyAttack` и `WorldItemUseController` вызывают урон/лечение. `BattleUnit.IsAlive`, `BattleUI`, `BattleHUD`, `InventoryWindow` и `EnemySpriteAnimation` читают HP. `Health` не знает о мане — ею владеет `BattleUnit`.
+`BattleUnit` требует `Health` через `[RequireComponent(typeof(Health))]`. `BattleAbilities`, `BattleManager` и `WorldItemUseController` вызывают урон/лечение. `BattleUnit.IsAlive`, `BattleUI`, `BattleHUD`, `InventoryWindow` и `EnemySpriteAnimation` читают HP. `Health` не знает о мане — ею владеет `BattleUnit`.
 
 ## 6. Пример
 
@@ -44,6 +44,7 @@
 
 ## 9. История изменений
 
+- 2026-11-10 — удалён устаревший `EnemyAttack`; список источников урона обновлён.
 - 2026-11-08 — описание сверено с текущим кодом после упрощения (коммит c15d100).
 - 2026-10-31 — удалён `SetMaximumHealth` и связь с ростом уровней; документ приведён к текущей модели без EXP.
 - 2026-10-11 — базовая документация HP.
