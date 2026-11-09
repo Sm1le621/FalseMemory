@@ -13,8 +13,8 @@
 - Player должен иметь тег `Player`, `Rigidbody2D` и `Collider2D`.
 - В `Dungeon` ничего добавлять не нужно. Там должна быть камера; если у неё нет `CameraFollow`, `SceneTransitionManager` добавит компонент в рантайме.
 - Менеджер создаётся автоматически при первом переходе. Вручную добавлять `SceneTransitionManager` в сцену не требуется.
-- Перед Play Mode сохраните `SampleScene`: изменения, сделанные только в открытом Editor, не попадут в файл сцены.
-- Если в `Dungeon` позже появится собственный Player, HUD, Canvas, EventSystem, `BattleTransition` или Global Light 2D, менеджер удалит их как дубликаты и оставит перенесённые объекты.
+- В рабочей копии триггер уже сохранён в `SampleScene`. После новых правок сцены сохраняйте её перед Play Mode.
+- Окружение `Dungeon` (`Grid`, `Rocks`) менеджер не изменяет. Если в `Dungeon` позже появится собственный Player, HUD, Canvas, EventSystem, `BattleTransition` или Global Light 2D, менеджер удалит их как дубликаты и оставит перенесённые объекты.
 
 ## Player в SampleScene
 

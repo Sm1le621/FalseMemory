@@ -42,7 +42,7 @@
 
 В `SampleScene` у входа в пещеру должен лежать объект с `BoxCollider2D` (Is Trigger) и `SceneTransition`. Игрок подходит и касается триггера. Скрипт проверяет тег, вызывает менеджер, и после загрузки `Dungeon` игрок появляется в точке `(0, 0)` с теми же HP/MP, инвентарём и экипировкой.
 
-На диске в сохранённом `SampleScene.unity` этого объекта пока нет: он добавлен в открытом Editor и должен быть сохранён перед Play Mode.
+В рабочей копии объект сохранён в `SampleScene.unity` с настройками `targetSceneName = Dungeon`, `useSpawnPosition = true`, `spawnPosition = (0,0)`.
 
 ## 7. Настройка в Unity
 

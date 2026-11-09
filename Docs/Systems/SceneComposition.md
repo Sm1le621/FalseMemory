@@ -80,22 +80,25 @@ InventoryCanvas           Canvas + CanvasScaler + GraphicRaycaster
 - `PlayerController` в покое показывает `idleSprite = Idle1.ase` и выключает Animator. При движении Animator включается, получает `isMoving = true` и переходит между `Player_Walk`/`Player_Run` в `Assets/Player.controller`; структура контроллера существует в рабочей копии и не перестраивалась этой задачей.
 - `EnemySpriteAnimation` читает позицию и `Health`, меняя только `SpriteRenderer` по `SpriteAnimationSet` (`Skeleton64`); idle-кадров в наборе нет.
 - Объектов `TestLoot`, `InteractionPrompt`, `PickupNotification`, `CharacterPanel`, портрета и лишних слотов экипировки больше нет.
-- Вход в пещеру/дверь — объект с `BoxCollider2D` (`Is Trigger`) и `SceneTransition`; `targetSceneName = Dungeon`, `useSpawnPosition = true`, `spawnPosition = (0,0)`. На диске в сохранённом `SampleScene.unity` этого объекта пока нет: он добавлен в открытом Editor и должен быть сохранён владельцем.
+- Вход в пещеру/дверь — объект с `BoxCollider2D` (`Is Trigger`) и `SceneTransition`; `targetSceneName = Dungeon`, `useSpawnPosition = true`, `spawnPosition = (0,0)`. В рабочей копии объект сохранён в `SampleScene.unity`.
 - `SceneTransition` не загружает сцену напрямую: он создаёт `SceneTransitionManager` и передаёт ему имя сцены и точку появления. Подробно — [SceneTransitionSystem](SceneTransitionSystem.md).
 
 ## 4. Сцена Dungeon (целевая сцена перехода)
 
-Сохранённый файл `Assets/Scenes/Dungeon.unity` содержит только камеру. Player, HP/MP HUD, инвентарь, EventSystem, `BattleTransition` и Global Light 2D появляются в ней в рантайме — их переносит `SceneTransitionManager`.
+В рабочей копии сохранённый файл `Assets/Scenes/Dungeon.unity` содержит камеру, сетку и декоративные камни. Player, HP/MP HUD, инвентарь, EventSystem, `BattleTransition` и Global Light 2D появляются в ней в рантайме — их переносит `SceneTransitionManager`.
 
 ```
 Main Camera
+Grid
+Rocks                     21 экземпляр rock_obj
 ```
 
 Связи:
 
 - `Dungeon` добавлена в Build Profiles → Scene List; без этого `SceneTransitionManager` не начнёт загрузку.
 - Камера `Dungeon` получает `CameraFollow` в рантайме, если компонента нет; цель — перенесённый Player.
-- Собственных Player/HUD/Canvas в сцене нет, поэтому удалять дубликаты не требуется. Если их добавить, менеджер удалит их при входе.
+- `Grid` и `Rocks` — окружение сцены. Менеджер их не трогает: он удаляет только собственные Player/HUD/Canvas/EventSystem/`BattleTransition`/Global Light 2D, если они появятся.
+- Собственных Player/HUD/Canvas в сцене нет, поэтому удалять дубликаты не требуется.
 - Обратного триггера в `Dungeon` пока нет; возврат в `SampleScene` потребует отдельного объекта с `SceneTransition`.
 
 ## 5. Сцена BattleScene (бой)

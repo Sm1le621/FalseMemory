@@ -26,7 +26,7 @@
 
 **BattleScene** содержит собственную камеру, освещение, EventSystem, `BattleManager` и `BattleUI` с сохранённым Canvas. Бой отображает тех же `Player`/`Enemy` из мира и не копирует здоровье игрока. `BattleHUD` оформляет характеристики, полосы и меню, не изменяя ресурсы. Canvas использует Scale With Screen Size 960×540, match 1.
 
-**Dungeon** — целевая сцена перехода. Сохранённый файл содержит только `Main Camera`; Player, HP/MP HUD, инвентарь, EventSystem, `BattleTransition` и Global Light 2D переносятся в неё в рантайме из `SampleScene`. `SceneTransition` на входе в пещеру вызывает `SceneTransitionManager`; тот загружает `Dungeon` через `LoadSceneMode.Single`, удаляет возможные дубликаты и привязывает камеру к Player через `CameraFollow`.
+**Dungeon** — целевая сцена перехода. В рабочей копии сохранённый файл содержит `Main Camera`, `Grid` и декоративные `Rocks`; Player, HP/MP HUD, инвентарь, EventSystem, `BattleTransition` и Global Light 2D переносятся в неё в рантайме из `SampleScene`. Окружение `Dungeon` менеджер не изменяет. `SceneTransition` на входе в пещеру вызывает `SceneTransitionManager`; тот загружает `Dungeon` через `LoadSceneMode.Single`, удаляет возможные дубликаты и привязывает камеру к Player через `CameraFollow`.
 
 Все четыре сцены включены в Build Profiles. Физическая встреча запускает бой; прямой запуск `BattleScene` без встречи показывает вспомогательное меню. Изменения входа в пещеру в открытом Editor должны быть сохранены в `SampleScene`, иначе на диске триггера не будет.
 
