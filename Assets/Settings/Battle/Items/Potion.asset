@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item.potion
   displayName: Potion
   description: Restores up to 30 HP. Cannot revive a fallen character.
-  icon: {fileID: 21300000, guid: 3bf3feb6347ab7d4ba922bd774eeb508, type: 3}
+  icon: {fileID: -3684325291367006116, guid: 365cb3d072a44644f8c79060acf3f479, type: 3}
   category: 0
   stackable: 1
   maxStack: 99

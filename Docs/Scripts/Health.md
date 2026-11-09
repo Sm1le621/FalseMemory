@@ -28,7 +28,7 @@
 
 ## 5. Связи
 
-Требуется `BattleUnit` (через `RequireComponent` у `BattleUnit`). `BattleAbilities`, `BattleManager`, `EnemyAttack` и `WorldItemUseController` вызывают урон/лечение. `BattleUnit.IsAlive`, `BattleUI`, `BattleHUD`, `ManaHUD` и `InventoryWindow` читают HP. `Health` не знает о мане — ею владеет `BattleUnit`.
+`BattleUnit` требует `Health` через `[RequireComponent(typeof(Health))]`. `BattleAbilities`, `BattleManager`, `EnemyAttack` и `WorldItemUseController` вызывают урон/лечение. `BattleUnit.IsAlive`, `BattleUI`, `BattleHUD`, `InventoryWindow` и `EnemySpriteAnimation` читают HP. `Health` не знает о мане — ею владеет `BattleUnit`.
 
 ## 6. Пример
 
@@ -40,9 +40,10 @@
 
 ## 8. Возможные проблемы
 
-Прямая запись `currentHealth` не обновляет UI. `Heal` не воскрешает мёртвого. `TakeDamage` с отрицательным значением лечит. HP сбрасывается при повторном запуске сцены, но не при переходе в бой. Нет событий изменения HP — UI опрашивает значения каждый кадр.
+Прямая запись `currentHealth` не обновляет UI. `Heal` не воскрешает мёртвого. `TakeDamage` с отрицательным значением лечит. HP сбрасывается при повторном запуске сцены, но не при переходе в бой. Событий изменения HP нет: `UpdateUI` вызывается только из `Start`, `TakeDamage` и `Heal`, а не каждый кадр.
 
 ## 9. История изменений
 
+- 2026-11-08 — описание сверено с текущим кодом после упрощения (коммит c15d100).
 - 2026-10-31 — удалён `SetMaximumHealth` и связь с ростом уровней; документ приведён к текущей модели без EXP.
 - 2026-10-11 — базовая документация HP.

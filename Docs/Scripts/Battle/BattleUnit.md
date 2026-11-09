@@ -19,7 +19,7 @@
 - `Defend()` — включает `IsDefending` до следующего `BeginTurn`.
 - `ResetBattleState()` — снимает защиту при входе/выходе из боя; HP/MP/инвентарь не трогает.
 - `Health` → `Health`; `Inventory` → `BattleInventory`; `Equipment` → `EquipmentController`.
-- `EffectiveAttack`/`EffectiveDefense` — база плюс бонусы экипировки с насыщением `int.MaxValue`.
+- `EffectiveAttack`/`EffectiveDefense` — база плюс `EquipmentBonuses` (приватная сумма `attack`/`defense` надетых предметов) с насыщением `int.MaxValue`.
 - `EffectiveMagicAttack`/`EffectiveMagicDefense` — текущие базовые `magicAttack`/`magicDefense`.
 - `Speed` → `speed`; `IsAlive` → `Health.currentHealth > 0`.
 - `MaxMP` → `maxMP`; `CurrentMP` → `currentMP`, ограниченный диапазоном `0..MaxMP`.
@@ -53,5 +53,6 @@ Fire стоит 8 MP. При старте у игрока 30 MP; после `Try
 
 ## 9. История изменений
 
+- 2026-11-09 — уточнён источник бонусов экипировки (`EquipmentBonuses`); описание сверено с кодом после упрощения.
 - 2026-10-31 — удалены EXP, уровни, `CharacterGrowthRules` и `localizationId`; магические характеристики больше не растут от уровня; добавлено пояснение о MP и защите.
 - 2026-10-12 — базовая версия с ростом и строками; запись историческая.

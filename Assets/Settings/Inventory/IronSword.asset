@@ -15,7 +15,7 @@ MonoBehaviour:
   id: item.iron_sword
   displayName: Iron Sword
   description: A plain iron sword, worn but reliable.
-  icon: {fileID: 21300000, guid: 130119ea6764f7941ab1510a78f6f914, type: 3}
+  icon: {fileID: 3287038575609840786, guid: f54cfadc8819b4a6ab28ebe47d242d41, type: 3}
   category: 1
   stackable: 0
   maxStack: 99

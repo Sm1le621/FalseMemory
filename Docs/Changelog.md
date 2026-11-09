@@ -1,5 +1,17 @@
 # История значимых изменений FalseMemory
 
+## 2026-11-09 — иконки предметов из Aseprite и сверка документации
+
+**Добавлено:** спрайты из `Assets/sword.ase`, `Assets/armor.ase`, `Assets/potion.ase` (32×32, Point, PPU 100, Aseprite importer) назначены в поле `icon` ассетов `IronSword`, `LeatherArmor`, `Potion`. Раньше там стояли временные PNG боевого UI (`AttackIcon`, `DefendIcon`, `ItemsIcon`).
+
+**Изменено:** в `AGENTS.md` добавлен раздел **Code Style Rules** — весь C#-код пишется простым стилем «уровня 3 курса», как после упрощения `c15d100` (без LINQ, рекурсии, сложных обобщений и «умных» однострочников). Документация сверена с текущим кодом: уточнены/дополнены `InventoryWindow`, `EnemyAttack`, `Health`, `BattlePresentation`, `BattleUnit`, `BattleCalculator`, `BattleTransition`, `InventoryState`, `PixelBattleAssetBuilder`, `Docs/Systems/InventorySystem`; в историях документов добавлены датированные записи.
+
+**Удалено:** временная editor-утилита `Assets/Editor/ItemIconSetup.cs` (и `.meta`) после однократного назначения иконок. Другого очевидного мёртвого кода статический анализ не выявил: приватные методы/поля используются, Unity-callbacks и `[RuntimeInitializeOnLoadMethod]` на месте, закомментированного кода и TODO нет.
+
+**Проверки:** Unity 6000.6.2f1 запущен в batchmode (`-executeMethod ItemIconSetup.Run`): импорт ассетов и компиляция всех скриптов прошли, **0 ошибок компиляции**, три предмета получили спрайты (`sword`, `armor`, `potion`), batchmode завершился успешно. Тесты и Play Mode не запускались. Визуальная приёмка иконок в инвентаре остаётся за владельцем.
+
+**Ограничения:** иконки предметов 32×32, а не 64×64 — это формат исходников владельца для UI-слотов; он зафиксирован в `Docs/Systems/InventorySystem.md`. После удаления временной утилиты повторное назначение иконок вручную делается через Inspector ассетов предметов.
+
 ## 2026-11-02 — исправление ходьбы Player и удаление мёртвого кода
 
 **Исправлено:** `PlayerController.SetWalking` теперь выставляет bool `isMoving` перед включением Animator. В рабочей копии `Assets/Player.controller` уже содержит `Player_Idle` (default), `Player_Walk`, `Player_Run` и переходы по `isMoving`; структура контроллера не перестраивалась. При отсутствии параметра код не пишет его и сохраняет прежнее включение Animator без предупреждений. При блокировке ввода (открыт инвентарь) контроллер вызывает `SetWalking(false)`, поэтому ходьба не продолжается за окном.

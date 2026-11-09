@@ -12,8 +12,7 @@
 
 ## 3. Методы и функции
 
-- `OnCollisionStay2D(Collision2D collision)` — Unity callback; наносит контактный урон только без `BattleEncounter` и только объекту с тегом `Player`.
-- `nextAttackTime` — внутренний таймер следующего удара.
+- `OnCollisionStay2D(Collision2D collision)` — Unity callback; наносит контактный урон только без `BattleEncounter` и только объекту с тегом `Player`. После удара записывает в `nextAttackTime` момент `Time.time + attackCooldown`.
 
 ## 4. Переменные и Inspector
 
@@ -23,7 +22,7 @@
 
 ## 5. Связи
 
-Требуются `Collider2D` без `Is Trigger` и, для цели, `Health` на объекте с тегом `Player`. `BattleEncounter` отключает этот компонент. `BattleTransition` выключает `EnemyAttack` на время боя.
+Требуются `Collider2D` без `Is Trigger` и, для цели, `Health` на объекте с тегом `Player`. `BattleEncounter` не выключает компонент, а служит для него признаком: если он есть на враге, `OnCollisionStay2D` сразу выходит и урон не наносится. `BattleTransition` временно выключает `EnemyAttack` на время боя.
 
 ## 6. Пример
 
@@ -39,5 +38,6 @@
 
 ## 9. История изменений
 
+- 2026-11-08 — описание сверено с текущим кодом после упрощения (коммит c15d100).
 - 2026-10-31 — документ приведён к текущему коду; подчёркнут приоритет `BattleEncounter`.
 - 2026-10-11 — базовая документация контактного урона.

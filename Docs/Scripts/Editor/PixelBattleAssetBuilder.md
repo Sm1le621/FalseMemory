@@ -20,6 +20,7 @@
 - `Skull`, `Bone`, `Sword`, `Shield` — примитивы сборки силуэта.
 - `Fire(int frame)` / `Heal(int frame)` → `Grid`; кадры VFX.
 - `Grid.Px/Rect/Line/Poly/Ellipse` — низкоуровневая отрисовка в массив 64×64.
+- `ApplyPixelArtSettings(string path)` / `SavePng(string path, Grid grid)` — private helpers; сохраняют PNG и включают Point-фильтр, отсутствие mipmaps/компрессии, PPU 100.
 - Константы `SkeletonRoot`, `VfxRoot` — пути вывода.
 
 ## 4. Переменные и Inspector
@@ -44,5 +45,6 @@ Inspector-полей нет. `Palette` — фиксированная палит
 
 ## 9. История изменений
 
+- 2026-11-09 — добавлены private helpers `ApplyPixelArtSettings`/`SavePng`; описание сверено с кодом после упрощения.
 - 2026-10-31 — из генератора/набора удалены IDLE-кадры; скелет содержит Move/Attack/Hurt/Death, проверка существующих файлов сохранена.
 - 2026-10-12 — базовая генерация пиксельной графики.

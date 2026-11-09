@@ -17,6 +17,7 @@
 - `ResolvePhysical(int attack,int defense,bool defending,BattleRules rules,float criticalChance,float missChance,IBattleRandom random)` → PhysicalAttackResult; после промаха не делает второй случайный запрос.
 - `MagicalDamage(int attack,int defense,int power,BattleRules rules)` → int: power+MATK×коэффициент−MDEF×коэффициент, минимум и потолок int.MaxValue.
 - `PhysicalDamage(int attack,int defense,bool defending,BattleRules rules)` → int обычного попадания; приватная перегрузка также получает criticalMultiplier. База=max(minimumDamage,ATK×множитель−DEF×множитель), затем крит/защита; округление вверх, минимум 1. Unity callbacks нет.
+- `Clamp01(float value)` — private helper; ограничивает значение диапазоном 0…1 (шансы побега/попадания и множитель защиты).
 
 ## 4. Переменные и параметры Inspector
 
@@ -39,6 +40,8 @@ ATK15 против DEF5 → 10; крит ×1.5 →15; крит при Defend×0.
 rules/random null вызывают ArgumentNullException в расчётах, поэтому ссылки обязательны. MISS имеет 0 урона, успешное попадание минимум 1. Числа Fire показывают расчётный урон, который может превышать оставшиеся HP цели. Формулы/seed/границы проверены тестами.
 
 ## 9. История изменений
+
+- 2026-11-09 — добавлен private helper `Clamp01`; описание сверено с кодом после упрощения.
 
 - 2026-10-11 — впервые документирован прочитанный текущий код рабочей копии. В задаче документации исходный C#-файл не изменялся.
 

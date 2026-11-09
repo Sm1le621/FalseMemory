@@ -19,6 +19,8 @@
 - `StaticFrame(bool onPlayer)` — показывает `battleSprite` живого участника; IDLE-кадра нет.
 - `PoseFrame(bool onPlayer, SpritePose pose, float progress)` — берёт кадр из `SpriteAnimationSet` с fallback на `battleSprite`.
 - `ReadPause(bool enemyThinking, float pace)` — coroutine паузы; длительность ограничена 0…2 с и масштабируется темпом.
+- `Pace(float delay)` — private helper; ускоряет задержку при включённом fast-forward (Space).
+- `GetUnit(bool onPlayer)` / `GetPortrait(bool onPlayer)` — private helpers; выбирают участника и его портрет по флагу.
 - `Windup(bool onPlayer, BattleAction action, float pace)` — coroutine подготовки действия; двигает портрет и меняет позу/цвет.
 - `Recover(bool attackerIsPlayer, bool successfulHit, bool critical, float pace)` — coroutine возврата атакующего и реакции цели; увеличивает `HitEffectsPlayed` при попадании.
 - `Finish(BattleState outcome, float pace)` — coroutine завершения: побег двигает портрет, смерть/поражение проявляет `Death`.
@@ -30,7 +32,7 @@
 
 - `ui` — ссылка на `BattleUI` с портретами.
 - `playerGuard`, `enemyGuard` — необязательные изображения щитов; показываются при `IsDefending`.
-- `attackDuration` (0…1, 0.4), `hitDuration` (0…1, 0.18), `outcomeDuration` (0…1, 0.35) — длительности фаз.
+- `attackDuration` (0…1, 0.4), `hitDuration` (0…1, 0.18), `outcomeDuration` (0…2, 0.35) — длительности фаз. Верхняя граница `outcomeDuration` в текущем коде равна 2, хотя внутри `Finish` длительность дополнительно ограничивается значением 1.
 - `lungeDistance` (≥0, 42), `reactionDistance` (≥0, 8) — смещения в пикселях.
 - `messageDuration` (0…2, 0.75), `enemyThinkDuration` (0…2, 0.5) — паузы.
 - `allowFastForward` (true), `fastForwardMultiplier` (1…6, 3) — ускорение по Space.
@@ -43,7 +45,7 @@
 
 ## 6. Пример
 
-Игрок выбирает Attack. `Windup` сдвигает портрет вправо и проигрывает кадры Attack. После попадания `Recover` возвращает портрет, показывает `Hurt` и отбрасывание цели. Если враг погиб, `Finish` проявляет `Death`; в покое портрет снова показывает один статичный `battleSprite`.
+Игрок выбирает Attack. `Windup` сдвигает портрет игрока влево (к врагу) и проигрывает кадры Attack. После попадания `Recover` возвращает портрет, показывает `Hurt` и отбрасывание цели. Если враг погиб, `Finish` проявляет `Death`; в покое портрет снова показывает один статичный `battleSprite`.
 
 ## 7. Настройка в Unity
 
@@ -55,5 +57,6 @@
 
 ## 9. История изменений
 
+- 2026-11-09 — добавлены private helpers `Pace`/`GetUnit`/`GetPortrait`; уточнён диапазон `outcomeDuration`; описание сверено с кодом после упрощения.
 - 2026-10-31 — удалена IDLE-анимация: в покое показывается статичный кадр; `SpritePose` сокращён до Move/Attack/Hurt/Death; удалены ссылки на лечение.
 - 2026-10-12 — базовая визуальная постановка боя.

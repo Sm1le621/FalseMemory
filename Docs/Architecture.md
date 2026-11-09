@@ -1,6 +1,6 @@
 # Архитектура FalseMemory
 
-Актуально на **2026-11-02**. Документ описывает текущую рабочую копию: упрощённый инвентарь без золота и цен, бой без EXP и вкладки Items, английский текст прямо в сценах и сценовую композицию UI.
+Актуально на **2026-11-09**. Документ описывает текущую рабочую копию: упрощённый инвентарь без золота и цен, бой без EXP и вкладки Items, английский текст прямо в сценах и сценовую композицию UI. C#-код пишется простым стилем «уровня 3 курса» (см. `AGENTS.md`, Code Style Rules).
 
 ## Структура проекта
 
@@ -11,6 +11,7 @@
 - `Assets/Scenes/` — `MainMenu`, `SampleScene`, `BattleScene`.
 - `Assets/Settings/Battle/` — `DefaultBattleRules`, `Fire`, `Potion`, визуальные профили и кадры.
 - `Assets/Settings/Inventory/` — `IronSword`, `LeatherArmor`.
+- `Assets/sword.ase`, `Assets/armor.ase`, `Assets/potion.ase` — исходники иконок предметов (32×32, Aseprite importer, Point, PPU 100).
 - `Assets/Tests/EditMode/` и `Assets/Tests/PlayMode/` — расчёты и интеграционные проверки.
 - `Assets/Editor/` — Editor-only инструмент сборки пиксельных боевых ассетов.
 - `Docs/` — документация; `AGENTS.md` — постоянные правила.
@@ -31,7 +32,7 @@
 - **Health** — единственный владелец HP (`maxHealth`, `currentHealth`) и обновления мирового HP-текста/полосы. `BattleUnit` и UI читают тот же компонент.
 - **BattleUnit** — физические и магические характеристики, текущие MP, флаг защиты и внешний вид боя. `EffectiveAttack`/`EffectiveDefense` добавляют бонусы экипировки к базовым полям, не изменяя их и не восстанавливая ресурсы. Уровней, EXP и growth нет.
 - **BattleInventory** — сессионный запас на объекте игрока. `InventoryState` — один массив на 30 слотов; `startingItems` служит стартовым seed и создаёт модель один раз. UI и бой не копируют количества.
-- **ItemData** — статическое определение предмета: `id`, имя, описание, иконка, категория, стопка, контекст использования, слот экипировки и бонусы `attack`/`defense`. `BattleConsumable` добавляет лечение и восстановление MP. Цен, валюты и редкости нет.
+- **ItemData** — статическое определение предмета: `id`, имя, описание, иконка, категория, стопка, контекст использования, слот экипировки и бонусы `attack`/`defense`. Иконки берутся из `sword.ase`/`armor.ase`/`potion.ase`. `BattleConsumable` добавляет лечение и восстановление MP. Цен, валюты и редкости нет.
 - **EquipmentState** — два надетых предмета (`Weapon`, `Chest`), атомарный обмен с `InventoryState`. `EquipmentController` связывает модель с окном; `BattleUnit.Effective*` читает сумму бонусов.
 - **InventoryWindow / InventorySlotView / EquipmentSlotView / InventoryTooltip** — 30 readonly-ячеек, выбор, drag, описание и два слота экипировки. Это представление, а не второй запас.
 - **WorldItemUseController** — применение расходуемого из инвентаря вне боя через общую `BattleAbilities`; повторный callback в том же кадре отклоняется.
