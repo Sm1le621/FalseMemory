@@ -1,11 +1,11 @@
 # Проверки текущего проекта
 
-Актуально на **2026-11-09**, рабочая копия после исправления ходьбы Player, удаления мёртвого кода и добавления перехода в `Dungeon`.
+Актуально на **2026-11-10**, рабочая копия после перевода анимаций и VFX на `.anim`-клипы, добавления модели босса и удаления мёртвого кода.
 
 ## Итог последней проверки
 
-- **EditMode: 58/58 passed**, 0 failed, 0 skipped. Результат: `Logs/EditModeResults.xml`.
-- **PlayMode: 37/37 passed**, 0 failed, 0 skipped. Результат: `Logs/PlayModeResults.xml`.
+- **EditMode: 57/57 passed**, 0 failed, 0 skipped. Прогон через временный `TestRunnerApi`-раннер (удалён после проверки).
+- **PlayMode: 37/37 passed**, 0 failed, 0 skipped. Тот же способ запуска.
 - Компиляция Unity завершается без ошибок.
 - Console после финальных прогонов: 0 ошибок, 0 предупреждений (кроме служебных Info-сообщений MCP/Unity AI).
 - Проверены сцены через MCP: `missingScripts = 0` в `SampleScene`, `BattleScene` и `MainMenu`; Player Animator использует `Player.controller` с параметром `isMoving`; `BattleUI.commandButtons/Labels` — 5/5; `BattleHUD.commandIcons` — 4; в `BattleScene` нет `previewPlayerSprite`/`previewEnemySprite`; ссылок на удалённые `PlayerAnimatorController`, `WorldItemPickup` и `Welcome` нет.
@@ -22,7 +22,7 @@
 - Экипировка: Weapon/Chest, атомарный обмен, сумма бонусов, неизменность базовых полей.
 - ItemData: категории, совместимость со слотом, `StackLimit`, отсутствие редкости.
 - Crit/miss, seed RNG, формула побега.
-- Пиксельные ассеты: реальные размеры 64×64, кадры и настройки импорта.
+- Пиксельные ассеты: 25 PNG реального размера 64×64, настройки импорта, наличие состояний в Animator-контролерах.
 
 ## Что проверяет PlayMode
 
@@ -33,8 +33,8 @@
 - Инвентарь: открытие/закрытие, выбор, drag настоящей мышью, tooltip, границы экрана.
 - Экипировка: два слота, замена, снятие, сохранение после боя.
 - Мировой HUD: HP и MP-полоса `ManaHUD` читают те же ресурсы и не меняют их.
-- Анимации скелета и игрока: движение, Attack/Hurt/Death; отдельный сценарий проверяет `isMoving`, переход Player в `Player_Walk` и возврат `Idle1.ase`.
-- VFX и звук: эффект завершается, пустые ссылки не блокируют правила и не меняют ресурсы.
+- Анимации скелета и игрока: движение, Attack/Hurt/Death из `.anim`-клипов; отдельный сценарий проверяет `isMoving`, переход Player в `Player_Walk` и возврат `Idle1.ase`.
+- VFX и звук: клип Effect завершается, пустые ссылки не блокируют правила и не меняют ресурсы.
 
 ## Что тесты не доказывают
 
@@ -70,6 +70,7 @@
 
 ## История проверок
 
+- 2026-11-10 — анимации и Fire VFX переведены на `.anim`-клипы; добавлен статичный PNG босса; удалены Heal-ассеты, лечебный VFX и `EnemyAttack`. EditMode 57/57, PlayMode 37/37, Console без ошибок.
 - 2026-11-09 — добавлен переход `SampleScene` → `Dungeon`. Ручная компиляция `FalseMemory.Runtime` через Roslyn: exit 0, без ошибок. PlayMode-тесты для перехода не запускались; ручной сценарий описан выше.
 - 2026-11-02 — после исправления ходьбы и удаления мёртвого кода: EditMode 58/58, PlayMode 37/37, Console после финальных прогонов без ошибок и предупреждений; XML-результаты в `Logs/EditModeResults.xml` и `Logs/PlayModeResults.xml`.
 - 2026-11-01 — после удаления золота, цен и счётчика зелий: EditMode 58/58, PlayMode 36/36, Console без ошибок и предупреждений; XML-результаты в `Logs/EditModeResults.xml` и `Logs/PlayModeResults.xml`.

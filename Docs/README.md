@@ -1,6 +1,6 @@
 # Документация FalseMemory
 
-FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Документация описывает текущую рабочую копию на **2026-11-09** и написана по-русски для владельца без опыта C#. C#-код пишется простым стилем «уровня 3 курса» (см. `AGENTS.md`, Code Style Rules).
+FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Документация описывает текущую рабочую копию на **2026-11-10** и написана по-русски для владельца без опыта C#. C#-код пишется простым стилем «уровня 3 курса» (см. `AGENTS.md`, Code Style Rules).
 
 Начните с [архитектуры](Architecture.md), затем откройте нужную систему или описание скрипта. Постоянные правила проекта находятся в [AGENTS.md](../AGENTS.md).
 
@@ -15,7 +15,8 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 - Боевые команды: Attack, Magic, Defend, Flee. Отдельной вкладки Items нет; Potion применяется из инвентаря вне боя.
 - Магия: Fire; заклинание Heal удалено. MP показан в бою и отдельной полосой в мире (`ManaHUD`).
 - Локализация, уровни/EXP, редкость предметов, золото/торговля и подбор предметов с земли удалены. Игровой текст в сценах — английский.
-- У скелета нет idle-анимации: в покое показывается статичный кадр. Player в покое показывает `Idle1.ase` с выключенным Animator; при движении включаются состояния `Player_Walk`/`Player_Run`, управляемые параметром `isMoving`.
+- Анимации скелета и Fire VFX хранятся в `.anim`-клипах; Animator добавляется в рантайме через `SpriteClipPlayer`. У скелета нет idle-анимации: в покое показывается статичный кадр. Player в покое показывает `Idle1.ase` с выключенным Animator; при движении включаются состояния `Player_Walk`/`Player_Run`, управляемые параметром `isMoving`.
+- В `Assets/Art/Enemies/BossSkeleton64` лежит один статичный PNG скелета босса; он пока не подключён к сцене, префабу или бою.
 
 ## Общие документы
 
@@ -80,6 +81,7 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 - [EnemyBattleAI](Scripts/Battle/EnemyBattleAI.md)
 - [EnemySpriteAnimation](Scripts/Battle/EnemySpriteAnimation.md)
 - [SpriteAnimationSet](Scripts/Battle/SpriteAnimationSet.md)
+- [SpriteClipPlayer](Scripts/Battle/SpriteClipPlayer.md)
 
 ### Инвентарь и экипировка
 
@@ -101,13 +103,13 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 - [SceneTransition](Scripts/Dangeon/SceneTransition.md)
 - [SceneTransitionManager](Scripts/Dangeon/SceneTransitionManager.md)
 - [EnemyAI](Scripts/EnemyAI.md)
-- [EnemyAttack](Scripts/EnemyAttack.md)
 - [Health](Scripts/Health.md)
 - [PlayerController](Scripts/PlayerController.md)
 - [MainMenuController](Scripts/UI/MainMenuController.md)
 - [ManaHUD](Scripts/UI/ManaHUD.md)
 - [SettingsMenu](Scripts/UI/SettingsMenu.md)
 - [PixelBattleAssetBuilder](Scripts/Editor/PixelBattleAssetBuilder.md)
+- [SpriteAnimationAssetBuilder](Scripts/Editor/SpriteAnimationAssetBuilder.md)
 
 ### Тесты
 

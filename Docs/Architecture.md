@@ -1,20 +1,22 @@
 # Архитектура FalseMemory
 
-Актуально на **2026-11-09**. Документ описывает текущую рабочую копию: упрощённый инвентарь без золота и цен, бой без EXP и вкладки Items, английский текст прямо в сценах и сценовую композицию UI. C#-код пишется простым стилем «уровня 3 курса» (см. `AGENTS.md`, Code Style Rules).
+Актуально на **2026-11-10**. Документ описывает текущую рабочую копию: упрощённый инвентарь без золота и цен, бой без EXP и вкладки Items, английский текст прямо в сценах и сценовую композицию UI. C#-код пишется простым стилем «уровня 3 курса» (см. `AGENTS.md`, Code Style Rules).
 
 ## Структура проекта
 
 - `Assets/Scripts/` — движение игрока, камера, здоровье, поведение мира, вход в бой.
-- `Assets/Scripts/Battle/` — менеджер и интерфейс боя, очередь и расчёты, переходы, магия, предметы, ресурсы участника, визуальные профили.
+- `Assets/Scripts/Battle/` — менеджер и интерфейс боя, очередь и расчёты, переходы, магия, предметы, ресурсы участника, визуальные профили и показ `.anim`-клипов.
 - `Assets/Scripts/Inventory/` — общая модель инвентаря, предметы, экипировка, окно, подсказка и использование предметов.
 - `Assets/Scripts/UI/` — главное меню, настройки и мировой HUD маны.
 - `Assets/Scripts/Dangeon/` — триггер входа в пещеру/дверь и менеджер перехода между сценами.
 - `Assets/Scenes/` — `MainMenu`, `SampleScene`, `BattleScene`, `Dungeon`.
-- `Assets/Settings/Battle/` — `DefaultBattleRules`, `Fire`, `Potion`, визуальные профили и кадры.
+- `Assets/Settings/Battle/` — `DefaultBattleRules`, `Fire`, `Potion`, визуальные профили, кадры и ссылки на контролеры.
+- `Assets/Animations/` — сгенерированные `.anim`-клипы и Animator-контролеры скелета и Fire VFX.
+- `Assets/Art/` — нативные PNG 64×64: скелет, Fire, Impact и отдельная модель босса.
 - `Assets/Settings/Inventory/` — `IronSword`, `LeatherArmor`.
 - `Assets/sword.ase`, `Assets/armor.ase`, `Assets/potion.ase` — исходники иконок предметов (32×32, Aseprite importer, Point, PPU 100).
 - `Assets/Tests/EditMode/` и `Assets/Tests/PlayMode/` — расчёты и интеграционные проверки.
-- `Assets/Editor/` — Editor-only инструмент сборки пиксельных боевых ассетов.
+- `Assets/Editor/` — Editor-only инструменты: генерация пиксельных PNG и сборка `.anim`-клипов/контролеров.
 - `Docs/` — документация; `AGENTS.md` — постоянные правила.
 - `Library/`, `Temp/`, `Obj/`, `Logs/`, `Builds/`, `.vs/` — генерируемые данные, исключены `.gitignore`.
 
@@ -22,7 +24,7 @@
 
 **MainMenu** содержит сохранённые Canvas, фон, три кнопки, панель настроек и EventSystem. `MainMenuController` запускает `SampleScene`, открывает настройки или завершает приложение. `SettingsMenu` хранит громкость и fullscreen в `PlayerPrefs`.
 
-**SampleScene** — мир. `Player` имеет `PlayerController`, `Health`, `BattleUnit`, `BattleInventory`, `InventoryWindow`, `EquipmentController`, `WorldItemUseController`, `WorldInputGate`, физические и визуальные компоненты. Animator Player использует `Assets/Player.controller`; в текущей рабочей копии контроллер содержит `Player_Idle`/`Player_Walk`/`Player_Run` и bool `isMoving`, а `PlayerController` выставляет этот параметр при движении. `Enemy` имеет `EnemyAI`, `Health`, `BattleUnit`, `BattleEncounter`; старый `EnemyAttack` выключен. Камера использует `CameraFollow`. Мировой HUD (`Health`) содержит HP-полосу и добавленную MP-полосу `ManaHUD`. `BattleTransition` — отдельный координатор встречи.
+**SampleScene** — мир. `Player` имеет `PlayerController`, `Health`, `BattleUnit`, `BattleInventory`, `InventoryWindow`, `EquipmentController`, `WorldItemUseController`, `WorldInputGate`, физические и визуальные компоненты. Animator Player использует `Assets/Player.controller`; в текущей рабочей копии контроллер содержит `Player_Idle`/`Player_Walk`/`Player_Run` и bool `isMoving`, а `PlayerController` выставляет этот параметр при движении. `Enemy` имеет `EnemyAI`, `Health`, `BattleUnit`, `BattleEncounter` и `EnemySpriteAnimation`; устаревший `EnemyAttack` удалён. Камера использует `CameraFollow`. Мировой HUD (`Health`) содержит HP-полосу и добавленную MP-полосу `ManaHUD`. `BattleTransition` — отдельный координатор встречи.
 
 **BattleScene** содержит собственную камеру, освещение, EventSystem, `BattleManager` и `BattleUI` с сохранённым Canvas. Бой отображает тех же `Player`/`Enemy` из мира и не копирует здоровье игрока. `BattleHUD` оформляет характеристики, полосы и меню, не изменяя ресурсы. Canvas использует Scale With Screen Size 960×540, match 1.
 
@@ -46,8 +48,9 @@
 - **SceneTransitionManager** — единственный владелец перехода между сценами: переносит Player и интерфейс, удаляет дубликаты, размещает Player и настраивает камеру. Создаётся в рантайме и живёт в `DontDestroyOnLoad`.
 - **BattleScreenFade** — временный Canvas, переживающий Single-загрузку; RPG-состояние не хранит.
 - **BattleAudioProfile/Controller** — клипы и единственный AudioSource боя; общая громкость остаётся в `SettingsMenu`/`AudioListener`.
-- **BattleVFXProfile/Controller** — данные и воспроизведение эффектов на существующих Image; ссылки заклинаний не участвуют в формулах.
-- **BattlePresentation** — только позы и цвета портретов; урон/MP применяет `BattleManager` один раз.
+- **BattleVFXProfile/Controller** — данные (включая `effectController` с клипом эффекта) и воспроизведение эффектов на существующих Image; ссылки заклинаний не участвуют в формулах.
+- **BattlePresentation** — клипы поз, движения и цвета портретов через Animator; урон/MP применяет `BattleManager` один раз.
+- **SpriteClipPlayer** — общий показ `.anim`-состояний на `SpriteRenderer`/UI Image; Animator добавляется в рантайме.
 
 ## Последовательность боя
 

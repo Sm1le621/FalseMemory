@@ -29,7 +29,7 @@ Current Health/MP до запуска не являются сохранение
 
 ## Enemy и переход
 
-`Enemy` содержит `Rigidbody2D`, триггер обнаружения для `EnemyAI`, физический `Collider2D` для `BattleEncounter`, `Health` 60 и `BattleUnit` ATK 12/DEF 5/SPD 7/MDEF 3. `EnemyAttack` выключен; наличие `BattleEncounter` дополнительно исключает контактный урон. `BattleUnit.visualAnimations` = `Skeleton64`, idle-кадров в наборе нет.
+`Enemy` содержит `Rigidbody2D`, триггер обнаружения для `EnemyAI`, физический `Collider2D` для `BattleEncounter`, `Health` 60 и `BattleUnit` ATK 12/DEF 5/SPD 7/MDEF 3. Устаревший `EnemyAttack` удалён; контактный урон не используется. `BattleUnit.visualAnimations` = `Skeleton64` с `worldController` и `portraitController`; idle-клипов в наборе нет. Animator на Enemy и портреты добавляется в рантайме.
 
 Единственный `BattleTransition` содержит Rules = `DefaultBattleRules` и имена сцен `BattleScene`/`MainMenu`. Он сохраняет исходные объекты мира; копировать Player/Enemy в `BattleScene` не нужно. `CameraFollow` ссылается на Player.
 
@@ -39,7 +39,7 @@ Current Health/MP до запуска не являются сохранение
 
 Canvas боя: Scale With Screen Size 960×540, Match Height = 1, Pixel Perfect = true. Оформление сохранено объектами сцены; Editor-методов `BuildLayout` больше нет. Тексты английские и заданы прямо в TMP-компонентах сцены.
 
-`Fire` использует `FireVisual`; `HealVisual` остаётся ассетом, но заклинание Heal удалено и профиль ни одним заклинанием не используется. В `BattleAudioController` назначен `DefaultBattleAudio` и существующий AudioSource: Spatial Blend 0, Ignore Listener Volume = false. Клипы пока пусты — назначайте свои в профиль.
+`Fire` использует `FireVisual` с клипом `Effect`; лечебный профиль и кадры Heal удалены. В `BattleAudioController` назначен `DefaultBattleAudio` и существующий AudioSource: Spatial Blend 0, Ignore Listener Volume = false. Клипы пока пусты — назначайте свои в профиль.
 
 `BattlePresentation`: Attack 0.4, Hit 0.18, Outcome 0.35, Message 0.75, Enemy Think 0.5, Allow Fast Forward = true, множитель 3. Space ускоряет движения и паузы, не игровой урон. `DefaultBattleRules.actionDelay` = 0.8, `fadeDuration` = 0.5.
 

@@ -1,5 +1,17 @@
 # История значимых изменений FalseMemory
 
+## 2026-11-10 — анимации и VFX на `.anim`-клипах, модель босса, удаление мёртвого кода
+
+**Добавлено:** редакторский `Assets/Editor/SpriteAnimationAssetBuilder.cs` — собирает `.anim`-клипы и Animator-контролеры из готовых PNG: `SkeletonWorld.controller` (Move/Hurt/Death для `SpriteRenderer`), `SkeletonPortrait.controller` (Attack/Hurt/Death для UI `Image`) и `FireVFX.controller` (клип `Effect`). Клипы лежат в `Assets/Animations/Enemies/Skeleton/{World,Portrait}` и `Assets/Animations/VFX`. Рантайм-помощник `Assets/Scripts/Battle/SpriteClipPlayer.cs` добавляет Animator на объект и показывает нужный клип/прогресс. В `PixelBattleAssetBuilder` добавлена генерация одного статичного PNG босса `Assets/Art/Enemies/BossSkeleton64/BossSkeleton-Idle-00.png` (64×64, RGBA, без подключения к сцене/бою).
+
+**Изменено:** `SpriteAnimationSet` больше не хранит массивы кадров — только `worldController` и `portraitController`. `BattleVFXProfile` вместо `frames` хранит `effectController` и `frameCount`. `EnemySpriteAnimation` и `BattlePresentation` проигрывают клипы через `SpriteClipPlayer`, а `BattleVFXController` показывает клип `Effect` и по-прежнему двигает частицы кодом. Временные тайминги боя, быстрый просмотр и процедурные движения остались в коде. В `Skeleton64.asset` и `FireVisual.asset` назначены новые контролеры.
+
+**Удалено:** лечебный VFX (`BattleVFXController.healProfile`, параметр `healing`, `HealVisual.asset`, кадры `Assets/Art/VFX/Heal64`), генерация лечения в `PixelBattleAssetBuilder`, устаревший `Assets/Scripts/EnemyAttack.cs` и его компонент в `SampleScene`, вызов `Pause(EnemyAttack)` в `BattleTransition`, документ `Docs/Scripts/EnemyAttack.md`.
+
+**Проверки:** Unity 6000.6.2f1, компиляция без ошибок; Console без ошибок. EditMode **57/57**, PlayMode **37/37**, 0 failed/skipped. `PixelArtTests` проверяет 25 PNG (14 скелета, 1 босс, 8 огня, 1 удар, 1 запасной Idle-кадр), импорт и состояния контролеров; `PixelVisualFlowTests` проверяет кадры по именам клипов. PNG босса проверен отдельно: 64×64, RGBA8, альфа 0/255, 14 цветов, нет непрозрачных пикселей на границе.
+
+**Ограничения:** модель босса намеренно не используется — ни префаба, ни сцены, ни анимации. Старые сериализованные массивы в `Skeleton64.asset` могут остаться в YAML до следующего сохранения ассета, но код их не читает. Художественная оценка клипов и босса — за владельцем. Файлы `.plastic` не входят в коммит.
+
 ## 2026-11-09 — перенос Player и HUD в сцену Dungeon
 
 **Добавлено:** скрипт `Assets/Scripts/Dangeon/SceneTransitionManager.cs` — загружает целевую сцену и переносит в неё существующего Player вместе с HP/MP HUD, инвентарём, EventSystem, `BattleTransition` и Global Light 2D. Сцена `Dungeon` добавлена в `ProjectSettings/EditorBuildSettings.asset`. В `CameraFollow` добавлены `SetTarget`/`SnapToTarget`.

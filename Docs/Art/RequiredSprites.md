@@ -13,7 +13,7 @@
 | Hurt | 2 | `Player-Hurt-00…01` |
 | Death | 4 | `Player-Death-00…03` |
 
-IDLE-кадры не нужны: в покое `PlayerController` показывает статичный `Idle1.ase`, а `BattlePresentation` — статичный `battleSprite`. После рисования: собрать `SpriteAnimationSet` `Assets/Settings/Battle/Visuals/Player64.asset` и назначить в `Player.visualAnimations`. Размер и pivot — как у Skeleton64 (64×64, низ по центру), чтобы не менять масштаб/коллайдеры.
+IDLE-кадры не нужны: в покое `PlayerController` показывает статичный `Idle1.ase`, а `BattlePresentation` — статичный `battleSprite`. После рисования: собрать клипы/контролеры через `SpriteAnimationAssetBuilder` и назначить набор `Assets/Settings/Battle/Visuals/Player64.asset` в `Player.visualAnimations`. Размер и pivot — как у Skeleton64 (64×64, низ по центру), чтобы не менять масштаб/коллайдеры.
 
 ## 2. Частицы VFX (8×8 или 16×16)
 
@@ -25,7 +25,7 @@ IDLE-кадры не нужны: в покое `PlayerController` показыв
 | `vfx-hit-spark-00…02` | 8×8 | физическое попадание |
 | `vfx-impact-ring` | 16×16 | вспышка попадания (опционально) |
 
-`HealVisual` остаётся в проекте как неиспользуемый fallback; лечебных заклинаний нет.
+Лечебный профиль и кадры Heal удалены; лечебных заклинаний нет.
 
 ## 3. Hit / Slash (16×16 или 32×32)
 
