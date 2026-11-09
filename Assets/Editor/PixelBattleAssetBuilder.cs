@@ -14,6 +14,8 @@ public static class PixelBattleAssetBuilder
     public const string SkeletonRoot = "Assets/Art/Enemies/Skeleton64";
     // Куди зберігати ефекти
     public const string VfxRoot = "Assets/Art/VFX";
+    // Куди зберігати модель боса (один статичний кадр)
+    public const string BossRoot = "Assets/Art/Enemies/BossSkeleton64";
 
     // Палітра кольорів. У функціях малювання колір вказується НОМЕРОМ з цього масиву.
     // 0 - прозорий
@@ -81,11 +83,10 @@ public static class PixelBattleAssetBuilder
             }
         }
 
-        // По 8 кадрів вогню і лікування
+        // 8 кадрів вогню
         for (int i = 0; i < 8; i++)
         {
             outputs.Add(VfxRoot + "/Fire64/Fire-" + i.ToString("00") + ".png", Fire(i));
-            outputs.Add(VfxRoot + "/Heal64/Heal-" + i.ToString("00") + ".png", Heal(i));
         }
 
         // Спочатку перевіряємо ВЕСЬ набір: генератор ніколи не перезаписує готові малюнки
@@ -300,6 +301,144 @@ public static class PixelBattleAssetBuilder
         return g;
     }
 
+    // Згенерувати одну статичну модель скелета боса.
+    // Ні до сцени, ні до бою цей файл не підключається.
+    [MenuItem("FalseMemory/Art/Generate native 64px boss skeleton")]
+    public static void GenerateBossSkeleton()
+    {
+        if (EditorApplication.isPlaying)
+        {
+            throw new InvalidOperationException("Stop Play Mode before generating assets.");
+        }
+
+        string path = BossRoot + "/BossSkeleton-Idle-00.png";
+        if (File.Exists(path))
+        {
+            throw new InvalidOperationException("Asset already exists: " + path);
+        }
+
+        Directory.CreateDirectory(Path.GetDirectoryName(path));
+        SavePng(path, BossSkeleton());
+
+        TextureImporter importer = (TextureImporter)AssetImporter.GetAtPath(path);
+        importer.textureType = TextureImporterType.Sprite;
+        importer.spriteImportMode = SpriteImportMode.Single;
+        importer.spritePixelsPerUnit = 100;
+        importer.spritePivot = Vector2.one * 0.5f;
+        ApplyPixelArtSettings(importer);
+    }
+
+    // Один статичний кадр боса: корона, роги, великий меч і рвана накидка
+    private static Grid BossSkeleton()
+    {
+        Grid g = new Grid();
+
+        // Рвана накидка за спиною
+        g.Poly(10, 18, 28, 46, 28, 44, 48, 40, 57, 36, 50, 32, 58, 28, 51, 24, 58, 20, 48, 18, 34);
+        g.Poly(11, 22, 30, 42, 30, 40, 47, 37, 53, 34, 47, 31, 53, 27, 47, 24, 52, 22, 40);
+
+        // Ноги і ступні
+        Bone(g, 27, 47, 23, 55);
+        Bone(g, 23, 55, 25, 60);
+        Bone(g, 37, 47, 41, 55);
+        Bone(g, 41, 55, 39, 60);
+        g.Poly(1, 19, 59, 28, 59, 29, 62, 18, 62);
+        g.Poly(1, 36, 59, 45, 59, 46, 62, 35, 62);
+        g.Line(20, 60, 27, 60, 8, 1);
+        g.Line(37, 60, 44, 60, 8, 1);
+
+        // Тулуб і хребет
+        g.Poly(1, 24, 29, 40, 29, 43, 46, 37, 50, 27, 50, 21, 46);
+        g.Poly(6, 25, 30, 39, 30, 41, 45, 36, 48, 28, 48, 23, 45);
+        g.Line(32, 30, 32, 47, 7, 3);
+        g.Line(32, 30, 32, 47, 8, 1);
+
+        // Ребра
+        for (int i = 0; i < 4; i++)
+        {
+            int y = 33 + i * 4;
+            g.Line(24, y, 31, y + 1, 8, 2);
+            g.Line(33, y + 1, 40, y, 7, 2);
+            g.Line(25, y + 1, 31, y + 2, 9, 1);
+        }
+
+        // Пояс
+        g.Line(22, 44, 42, 44, 5, 2);
+        g.Rect(30, 43, 4, 4, 8);
+        g.Px(32, 44, 1);
+
+        // Наплічники з шипами
+        g.Poly(1, 13, 27, 24, 24, 28, 32, 18, 37);
+        g.Poly(2, 15, 28, 23, 26, 26, 31, 19, 35);
+        g.Poly(1, 40, 24, 51, 27, 46, 37, 36, 32);
+        g.Poly(2, 41, 26, 49, 28, 45, 35, 38, 31);
+        g.Line(17, 26, 11, 19, 1, 3);
+        g.Line(17, 26, 11, 19, 3, 1);
+        g.Line(47, 26, 53, 19, 1, 3);
+        g.Line(47, 26, 53, 19, 3, 1);
+        g.Line(14, 30, 8, 26, 1, 2);
+        g.Line(50, 30, 56, 26, 1, 2);
+
+        // Руки
+        Bone(g, 20, 33, 17, 43);
+        Bone(g, 44, 33, 47, 42);
+        g.Rect(15, 42, 4, 4, 8);
+        g.Rect(45, 41, 4, 4, 8);
+
+        // Великий меч (кінчик не торкається краю картинки)
+        g.Line(16, 44, 9, 58, 1, 6);
+        g.Line(16, 44, 9, 58, 3, 4);
+        g.Line(16, 44, 9, 58, 4, 2);
+        g.Px(11, 55, 9);
+        g.Px(12, 53, 9);
+        g.Line(11, 42, 22, 47, 1, 3);
+        g.Line(11, 42, 22, 47, 5, 1);
+        g.Line(16, 44, 18, 38, 1, 3);
+        g.Rect(17, 36, 3, 3, 8);
+
+        // Череп
+        g.Poly(1, 23, 9, 41, 9, 45, 15, 43, 24, 38, 30, 32, 31, 26, 29, 22, 23, 21, 15);
+        g.Poly(6, 24, 10, 40, 10, 43, 15, 41, 23, 37, 28, 32, 29, 27, 27, 24, 22, 23, 15);
+        g.Poly(8, 25, 11, 39, 11, 42, 16, 39, 22, 34, 26, 29, 25, 26, 20, 26, 15);
+        g.Line(26, 12, 38, 12, 9, 1);
+        g.Px(37, 13, 6);
+        g.Px(38, 14, 6);
+
+        // Очниці і вогники
+        g.Poly(1, 25, 16, 31, 15, 32, 22, 26, 23);
+        g.Poly(1, 34, 15, 40, 16, 39, 23, 33, 22);
+        g.Rect(28, 18, 2, 2, 13);
+        g.Rect(35, 18, 2, 2, 13);
+        g.Px(29, 18, 16);
+        g.Px(36, 18, 16);
+
+        // Ніс і щелепа із зубами
+        g.Poly(1, 31, 23, 34, 23, 33, 26, 32, 27);
+        g.Line(27, 28, 38, 28, 1, 1);
+        for (int i = 0; i < 4; i++)
+        {
+            g.Rect(28 + i * 3, 28, 1, 3, 9);
+        }
+        g.Line(26, 31, 39, 31, 6, 1);
+
+        // Корона
+        g.Poly(1, 24, 10, 27, 10, 27, 5, 30, 8, 32, 2, 34, 8, 37, 5, 37, 10, 40, 10, 40, 12, 24, 12);
+        g.Poly(2, 25, 10, 26, 10, 26, 6, 30, 8, 32, 3, 34, 8, 38, 6, 38, 10, 39, 10, 39, 11, 25, 11);
+        g.Px(32, 6, 13);
+
+        // Роги
+        g.Line(23, 12, 17, 7, 1, 3);
+        g.Line(17, 7, 14, 4, 1, 2);
+        g.Line(23, 12, 17, 7, 8, 1);
+        g.Line(17, 7, 14, 4, 8, 1);
+        g.Line(41, 12, 47, 7, 1, 3);
+        g.Line(47, 7, 49, 4, 1, 2);
+        g.Line(41, 12, 47, 7, 8, 1);
+        g.Line(47, 7, 49, 4, 8, 1);
+
+        return g;
+    }
+
     // Згенерувати картинку удару (окремий пункт меню)
     [MenuItem("FalseMemory/Art/Generate native 64px impact")]
     public static void GenerateImpact()
@@ -449,60 +588,6 @@ public static class PixelBattleAssetBuilder
                     if ((x + y + frame) % 3 == 0 || (frame == 7 && (x + y) % 2 == 0))
                     {
                         g.Px(x, y, 0);
-                    }
-                }
-            }
-        }
-
-        return g;
-    }
-
-    // Один кадр лікування (0..7)
-    private static Grid Heal(int frame)
-    {
-        Grid g = new Grid();
-
-        // Зелене кільце, яке росте і піднімається
-        int r = 12 + frame;
-        int y = 46 - frame;
-        g.Ellipse(32, y, r, Math.Max(3, r / 3), 17);
-        g.Ellipse(32, y - 1, r - 1, Math.Max(2, r / 3 - 1), 19);
-        g.Line(32 - r + 4, y + 2, 32 + r - 4, y + 2, 20, 1);
-
-        // 6 "плюсиків", які летять вгору
-        for (int i = 0; i < 6; i++)
-        {
-            int x = 15 + i * 7 + (frame % 2);
-            int cy = 39 - (frame * 3 + i * 5) % 28;
-
-            int color = 19;
-            if ((i + frame) % 3 == 0)
-            {
-                color = 21;
-            }
-
-            g.Line(x - 2, cy, x + 2, cy, color, 1);
-            g.Line(x, cy - 2, x, cy + 2, color, 1);
-            g.Px(x, cy, 20);
-        }
-
-        // Великий хрест у середині анімації
-        if (frame > 1 && frame < 6)
-        {
-            g.Line(29, 29 - frame, 35, 29 - frame, 18, 1);
-            g.Line(32, 26 - frame, 32, 32 - frame, 20, 1);
-        }
-
-        // Останній кадр - ефект зникає
-        if (frame == 7)
-        {
-            for (int py = 0; py < 64; py++)
-            {
-                for (int px = 0; px < 64; px++)
-                {
-                    if ((px + py) % 3 == 0)
-                    {
-                        g.Px(px, py, 0);
                     }
                 }
             }
