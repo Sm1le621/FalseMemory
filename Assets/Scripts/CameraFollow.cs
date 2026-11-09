@@ -13,6 +13,23 @@ public class CameraFollow : MonoBehaviour
     // Зсув камери. По Z стоїть -10, щоб камера була "перед" сценою і все бачила
     [SerializeField] private Vector3 offset = new Vector3(0f, 0f, -10f);
 
+    // Змінити ціль камери (потрібно після перенесення гравця в іншу сцену)
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
+    }
+
+    // Одразу поставити камеру на ціль, без плавного руху
+    public void SnapToTarget()
+    {
+        if (target == null)
+        {
+            return;
+        }
+
+        transform.position = target.position + offset;
+    }
+
     // LateUpdate викликається після всіх Update,
     // тобто гравець уже встиг рухнутися в цьому кадрі
     private void LateUpdate()

@@ -1,10 +1,20 @@
 # Настройка существующего проекта в Unity
 
-Актуально на **2026-10-31**. Открывайте корень `FalseMemory`, содержащий `Assets`, `Packages` и `ProjectSettings`. Проверенная версия Editor — **6000.6.2f1**. Создавать новую сцену для проверки боя не нужно.
+Актуально на **2026-11-09**. Открывайте корень `FalseMemory`, содержащий `Assets`, `Packages` и `ProjectSettings`. Проверенная версия Editor — **6000.6.2f1**. Создавать новую сцену для проверки боя не нужно.
 
 ## Сцены
 
-В Build Profiles → Scene List включены `MainMenu`, `SampleScene` и `BattleScene`. `MainMenu` запускает новую игру; `SampleScene` содержит мир и участников; `BattleScene` загружается аддитивно координатором `BattleTransition`. Прямой Play в `BattleScene` без встречи показывает вспомогательное меню.
+В Build Profiles → Scene List включены `MainMenu`, `SampleScene`, `BattleScene` и `Dungeon`. `MainMenu` запускает новую игру; `SampleScene` содержит мир и участников; `BattleScene` загружается аддитивно координатором `BattleTransition`; `Dungeon` загружается как Single-сцена при входе в пещеру. Прямой Play в `BattleScene` без встречи показывает вспомогательное меню.
+
+## Переход в Dungeon
+
+- В `SampleScene` на объекте входа в пещеру/дверь должен быть `BoxCollider2D` с `Is Trigger` и компонент `SceneTransition`.
+- `Target Scene Name = Dungeon`, `Use Spawn Position = true`, `Spawn Position = (0,0)`.
+- Player должен иметь тег `Player`, `Rigidbody2D` и `Collider2D`.
+- В `Dungeon` ничего добавлять не нужно. Там должна быть камера; если у неё нет `CameraFollow`, `SceneTransitionManager` добавит компонент в рантайме.
+- Менеджер создаётся автоматически при первом переходе. Вручную добавлять `SceneTransitionManager` в сцену не требуется.
+- Перед Play Mode сохраните `SampleScene`: изменения, сделанные только в открытом Editor, не попадут в файл сцены.
+- Если в `Dungeon` позже появится собственный Player, HUD, Canvas, EventSystem, `BattleTransition` или Global Light 2D, менеджер удалит их как дубликаты и оставит перенесённые объекты.
 
 ## Player в SampleScene
 

@@ -8,7 +8,8 @@
 - `Assets/Scripts/Battle/` — менеджер и интерфейс боя, очередь и расчёты, переходы, магия, предметы, ресурсы участника, визуальные профили.
 - `Assets/Scripts/Inventory/` — общая модель инвентаря, предметы, экипировка, окно, подсказка и использование предметов.
 - `Assets/Scripts/UI/` — главное меню, настройки и мировой HUD маны.
-- `Assets/Scenes/` — `MainMenu`, `SampleScene`, `BattleScene`.
+- `Assets/Scripts/Dangeon/` — триггер входа в пещеру/дверь и менеджер перехода между сценами.
+- `Assets/Scenes/` — `MainMenu`, `SampleScene`, `BattleScene`, `Dungeon`.
 - `Assets/Settings/Battle/` — `DefaultBattleRules`, `Fire`, `Potion`, визуальные профили и кадры.
 - `Assets/Settings/Inventory/` — `IronSword`, `LeatherArmor`.
 - `Assets/sword.ase`, `Assets/armor.ase`, `Assets/potion.ase` — исходники иконок предметов (32×32, Aseprite importer, Point, PPU 100).
@@ -25,7 +26,9 @@
 
 **BattleScene** содержит собственную камеру, освещение, EventSystem, `BattleManager` и `BattleUI` с сохранённым Canvas. Бой отображает тех же `Player`/`Enemy` из мира и не копирует здоровье игрока. `BattleHUD` оформляет характеристики, полосы и меню, не изменяя ресурсы. Canvas использует Scale With Screen Size 960×540, match 1.
 
-Все три сцены включены в Build Profiles. Физическая встреча запускает бой; прямой запуск `BattleScene` без встречи показывает вспомогательное меню.
+**Dungeon** — целевая сцена перехода. Сохранённый файл содержит только `Main Camera`; Player, HP/MP HUD, инвентарь, EventSystem, `BattleTransition` и Global Light 2D переносятся в неё в рантайме из `SampleScene`. `SceneTransition` на входе в пещеру вызывает `SceneTransitionManager`; тот загружает `Dungeon` через `LoadSceneMode.Single`, удаляет возможные дубликаты и привязывает камеру к Player через `CameraFollow`.
+
+Все четыре сцены включены в Build Profiles. Физическая встреча запускает бой; прямой запуск `BattleScene` без встречи показывает вспомогательное меню. Изменения входа в пещеру в открытом Editor должны быть сохранены в `SampleScene`, иначе на диске триггера не будет.
 
 ## Владельцы данных
 
@@ -39,6 +42,8 @@
 - **WorldInputGate** — блокировка движения, пока открыто модальное окно. `PlayerController` проверяет gate.
 - **BattleManager** — фаза и очередь текущего боя, выбранное действие и защита от повторной команды.
 - **BattleTransition** — активная встреча, сохранение активности мировых объектов, загрузка/выгрузка `BattleScene`, возврат после победы/побега/поражения.
+- **SceneTransition** — триггер перехода между сценами. Хранит имя целевой сцены и точку появления; сам сцену не грузит.
+- **SceneTransitionManager** — единственный владелец перехода между сценами: переносит Player и интерфейс, удаляет дубликаты, размещает Player и настраивает камеру. Создаётся в рантайме и живёт в `DontDestroyOnLoad`.
 - **BattleScreenFade** — временный Canvas, переживающий Single-загрузку; RPG-состояние не хранит.
 - **BattleAudioProfile/Controller** — клипы и единственный AudioSource боя; общая громкость остаётся в `SettingsMenu`/`AudioListener`.
 - **BattleVFXProfile/Controller** — данные и воспроизведение эффектов на существующих Image; ссылки заклинаний не участвуют в формулах.
@@ -57,7 +62,7 @@
 
 ## Сборки и зависимости
 
-`FalseMemory.Runtime.asmdef` объединяет `Assets/Scripts` и ссылается на `Unity.InputSystem`, `Unity.TextMeshPro`, `UnityEngine.UI`. EditMode и PlayMode имеют отдельные тестовые asmdef со ссылкой на Runtime; EditMode ограничен платформой Editor. Пакеты Unity Localization и Addressables удалены.
+`FalseMemory.Runtime.asmdef` объединяет `Assets/Scripts` и ссылается на `Unity.InputSystem`, `Unity.TextMeshPro`, `UnityEngine.UI` и `Unity.RenderPipelines.Universal.2D.Runtime` (нужен для `Light2D` при переносе Global Light 2D). EditMode и PlayMode имеют отдельные тестовые asmdef со ссылкой на Runtime; EditMode ограничен платформой Editor. Пакеты Unity Localization и Addressables удалены.
 
 Установлены Input System, TMP/uGUI, URP, 2D-инструменты, Test Framework и Unity MCP. Точные версии фиксируются `Packages/manifest.json` и lock-файлом.
 
@@ -69,4 +74,4 @@ UI, текст, эффекты и затемнение заранее сохра
 
 На 2026-11-02 прошли **58/58 EditMode** и **37/37 PlayMode**; Console без ошибок. Тесты используют настоящий `SceneManager`, физический контакт и синтетический Input System; часть кнопок вызывается через `onClick.Invoke`, что не заменяет ручную проверку курсора.
 
-Известные ограничения: бой один на один; враг не обходит стены; камера без ограничений карты; Health напрямую связан с UI; клавиатура не переназначается; gamepad не добавлен; нет партий, классов, статусов, квестов, диалогов, торговли и дисковых сохранений. Данные сессии живут, пока исходная карта загружена. Сборка вне Editor и художественная оценка владельцем остаются отдельными проверками.
+Известные ограничения: бой один на один; враг не обходит стены; камера без ограничений карты; Health напрямую связан с UI; клавиатура не переназначается; gamepad не добавлен; нет партий, классов, статусов, квестов, диалогов, торговли и дисковых сохранений. Данные сессии (HP, MP, инвентарь, экипировка) переживают переход в `Dungeon`, но мир `SampleScene` при `LoadSceneMode.Single` выгружается и создаётся заново. В `Dungeon` пока нет собственного контента и обратного триггера. Сборка вне Editor и художественная оценка владельцем остаются отдельными проверками.

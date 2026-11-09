@@ -6,7 +6,8 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 
 ## Текущее состояние игры
 
-- Три сцены: `MainMenu`, `SampleScene` (мир), `BattleScene` (пошаговый бой).
+- Четыре сцены: `MainMenu`, `SampleScene` (мир), `BattleScene` (пошаговый бой), `Dungeon` (целевая сцена перехода).
+- Вход в пещеру/дверь переносит Player с текущими HP/MP, инвентарём и экипировкой в `Dungeon` без копирования объектов.
 - Инвентарь: 30 слотов, предметы трёх категорий — `Consumable`, `Weapon`, `Armor`.
 - Экипировка: два слота — `Weapon` и `Chest`; бонусы только `attack` и `defense`.
 - Стартовый набор: Iron Sword ×1, Leather Armor ×1, Potion ×3.
@@ -30,7 +31,8 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 
 ## Игровые системы
 
-- [Состав сцен](Systems/SceneComposition.md) — объекты, компоненты и связи MainMenu/SampleScene/BattleScene.
+- [Состав сцен](Systems/SceneComposition.md) — объекты, компоненты и связи MainMenu/SampleScene/BattleScene/Dungeon.
+- [Переходы между сценами](Systems/SceneTransitionSystem.md) — перенос Player и HUD в `Dungeon`.
 - [Пошаговые сражения](Systems/CombatSystem.md).
 - [Интерфейс боя](Systems/BattleUISystem.md).
 - [Магия и MP](Systems/MagicSystem.md).
@@ -51,7 +53,7 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 
 ## Описания скриптов
 
-Всего в `Assets` **59 собственных C#-файлов**: 42 runtime, 16 тестовых и 1 Editor-инструмент. У каждого проектного скрипта есть отдельное описание в `Docs/Scripts`; частичные тестовые классы объединяют несколько файлов. Служебный шаблон Unity Welcome удалён.
+Всего в `Assets` **61 собственный C#-файл**: 44 runtime, 16 тестовых и 1 Editor-инструмент. У каждого проектного скрипта есть отдельное описание в `Docs/Scripts`; частичные тестовые классы объединяют несколько файлов. Служебный шаблон Unity Welcome удалён.
 
 ### Бой
 
@@ -96,6 +98,8 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 ### Мир, интерфейс и служебные
 
 - [CameraFollow](Scripts/CameraFollow.md)
+- [SceneTransition](Scripts/Dangeon/SceneTransition.md)
+- [SceneTransitionManager](Scripts/Dangeon/SceneTransitionManager.md)
 - [EnemyAI](Scripts/EnemyAI.md)
 - [EnemyAttack](Scripts/EnemyAttack.md)
 - [Health](Scripts/Health.md)

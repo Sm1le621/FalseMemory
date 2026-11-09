@@ -1,13 +1,14 @@
 # Состав сцен и взаимодействие объектов
 
-Актуально на **2026-11-01**. Документ описывает сохранённые объекты трёх сцен, компоненты и связи. Источник истины для UI, текста и эффектов — сцены, а не код, создающий объекты в рантайме.
+Актуально на **2026-11-09**. Документ описывает сохранённые объекты четырёх сцен, компоненты и связи. Источник истины для UI, текста и эффектов — сцены, а не код, создающий объекты в рантайме.
 
 ## 1. Общее правило
 
 - Canvas, панели, кнопки, подписи, портреты, частицы VFX и затемнение заранее сохранены в сценах.
 - Скрипты читают ссылки и меняют состояние: текст, цвет, позицию, `SetActive`, значения полос.
 - Игровой текст — английские строки прямо в TMP-компонентах сцен. Unity StringTable, `LocalizedLabel` и `GameText` удалены.
-- Код не создаёт GameObject интерфейса; исключение — временные `Sprite`/`Texture2D` для отображения кадров.
+- Код не создаёт GameObject интерфейса; исключения — временные `Sprite`/`Texture2D` для отображения кадров и служебный `SceneTransitionManager`, который создаётся в рантайме.
+- Переход в `Dungeon` не добавляет объекты в целевую сцену: Player и HUD переносятся из `SampleScene` во время игры.
 
 ## 2. Сцена MainMenu
 
@@ -79,8 +80,25 @@ InventoryCanvas           Canvas + CanvasScaler + GraphicRaycaster
 - `PlayerController` в покое показывает `idleSprite = Idle1.ase` и выключает Animator. При движении Animator включается, получает `isMoving = true` и переходит между `Player_Walk`/`Player_Run` в `Assets/Player.controller`; структура контроллера существует в рабочей копии и не перестраивалась этой задачей.
 - `EnemySpriteAnimation` читает позицию и `Health`, меняя только `SpriteRenderer` по `SpriteAnimationSet` (`Skeleton64`); idle-кадров в наборе нет.
 - Объектов `TestLoot`, `InteractionPrompt`, `PickupNotification`, `CharacterPanel`, портрета и лишних слотов экипировки больше нет.
+- Вход в пещеру/дверь — объект с `BoxCollider2D` (`Is Trigger`) и `SceneTransition`; `targetSceneName = Dungeon`, `useSpawnPosition = true`, `spawnPosition = (0,0)`. На диске в сохранённом `SampleScene.unity` этого объекта пока нет: он добавлен в открытом Editor и должен быть сохранён владельцем.
+- `SceneTransition` не загружает сцену напрямую: он создаёт `SceneTransitionManager` и передаёт ему имя сцены и точку появления. Подробно — [SceneTransitionSystem](SceneTransitionSystem.md).
 
-## 4. Сцена BattleScene (бой)
+## 4. Сцена Dungeon (целевая сцена перехода)
+
+Сохранённый файл `Assets/Scenes/Dungeon.unity` содержит только камеру. Player, HP/MP HUD, инвентарь, EventSystem, `BattleTransition` и Global Light 2D появляются в ней в рантайме — их переносит `SceneTransitionManager`.
+
+```
+Main Camera
+```
+
+Связи:
+
+- `Dungeon` добавлена в Build Profiles → Scene List; без этого `SceneTransitionManager` не начнёт загрузку.
+- Камера `Dungeon` получает `CameraFollow` в рантайме, если компонента нет; цель — перенесённый Player.
+- Собственных Player/HUD/Canvas в сцене нет, поэтому удалять дубликаты не требуется. Если их добавить, менеджер удалит их при входе.
+- Обратного триггера в `Dungeon` пока нет; возврат в `SampleScene` потребует отдельного объекта с `SceneTransition`.
+
+## 5. Сцена BattleScene (бой)
 
 ```
 Battle Camera
@@ -114,7 +132,7 @@ BattleManager              BattleManager, BattleUI, BattleHUD, BattlePresentatio
 - `BattleVFXController` использует `PixelSpellFrame` и 24 `BattleParticle*`; профили `FireVisual`/`HealVisual` — ScriptableObject. `HealVisual` остаётся, но заклинания Heal больше нет.
 - `BattleManager` — единственный владелец хода, урона, MP, предметов и исхода; UI/анимации только отображают результат. Наград EXP нет.
 
-## 5. Полный поток
+## 6. Полный поток
 
 1. `MainMenu` → New Game → `SampleScene`.
 2. Игрок ходит (`PlayerController`), открывает инвентарь (`InventoryWindow`), экипирует Weapon/Chest, использует Potion.
@@ -122,8 +140,9 @@ BattleManager              BattleManager, BattleUI, BattleHUD, BattlePresentatio
 4. `BattleManager` получает сохранённых `Player`/`Enemy`, ведёт раунды; UI/HUD/Presentation/VFX/Audio показывают бой. Команды: Attack, Magic, Defend, Flee.
 5. Победа → `ReturnAfterVictory` → выгрузка `BattleScene`; поражение → `ReturnToMainMenu`; побег → `ReturnAfterEscape` с защитой.
 6. Рестарт/меню используют `BattleScreenFade`, который переживает Single-загрузку и удаляется после проявления.
+7. Вход в пещеру → `SceneTransition` → `SceneTransitionManager` → Single-загрузка `Dungeon` → перенос Player, HP/MP HUD, инвентаря, EventSystem, `BattleTransition` и света → Player в `(0,0)`, камера следует за ним.
 
-## 6. Где что менять
+## 7. Где что менять
 
 - Текст и подписи — прямо в TMP-компонентах сцены, по-английски.
 - Позиции/размеры/цвета UI — в сцене, без Build-кода.
@@ -132,7 +151,7 @@ BattleManager              BattleManager, BattleUI, BattleHUD, BattlePresentatio
 - Новые команды боя — кнопка в `CommandRows`, ссылка в `BattleUI.commandButtons/commandLabels`, обработка в `BattleManager`.
 - Новый предмет — ScriptableObject `ItemData`/`BattleConsumable`, добавить в `startingItems` или получить по сюжету (подбора с земли нет).
 
-## 7. Проверки
+## 8. Проверки
 
 - EditMode **58/58**, PlayMode **37/37** (2026-11-02), 0 failed/skipped.
 - MCP: Missing Script = 0; `ManaHUD` ссылки заполнены; `equipmentButtons.Length == 2`; `slots.Length == 30`; `border` назначен; в `BattleScene` нет Items/Heal/LV/EXP; объект `Gold` и ссылка `goldLabel` удалены из `SampleScene`.
@@ -141,6 +160,7 @@ BattleManager              BattleManager, BattleUI, BattleHUD, BattlePresentatio
 
 ## История
 
+- 2026-11-09 — добавлена сцена `Dungeon` и переход в неё: `SceneTransition` + `SceneTransitionManager` переносят Player, HP/MP HUD, инвентарь, EventSystem, `BattleTransition` и Global Light 2D. В `Dungeon` сохранена только камера.
 - 2026-11-02 — PlayerController выставляет `isMoving`; из боевой сцены удалены неиспользуемые `preview*Sprite` и слот иконки Items. Служебный шаблон Welcome и пустой `PlayerAnimatorController.controller` удалены.
 - 2026-11-01 — из `InventoryPanel` удалён объект `Gold`; `SessionResources` в бою показывает только `DEFENDING`.
 - 2026-10-31 — сцены приведены к текущей композиции без Build-кода.

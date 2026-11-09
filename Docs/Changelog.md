@@ -1,5 +1,15 @@
 # История значимых изменений FalseMemory
 
+## 2026-11-09 — перенос Player и HUD в сцену Dungeon
+
+**Добавлено:** скрипт `Assets/Scripts/Dangeon/SceneTransitionManager.cs` — загружает целевую сцену и переносит в неё существующего Player вместе с HP/MP HUD, инвентарём, EventSystem, `BattleTransition` и Global Light 2D. Сцена `Dungeon` добавлена в `ProjectSettings/EditorBuildSettings.asset`. В `CameraFollow` добавлены `SetTarget`/`SnapToTarget`.
+
+**Изменено:** `Assets/Scripts/Dangeon/SceneTransition.cs` переписан как триггер входа: проверяет тег `Player`, состояние боя, вызывает менеджер и передаёт имя сцены с точкой появления. `FalseMemory.Runtime.asmdef` получил ссылку на `Unity.RenderPipelines.Universal.2D.Runtime` для `Light2D`.
+
+**Исправлено:** переход из `SampleScene` в `Dungeon` больше не создаёт вторую копию Player и не сбрасывает HP/MP. После загрузки объекты принадлежат новой сцене через `SceneManager.MoveGameObjectToScene`, камера `Dungeon` привязывается к перенесённому Player.
+
+**Ограничения:** в сохранённом `SampleScene.unity` на диске пока нет объекта входа в пещеру — он добавлен в открытом Editor и требует сохранения. Обратного триггера в `Dungeon` нет. Реализация проверена ручной компиляцией Roslyn; PlayMode и визуальная проверка перехода не выполнялись.
+
 ## 2026-11-09 — иконки предметов из Aseprite и сверка документации
 
 **Добавлено:** спрайты из `Assets/sword.ase`, `Assets/armor.ase`, `Assets/potion.ase` (32×32, Point, PPU 100, Aseprite importer) назначены в поле `icon` ассетов `IronSword`, `LeatherArmor`, `Potion`. Раньше там стояли временные PNG боевого UI (`AttackIcon`, `DefendIcon`, `ItemsIcon`).
