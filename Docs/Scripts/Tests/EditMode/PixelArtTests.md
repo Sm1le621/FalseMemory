@@ -12,7 +12,7 @@
 
 ## 3. Методы и функции
 
-- `EveryNewFrameIsNative64PointUncompressedAndWithoutMipmaps()` — 25 PNG (14 скелета, 1 босс, 8 огня, 1 удар, 1 запасной Idle-кадр скелета): размер 64×64, rect 64×64, PPU 100, Point, без mipmaps, Uncompressed, Single.
+- `EveryNewFrameIsNative64PointUncompressedAndWithoutMipmaps()` — 25 PNG (15 скелета, включая 2 старых Idle-кадра, 1 босс, 8 огня, 1 удар): размер 64×64, rect 64×64, PPU 100, Point, без mipmaps, Uncompressed, Single.
 - `SkeletonHasNoIdlePoseAndFireHasCompleteFrames()` — `SpritePose` не содержит `Idle`; `worldController` содержит `Move`/`Hurt`/`Death`, `portraitController` — `Attack`/`Hurt`/`Death`; Fire имеет `frameCount = 8`, контролер с состоянием `Effect` и duration 0.1…1.
 - `AssertStateExists(RuntimeAnimatorController controller, string stateName)` — private helper; ищет состояние по имени в первом слое контролера.
 
