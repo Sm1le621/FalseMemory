@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     [Header("Настройки движения")]
-    // Швидкість ворога
+    // Швидкість ворога в одиницях світу за секунду
     public float moveSpeed = 3f;
 
     // Посилання на гравця (з'являється, коли гравець зайде в тригер)
@@ -20,7 +20,9 @@ public class EnemyAI : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    // Фізику рухаємо у FixedUpdate: він викликається з однаковим кроком часу,
+    // тому швидкість ворога не залежить від FPS (на ПК і ноутбуці однакова)
+    void FixedUpdate()
     {
         // Якщо гравець у радіусі агро - рухаємось до нього
         if (isAggro == true && playerTransform != null)
@@ -28,7 +30,7 @@ public class EnemyAI : MonoBehaviour
             // Напрямок від ворога до гравця (довжина 1)
             Vector2 direction = (playerTransform.position - transform.position).normalized;
 
-            Vector2 newPosition = rb.position + direction * moveSpeed * Time.deltaTime;
+            Vector2 newPosition = rb.position + direction * moveSpeed * Time.fixedDeltaTime;
             rb.MovePosition(newPosition);
         }
     }
