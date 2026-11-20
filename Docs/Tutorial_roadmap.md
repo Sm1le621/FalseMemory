@@ -81,7 +81,7 @@
 
 1. [CombatSystem](Systems/CombatSystem.md) — общая схема.
 2. [BattleManager](Scripts/Battle/BattleManager.md) — единственный владелец хода и применения действия.
-3. [BattleTurnOrder](Scripts/Battle/BattleTurnOrder.md) — очередь по Speed.
+3. [BattleTurnOrder](Scripts/Battle/BattleTurnOrder.md) — очередь ходов (игрок первым).
 4. [BattleCalculator](Scripts/Battle/BattleCalculator.md) — урон, промах, крит, защита.
 5. [BattleRules](Scripts/Battle/BattleRules.md) — коэффициенты в ScriptableObject.
 6. [BattleRandom](Scripts/Battle/BattleRandom.md) — случайность и тестовый контроль.

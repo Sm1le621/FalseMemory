@@ -98,6 +98,7 @@ public sealed class BattleManager : MonoBehaviour
         while (Player.IsAlive && Enemy.IsAlive)
         {
             Round = Round + 1;
+            // Гравець завжди ходить першим, ворог - другим
             turns.BeginRound(new BattleUnit[] { Player, Enemy });
 
             BattleUnit actor;
@@ -190,19 +191,10 @@ public sealed class BattleManager : MonoBehaviour
                         audioController.Play(BattleSound.Flee);
                     }
 
-                    float fleeChance = BattleCalculator.FleeChance(Player.Speed, Enemy.Speed, rules);
-                    bool escaped = BattleCalculator.ChanceSucceeds(fleeChance, random.Next01());
-
-                    if (escaped)
-                    {
-                        State = BattleState.Escaped;
-                        CurrentActor = null;
-                        ui.ShowMessage("Escaped! Returning to the map.");
-                    }
-                    else
-                    {
-                        ui.ShowMessage("Couldn't escape!");
-                    }
+                    // Втеча завжди вдається
+                    State = BattleState.Escaped;
+                    CurrentActor = null;
+                    ui.ShowMessage("Escaped! Returning to the map.");
                 }
                 else if (pendingAction == BattleAction.Defend)
                 {

@@ -45,17 +45,16 @@ public sealed class BattleCoreTests
     // Простий учасник для тестів черги ходів (без Unity)
     private sealed class Participant : IBattleParticipant
     {
-        public int Speed { get; set; }
         public bool IsAlive { get; set; } = true;
     }
 
-    // Швидший ходить першим, при рівній швидкості - хто раніше в списку, і кожен ходить один раз
+    // Черга зберігає порядок, у якому передали учасників, і кожен ходить один раз
     [Test]
-    public void RoundUsesSpeedAndStableTiesWithOneTurnPerUnit()
+    public void RoundKeepsGivenOrderWithOneTurnPerUnit()
     {
-        Participant a = new Participant { Speed = 7 };
-        Participant b = new Participant { Speed = 10 };
-        Participant c = new Participant { Speed = 10 };
+        Participant a = new Participant();
+        Participant b = new Participant();
+        Participant c = new Participant();
         BattleTurnOrder<Participant> queue = new BattleTurnOrder<Participant>();
 
         // b передаємо двічі - він все одно має ходити один раз
@@ -63,36 +62,34 @@ public sealed class BattleCoreTests
 
         Participant unit;
         Assert.That(queue.TryNext(out unit), Is.True);
+        Assert.That(unit, Is.SameAs(a));
+        Assert.That(queue.TryNext(out unit), Is.True);
         Assert.That(unit, Is.SameAs(b));
         Assert.That(queue.TryNext(out unit), Is.True);
         Assert.That(unit, Is.SameAs(c));
-        Assert.That(queue.TryNext(out unit), Is.True);
-        Assert.That(unit, Is.SameAs(a));
         Assert.That(queue.TryNext(out unit), Is.False);
     }
 
-    // Мертві пропускаються, а зміна швидкості діє тільки з наступного раунду
+    // Мертві пропускаються, а в новому раунді першим знову ходить перший у списку
     [Test]
-    public void KilledUnitsAreSkippedAndSpeedReordersOnlyAtNextRound()
+    public void KilledUnitsAreSkippedAndFirstUnitStartsEveryRound()
     {
-        Participant a = new Participant { Speed = 10 };
-        Participant b = new Participant { Speed = 7 };
+        Participant player = new Participant();
+        Participant enemy = new Participant();
         BattleTurnOrder<Participant> queue = new BattleTurnOrder<Participant>();
-        queue.BeginRound(new Participant[] { a, b });
-
-        b.Speed = 20;
+        queue.BeginRound(new Participant[] { player, enemy });
 
         Participant unit;
         queue.TryNext(out unit);
-        Assert.That(unit, Is.SameAs(a));
+        Assert.That(unit, Is.SameAs(player));
 
-        b.IsAlive = false;
+        enemy.IsAlive = false;
         Assert.That(queue.TryNext(out unit), Is.False);
 
-        b.IsAlive = true;
-        queue.BeginRound(new Participant[] { a, b });
+        enemy.IsAlive = true;
+        queue.BeginRound(new Participant[] { player, enemy });
         queue.TryNext(out unit);
-        Assert.That(unit, Is.SameAs(b));
+        Assert.That(unit, Is.SameAs(player));
     }
 
     // Одну команду можна прийняти тільки один раз

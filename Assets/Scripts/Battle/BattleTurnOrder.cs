@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 
-// Черга ходів у раунді. Хто швидший - ходить першим.
+// Черга ходів у раунді. Учасники ходять у тому порядку,
+// в якому їх передали (у бою першим завжди передається гравець).
 // Тут немає нічого від Unity, тому клас легко тестувати.
 // Працює з будь-якою кількістю учасників.
 public sealed class BattleTurnOrder<T> where T : class, IBattleParticipant
@@ -11,7 +12,7 @@ public sealed class BattleTurnOrder<T> where T : class, IBattleParticipant
     // Номер того, хто ходить наступним
     private int cursor;
 
-    // Почати новий раунд: розставити всіх живих за швидкістю
+    // Почати новий раунд: поставити всіх живих у черзі в тому ж порядку
     public void BeginRound(IEnumerable<T> participants)
     {
         order.Clear();
@@ -33,27 +34,8 @@ public sealed class BattleTurnOrder<T> where T : class, IBattleParticipant
                 continue;
             }
 
-            // Шукаємо перше місце, де стоїть хтось ПОВІЛЬНІШИЙ.
-            // Якщо швидкість однакова - той, хто був раніше в списку, залишається першим.
-            int index = -1;
-            for (int i = 0; i < order.Count; i++)
-            {
-                if (order[i].Speed < participant.Speed)
-                {
-                    index = i;
-                    break;
-                }
-            }
-
-            if (index < 0)
-            {
-                // Повільніших немає - ставимо в кінець
-                order.Add(participant);
-            }
-            else
-            {
-                order.Insert(index, participant);
-            }
+            // Ставимо в кінець черги
+            order.Add(participant);
         }
     }
 

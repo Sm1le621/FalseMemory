@@ -1,5 +1,15 @@
 # История значимых изменений FalseMemory
 
+## 2026-11-20 — удалён атрибут Speed, игрок всегда ходит первым, побег всегда успешен
+
+**Удалено:** поле `BattleUnit.speed`, свойства `BattleUnit.Speed` и `IBattleParticipant.Speed`, строка `SPD` в характеристиках `BattleUI`, метод `BattleCalculator.FleeChance`, настройки `BattleRules.fleeBaseChance`, `fleeSpeedCoefficient`, `minimumFleeChance`, `maximumFleeChance` (и их строки в `DefaultBattleRules.asset`), тестовый файл `Assets/Tests/EditMode/BattleFleeTests.cs` и его документ.
+
+**Изменено:** `BattleTurnOrder.BeginRound` больше не сортирует участников — они ходят в порядке передачи; `BattleManager` передаёт `{ Player, Enemy }`, поэтому игрок ходит первым с начала боя и в каждом раунде. Команда `Flee` всегда завершается побегом без случайного числа; сообщения `Couldn't escape!` больше нет. Защита от повторной встречи (`fleeProtectionSeconds`) и отступ (`fleeSafeDistance`) сохранены. Тесты очереди в `BattleCoreTests` переписаны без Speed; PlayMode-сценарий неудачного побега заменён на `FleeAlwaysSucceedsAndDoesNotSpendResources`. В `AGENTS.md` закреплено правило: комментарии в C#-коде — на украинском.
+
+**Проверки:** компиляция в Unity 6000.6.2f1 без ошибок, Console без ошибок и предупреждений. EditMode **52/52**, PlayMode **37/37**, 0 failed/skipped (запуск через `TestRunnerApi` в текущей рабочей копии). Ручная проверка боя владельцем не выполнялась.
+
+**Ограничения:** в YAML `SampleScene.unity` и `Dungeon.unity` остались старые строки `speed:` у `BattleUnit`; Unity их не читает и уберёт при следующем сохранении сцены. Сцены в этом коммите не менялись (в `Dungeon.unity` есть незакоммиченные изменения владельца, они не включены).
+
 ## 2026-11-10 — анимации и VFX на `.anim`-клипах, модель босса, удаление мёртвого кода
 
 **Добавлено:** редакторский `Assets/Editor/SpriteAnimationAssetBuilder.cs` — собирает `.anim`-клипы и Animator-контролеры из готовых PNG: `SkeletonWorld.controller` (Move/Hurt/Death для `SpriteRenderer`), `SkeletonPortrait.controller` (Attack/Hurt/Death для UI `Image`) и `FireVFX.controller` (клип `Effect`). Клипы лежат в `Assets/Animations/Enemies/Skeleton/{World,Portrait}` и `Assets/Animations/VFX`. Рантайм-помощник `Assets/Scripts/Battle/SpriteClipPlayer.cs` добавляет Animator на объект и показывает нужный клип/прогресс. В `PixelBattleAssetBuilder` добавлена генерация одного статичного PNG босса `Assets/Art/Enemies/BossSkeleton64/BossSkeleton-Idle-00.png` (64×64, RGBA, без подключения к сцене/бою).

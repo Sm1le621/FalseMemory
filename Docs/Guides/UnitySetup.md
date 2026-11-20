@@ -29,7 +29,7 @@ Current Health/MP до запуска не являются сохранение
 
 ## Enemy и переход
 
-`Enemy` содержит `Rigidbody2D`, триггер обнаружения для `EnemyAI`, физический `Collider2D` для `BattleEncounter`, `Health` 60 и `BattleUnit` ATK 12/DEF 5/SPD 7/MDEF 3. Устаревший `EnemyAttack` удалён; контактный урон не используется. `BattleUnit.visualAnimations` = `Skeleton64` с `worldController` и `portraitController`; idle-клипов в наборе нет. Animator на Enemy и портреты добавляется в рантайме.
+`Enemy` содержит `Rigidbody2D`, триггер обнаружения для `EnemyAI`, физический `Collider2D` для `BattleEncounter`, `Health` 60 и `BattleUnit` ATK 12/DEF 5/MDEF 3. Устаревший `EnemyAttack` удалён; контактный урон не используется. `BattleUnit.visualAnimations` = `Skeleton64` с `worldController` и `portraitController`; idle-клипов в наборе нет. Animator на Enemy и портреты добавляется в рантайме.
 
 Единственный `BattleTransition` содержит Rules = `DefaultBattleRules` и имена сцен `BattleScene`/`MainMenu`. Он сохраняет исходные объекты мира; копировать Player/Enemy в `BattleScene` не нужно. `CameraFollow` ссылается на Player.
 

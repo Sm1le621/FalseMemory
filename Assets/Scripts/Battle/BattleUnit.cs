@@ -3,7 +3,6 @@ using UnityEngine;
 // Все, що потрібно черзі ходів від учасника бою
 public interface IBattleParticipant
 {
-    int Speed { get; }
     bool IsAlive { get; }
 }
 
@@ -19,8 +18,6 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
     public int attack = 15;
     [Min(0)]
     public int defense = 8;
-    [Min(0)]
-    public int speed = 10;
 
     [Header("Magic")]
     [Min(0)]
@@ -101,11 +98,6 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
     public int EffectiveMagicDefense
     {
         get { return magicDefense; }
-    }
-
-    public int Speed
-    {
-        get { return speed; }
     }
 
     // Живий, якщо HP більше 0

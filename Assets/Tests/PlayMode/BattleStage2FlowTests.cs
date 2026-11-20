@@ -86,25 +86,27 @@ public sealed partial class BattleFlowTests
         yield return null;
     }
 
-    // Невдала втеча забирає хід, але не витрачає ресурси
+    // Втеча вдається завжди, навіть з "найгіршим" випадковим числом, і не витрачає ресурси
     [UnityTest]
-    public IEnumerator FailedFleeConsumesOneTurnAndDoesNotSpendResources()
+    public IEnumerator FleeAlwaysSucceedsAndDoesNotSpendResources()
     {
         BattleUnit player = Player();
         BattleUnit enemy = Enemy();
+        BattleTransition transition = BattleTransition.Instance;
         yield return BeginBattle(player, enemy);
 
         BattleManager manager = Manager();
-        // 1 - шанс ніколи не спрацює
+        // 1 - раніше з таким числом втеча ніколи не вдавалась
         manager.SetRandomSource(new ConstantBattleRandom(1f));
 
         Assert.That(manager.TryPlayerAction(BattleAction.Flee), Is.True);
         Assert.That(manager.TryPlayerAction(BattleAction.Flee), Is.False);
-        yield return WaitUntil(() => manager.ui.messageText.text.Contains("Couldn't escape!"));
-        yield return WaitUntil(() => manager.State == BattleState.AwaitingPlayer);
+        yield return WaitUntil(() => manager.State == BattleState.Escaped);
+        Assert.That(manager.ui.messageText.text, Does.Contain("Escaped!"));
+        Assert.That(manager.Round, Is.EqualTo(1));
+        yield return WaitUntil(() => !transition.EncounterActive);
 
-        Assert.That(manager.Round, Is.EqualTo(2));
-        Assert.That(player.Health.currentHealth, Is.EqualTo(96));
+        Assert.That(player.Health.currentHealth, Is.EqualTo(100));
         Assert.That(player.CurrentMP, Is.EqualTo(30));
         Assert.That(player.Inventory.Count(Potion(player)), Is.EqualTo(3));
         Assert.That(enemy.Health.currentHealth, Is.EqualTo(60));
@@ -130,9 +132,6 @@ public sealed partial class BattleFlowTests
         yield return BeginBattle(player, enemy);
         BattleManager manager = Manager();
         Vector3 enemyPosition = enemy.transform.position;
-        // 0 - шанс завжди спрацює
-        manager.SetRandomSource(new ConstantBattleRandom(0f));
-
         Assert.That(manager.TryPlayerAction(BattleAction.Flee), Is.True);
         yield return WaitUntil(() => manager.State == BattleState.Escaped);
         Assert.That(manager.ui.messageText.text, Does.Contain("Escaped!"));

@@ -42,16 +42,7 @@ public sealed class BattleRules : ScriptableObject
     public float criticalMultiplier = 1.5f;
 
     [Header("Escape")]
-    // Базовий шанс втечі
-    [Range(0f, 1f)]
-    public float fleeBaseChance = 0.65f;
-    // Скільки додає кожна одиниця різниці швидкостей
-    [Min(0f)]
-    public float fleeSpeedCoefficient = 0.03f;
-    [Range(0f, 1f)]
-    public float minimumFleeChance = 0.05f;
-    [Range(0f, 1f)]
-    public float maximumFleeChance = 0.95f;
+    // Втеча завжди вдається, тому шансу втечі тут немає
     // Скільки секунд після втечі ворог не може знову почати бій
     [Min(0.1f)]
     public float fleeProtectionSeconds = 3f;

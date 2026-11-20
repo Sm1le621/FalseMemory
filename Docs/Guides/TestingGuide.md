@@ -6,7 +6,7 @@
 
 Откройте `Window → General → Test Runner`.
 
-- **EditMode**: группа `FalseMemory.Battle.EditModeTests` или Run All. 57 тестов проверяют урон/защиту, очередь, MP/Fire, Potion, инвентарь, экипировку Weapon/Chest, ItemData, RNG/Flee, пиксельные ассеты и состояния Animator-контролеров.
+- **EditMode**: группа `FalseMemory.Battle.EditModeTests` или Run All. 52 теста проверяют урон/защиту, очередь, MP/Fire, Potion, инвентарь, экипировку Weapon/Chest, ItemData, RNG, пиксельные ассеты и состояния Animator-контролеров.
 - **PlayMode**: группа `FalseMemory.Battle.PlayModeTests` или Run All. 37 сценариев загружают существующие сцены и проверяют бой, ввод, инвентарь, экипировку, MP-полосу, анимации и возврат в мир. Отдельный сценарий `WalkInputDrivesExistingAnimatorStatesAndRestoresIdleSprite` проверяет `isMoving`, переход в `Player_Walk` и возврат `Idle1.ase`.
 
 Тесты не прикрепляются к GameObject. Частичные классы `BattleAbilityTests` и `BattleFlowTests` разделены между файлами, поэтому имя группы отличается от имени отдельного файла. Зелёный результат должен относиться ко всему завершённому запуску; провалы и пропуски нельзя скрывать.

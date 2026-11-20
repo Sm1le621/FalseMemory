@@ -4,7 +4,7 @@
 
 Исходник: `Assets/Scripts/Battle/BattleUnit.cs`.
 
-Данные участника боя: имя, физические и магические характеристики, MP, заклинания, внешний вид и состояние защиты. HP остаётся в отдельном `Health`; `IBattleParticipant` позволяет очереди читать `Speed` и `IsAlive`. Уровней, опыта и роста характеристик нет.
+Данные участника боя: имя, физические и магические характеристики, MP, заклинания, внешний вид и состояние защиты. HP остаётся в отдельном `Health`; `IBattleParticipant` позволяет очереди читать `IsAlive`. Уровней, опыта и роста характеристик нет.
 
 ## 2. Как работает
 
@@ -21,19 +21,19 @@
 - `Health` → `Health`; `Inventory` → `BattleInventory`; `Equipment` → `EquipmentController`.
 - `EffectiveAttack`/`EffectiveDefense` — база плюс `EquipmentBonuses` (приватная сумма `attack`/`defense` надетых предметов) с насыщением `int.MaxValue`.
 - `EffectiveMagicAttack`/`EffectiveMagicDefense` — текущие базовые `magicAttack`/`magicDefense`.
-- `Speed` → `speed`; `IsAlive` → `Health.currentHealth > 0`.
+- `IsAlive` → `Health.currentHealth > 0`.
 - `MaxMP` → `maxMP`; `CurrentMP` → `currentMP`, ограниченный диапазоном `0..MaxMP`.
 
 ## 4. Переменные и Inspector
 
 - `displayName` — подпись в сообщениях и характеристиках.
-- `attack`, `defense`, `speed` — базовые физические характеристики, `≥ 0`.
+- `attack`, `defense` — базовые физические характеристики, `≥ 0`.
 - `maxMP` — максимум маны; `currentMP` — сериализованное текущее значение, при старте заполняется максимумом.
 - `magicAttack`, `magicDefense` — магические характеристики, `≥ 0`.
 - `spells` — массив `BattleSpell`; сейчас у игрока Fire, у скелета пусто.
 - `criticalChance`, `missChance` — шансы 0…1.
 - `battleSprite`, `visualAnimations`, `spriteColor`, `flipInBattle` — внешний вид в бою и мире.
-- В текущей сцене у игрока MP 30, MATK 12, MDEF 8; у скелета ATK 12, DEF 5, SPD 7, MDEF 3.
+- В текущей сцене у игрока MP 30, MATK 12, MDEF 8; у скелета ATK 12, DEF 5, MDEF 3.
 
 ## 5. Связи
 
@@ -53,6 +53,7 @@ Fire стоит 8 MP. При старте у игрока 30 MP; после `Try
 
 ## 9. История изменений
 
+- 2026-11-20 — удалены поле `speed` и свойство `Speed` (также из `IBattleParticipant`). Старые значения `speed:` в YAML сцен Unity игнорирует и уберёт при следующем сохранении сцены.
 - 2026-11-09 — уточнён источник бонусов экипировки (`EquipmentBonuses`); описание сверено с кодом после упрощения.
 - 2026-10-31 — удалены EXP, уровни, `CharacterGrowthRules` и `localizationId`; магические характеристики больше не растут от уровня; добавлено пояснение о MP и защите.
 - 2026-10-12 — базовая версия с ростом и строками; запись историческая.

@@ -113,7 +113,7 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 
 ### Тесты
 
-- EditMode: [BattleAbilityTests](Scripts/Tests/EditMode/BattleAbilityTests.md), [BattleCoreTests](Scripts/Tests/EditMode/BattleCoreTests.md), [BattleFleeTests](Scripts/Tests/EditMode/BattleFleeTests.md), [BattleItemTests](Scripts/Tests/EditMode/BattleItemTests.md), [BattleRandomTests](Scripts/Tests/EditMode/BattleRandomTests.md), [EquipmentTests](Scripts/Tests/EditMode/EquipmentTests.md), [InventoryTests](Scripts/Tests/EditMode/InventoryTests.md), [ItemPresentationTests](Scripts/Tests/EditMode/ItemPresentationTests.md), [PixelArtTests](Scripts/Tests/EditMode/PixelArtTests.md).
+- EditMode: [BattleAbilityTests](Scripts/Tests/EditMode/BattleAbilityTests.md), [BattleCoreTests](Scripts/Tests/EditMode/BattleCoreTests.md), [BattleItemTests](Scripts/Tests/EditMode/BattleItemTests.md), [BattleRandomTests](Scripts/Tests/EditMode/BattleRandomTests.md), [EquipmentTests](Scripts/Tests/EditMode/EquipmentTests.md), [InventoryTests](Scripts/Tests/EditMode/InventoryTests.md), [ItemPresentationTests](Scripts/Tests/EditMode/ItemPresentationTests.md), [PixelArtTests](Scripts/Tests/EditMode/PixelArtTests.md).
 - PlayMode: [BattleFlowTests](Scripts/Tests/PlayMode/BattleFlowTests.md), [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md), [BattleStage2FlowTests](Scripts/Tests/PlayMode/BattleStage2FlowTests.md), [InventoryFlowTests](Scripts/Tests/PlayMode/InventoryFlowTests.md), [InventoryPresentationFlowTests](Scripts/Tests/PlayMode/InventoryPresentationFlowTests.md), [PixelVisualFlowTests](Scripts/Tests/PlayMode/PixelVisualFlowTests.md), [PlayerMovementFlowTests](Scripts/Tests/PlayMode/PlayerMovementFlowTests.md).
 
 ## Как пользоваться

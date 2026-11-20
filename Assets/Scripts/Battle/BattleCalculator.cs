@@ -1,47 +1,9 @@
 using System;
 
-// Всі формули бою: шанс втечі, фізична і магічна шкода.
+// Всі формули бою: шанси, фізична і магічна шкода.
 // Тут немає Unity-об'єктів, тому ці формули легко тестувати.
 public static class BattleCalculator
 {
-    // Шанс втекти з бою (від 0 до 1)
-    public static float FleeChance(int playerSpeed, int enemySpeed, BattleRules rules)
-    {
-        if (rules == null)
-        {
-            throw new ArgumentNullException(nameof(rules));
-        }
-
-        // Мінімум і максимум обрізаємо в межі від 0 до 1
-        double minimum = Clamp01(rules.minimumFleeChance);
-        double maximum = Clamp01(rules.maximumFleeChance);
-        // Максимум не може бути меншим за мінімум
-        if (maximum < minimum)
-        {
-            maximum = minimum;
-        }
-
-        // Швидкості не можуть бути від'ємними
-        int safePlayerSpeed = Math.Max(0, playerSpeed);
-        int safeEnemySpeed = Math.Max(0, enemySpeed);
-        double difference = (double)safePlayerSpeed - safeEnemySpeed;
-
-        // Базовий шанс + різниця швидкостей * коефіцієнт
-        double coefficient = Math.Max(0f, rules.fleeSpeedCoefficient);
-        double chance = rules.fleeBaseChance + difference * coefficient;
-
-        // Обрізаємо результат між мінімумом і максимумом
-        if (chance > maximum)
-        {
-            chance = maximum;
-        }
-        if (chance < minimum)
-        {
-            chance = minimum;
-        }
-        return (float)chance;
-    }
-
     // Чи спрацював шанс. sample - випадкове число від 0 до 1
     public static bool ChanceSucceeds(float chance, float sample)
     {

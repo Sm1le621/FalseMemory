@@ -16,7 +16,7 @@ ScriptableObject общих коэффициентов боя; позволяе�
 
 ## 4. Переменные и параметры Inspector
 
-attackMultiplier/defenseMultiplier≥0, код 1/1; minimumDamage≥1, код 1; defendMultiplier 0…1, код 0.5; enemyDefendChance 0…1, код 0.2. actionDelay≥0.1 секунды, код 0.8; fadeDuration≥0, код 0.3. magicAttackMultiplier/magicDefenseMultiplier≥0, код 1/1; minimumMagicDamage≥1, код 1. criticalMultiplier≥1, код 1.5. fleeBaseChance 0…1, код 0.65; fleeSpeedCoefficient≥0, код 0.03; minimumFleeChance/maximumFleeChance 0…1, код 0.05/0.95 (минимум≤максимум); fleeProtectionSeconds/fleeSafeDistance≥0.1, код 3/2.
+attackMultiplier/defenseMultiplier≥0, код 1/1; minimumDamage≥1, код 1; defendMultiplier 0…1, код 0.5; enemyDefendChance 0…1, код 0.2. actionDelay≥0.1 секунды, код 0.8; fadeDuration≥0, код 0.3. magicAttackMultiplier/magicDefenseMultiplier≥0, код 1/1; minimumMagicDamage≥1, код 1. criticalMultiplier≥1, код 1.5. Шанса побега нет — побег всегда успешен; fleeProtectionSeconds/fleeSafeDistance≥0.1, код 3/2.
 
 ## 5. Связи с другими системами
 
@@ -32,9 +32,11 @@ criticalMultiplier=1.5 → обычные 10 HP превращаются в кр
 
 ## 8. Возможные проблемы и проверки
 
-Изменение общего ассета влияет на все бои с этой ссылкой; Inspector значения Play могут менять ассет. Тесты временно меняют задержки и восстанавливают их. Не путать chance 0.65 и 65. Коэффициенты и границы проверены Edit Mode.
+Изменение общего ассета влияет на все бои с этой ссылкой; Inspector значения Play могут менять ассет. Тесты временно меняют задержки и восстанавливают их. Не путать chance 0.2 и 20. Коэффициенты и границы проверены Edit Mode.
 
 ## 9. История изменений
+
+- 2026-11-20 — удалены `fleeBaseChance`, `fleeSpeedCoefficient`, `minimumFleeChance`, `maximumFleeChance` (и строки в DefaultBattleRules.asset): побег всегда успешен. Остались `fleeProtectionSeconds` и `fleeSafeDistance`.
 
 - 2026-10-11 — 3.5: текущий DefaultBattleRules.fadeDuration установлен через MCP в 0.5 секунды; значение по умолчанию исходника остаётся 0.3.
 

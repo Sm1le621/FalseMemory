@@ -13,7 +13,7 @@ Partial `BattleFlowTests`: интеграционные сценарии поб�
 ## 3. Методы и функции
 
 - `Fire`, `Potion`, `Sword`, `Armor` — поиск первых подходящих определений в инвентаре/заклинаниях.
-- `FailedFleeConsumesOneTurnAndDoesNotSpendResources()` — неудачный побег тратит ход, но не HP/MP/предметы.
+- `FleeAlwaysSucceedsAndDoesNotSpendResources()` — даже при случайном числе 1 побег успешен в первом раунде, HP/MP/предметы и HP врага не меняются.
 - `SuccessfulFleePreservesResourcesAndEnemyThenProtectsAndAllowsAnotherBattle()` — побег сохраняет HP/MP/предметы, враг жив, игрок в безопасной точке, защита блокирует повторный вход.
 - `VictoryPreservesAllSessionStateAndShowsResults()` — победа не содержит EXP, сохраняет MP 14/предметы/HP, выключает врага.
 - `TargetDeathBeforeQueuedSpellCancelsManaSpendAndFurtherActions()` — смерть цели до применения отменяет расход MP.
@@ -47,5 +47,6 @@ Test Runner → PlayMode; реальные `SampleScene`/`BattleScene`. Без `
 
 ## 9. История изменений
 
+- 2026-11-20 — сценарий неудачного побега заменён на `FleeAlwaysSucceedsAndDoesNotSpendResources`; из успешного побега убрана подмена случайности.
 - 2026-10-31 — удалены EXP/Heal/Items-сценарии; ожидания приведены к MP 22/6, HP 96/94/92.
 - 2026-10-12 — базовая документация.

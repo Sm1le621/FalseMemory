@@ -541,7 +541,7 @@ public sealed class BattleUI : MonoBehaviour
         string text = unit.displayName;
         text = text + "\nHP " + unit.Health.currentHealth + " / " + unit.Health.maxHealth;
         text = text + "   MP " + unit.CurrentMP + " / " + unit.MaxMP;
-        text = text + "\nATK " + unit.EffectiveAttack + "   DEF " + unit.EffectiveDefense + "   SPD " + unit.Speed;
+        text = text + "\nATK " + unit.EffectiveAttack + "   DEF " + unit.EffectiveDefense;
         if (unit.IsDefending)
         {
             text = text + "\nDEFENDING";
