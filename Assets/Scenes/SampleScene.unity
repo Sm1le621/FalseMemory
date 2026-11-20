@@ -4056,7 +4056,6 @@ MonoBehaviour:
   displayName: Skeleton
   attack: 12
   defense: 5
-  speed: 7
   maxMP: 0
   currentMP: 0
   magicAttack: 0
@@ -4065,7 +4064,7 @@ MonoBehaviour:
   criticalChance: 0.1
   missChance: 0.05
   battleSprite: {fileID: 21300000, guid: e8b3f7969ac3a974c889b3b2a7984741, type: 3}
-  visualAnimations: {fileID: 11400000, guid: 9b5604a7fd518bd4cb69e85bbb808acf, type: 2}
+  visualAnimations: {fileID: 0}
   spriteColor: {r: 1, g: 1, b: 1, a: 1}
   flipInBattle: 0
 --- !u!114 &497416146
@@ -4426,7 +4425,6 @@ MonoBehaviour:
   displayName: Player
   attack: 15
   defense: 8
-  speed: 10
   maxMP: 30
   currentMP: 0
   magicAttack: 12

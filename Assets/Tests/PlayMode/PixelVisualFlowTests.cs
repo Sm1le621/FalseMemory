@@ -3,29 +3,30 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-// Тести піксельних анімацій скелета і вогню (частина класу BattleFlowTests)
+// Тести піксельної графіки: статичний скелет і анімований вогонь (частина класу BattleFlowTests)
 public sealed partial class BattleFlowTests
 {
-    // Скелет у світі показує кадри ходьби, а в бою - кадри атаки, болю і смерті
+    // Скелет без власної анімації: у світі і в бою завжди один статичний Idle-спрайт.
+    // Ефекти ударів і рух портрета при цьому залишаються.
     [UnityTest]
-    public IEnumerator WorldSkeletonMovesAndBattleUsesAttackHurtAndDeathFrames()
+    public IEnumerator SkeletonUsesStaticIdleSpriteInWorldAndBattle()
     {
         BattleUnit player = Player();
         BattleUnit enemy = Enemy();
         SpriteRenderer visual = enemy.GetComponent<SpriteRenderer>();
-        SpriteAnimationSet set = enemy.visualAnimations;
 
-        Assert.That(enemy.GetComponent<EnemySpriteAnimation>(), Is.Not.Null);
-        Assert.That(set, Is.Not.Null);
+        // Як у BossSkeleton - набору анімацій немає
+        Assert.That(enemy.visualAnimations, Is.Null);
+        Assert.That(enemy.battleSprite.name, Does.Contain("Idle"));
         Assert.That(enemy.transform.localScale, Is.EqualTo(new Vector3(2, 2, 1)));
         Assert.That(enemy.GetComponents<Collider2D>().Length, Is.EqualTo(2));
 
-        // Трохи зсуваємо скелета вручну - має з'явитись кадр ходьби
+        // Трохи зсуваємо скелета вручну - кадр НЕ має змінитись
         enemy.GetComponent<EnemyAI>().enabled = false;
         Vector3 position = enemy.transform.position;
         enemy.transform.position = enemy.transform.position + Vector3.right * 0.1f;
         yield return new WaitForEndOfFrame();
-        Assert.That(visual.sprite.name, Does.Contain("Move"));
+        Assert.That(visual.sprite, Is.SameAs(enemy.battleSprite));
         enemy.transform.position = position;
 
         yield return BeginBattle(player, enemy);
@@ -33,22 +34,21 @@ public sealed partial class BattleFlowTests
         manager.presentation.attackDuration = 0.8f;
         Assert.That(manager.ui.enemyPortrait.sprite.texture.width, Is.EqualTo(64));
 
-        // Б'ємо - скелет показує біль
+        // Б'ємо - урон є, але кадр портрета той самий
         Assert.That(manager.TryPlayerAction(BattleAction.Attack), Is.True);
-        yield return WaitUntil(() => manager.ui.enemyPortrait.sprite.name.Contains("Hurt"));
-        Assert.That(enemy.Health.currentHealth, Is.EqualTo(50));
+        yield return WaitUntil(() => enemy.Health.currentHealth == 50);
+        Assert.That(manager.ui.enemyPortrait.sprite, Is.SameAs(enemy.battleSprite));
 
-        // Хід скелета - кадри атаки
-        yield return WaitUntil(() => manager.CurrentActor == enemy && manager.presentation.IsAnimating && manager.ui.enemyPortrait.sprite.name.Contains("Attack"));
+        // Хід скелета - теж без кадрів атаки
+        yield return WaitUntil(() => manager.CurrentActor == enemy && manager.presentation.IsAnimating);
+        Assert.That(manager.ui.enemyPortrait.sprite, Is.SameAs(enemy.battleSprite));
         yield return WaitUntil(() => manager.State == BattleState.AwaitingPlayer);
-        Assert.That(enemy.Health.currentHealth, Is.EqualTo(50));
         Assert.That(player.Health.currentHealth, Is.EqualTo(96));
 
-        // Вбиваємо - останній кадр смерті, портрет прозорий
+        // Вбиваємо - спрайт той самий, портрет плавно зникає
         enemy.Health.TakeDamage(50);
         yield return WaitUntil(() => manager.State == BattleState.Victory);
-        Assert.That(manager.ui.enemyPortrait.sprite, Is.Not.Null);
-        Assert.That(manager.ui.enemyPortrait.sprite.name, Does.Contain("Death"));
+        Assert.That(manager.ui.enemyPortrait.sprite, Is.SameAs(enemy.battleSprite));
         Assert.That(manager.ui.enemyPortrait.color.a, Is.Zero);
         Assert.That(manager.presentation.IsAnimating, Is.False);
     }

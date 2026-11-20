@@ -16,6 +16,26 @@ public sealed class SceneTransitionManager : MonoBehaviour
     // Чи вже йде перехід
     public bool IsTransitioning { get; private set; }
 
+    // Скільки секунд після прибуття тригери переходу не спрацьовують.
+    // Так гравець не "відскакує" назад, якщо з'явився поруч із виходом.
+    private const float ArrivalGraceSeconds = 0.5f;
+    // Коли закінчився останній перехід (-1 = переходу ще не було)
+    private float lastArrivalTime = -1f;
+
+    // true - гравець щойно прибув у сцену, нові переходи поки ігноруємо
+    public bool IsArrivalProtected
+    {
+        get
+        {
+            if (lastArrivalTime < 0f)
+            {
+                return false;
+            }
+            float timePassed = Time.unscaledTime - lastArrivalTime;
+            return timePassed < ArrivalGraceSeconds;
+        }
+    }
+
     // Кореневі об'єкти, які переживають завантаження сцени
     private readonly List<GameObject> carriedRoots = new List<GameObject>();
     // Корінь гравця
@@ -26,6 +46,9 @@ public sealed class SceneTransitionManager : MonoBehaviour
     private bool eventSystemWasActive;
     // Чи був PlayerController увімкнений до переходу
     private bool playerControllerWasEnabled;
+    // Перенесене глобальне світло, яке вимкнули на час завантаження.
+    // Інакше в новій сцені на мить будуть два Global Light 2D і URP покаже помилку
+    private readonly List<GameObject> hiddenLightRoots = new List<GameObject>();
 
     // Скидаємо static-змінну перед запуском гри в редакторі
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -173,6 +196,8 @@ public sealed class SceneTransitionManager : MonoBehaviour
         carriedRoots.Clear();
         playerRoot = null;
         eventSystemRoot = null;
+        // Запам'ятовуємо час прибуття (для захисту від миттєвого повернення)
+        lastArrivalTime = Time.unscaledTime;
         IsTransitioning = false;
     }
 
@@ -298,11 +323,55 @@ public sealed class SceneTransitionManager : MonoBehaviour
             playerControllerWasEnabled = controller.enabled;
             controller.enabled = false;
         }
+
+        HideCarriedLights();
+    }
+
+    // Вимикаємо перенесене світло, поки нова сцена завантажується
+    private void HideCarriedLights()
+    {
+        hiddenLightRoots.Clear();
+
+        for (int i = 0; i < carriedRoots.Count; i++)
+        {
+            GameObject root = carriedRoots[i];
+            if (root == null)
+            {
+                continue;
+            }
+            if (root.GetComponent<Light2D>() == null)
+            {
+                continue;
+            }
+            if (!root.activeSelf)
+            {
+                continue;
+            }
+
+            root.SetActive(false);
+            hiddenLightRoots.Add(root);
+        }
+    }
+
+    // Вмикаємо перенесене світло назад (копії з нової сцени вже видалені)
+    private void ShowCarriedLights()
+    {
+        for (int i = 0; i < hiddenLightRoots.Count; i++)
+        {
+            GameObject root = hiddenLightRoots[i];
+            if (root != null)
+            {
+                root.SetActive(true);
+            }
+        }
+        hiddenLightRoots.Clear();
     }
 
     // Повертаємо керування після завантаження
     private void RestoreAfterLoad()
     {
+        ShowCarriedLights();
+
         if (eventSystemRoot != null)
         {
             if (eventSystemWasActive)

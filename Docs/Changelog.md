@@ -1,5 +1,17 @@
 # История значимых изменений FalseMemory
 
+## 2026-11-20 — статичные скелеты и выход из пещеры в SampleScene
+
+**Добавлено:** в `Dungeon` объект `CaveExit` — экземпляр того же `Assets/Cave.aseprite`, что и вход (масштаб 4, sortingOrder 1), в точке `(0,2)` чуть выше точки появления `(0,0)`; дочерний `DoorTriger` (`BoxCollider2D` Is Trigger, тот же размер, что у входа) + `SceneTransition` → `SampleScene`, `spawnPosition = (7, 3.4)` под входом в пещеру. В `SceneTransitionManager` — `IsArrivalProtected` (0,5 с после прибытия переходы игнорируются), в `SceneTransition` — проверка этой защиты и свойство `TargetSceneName`. Новый PlayMode-тест `SceneTransitionFlowTests`.
+
+**Изменено:** у всех скелетов (`Enemy` в `SampleScene`; `Enemy`, `Enemy (1..3)` в `Dungeon`) снят `BattleUnit.visualAnimations = Skeleton64` — как у `BossSkeleton`, в мире и на боевом портрете показывается статичный `Skeleton-Idle-00`. Эффекты ударов (Fire, Hit), выпад/отдача и исчезновение портрета остались. Клипы, контролеры и `Skeleton64.asset` не удалены. Тест `PixelVisualFlowTests` переписан на `SkeletonUsesStaticIdleSpriteInWorldAndBattle`. В коммит включены и ранее незакоммиченные изменения владельца: `Dungeon.unity` (враги, `BossSkeleton`, `Borders`, камни), `PixelFont.asset` и `LiberationSans SDF - Fallback.asset`.
+
+**Исправлено:** при возврате в `SampleScene` URP писал ошибку «More than one global light on layer Default»: на кадр одновременно работали перенесённый и собственный Global Light 2D. Теперь перенесённый свет выключается на время загрузки и включается после удаления копии.
+
+**Проверки:** компиляция без ошибок, Console без ошибок/предупреждений. EditMode **52/52**, PlayMode **38/38**, 0 failed/skipped. Ручная проверка владельцем не выполнялась.
+
+**Ограничения:** мир `SampleScene` при возврате загружается заново — побеждённый скелет снова на месте. `EnemySpriteAnimation` остался на скелетах, но ничего не делает без набора анимаций. В рабочей копии `SampleScene` при сохранении через редактор `moveSpeed` скелета сбросился с 10 на 3 по непонятной причине; значение 10 возвращено вручную в файле сцены.
+
 ## 2026-11-20 — удалён атрибут Speed, игрок всегда ходит первым, побег всегда успешен
 
 **Удалено:** поле `BattleUnit.speed`, свойства `BattleUnit.Speed` и `IBattleParticipant.Speed`, строка `SPD` в характеристиках `BattleUI`, метод `BattleCalculator.FleeChance`, настройки `BattleRules.fleeBaseChance`, `fleeSpeedCoefficient`, `minimumFleeChance`, `maximumFleeChance` (и их строки в `DefaultBattleRules.asset`), тестовый файл `Assets/Tests/EditMode/BattleFleeTests.cs` и его документ.

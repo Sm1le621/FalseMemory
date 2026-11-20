@@ -14,7 +14,8 @@
 - В `Dungeon` ничего добавлять не нужно. Там должна быть камера; если у неё нет `CameraFollow`, `SceneTransitionManager` добавит компонент в рантайме.
 - Менеджер создаётся автоматически при первом переходе. Вручную добавлять `SceneTransitionManager` в сцену не требуется.
 - В рабочей копии триггер уже сохранён в `SampleScene`. После новых правок сцены сохраняйте её перед Play Mode.
-- Окружение `Dungeon` (`Grid`, `Rocks`) менеджер не изменяет. Если в `Dungeon` позже появится собственный Player, HUD, Canvas, EventSystem, `BattleTransition` или Global Light 2D, менеджер удалит их как дубликаты и оставит перенесённые объекты.
+- Выход: в `Dungeon` объект `CaveExit` (экземпляр `Assets/Cave.aseprite`, тот же спрайт, что у входа, позиция `(0,2)`, масштаб 4, sortingOrder 1) с дочерним `DoorTriger`: `BoxCollider2D` Is Trigger + `SceneTransition` с `Target Scene Name = SampleScene`, `Spawn Position = (7, 3.4)`.
+- Окружение `Dungeon` (`Grid`, `Rocks`, враги) менеджер не изменяет. Если в `Dungeon` позже появится собственный Player, HUD, Canvas, EventSystem, `BattleTransition` или Global Light 2D, менеджер удалит их как дубликаты и оставит перенесённые объекты.
 
 ## Player в SampleScene
 
@@ -29,7 +30,7 @@ Current Health/MP до запуска не являются сохранение
 
 ## Enemy и переход
 
-`Enemy` содержит `Rigidbody2D`, триггер обнаружения для `EnemyAI`, физический `Collider2D` для `BattleEncounter`, `Health` 60 и `BattleUnit` ATK 12/DEF 5/MDEF 3. Устаревший `EnemyAttack` удалён; контактный урон не используется. `BattleUnit.visualAnimations` = `Skeleton64` с `worldController` и `portraitController`; idle-клипов в наборе нет. Animator на Enemy и портреты добавляется в рантайме.
+`Enemy` содержит `Rigidbody2D`, триггер обнаружения для `EnemyAI`, физический `Collider2D` для `BattleEncounter`, `Health` 60 и `BattleUnit` ATK 12/DEF 5/MDEF 3. Устаревший `EnemyAttack` удалён; контактный урон не используется. `BattleUnit.visualAnimations` пустой — скелет без собственной анимации, как `BossSkeleton`; показывается статичный `Skeleton-Idle-00`.
 
 Единственный `BattleTransition` содержит Rules = `DefaultBattleRules` и имена сцен `BattleScene`/`MainMenu`. Он сохраняет исходные объекты мира; копировать Player/Enemy в `BattleScene` не нужно. `CameraFollow` ссылается на Player.
 

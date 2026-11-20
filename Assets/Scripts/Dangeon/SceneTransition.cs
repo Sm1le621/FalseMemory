@@ -2,17 +2,26 @@ using UnityEngine;
 
 // Тригер дверей або печери. Коли гравець входить у нього,
 // запускається перехід в іншу сцену.
+// Вхід у печеру (SampleScene -> Dungeon) і вихід з неї (Dungeon -> SampleScene)
+// використовують цей самий скрипт, різняться тільки налаштування в Inspector.
 // Сам перехід і перенесення гравця робить SceneTransitionManager.
 public class SceneTransition : MonoBehaviour
 {
-    // Ім'я сцени, яку треба завантажити
+    // Ім'я сцени, яку треба завантажити (Dungeon для входу, SampleScene для виходу)
     [SerializeField] private string targetSceneName = "Dungeon";
 
     [Header("Spawn")]
     // Чи ставити гравця в задану точку нової сцени
     [SerializeField] private bool useSpawnPosition = true;
-    // Точка появи гравця в новій сцені
+    // Точка появи гравця в новій сцені.
+    // Вона має бути ПОЗА тригером переходу в тій сцені, інакше гравець одразу піде назад
     [SerializeField] private Vector2 spawnPosition = Vector2.zero;
+
+    // Ім'я цільової сцени (тільки читання, наприклад для тестів)
+    public string TargetSceneName
+    {
+        get { return targetSceneName; }
+    }
 
     private void Awake()
     {
@@ -51,6 +60,12 @@ public class SceneTransition : MonoBehaviour
 
         // Один перехід за раз
         if (manager.IsTransitioning)
+        {
+            return;
+        }
+
+        // Гравець щойно прибув - не відправляємо його одразу назад
+        if (manager.IsArrivalProtected)
         {
             return;
         }

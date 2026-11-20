@@ -2,6 +2,8 @@
 
 ## 1. Назначение
 
+**С 2026-11-20 скелеты не используют собственную анимацию:** у всех скелетов в `SampleScene` и `Dungeon` `BattleUnit.visualAnimations` пустой (как у `BossSkeleton`), поэтому в мире и на портрете всегда виден статичный `Skeleton-Idle-00`. Процедурный выпад/отдача портрета, исчезновение при смерти и эффекты ударов (Fire, Hit) остались. Клипы, контролеры и `Skeleton64.asset` не удалены и могут быть снова назначены.
+
 Показ поз персонажей в мире и на боевых портретах без изменения боевых ресурсов. Кадры хранятся в `.anim`-клипах, которые проигрывает Animator. IDLE-анимации нет: в покое используется статичный `battleSprite`.
 
 ## 2. Общая логика
@@ -32,7 +34,7 @@
 
 ## 7. Использование в Unity
 
-Кадры лежат в `Assets/Art/Enemies/Skeleton64` и импортированы как Sprite 2D 64×64, Point, без mipmaps, PPU 100. Клипы и контролеры — в `Assets/Animations/Enemies/Skeleton/{World,Portrait}`, набор — `Assets/Settings/Battle/Visuals/Skeleton64.asset`; он назначен в `BattleUnit.visualAnimations`. Animator на Enemy и портреты не добавляется в сцене: его создаёт `SpriteClipPlayer`. Портреты и щиты сохранены в `BattleScene`.
+Кадры лежат в `Assets/Art/Enemies/Skeleton64` и импортированы как Sprite 2D 64×64, Point, без mipmaps, PPU 100. Клипы и контролеры — в `Assets/Animations/Enemies/Skeleton/{World,Portrait}`, набор — `Assets/Settings/Battle/Visuals/Skeleton64.asset`; сейчас он **не назначен** ни одному скелету. Animator на Enemy и портреты не добавляется в сцене: его создаёт `SpriteClipPlayer`. Портреты и щиты сохранены в `BattleScene`.
 
 ## 8. Расширение
 
@@ -44,6 +46,7 @@
 
 ## История
 
+- 2026-11-20 — `Skeleton64` снят со всех скелетов; скелеты статичны. PlayMode-тест переписан на `SkeletonUsesStaticIdleSpriteInWorldAndBattle`.
 - 2026-11-10 — анимации переведены на `.anim`-клипы и Animator; добавлен `SpriteClipPlayer`, набор хранит контролеры.
 - 2026-10-31 — удалена IDLE-анимация, позы сокращены до Move/Attack/Hurt/Death.
 - 2026-10-12 — базовые пиксельные анимации.

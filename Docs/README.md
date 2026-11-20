@@ -7,7 +7,7 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 ## Текущее состояние игры
 
 - Четыре сцены: `MainMenu`, `SampleScene` (мир), `BattleScene` (пошаговый бой), `Dungeon` (целевая сцена перехода).
-- Вход в пещеру/дверь переносит Player с текущими HP/MP, инвентарём и экипировкой в `Dungeon` без копирования объектов.
+- Вход в пещеру переносит Player с текущими HP/MP, инвентарём и экипировкой в `Dungeon`, выход `CaveExit` — обратно в `SampleScene`, без копирования объектов.
 - Инвентарь: 30 слотов, предметы трёх категорий — `Consumable`, `Weapon`, `Armor`.
 - Экипировка: два слота — `Weapon` и `Chest`; бонусы только `attack` и `defense`.
 - Стартовый набор: Iron Sword ×1, Leather Armor ×1, Potion ×3.
@@ -15,7 +15,7 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 - Боевые команды: Attack, Magic, Defend, Flee. Отдельной вкладки Items нет; Potion применяется из инвентаря вне боя.
 - Магия: Fire; заклинание Heal удалено. MP показан в бою и отдельной полосой в мире (`ManaHUD`).
 - Локализация, уровни/EXP, редкость предметов, золото/торговля и подбор предметов с земли удалены. Игровой текст в сценах — английский.
-- Анимации скелета и Fire VFX хранятся в `.anim`-клипах; Animator добавляется в рантайме через `SpriteClipPlayer`. У скелета нет idle-анимации: в покое показывается статичный кадр. Player в покое показывает `Idle1.ase` с выключенным Animator; при движении включаются состояния `Player_Walk`/`Player_Run`, управляемые параметром `isMoving`.
+- Скелеты (и `BossSkeleton`) статичны: собственной анимации нет, показывается Idle-спрайт. Fire VFX хранится в `.anim`-клипе; Animator добавляется в рантайме через `SpriteClipPlayer`. Player в покое показывает `Idle1.ase` с выключенным Animator; при движении включаются состояния `Player_Walk`/`Player_Run`, управляемые параметром `isMoving`.
 - В `Assets/Art/Enemies/BossSkeleton64` лежит один статичный PNG скелета босса; он пока не подключён к сцене, префабу или бою.
 
 ## Общие документы
@@ -114,7 +114,7 @@ FalseMemory — 2D Pixel Art RPG в жанре Dark Fantasy на Unity 6. Док
 ### Тесты
 
 - EditMode: [BattleAbilityTests](Scripts/Tests/EditMode/BattleAbilityTests.md), [BattleCoreTests](Scripts/Tests/EditMode/BattleCoreTests.md), [BattleItemTests](Scripts/Tests/EditMode/BattleItemTests.md), [BattleRandomTests](Scripts/Tests/EditMode/BattleRandomTests.md), [EquipmentTests](Scripts/Tests/EditMode/EquipmentTests.md), [InventoryTests](Scripts/Tests/EditMode/InventoryTests.md), [ItemPresentationTests](Scripts/Tests/EditMode/ItemPresentationTests.md), [PixelArtTests](Scripts/Tests/EditMode/PixelArtTests.md).
-- PlayMode: [BattleFlowTests](Scripts/Tests/PlayMode/BattleFlowTests.md), [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md), [BattleStage2FlowTests](Scripts/Tests/PlayMode/BattleStage2FlowTests.md), [InventoryFlowTests](Scripts/Tests/PlayMode/InventoryFlowTests.md), [InventoryPresentationFlowTests](Scripts/Tests/PlayMode/InventoryPresentationFlowTests.md), [PixelVisualFlowTests](Scripts/Tests/PlayMode/PixelVisualFlowTests.md), [PlayerMovementFlowTests](Scripts/Tests/PlayMode/PlayerMovementFlowTests.md).
+- PlayMode: [BattleFlowTests](Scripts/Tests/PlayMode/BattleFlowTests.md), [BattlePresentationFlowTests](Scripts/Tests/PlayMode/BattlePresentationFlowTests.md), [BattleStage2FlowTests](Scripts/Tests/PlayMode/BattleStage2FlowTests.md), [InventoryFlowTests](Scripts/Tests/PlayMode/InventoryFlowTests.md), [InventoryPresentationFlowTests](Scripts/Tests/PlayMode/InventoryPresentationFlowTests.md), [PixelVisualFlowTests](Scripts/Tests/PlayMode/PixelVisualFlowTests.md), [PlayerMovementFlowTests](Scripts/Tests/PlayMode/PlayerMovementFlowTests.md), [SceneTransitionFlowTests](Scripts/Tests/PlayMode/SceneTransitionFlowTests.md).
 
 ## Как пользоваться
 

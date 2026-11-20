@@ -78,7 +78,7 @@ InventoryCanvas           Canvas + CanvasScaler + GraphicRaycaster
 - `EquipmentWeapon.slot = Weapon`, `EquipmentChest.slot = Chest`; у обоих `EquipmentSlotView` назначен `border` (`Outline`), `icon`, `background`, `slotLabel` и `owner`.
 - `ManaHUD` живёт на объекте `Health`, ссылается на `ManaSlider`, `MPText` и `BattleUnit` игрока. HP-текст/полоса и MP-текст/полоса читают те же `Health`/`BattleUnit`.
 - `PlayerController` в покое показывает `idleSprite = Idle1.ase` и выключает Animator. При движении Animator включается, получает `isMoving = true` и переходит между `Player_Walk`/`Player_Run` в `Assets/Player.controller`; структура контроллера существует в рабочей копии и не перестраивалась этой задачей.
-- `EnemySpriteAnimation` читает позицию и `Health`, меняя только `SpriteRenderer` через клипы `SpriteAnimationSet` (`Skeleton64`); Animator добавляется в рантайме, idle-кадров в наборе нет.
+- Скелет статичен: `BattleUnit.visualAnimations` пустой (как у `BossSkeleton`), поэтому `EnemySpriteAnimation` ничего не меняет и всегда виден `Skeleton-Idle-00`.
 - Объектов `TestLoot`, `InteractionPrompt`, `PickupNotification`, `CharacterPanel`, портрета и лишних слотов экипировки больше нет.
 - Вход в пещеру/дверь — объект с `BoxCollider2D` (`Is Trigger`) и `SceneTransition`; `targetSceneName = Dungeon`, `useSpawnPosition = true`, `spawnPosition = (0,0)`. В рабочей копии объект сохранён в `SampleScene.unity`.
 - `SceneTransition` не загружает сцену напрямую: он создаёт `SceneTransitionManager` и передаёт ему имя сцены и точку появления. Подробно — [SceneTransitionSystem](SceneTransitionSystem.md).
@@ -88,9 +88,14 @@ InventoryCanvas           Canvas + CanvasScaler + GraphicRaycaster
 В рабочей копии сохранённый файл `Assets/Scenes/Dungeon.unity` содержит камеру, сетку и декоративные камни. Player, HP/MP HUD, инвентарь, EventSystem, `BattleTransition` и Global Light 2D появляются в ней в рантайме — их переносит `SceneTransitionManager`.
 
 ```
+Borders
 Main Camera
 Grid
-Rocks                     21 экземпляр rock_obj
+Rocks                     экземпляры rock_obj
+BossSkeleton              статичный BossSkeleton-Idle-00
+Enemies                   Enemy, Enemy (1..3) — статичные Skeleton-Idle-00
+CaveExit                  спрайт Cave (как вход), (0,2), scale 4
+  DoorTriger              BoxCollider2D Is Trigger + SceneTransition → SampleScene, spawn (7, 3.4)
 ```
 
 Связи:
@@ -99,7 +104,7 @@ Rocks                     21 экземпляр rock_obj
 - Камера `Dungeon` получает `CameraFollow` в рантайме, если компонента нет; цель — перенесённый Player.
 - `Grid` и `Rocks` — окружение сцены. Менеджер их не трогает: он удаляет только собственные Player/HUD/Canvas/EventSystem/`BattleTransition`/Global Light 2D, если они появятся.
 - Собственных Player/HUD/Canvas в сцене нет, поэтому удалять дубликаты не требуется.
-- Обратного триггера в `Dungeon` пока нет; возврат в `SampleScene` потребует отдельного объекта с `SceneTransition`.
+- `CaveExit` — выход обратно в `SampleScene`, стоит чуть выше точки появления `(0,0)`; Player появляется вне его триггера.
 
 ## 5. Сцена BattleScene (бой)
 
@@ -131,7 +136,7 @@ BattleManager              BattleManager, BattleUI, BattleHUD, BattlePresentatio
 
 - `BattleUI` содержит тексты, портреты, четыре кнопки команд и подписи, Back, `BattleResults`, `AbilityGlow/AbilityAmount`, `BattleHUD`, `BattleAudioController`.
 - `BattleHUD` содержит три `Slider` (HP/MP игрока, HP врага), `SessionResources`, `LowHealth`, `MenuTitle`, `Controls`, `CommandRows` и `CanvasGroup` меню. `SessionResources` показывает только `DEFENDING`; счётчик предметов не выводится.
-- `BattlePresentation` двигает портреты, показывает клипы `SpriteAnimationSet` (`Skeleton64`) через Animator и `BattleUnit`, отображает `PlayerGuard`/`EnemyGuard`.
+- `BattlePresentation` двигает портреты, двигает портреты; у скелета набора клипов нет, поэтому показывается статичный `battleSprite`, отображает `PlayerGuard`/`EnemyGuard`.
 - `BattleVFXController` использует `PixelSpellFrame` и 24 `BattleParticle*`; профиль `FireVisual` — ScriptableObject с клипом `Effect`. `HealVisual` и кадры Heal удалены.
 - `BattleManager` — единственный владелец хода, урона, MP, предметов и исхода; UI/анимации только отображают результат. Наград EXP нет.
 
@@ -163,6 +168,7 @@ BattleManager              BattleManager, BattleUI, BattleHUD, BattlePresentatio
 
 ## История
 
+- 2026-11-20 — скелеты в `SampleScene` и `Dungeon` без собственной анимации (`visualAnimations` пустой); в `Dungeon` добавлен выход `CaveExit` в `SampleScene`.
 - 2026-11-09 — добавлена сцена `Dungeon` и переход в неё: `SceneTransition` + `SceneTransitionManager` переносят Player, HP/MP HUD, инвентарь, EventSystem, `BattleTransition` и Global Light 2D. В `Dungeon` сохранена только камера.
 - 2026-11-02 — PlayerController выставляет `isMoving`; из боевой сцены удалены неиспользуемые `preview*Sprite` и слот иконки Items. Служебный шаблон Welcome и пустой `PlayerAnimatorController.controller` удалены.
 - 2026-11-01 — из `InventoryPanel` удалён объект `Gold`; `SessionResources` в бою показывает только `DEFENDING`.

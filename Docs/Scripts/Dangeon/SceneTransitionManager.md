@@ -15,13 +15,13 @@
 1. `ChangeScene` проверяет имя сцены, наличие её в Build Settings и блокирует повторный запуск.
 2. `CollectCarriedRoots` собирает корневые объекты Player и интерфейса.
 3. Найденные объекты временно переводятся в `DontDestroyOnLoad`.
-4. `PrepareForLoad` выключает EventSystem и `PlayerController`, чтобы не было двух систем ввода и движения во время загрузки.
+4. `PrepareForLoad` выключает EventSystem, `PlayerController` и перенесённый Global Light 2D, чтобы во время загрузки не было двух систем ввода, движения и двух глобальных источников света (иначе URP пишет ошибку «More than one global light»).
 5. `SceneManager.LoadSceneAsync(..., Single)` загружает новую сцену.
 6. В `sceneLoaded` менеджер удаляет из новой сцены копии Player, HUD, Canvas, EventSystem, `BattleTransition` и Global Light.
 7. После загрузки перенесённые объекты возвращаются из `DontDestroyOnLoad` в активную сцену через `SceneManager.MoveGameObjectToScene`.
 8. При необходимости игрок ставится в `spawnPosition`.
 9. Камера новой сцены получает `CameraFollow` и цель — перенесённого Player.
-10. EventSystem и `PlayerController` включаются обратно.
+10. EventSystem, `PlayerController` и перенесённый свет включаются обратно; запоминается время прибытия для `IsArrivalProtected`.
 
 HP, MP, инвентарь и экипировка сохраняются, потому что это те же самые компоненты и объекты, а не новые копии. `Health.Start` и `BattleUnit.Awake` повторно не вызываются.
 
@@ -37,8 +37,11 @@ HP, MP, инвентарь и экипировка сохраняются, по�
 - `IsGameplayRoot(GameObject root)` — проверяет наличие `PlayerController`, `ManaHUD`, `Canvas`, `EventSystem`, `BattleTransition` или `Light2D`. Такие объекты переносятся, а копии в новой сцене удаляются.
 - `HandleSceneLoaded(Scene scene, LoadSceneMode mode)` — Unity-событие после загрузки сцены; при активном переходе вызывает удаление копий.
 - `RemoveDuplicates(Scene scene)` — выключает и уничтожает корневые объекты новой сцены, которые совпадают по роли с переносимыми.
-- `PrepareForLoad()` — запоминает и выключает `EventSystem`, выключает `PlayerController`.
-- `RestoreAfterLoad()` — включает EventSystem и `PlayerController` обратно.
+- `PrepareForLoad()` — запоминает и выключает `EventSystem`, выключает `PlayerController`, вызывает `HideCarriedLights`.
+- `HideCarriedLights()` — выключает перенесённые корни с `Light2D` и запоминает их в `hiddenLightRoots`.
+- `ShowCarriedLights()` — включает их обратно после удаления копий из новой сцены.
+- `RestoreAfterLoad()` — включает свет, EventSystem и `PlayerController` обратно.
+- `IsArrivalProtected` → `bool`; `true` первые 0,5 секунды (`ArrivalGraceSeconds`, по `Time.unscaledTime`) после окончания перехода. `SceneTransition` в это время не запускает новый переход.
 - `RestoreAfterFailedLoad()` — возвращает перенесённые объекты в текущую сцену, если загрузка не удалась.
 - `PlacePlayer(Vector2 spawnPosition)` — ставит Transform и `Rigidbody2D` Player в точку появления и обнуляет скорость.
 - `SetupCamera(Scene scene)` — находит камеру сцены, добавляет `CameraFollow`, если его нет, назначает цель и сразу ставит камеру на Player.
@@ -55,6 +58,9 @@ HP, MP, инвентарь и экипировка сохраняются, по�
 - `eventSystemRoot` — корень EventSystem; выключается на время загрузки.
 - `eventSystemWasActive` — было ли EventSystem включено до перехода.
 - `playerControllerWasEnabled` — был ли `PlayerController` включён до перехода.
+- `hiddenLightRoots` — перенесённый свет, выключенный на время загрузки.
+- `ArrivalGraceSeconds` — константа 0,5 с, защита от мгновенного возврата.
+- `lastArrivalTime` — время окончания последнего перехода (`-1` — ещё не было).
 
 ## 5. Связи с другими системами
 
@@ -89,9 +95,10 @@ HP, MP, инвентарь и экипировка сохраняются, по�
 - **Пропали объекты мира.** При `LoadSceneMode.Single` старая сцена выгружается; враги и подобранные объекты перезагружаются заново. Дискового сохранения мира нет.
 - **Дубликаты HUD.** Если в целевой сцене есть собственный Canvas/Player, менеджер удалит их как копии. Это сделано намеренно, чтобы не было двух HP/MP-полос.
 - **Несколько переходов подряд.** `IsTransitioning` блокирует повторный запуск; дождитесь окончания загрузки.
-- **Возврат в `SampleScene` пока не настроен.** В `Dungeon` нет обратного триггера, поэтому проверить обратный перенос можно только после добавления такого объекта владельцем.
+- **Возврат в `SampleScene`.** Выход `CaveExit` в `Dungeon` переносит того же Player обратно; собственные Player/HUD/EventSystem/`BattleTransition`/свет `SampleScene` удаляются как копии. Мир `SampleScene` загружается заново, поэтому побеждённый скелет снова на месте.
 - **Нет плавного затемнения.** Переход выполняется без fade; при необходимости используйте существующий `BattleScreenFade` или отдельный overlay.
 
 ## 9. История изменений
 
+- 2026-11-20 — добавлены защита после прибытия (`IsArrivalProtected`) и выключение перенесённого Global Light 2D на время загрузки (исправлена ошибка URP «More than one global light» при возврате в `SampleScene`). Проверено PlayMode-тестом `SceneTransitionFlowTests`.
 - 2026-11-09 — менеджер создан для переноса Player и HP/MP-интерфейса из `SampleScene` в `Dungeon` без копирования объектов. Добавлены очистка дубликатов, привязка камеры и точка появления.
