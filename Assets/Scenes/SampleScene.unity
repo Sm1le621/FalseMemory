@@ -4001,7 +4001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ea8b0eb8ef7e0409c12f2aa6b31cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  moveSpeed: 10
+  moveSpeed: 3
 --- !u!50 &497416142
 Rigidbody2D:
   serializedVersion: 5
