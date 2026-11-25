@@ -105,7 +105,11 @@ private void OnEnable()
 5. Changed → InventoryWindow.Refresh → ячейка показывает ×2 вместо ×3
 ```
 
-## 6.8 Схема
+## 6.8 Новые предметы из лута
+
+Предмет попадает в инвентарь не только из `startingItems`, но и после победы над врагом с компонентом `LootDrop` ([05-battle.md](05-battle.md), раздел 5.7). Пример — `Excalibur` (оружие, ATK +10) из босса подземелья. Сам предмет — обычный ассет `ItemData`: создан копией `IronSword`, иконку можно заменить в поле `icon`.
+
+## 6.9 Схема
 
 ```mermaid
 sequenceDiagram

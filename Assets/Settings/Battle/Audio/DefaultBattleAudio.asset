@@ -18,14 +18,12 @@ MonoBehaviour:
   move: {fileID: 0}
   confirm: {fileID: 0}
   cancel: {fileID: 0}
-  attack: {fileID: 0}
+  attack: {fileID: 8300000, guid: 88b1cbe3caa3fee4b8b103b5edd7aba9, type: 3}
   hit: {fileID: 0}
   critical: {fileID: 0}
   miss: {fileID: 0}
-  fire: {fileID: 0}
-  heal: {fileID: 0}
+  fire: {fileID: 8300000, guid: a652877b012108e41871f867ada9f176, type: 3}
   victory: {fileID: 0}
   defeat: {fileID: 0}
-  defend: {fileID: 0}
-  potion: {fileID: 0}
-  flee: {fileID: 0}
+  defend: {fileID: 8300000, guid: b7b5a6156961bac44a67504d42ce6fcf, type: 3}
+  flee: {fileID: 8300000, guid: c458b6714dab015479d507b21fd2cead, type: 3}

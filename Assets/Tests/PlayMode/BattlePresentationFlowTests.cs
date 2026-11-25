@@ -138,7 +138,7 @@ public sealed partial class BattleFlowTests
         Assert.That(manager.TryPlayerAction(BattleAction.Attack), Is.False);
     }
 
-    // Якщо звуків немає - нічого не ламається
+    // Звук без кліпа нічого не ламає, звук з кліпом грає
     [UnityTest]
     public IEnumerator MissingAudioClipsAreSafeAndListenerVolumeIsRespected()
     {
@@ -152,7 +152,9 @@ public sealed partial class BattleFlowTests
 
         foreach (BattleSound sound in System.Enum.GetValues(typeof(BattleSound)))
         {
-            Assert.That(audio.Play(sound), Is.False);
+            // Play повертає true тільки якщо в профілі є кліп для цього звуку
+            bool hasClip = audio.profile.GetClip(sound) != null;
+            Assert.That(audio.Play(sound), Is.EqualTo(hasClip));
         }
 
         Assert.That(AudioListener.volume, Is.EqualTo(before));

@@ -50,6 +50,9 @@ EquipmentController --> InventoryWindow : подписка на события
 PlayerController --> WorldInputGate
 InventoryWindow --> WorldInputGate
 SceneTransition ..> SceneTransitionManager : ChangeScene()
+BattleManager ..> LootDrop : GiveTo() после победы
+PauseMenu --> InventoryWindow
+PauseMenu --> WorldInputGate
 BattleTransition ..> PlayerController : пауза
 BattleTransition ..> EnemyAI : пауза
 ```
@@ -323,6 +326,15 @@ class WorldItemUseController {
 WorldItemUseController --> InventoryWindow : подписка
 WorldItemUseController ..> BattleAbilities
 
+class LootDrop {
+  <<MonoBehaviour>>
+  +ItemData item
+  +int count
+  +GiveTo(BattleUnit) string
+}
+LootDrop --> ItemData
+LootDrop ..> BattleInventory : TryAdd
+
 class InventorySlotView
 <<MonoBehaviour>> InventorySlotView
 class EquipmentSlotView
@@ -392,6 +404,19 @@ class SettingsMenu {
   +OnVolumeChanged(float)
   +ToggleFullscreen()
 }
+class PauseMenu {
+  <<MonoBehaviour>>
+  -GameObject panel
+  -InventoryWindow inventory
+  -WorldInputGate inputGate
+  +bool IsPaused
+  +Pause()
+  +Resume()
+  +OpenMainMenu()
+}
+PauseMenu --> InventoryWindow : выключает на паузе
+PauseMenu --> WorldInputGate : Acquire / Release
+PauseMenu ..> BattleTransition : нет ли боя
 PlayerController --> WorldInputGate
 SceneTransition ..> SceneTransitionManager
 SceneTransitionManager ..> CameraFollow

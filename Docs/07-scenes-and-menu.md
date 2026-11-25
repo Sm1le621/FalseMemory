@@ -1,6 +1,6 @@
 # 7. Сцены и меню
 
-Скрипты: `SceneTransition`, `SceneTransitionManager`, `MainMenuController`, `SettingsMenu`.
+Скрипты: `SceneTransition`, `SceneTransitionManager`, `PauseMenu`, `MainMenuController`, `SettingsMenu`.
 
 ## 7.1 Проблема
 
@@ -67,7 +67,38 @@ sequenceDiagram
     M->>C: SetTarget(player), SnapToTarget()
 ```
 
-## 7.5 Главное меню — `MainMenuController` и `SettingsMenu`
+## 7.5 Меню паузы — `PauseMenu`
+
+Работает в мире (`SampleScene` и `Dungeon`). В бою пауза не открывается: там `Esc` — «назад» в меню команд.
+
+**Объекты** (сделаны в сцене, а не кодом):
+
+```
+PauseCanvas            Canvas (sortingOrder 500 — поверх HUD и инвентаря) + PauseMenu
+ └─ PausePanel         Image, чёрный с прозрачностью 60% на весь экран (выключен)
+     └─ PauseWindow    Image + Outline — окно в стиле инвентаря
+         ├─ Title          TMP "PAUSED"
+         ├─ ResumeButton   Button → OnClick: PauseMenu.Resume
+         └─ MainMenuButton Button → OnClick: PauseMenu.OpenMainMenu
+```
+
+Кнопки подключены в Inspector (раздел `OnClick()` у `Button`). Поля `PauseMenu` тоже заданы в Inspector: `panel` → `PausePanel`, `inventory` → `InventoryWindow` игрока, `inputGate` → `WorldInputGate` игрока.
+
+**Как работает:**
+
+| Действие | Что делает `PauseMenu` |
+|---|---|
+| `Esc` (инвентарь закрыт, нет боя и перехода сцены) | `Pause()`: показать `PausePanel`, `Time.timeScale = 0`, выключить `InventoryWindow`, закрыть замок `WorldInputGate` |
+| `Esc` на паузе или кнопка Resume | `Resume()`: всё обратно, `Time.timeScale = 1` |
+| Кнопка Main Menu | `OpenMainMenu()`: `Time.timeScale = 1`, `SceneManager.LoadScene("MainMenu")` |
+
+`Time.timeScale = 0` останавливает физику, `FixedUpdate`, анимации и всё, что считает время через `Time.deltaTime`, — враги замирают, бой начаться не может.
+
+Тонкость с `Esc`: им же закрывается инвентарь. Над классом стоит `[DefaultExecutionOrder(-100)]` — `PauseMenu.Update` выполняется **раньше** `InventoryWindow.Update`. Поэтому при открытом инвентаре пауза видит `inventory.IsOpen == true` и ничего не делает, а инвентарь потом закрывается сам.
+
+`PauseCanvas` — корневой объект с `Canvas`, поэтому `SceneTransitionManager` переносит его в `Dungeon` вместе с игроком, и пауза работает и там.
+
+## 7.6 Главное меню — `MainMenuController` и `SettingsMenu`
 
 Кнопки связаны с методами **в Inspector** (раздел `OnClick()` у компонента `Button`), а не кодом:
 

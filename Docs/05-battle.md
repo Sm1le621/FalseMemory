@@ -121,19 +121,47 @@ ui.ShowMenu(names, actions);
 | `BattleHUD` | полоски HP/MP с плавной анимацией, подсветка выбранной команды | каждый кадр в `Update` читает `BattleUnit` |
 | `BattlePresentation` | замах, рывок, тряска портретов, позы | корутины `Windup` / `Recover` / `Finish` |
 | `BattleVFXController` | анимация огня и частицы | `Play(onPlayer, spell.visualEffect, color)` |
-| `BattleAudioController` | звуки ударов, промаха, победы | `Play(BattleSound.Hit)` → клип из `BattleAudioProfile` |
+| `BattleAudioController` | звуки действий | `Play(BattleSound.Attack)` → клип из `BattleAudioProfile` |
 
 Ссылки между ними заданы в **Inspector**: все компоненты висят на одном объекте `BattleManager` в `BattleScene`.
+
+**Звуки.** Код просто вызывает `audioController.Play(BattleSound.Fire)`, а какой файл прозвучит — решает ассет `DefaultBattleAudio` (`BattleAudioProfile`). Сейчас назначены:
+
+| Действие | `BattleSound` | Файл в `Assets/Sounds/SFX/` |
+|---|---|---|
+| Attack | `Attack` | `10_Battle_SFX/22_Slash_04` |
+| Defend | `Defend` | `10_Battle_SFX/39_Block_03` |
+| Flee | `Flee` | `10_Battle_SFX/51_Flee_02` |
+| Magic Fire | `Fire` | `8_Atk_Magic_SFX/04_Fire_explosion_04_medium` |
+
+Остальные события (`Hit`, `Miss`, `Victory`...) вызываются, но клипы им не назначены — `Play` просто ничего не делает. Чтобы добавить звук, не нужен код: перетащить файл в поле ассета в Inspector.
 
 ## 5.6 Выход из боя
 
 | Исход | Метод `BattleTransition` | Что происходит |
 |---|---|---|
-| Победа | `ReturnAfterVictory()` | выгрузить `BattleScene`, вернуть мир, **скелет выключается** |
+| Победа | `ReturnAfterVictory()` | выгрузить `BattleScene`, вернуть мир, **скелет выключается**. Перед этим `BattleManager` выдаёт лут (см. ниже) |
 | Побег | `ReturnAfterEscape()` | вернуть мир, `EnemyAI` выключен на 3 с, игрока отодвигают на 2 единицы от скелета (чтобы бой не начался сразу снова) |
 | Поражение | `RestartGame()` / `ReturnToMainMenu()` | загрузить сцену заново, через `BattleScreenFade` (затемнение переживает загрузку) |
 
-## 5.7 Схема одного хода
+## 5.7 Лут после победы — `LootDrop`
+
+На враге может висеть компонент `LootDrop` с полями `item` (ассет `ItemData`) и `count`. Сейчас он есть только у `BossSkeleton` в `Dungeon`: `item = Excalibur`.
+
+```csharp
+// BattleManager, ветка победы
+LootDrop loot = Enemy.GetComponent<LootDrop>();       // есть ли у врага лут?
+if (loot != null)
+{
+    victoryMessage = victoryMessage + " " + loot.GiveTo(Player);   // "You found Excalibur!"
+}
+```
+
+`GiveTo` кладёт предмет через `Player.Inventory.TryAdd(...)`. Если сумка полна — предмет теряется, и об этом пишется в сообщении.
+
+Это пример подхода «больше объектов, меньше кода»: чтобы сделать лут другому врагу, достаточно добавить ему компонент `LootDrop` в Inspector и выбрать предмет — код менять не нужно.
+
+## 5.8 Схема одного хода
 
 ```mermaid
 sequenceDiagram

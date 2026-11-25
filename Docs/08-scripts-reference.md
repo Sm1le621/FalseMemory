@@ -17,7 +17,7 @@
 |---|---|---|
 | `BattleTransition` | MB, singleton | Начинает бой (прячет мир, грузит `BattleScene` Additive) и возвращает в мир |
 | `BattleEncounter` | MB | На скелете: при касании вызывает `BattleTransition.TryBegin` |
-| `BattleManager` | MB | Режиссёр боя: корутина с раундами и ходами, применяет урон/MP, решает исход |
+| `BattleManager` | MB | Режиссёр боя: корутина с раундами и ходами, применяет урон/MP, решает исход, выдаёт лут после победы |
 | `BattleUnit` | MB | Характеристики участника: ATK/DEF/MATK/MDEF, MP, заклинания, защита. Реализует `IBattleParticipant` |
 | `BattleTurnOrder<T>` | C# (generic) | Очередь ходов в раунде, пропускает мёртвых. Тот же файл: `enum BattleAction`, `enum BattleState`, класс `BattleCommandGate` (одна команда за ход) |
 | `BattleCalculator` | static | Формулы: физический урон, промах, крит, магический урон |
@@ -27,7 +27,7 @@
 | `BattleRules` | SO | Числа баланса: множители, мин. урон, крит, защита, паузы, защита после побега |
 | `BattleSpell` | SO | Заклинание: стоимость MP, сила, цель, визуальный эффект. Тот же файл: `enum BattleEffect`, `enum BattleTarget` |
 | `BattleConsumable` | SO | Наследник `ItemData`: лечение HP или восстановление MP |
-| `BattleInventory` | MB | Владелец инвентаря на Player: стартовые предметы + `InventoryState` |
+| `BattleInventory` | MB | Владелец инвентаря на Player: хранит `InventoryState` и стартовые предметы из Inspector. Через него инвентарь достают бой, окно, экипировка и лут |
 | `BattleUI` | MB | Универсальное меню (подписи + делегаты), сообщения, всплывающий урон, экран результата |
 | `BattleHUD` | MB | Полоски HP/MP с анимацией, оформление команд, появление экрана |
 | `BattlePresentation` | MB | Анимации портретов: замах, рывок, реакция на удар, финальные позы |
@@ -55,6 +55,7 @@
 | `EquipmentSlotView` | MB | Ячейка экипировки (оружие / броня) |
 | `InventoryTooltip` | MB | Всплывающее описание предмета у курсора |
 | `ItemPresentation` | static | Тексты и цвета для UI: название типа, строка бонусов, описание |
+| `LootDrop` | MB | Висит на враге (сейчас на боссе): какой предмет выпадает. После победы `BattleManager` вызывает `GiveTo(player)` — предмет кладётся в инвентарь |
 
 ## `Dangeon/` — переходы между сценами
 
@@ -68,6 +69,7 @@
 | Скрипт | Тип | Назначение |
 |---|---|---|
 | `MainMenuController` | MB | Кнопки New Game / Settings / Exit |
+| `PauseMenu` | MB | Пауза в мире по Esc: `Time.timeScale = 0`, панель с кнопками Resume / Main Menu |
 | `SettingsMenu` | MB | Громкость и полноэкранный режим, сохранение в `PlayerPrefs` |
 | `ManaHUD` | MB | Полоса маны в мире |
 

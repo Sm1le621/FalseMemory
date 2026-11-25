@@ -332,7 +332,14 @@ public sealed class BattleManager : MonoBehaviour
             }
             ui.RefreshStats(Player, Enemy, Round);
             ui.ShowVictoryResults(Player);
-            ui.ShowMessage("Victory! The skeleton is defeated.");
+            string victoryMessage = "Victory! The skeleton is defeated.";
+            // Якщо з ворога щось випадає - кладемо в інвентар гравця
+            LootDrop loot = Enemy.GetComponent<LootDrop>();
+            if (loot != null)
+            {
+                victoryMessage = victoryMessage + " " + loot.GiveTo(Player);
+            }
+            ui.ShowMessage(victoryMessage);
 
             string[] victoryNames = new string[] { "Return to Map" };
             Action[] victoryActions = new Action[]
