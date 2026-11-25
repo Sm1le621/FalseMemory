@@ -7,11 +7,6 @@ public enum ItemCategory { Consumable, Weapon, Armor }
 // Слоти екіпіровки
 public enum EquipmentSlot { Weapon, Chest }
 
-// Де можна використати предмет. [Flags] - значення можна поєднувати
-// (Anywhere = Exploration + Battle = 1 + 2 = 3)
-[Flags]
-public enum ItemUseLocation { None = 0, Exploration = 1, Battle = 2, Anywhere = 3 }
-
 // Бонуси до характеристик від предмета
 [Serializable]
 public struct ItemStatBonus
@@ -59,7 +54,6 @@ public class ItemData : ScriptableObject
     // Максимум у одній стопці
     [Min(1)]
     public int maxStack = 99;
-    public ItemUseLocation useLocations = ItemUseLocation.Anywhere;
     // Для броні: в який слот одягається
     public EquipmentSlot equipmentSlot = EquipmentSlot.Chest;
     public ItemStatBonus bonuses;

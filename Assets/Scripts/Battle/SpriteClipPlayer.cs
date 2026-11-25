@@ -42,29 +42,6 @@ public static class SpriteClipPlayer
         animator.Update(0f);
     }
 
-    // Запустити циклічний стан (наприклад, ходьбу)
-    public static void Loop(
-        Animator animator,
-        RuntimeAnimatorController controller,
-        string stateName)
-    {
-        if (animator == null || controller == null)
-        {
-            return;
-        }
-
-        bool changed = Prepare(animator, controller);
-        animator.speed = 1f;
-
-        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
-        // Після вмикання Animator ще не намалював кадр, тому примусово ставимо його
-        if (changed || !info.IsName(stateName))
-        {
-            animator.Play(stateName, 0, 0f);
-            animator.Update(0f);
-        }
-    }
-
     // Вимкнути Animator, щоб код міг поставити статичний спрайт
     public static void Stop(Animator animator)
     {

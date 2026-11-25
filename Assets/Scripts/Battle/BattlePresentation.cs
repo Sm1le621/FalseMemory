@@ -48,14 +48,8 @@ public sealed class BattlePresentation : MonoBehaviour
 
     private BattleUnit player;
     private BattleUnit enemy;
-    // Animator-и портретів. Додаються у грі, тому сцени не змінюються.
-    private Animator playerPortraitAnimator;
-    private Animator enemyPortraitAnimator;
     // true - вже запам'ятали позиції портретів
     private bool bound;
-    // Хто зараз атакує (щоб показувати кадри атаки)
-    private bool playerAttacking;
-    private bool enemyAttacking;
 
     // Скільки разів програвався ефект влучання (для тестів)
     public int HitEffectsPlayed { get; private set; }
@@ -169,56 +163,8 @@ public sealed class BattlePresentation : MonoBehaviour
 
         if (unit != null && unit.IsAlive && portrait != null)
         {
-            // Вимкнути Animator, інакше він переб'є статичний спрайт
-            if (unit.visualAnimations != null)
-            {
-                SpriteClipPlayer.Stop(GetPortraitAnimator(onPlayer));
-            }
             portrait.sprite = unit.battleSprite;
         }
-    }
-
-    // Поставити кадр анімації pose з прогресом progress (від 0 до 1)
-    private void PoseFrame(bool onPlayer, SpritePose pose, float progress)
-    {
-        BattleUnit unit = GetUnit(onPlayer);
-        Image portrait = GetPortrait(onPlayer);
-
-        if (unit != null && portrait != null && unit.visualAnimations != null)
-        {
-            SpriteClipPlayer.Sample(
-                GetPortraitAnimator(onPlayer),
-                unit.visualAnimations.portraitController,
-                pose.ToString(),
-                progress);
-        }
-    }
-
-    // Animator портрета; створюється один раз при першій анімації
-    private Animator GetPortraitAnimator(bool onPlayer)
-    {
-        if (onPlayer)
-        {
-            if (playerPortraitAnimator == null)
-            {
-                Image portrait = GetPortrait(true);
-                if (portrait != null)
-                {
-                    playerPortraitAnimator = SpriteClipPlayer.GetAnimator(portrait.gameObject);
-                }
-            }
-            return playerPortraitAnimator;
-        }
-
-        if (enemyPortraitAnimator == null)
-        {
-            Image portrait = GetPortrait(false);
-            if (portrait != null)
-            {
-                enemyPortraitAnimator = SpriteClipPlayer.GetAnimator(portrait.gameObject);
-            }
-        }
-        return enemyPortraitAnimator;
     }
 
     // Перша половина дії: замах / підготовка
@@ -244,15 +190,6 @@ public sealed class BattlePresentation : MonoBehaviour
         }
 
         IsAnimating = true;
-
-        if (onPlayer)
-        {
-            playerAttacking = action == BattleAction.Attack;
-        }
-        else
-        {
-            enemyAttacking = action == BattleAction.Attack;
-        }
 
         float duration = Mathf.Clamp(attackDuration, 0f, 1f) * 0.5f * Pace(pace);
 
@@ -284,11 +221,6 @@ public sealed class BattlePresentation : MonoBehaviour
             if (portrait == null)
             {
                 yield break;
-            }
-
-            if (action == BattleAction.Attack)
-            {
-                PoseFrame(onPlayer, SpritePose.Attack, t / duration);
             }
 
             portrait.rectTransform.anchoredPosition = Vector2.Lerp(home, destination, Mathf.SmoothStep(0, 1, t / duration));
@@ -328,10 +260,6 @@ public sealed class BattlePresentation : MonoBehaviour
             yield return null;
         }
 
-        if (action == BattleAction.Attack)
-        {
-            PoseFrame(onPlayer, SpritePose.Attack, 1f);
-        }
         if (portrait != null)
         {
             portrait.rectTransform.anchoredPosition = destination;
@@ -399,29 +327,11 @@ public sealed class BattlePresentation : MonoBehaviour
 
             float progress = t / duration;
 
-            // Чи атакував цей персонаж (тоді прокручуємо кадри атаки назад)
-            bool wasAttacking;
-            if (attackerIsPlayer)
-            {
-                wasAttacking = playerAttacking;
-            }
-            else
-            {
-                wasAttacking = enemyAttacking;
-            }
-            if (wasAttacking)
-            {
-                PoseFrame(attackerIsPlayer, SpritePose.Attack, 1f - progress);
-            }
-
             // Атакуючий повертається додому
             attacker.rectTransform.anchoredPosition = Vector2.Lerp(attackerStart, attackerHome, progress);
 
             if (successfulHit)
             {
-                // Ціль показує біль
-                PoseFrame(!attackerIsPlayer, SpritePose.Hurt, progress);
-
                 // Відскок від удару (при криті сильніший)
                 float criticalBoost = 1f;
                 if (critical)
@@ -491,19 +401,6 @@ public sealed class BattlePresentation : MonoBehaviour
         Vector3 scale = portrait.rectTransform.localScale;
         Vector2 home = portrait.rectTransform.anchoredPosition;
 
-        // Чий кадр показувати: при перемозі - ворога (onPlayer = false)
-        bool onPlayer = outcome != BattleState.Victory;
-        // При втечі - кадри ходьби, інакше - кадри смерті
-        SpritePose pose;
-        if (outcome == BattleState.Escaped)
-        {
-            pose = SpritePose.Move;
-        }
-        else
-        {
-            pose = SpritePose.Death;
-        }
-
         float duration = Mathf.Clamp(outcomeDuration, 0, 1) * Pace(pace);
 
         for (float t = 0; t < duration; t = t + VisualDelta)
@@ -513,8 +410,6 @@ public sealed class BattlePresentation : MonoBehaviour
             // Поступово робимо прозорим
             color.a = initialAlpha * (1f - progress);
             portrait.color = color;
-
-            PoseFrame(onPlayer, pose, progress);
 
             if (outcome == BattleState.Escaped)
             {
@@ -532,7 +427,6 @@ public sealed class BattlePresentation : MonoBehaviour
 
         color.a = 0f;
         portrait.color = color;
-        PoseFrame(onPlayer, pose, 1f);
         IsAnimating = false;
     }
 
@@ -540,8 +434,6 @@ public sealed class BattlePresentation : MonoBehaviour
     public void ResetPoses()
     {
         IsAnimating = false;
-        playerAttacking = false;
-        enemyAttacking = false;
         StaticFrame(true);
         StaticFrame(false);
 

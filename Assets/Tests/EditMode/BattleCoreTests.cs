@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 
-// Тести основи бою: формула шкоди, черга ходів, "ворота" команд, захист
+// Тести основи бою: формула шкоди і захист
 public sealed class BattleCoreTests
 {
     private BattleRules rules;
@@ -40,74 +40,6 @@ public sealed class BattleCoreTests
         rules.defenseMultiplier = 0.5f;
         // 15 * 2 - 8 * 0.5 = 26
         Assert.That(BattleCalculator.PhysicalDamage(15, 8, false, rules), Is.EqualTo(26));
-    }
-
-    // Простий учасник для тестів черги ходів (без Unity)
-    private sealed class Participant : IBattleParticipant
-    {
-        public bool IsAlive { get; set; } = true;
-    }
-
-    // Черга зберігає порядок, у якому передали учасників, і кожен ходить один раз
-    [Test]
-    public void RoundKeepsGivenOrderWithOneTurnPerUnit()
-    {
-        Participant a = new Participant();
-        Participant b = new Participant();
-        Participant c = new Participant();
-        BattleTurnOrder<Participant> queue = new BattleTurnOrder<Participant>();
-
-        // b передаємо двічі - він все одно має ходити один раз
-        queue.BeginRound(new Participant[] { a, b, c, b });
-
-        Participant unit;
-        Assert.That(queue.TryNext(out unit), Is.True);
-        Assert.That(unit, Is.SameAs(a));
-        Assert.That(queue.TryNext(out unit), Is.True);
-        Assert.That(unit, Is.SameAs(b));
-        Assert.That(queue.TryNext(out unit), Is.True);
-        Assert.That(unit, Is.SameAs(c));
-        Assert.That(queue.TryNext(out unit), Is.False);
-    }
-
-    // Мертві пропускаються, а в новому раунді першим знову ходить перший у списку
-    [Test]
-    public void KilledUnitsAreSkippedAndFirstUnitStartsEveryRound()
-    {
-        Participant player = new Participant();
-        Participant enemy = new Participant();
-        BattleTurnOrder<Participant> queue = new BattleTurnOrder<Participant>();
-        queue.BeginRound(new Participant[] { player, enemy });
-
-        Participant unit;
-        queue.TryNext(out unit);
-        Assert.That(unit, Is.SameAs(player));
-
-        enemy.IsAlive = false;
-        Assert.That(queue.TryNext(out unit), Is.False);
-
-        enemy.IsAlive = true;
-        queue.BeginRound(new Participant[] { player, enemy });
-        queue.TryNext(out unit);
-        Assert.That(unit, Is.SameAs(player));
-    }
-
-    // Одну команду можна прийняти тільки один раз
-    [Test]
-    public void DuplicateCommandsAreRejectedUntilNextTurn()
-    {
-        BattleCommandGate gate = new BattleCommandGate();
-        Assert.That(gate.TryConsume(), Is.False);
-
-        gate.Open();
-        Assert.That(gate.TryConsume(), Is.True);
-        Assert.That(gate.TryConsume(), Is.False);
-
-        gate.Open();
-        Assert.That(gate.TryConsume(), Is.True);
-
-        gate.Close();
-        Assert.That(gate.TryConsume(), Is.False);
     }
 
     // Захист тримається до свого наступного ходу, а HP - спільне з Health

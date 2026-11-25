@@ -1,9 +1,12 @@
 using System;
 
-// Всі формули бою: шанси, фізична і магічна шкода.
-// Тут немає Unity-об'єктів, тому ці формули легко тестувати.
+// Всі правила бою в одному місці: шанси, фізична і магічна шкода,
+// вибір дії ворога, заклинання і використання зілля.
+// Тут немає Unity-об'єктів на сцені, тому ці правила легко тестувати.
 public static class BattleCalculator
 {
+    // ===== Шанси і шкода =====
+
     // Чи спрацював шанс. sample - випадкове число від 0 до 1
     public static bool ChanceSucceeds(float chance, float sample)
     {
@@ -20,7 +23,7 @@ public static class BattleCalculator
 
     // Повний розрахунок фізичної атаки: промах -> крит -> шкода
     public static PhysicalAttackResult ResolvePhysical(int attack, int defense, bool defending, BattleRules rules,
-        float criticalChance, float missChance, IBattleRandom random)
+        float criticalChance, float missChance, BattleRandom random)
     {
         if (rules == null)
         {
@@ -112,9 +115,166 @@ public static class BattleCalculator
         return (int)Math.Min(int.MaxValue, rounded);
     }
 
+    // ===== Дія ворога =====
+
+    // "Мозок" ворога: з шансом enemyDefendChance захищається, інакше атакує
+    public static BattleAction ChooseEnemyAction(BattleRules rules, BattleRandom random)
+    {
+        bool defend = ChanceSucceeds(rules.enemyDefendChance, random.Next01());
+
+        if (defend)
+        {
+            return BattleAction.Defend;
+        }
+        return BattleAction.Attack;
+    }
+
+    // ===== Заклинання =====
+
+    // Чи може caster скастувати spell на target (заклинання б'ють тільки противника)
+    public static bool CanCast(BattleUnit caster, BattleUnit target, BattleSpell spell)
+    {
+        if (caster == null || target == null || spell == null)
+        {
+            return false;
+        }
+
+        if (!caster.IsAlive || !target.IsAlive)
+        {
+            return false;
+        }
+
+        // Вартість не може бути від'ємною, і мани має вистачати
+        if (spell.mpCost < 0)
+        {
+            return false;
+        }
+        if (caster.CurrentMP < spell.mpCost)
+        {
+            return false;
+        }
+
+        // Не можна вдарити самого себе
+        if (caster == target)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    // Спробувати скастувати заклинання. amount - скільки шкоди нанесено
+    public static bool TryCast(BattleUnit caster, BattleUnit target, BattleSpell spell, BattleRules rules, out int amount)
+    {
+        amount = 0;
+
+        if (rules == null)
+        {
+            return false;
+        }
+        if (!CanCast(caster, target, spell))
+        {
+            return false;
+        }
+        // Знімаємо ману
+        if (!caster.TrySpendMP(spell.mpCost))
+        {
+            return false;
+        }
+
+        amount = MagicalDamage(caster.EffectiveMagicAttack, target.EffectiveMagicDefense, spell.power, rules);
+        target.Health.TakeDamage(amount);
+        return true;
+    }
+
+    // ===== Зілля (використовуються з інвентаря на себе) =====
+
+    // Чи може user зараз використати предмет item на себе
+    public static bool CanUseItem(BattleUnit user, BattleConsumable item)
+    {
+        // 1) Всі об'єкти мають існувати, гравець має бути живий
+        if (user == null || item == null)
+        {
+            return false;
+        }
+        if (!user.IsAlive)
+        {
+            return false;
+        }
+
+        // 2) Це має бути саме витратний предмет
+        if (item.category != ItemCategory.Consumable)
+        {
+            return false;
+        }
+
+        // 3) Значення не можуть бути від'ємними
+        if (item.healing < 0 || item.manaRestoration < 0)
+        {
+            return false;
+        }
+
+        // 4) Предмет має щось робити: або лікувати, або відновлювати ману
+        if (item.healing <= 0 && item.manaRestoration <= 0)
+        {
+            return false;
+        }
+
+        // 5) Але НЕ обидва одразу (такий "гібрид" вважаємо помилкою)
+        if (item.healing > 0 && item.manaRestoration > 0)
+        {
+            return false;
+        }
+
+        // 6) Предмет має бути в інвентарі
+        if (user.Inventory == null)
+        {
+            return false;
+        }
+        if (user.Inventory.Count(item) <= 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    // Спробувати використати предмет на себе. amount - скільки HP/MP відновилось
+    public static bool TryUseItem(BattleUnit user, BattleConsumable item, out int amount)
+    {
+        amount = 0;
+
+        if (!CanUseItem(user, item))
+        {
+            return false;
+        }
+
+        // Забираємо 1 штуку з інвентаря
+        if (!user.Inventory.TryConsume(item))
+        {
+            return false;
+        }
+
+        if (item.manaRestoration > 0)
+        {
+            amount = user.RestoreMP(item.manaRestoration);
+        }
+        else
+        {
+            amount = user.Health.Heal(item.healing);
+        }
+        return true;
+    }
+
     // Обрізає число в межі від 0 до 1
     private static float Clamp01(float value)
     {
         return Math.Max(0f, Math.Min(1f, value));
     }
 }
+
+// Які дії можна вибрати в бою
+public enum BattleAction { Attack, Defend, Magic, Flee }
+
+// Стан бою
+public enum BattleState { Starting, Resolving, AwaitingPlayer, Victory, Defeat, Escaped }

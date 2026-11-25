@@ -16,7 +16,7 @@
 Player
  ├─ Transform, SpriteRenderer, Rigidbody2D, Collider2D, Animator   ← встроенные
  └─ PlayerController, Health, BattleUnit, BattleInventory,          ← наши скрипты
-    InventoryWindow, EquipmentController, WorldItemUseController, WorldInputGate
+    InventoryWindow, InventoryActions, WorldInputGate
 ```
 
 > Это **композиция вместо наследования**: игрок — не класс `Player : Character`, а набор маленьких компонентов, каждый отвечает за одно.
@@ -42,7 +42,7 @@ Unity сама вызывает методы с «магическими» им�
 | Метод | Когда вызывается | Пример в проекте |
 |---|---|---|
 | `Awake()` | Один раз, сразу при создании объекта | `BattleUnit.Awake` ставит `currentMP = maxMP` |
-| `OnEnable()` | Каждый раз при включении компонента/объекта | `EquipmentController` подписывается на события |
+| `OnEnable()` | Каждый раз при включении компонента/объекта | `InventoryActions` подписывается на события окна |
 | `Start()` | Один раз перед первым кадром | `Health.Start` ставит HP = максимум |
 | `Update()` | Каждый кадр | `PlayerController` читает клавиатуру |
 | `FixedUpdate()` | Каждый шаг физики (фиксированно, ~50 раз/с) | `PlayerController`, `EnemyAI` двигают `Rigidbody2D` |

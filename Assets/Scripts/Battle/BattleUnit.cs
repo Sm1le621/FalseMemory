@@ -1,15 +1,9 @@
 using UnityEngine;
 
-// Все, що потрібно черзі ходів від учасника бою
-public interface IBattleParticipant
-{
-    bool IsAlive { get; }
-}
-
 // Учасник бою (гравець або ворог): характеристики, мана, заклинання, спрайти.
 // HP тут НЕ зберігається - воно завжди в компоненті Health (і у світі, і в бою).
 [RequireComponent(typeof(Health))]
-public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
+public sealed class BattleUnit : MonoBehaviour
 {
     // Ім'я, яке показується в бою
     public string displayName = "Player";
@@ -40,8 +34,6 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
 
     // Картинка в бою
     public Sprite battleSprite;
-    // Набір кадрів анімацій (рух, атака, біль, смерть)
-    public SpriteAnimationSet visualAnimations;
     public Color spriteColor = Color.white;
     // Чи віддзеркалити картинку в бою
     public bool flipInBattle;
@@ -59,9 +51,9 @@ public sealed class BattleUnit : MonoBehaviour, IBattleParticipant
     }
 
     // Екіпіровка (є тільки у гравця)
-    public EquipmentController Equipment
+    public InventoryActions Equipment
     {
-        get { return GetComponent<EquipmentController>(); }
+        get { return GetComponent<InventoryActions>(); }
     }
 
     // Бонуси від одягнених речей (якщо екіпіровки немає - нулі)

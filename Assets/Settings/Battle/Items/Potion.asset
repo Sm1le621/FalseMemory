@@ -19,13 +19,9 @@ MonoBehaviour:
   category: 0
   stackable: 1
   maxStack: 99
-  useLocations: 3
   equipmentSlot: 1
   bonuses:
     attack: 0
     defense: 0
-  target: 1
   healing: 30
   manaRestoration: 0
-  visualEffect: {fileID: 0}
-  effectColor: {r: 0.3, g: 1, b: 0.45, a: 1}

@@ -106,8 +106,7 @@ public sealed partial class BattleFlowTests
         BattleUnit player = Player();
         BattleUnit enemy = Enemy();
         InventoryWindow window = player.GetComponent<InventoryWindow>();
-        WorldItemUseController use = player.GetComponent<WorldItemUseController>();
-        EquipmentController equipment = player.GetComponent<EquipmentController>();
+        InventoryActions actions = player.GetComponent<InventoryActions>();
         BattleConsumable potion = Potion(player);
         ItemData sword = Sword(player);
         ItemData armor = Armor(player);
@@ -119,12 +118,12 @@ public sealed partial class BattleFlowTests
         window.useButton.onClick.Invoke();
         Assert.That(player.Health.currentHealth, Is.EqualTo(80));
         Assert.That(player.Inventory.Count(potion), Is.EqualTo(2));
-        Assert.That(use.TryUse(2), Is.False, "A duplicate callback in the same frame is rejected");
+        Assert.That(actions.TryUse(2), Is.False, "A duplicate callback in the same frame is rejected");
         yield return null;
 
         // Одягаємо меч і броню
-        equipment.TryEquip(0);
-        equipment.TryEquip(1);
+        actions.TryEquip(0);
+        actions.TryEquip(1);
         window.Close();
         Assert.That(player.EffectiveAttack, Is.EqualTo(20));
         Assert.That(player.EffectiveDefense, Is.EqualTo(12));
@@ -136,7 +135,7 @@ public sealed partial class BattleFlowTests
         BattleManager manager = Manager();
         // В бою той самий інвентар, і екіпіровку міняти не можна
         Assert.That(manager.Player.Inventory.State, Is.SameAs(shared));
-        Assert.That(equipment.TryUnequip(EquipmentSlot.Weapon), Is.False);
+        Assert.That(actions.TryUnequip(EquipmentSlot.Weapon), Is.False);
 
         manager.TryPlayerAction(BattleAction.Attack);
         yield return WaitUntil(() => manager.State == BattleState.AwaitingPlayer);
@@ -158,8 +157,8 @@ public sealed partial class BattleFlowTests
         Assert.That(player.transform.position, Is.EqualTo(home));
         Assert.That(player.EffectiveAttack, Is.EqualTo(20));
         Assert.That(player.EffectiveDefense, Is.EqualTo(12));
-        Assert.That(equipment.State.GetSlot(EquipmentSlot.Weapon), Is.SameAs(sword));
-        Assert.That(equipment.State.GetSlot(EquipmentSlot.Chest), Is.SameAs(armor));
+        Assert.That(actions.State.GetSlot(EquipmentSlot.Weapon), Is.SameAs(sword));
+        Assert.That(actions.State.GetSlot(EquipmentSlot.Chest), Is.SameAs(armor));
         Assert.That(shared.Count(sword), Is.Zero);
         Assert.That(shared.Count(armor), Is.Zero);
         Assert.That(player.Health.currentHealth, Is.EqualTo(78));
@@ -167,18 +166,18 @@ public sealed partial class BattleFlowTests
         Assert.That(player.Health.hpText.text, Does.Contain("78"));
     }
 
-    // Предмет "тільки для бою" у світі не використовується, а кнопка Use вимкнена
+    // Неправильний предмет (і HP, і MP одразу) не використовується, а кнопка Use вимкнена
     [UnityTest]
     public IEnumerator WorldUseRestrictionsDisableButtonsWithoutConsumingItems()
     {
         BattleUnit player = Player();
         InventoryWindow window = player.GetComponent<InventoryWindow>();
-        WorldItemUseController use = player.GetComponent<WorldItemUseController>();
+        InventoryActions use = player.GetComponent<InventoryActions>();
 
         BattleConsumable item = ScriptableObject.CreateInstance<BattleConsumable>();
         item.id = "test.restricted";
-        item.useLocations = ItemUseLocation.Battle;
         item.healing = 10;
+        item.manaRestoration = 5;
         try
         {
             player.Inventory.TryAdd(item, 1);
@@ -188,8 +187,8 @@ public sealed partial class BattleFlowTests
             Assert.That(window.useButton.interactable, Is.False);
             Assert.That(use.TryUse(3), Is.False);
 
-            // Дозволяємо всюди - тепер можна
-            item.useLocations = ItemUseLocation.Anywhere;
+            // Тепер тільки лікує - можна
+            item.manaRestoration = 0;
             window.Refresh();
             Assert.That(window.useButton.interactable, Is.True);
             Assert.That(use.TryUse(3), Is.True);
@@ -210,7 +209,7 @@ public sealed partial class BattleFlowTests
     {
         BattleUnit player = Player();
         InventoryWindow window = player.GetComponent<InventoryWindow>();
-        EquipmentController equipment = player.GetComponent<EquipmentController>();
+        InventoryActions equipment = player.GetComponent<InventoryActions>();
         ItemData sword = Sword(player);
         ItemData armor = Armor(player);
 

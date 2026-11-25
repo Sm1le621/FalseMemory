@@ -7,7 +7,7 @@ using UnityEngine.UI;
 // Вікно інвентаря (відкривається клавішею I).
 // 30 клітинок, кнопки Use / Equip, слоти екіпіровки, перетягування предметів.
 [RequireComponent(typeof(BattleInventory), typeof(WorldInputGate))]
-public sealed partial class InventoryWindow : MonoBehaviour
+public sealed class InventoryWindow : MonoBehaviour
 {
     // Головна панель вікна
     public RectTransform panel;
@@ -353,7 +353,7 @@ public sealed partial class InventoryWindow : MonoBehaviour
             useButton.interactable = canUse;
         }
 
-        EquipmentController equipment = GetComponent<EquipmentController>();
+        InventoryActions equipment = GetComponent<InventoryActions>();
 
         // 6) Кнопка "Equip": тільки для екіпіровки
         if (equipButton != null)

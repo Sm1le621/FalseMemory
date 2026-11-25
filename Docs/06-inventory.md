@@ -6,7 +6,7 @@
 |---|---|---|
 | **Данные предметов** | `ItemData`, `BattleConsumable` (ScriptableObject), `ItemStatBonus` (struct) | только как файлы-ассеты |
 | **Модель** | `InventoryState`, `InventorySlot`, `EquipmentState` | **нет** — обычные C#-классы |
-| **Компоненты-владельцы** | `BattleInventory`, `EquipmentController`, `WorldItemUseController` | да, висят на Player |
+| **Компоненты-владельцы** | `BattleInventory`, `InventoryActions` | да, висят на Player |
 | **Представление (UI)** | `InventoryWindow`, `InventorySlotView`, `EquipmentSlotView`, `InventoryTooltip`, `ItemPresentation` | да |
 
 ## 6.1 Предметы — `ItemData` и `BattleConsumable`
@@ -35,14 +35,14 @@
 
 Компонент на Player. В Inspector задан список `startingItems` (меч, броня, 3 зелья). При первом обращении к свойству `State` создаёт `InventoryState` и кладёт в него стартовые предметы (**ленивая инициализация** — объект создаётся, когда он впервые нужен).
 
-## 6.4 Экипировка — `EquipmentState` + `EquipmentController`
+## 6.4 Экипировка и зелья — `EquipmentState` + `InventoryActions`
 
 `EquipmentState` — модель: 2 слота (`Weapon`, `Chest`).
 - `TryEquip(inventory, index, slot)` — забрать предмет из ячейки сумки в слот; если в слоте что-то было — вернуть это в сумку на то же место.
 - `TryUnequip(inventory, slot)` — снять в сумку (если в сумке есть место).
 - `Bonuses` — сумма бонусов надетых предметов. Отсюда её читает `BattleUnit.EffectiveAttack/EffectiveDefense`.
 
-`EquipmentController` — компонент, связывает модель с окном и запрещает менять экипировку во время боя.
+`InventoryActions` — компонент-«исполнитель»: владеет `EquipmentState`, надевает/снимает предметы и пьёт зелья по кнопкам окна. Во время боя (`EncounterActive`) и когда игрок мёртв ничего не разрешает.
 
 ## 6.5 Окно — `InventoryWindow` и события
 
@@ -57,27 +57,22 @@ public Func<int, bool> CanUseSelection;      // «можно ли использ
 ```
 
 ```csharp
-// EquipmentController (подписчик)
+// InventoryActions (подписчик)
 private void OnEnable()
 {
     window.EquipRequested   += HandleEquip;
     window.UnequipRequested += HandleUnequip;
+    window.UseRequested     += HandleUse;
+    window.CanUseSelection   = CanUse;           // окно спросит, активна ли кнопка Use
     State.Changed           += window.Refresh;   // экипировка изменилась → перерисовать окно
 }
 private void OnDisable()
 {
     window.EquipRequested   -= HandleEquip;
     window.UnequipRequested -= HandleUnequip;
+    window.UseRequested     -= HandleUse;
+    window.CanUseSelection   = null;
     State.Changed           -= window.Refresh;
-}
-```
-
-```csharp
-// WorldItemUseController (подписчик)
-private void OnEnable()
-{
-    window.UseRequested     += HandleUse;
-    window.CanUseSelection   = CanUse;          // окно спросит, активна ли кнопка Use
 }
 ```
 
@@ -98,8 +93,8 @@ private void OnEnable()
        → Refresh() → 30 × InventorySlotView.Render(...)
 2. Клик по зелью → InventorySlotView.OnPointerClick → window.Select(index)
 3. Кнопка Use → InventoryWindow.RequestUse → событие UseRequested(index)
-4. WorldItemUseController.HandleUse(index)
-       → BattleAbilities.TryUseItem(unit, unit, potion, Exploration)
+4. InventoryActions.HandleUse(index)
+       → BattleCalculator.TryUseItem(unit, potion)
             → BattleInventory.TryConsume → InventoryState.TryRemove → событие Changed
             → Health.Heal(30)
 5. Changed → InventoryWindow.Refresh → ячейка показывает ×2 вместо ×3
@@ -115,14 +110,14 @@ private void OnEnable()
 sequenceDiagram
     participant User as Игрок
     participant W as InventoryWindow
-    participant WU as WorldItemUseController
-    participant AB as BattleAbilities
+    participant WU as InventoryActions
+    participant AB as BattleCalculator
     participant S as InventoryState
     participant H as Health
 
     User->>W: кнопка Use
     W->>WU: событие UseRequested(index)
-    WU->>AB: TryUseItem(unit, unit, Potion)
+    WU->>AB: TryUseItem(unit, Potion)
     AB->>S: TryRemove(Potion, 1)
     S-->>W: событие Changed → Refresh()
     AB->>H: Heal(30)

@@ -37,17 +37,15 @@ public sealed partial class BattleAbilityTests
         fire = ScriptableObject.CreateInstance<BattleSpell>();
         fire.displayName = "Fire";
         fire.mpCost = 8;
-        fire.effect = BattleEffect.MagicDamage;
-        fire.target = BattleTarget.Opponent;
         fire.power = 10;
 
         // 3 зілля в інвентарі гравця
         potion = ScriptableObject.CreateInstance<BattleConsumable>();
         BattleInventory inventory = playerObject.AddComponent<BattleInventory>();
-        BattleItemStack stack = new BattleItemStack();
+        StartingItem stack = new StartingItem();
         stack.definition = potion;
         stack.count = 3;
-        inventory.items.Add(stack);
+        inventory.startingItems.Add(stack);
     }
 
     // Викликається ПІСЛЯ кожного тесту: прибираємо все створене
@@ -68,7 +66,7 @@ public sealed partial class BattleAbilityTests
         enemy.Defend();
 
         int amount;
-        Assert.That(BattleAbilities.TryCast(player, enemy, fire, rules, out amount), Is.True);
+        Assert.That(BattleCalculator.TryCast(player, enemy, fire, rules, out amount), Is.True);
         // 10 (сила) + 12 (атака) - 3 (захист) = 19
         Assert.That(amount, Is.EqualTo(19));
         Assert.That(player.CurrentMP, Is.EqualTo(22));
@@ -82,7 +80,7 @@ public sealed partial class BattleAbilityTests
         player.TrySpendMP(23);
 
         int amount;
-        Assert.That(BattleAbilities.TryCast(player, enemy, fire, rules, out amount), Is.False);
+        Assert.That(BattleCalculator.TryCast(player, enemy, fire, rules, out amount), Is.False);
         Assert.That(player.CurrentMP, Is.EqualTo(7));
         Assert.That(enemy.Health.currentHealth, Is.EqualTo(60));
     }
@@ -94,24 +92,22 @@ public sealed partial class BattleAbilityTests
         int amount;
 
         enemy.Health.currentHealth = 0;
-        Assert.That(BattleAbilities.TryCast(player, enemy, fire, rules, out amount), Is.False);
+        Assert.That(BattleCalculator.TryCast(player, enemy, fire, rules, out amount), Is.False);
 
         player.Health.currentHealth = 0;
-        Assert.That(BattleAbilities.TryCast(player, player, fire, rules, out amount), Is.False);
+        Assert.That(BattleCalculator.TryCast(player, player, fire, rules, out amount), Is.False);
 
         Assert.That(player.CurrentMP, Is.EqualTo(30));
     }
 
-    // Заклинання "на себе" не можна кинути у ворога
+    // Заклинання не можна кинути в самого себе
     [Test]
-    public void SelfTargetedDamageSpellCannotBeCastOnTheOpponent()
+    public void DamageSpellCannotBeCastOnTheCaster()
     {
-        fire.target = BattleTarget.Self;
-
         int amount;
-        Assert.That(BattleAbilities.TryCast(player, enemy, fire, rules, out amount), Is.False);
-        Assert.That(BattleAbilities.TryCast(player, player, fire, rules, out amount), Is.True);
-        Assert.That(player.Health.currentHealth, Is.EqualTo(78));
+        Assert.That(BattleCalculator.TryCast(player, player, fire, rules, out amount), Is.False);
+        Assert.That(player.Health.currentHealth, Is.EqualTo(100));
+        Assert.That(player.CurrentMP, Is.EqualTo(30));
     }
 
     // Мана не стає від'ємною і не більше максимуму

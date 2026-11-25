@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51fedf49323e544f9a19f2e0e5f663c, type: 3}
   m_Name: FireVisual
   m_EditorClassIdentifier: FalseMemory.Runtime::BattleVFXProfile
-  shape: 0
   color: {r: 1, g: 0.42, b: 0.08, a: 1}
   particleSprite: {fileID: 0}
   frames:

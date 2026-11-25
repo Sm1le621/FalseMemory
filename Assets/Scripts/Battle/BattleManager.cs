@@ -24,19 +24,15 @@ public sealed class BattleManager : MonoBehaviour
 
     private BattleRules rules;
     private BattleTransition transition;
-    // Не дає прийняти команду гравця двічі
-    private readonly BattleCommandGate gate = new BattleCommandGate();
-    // Черга ходів
-    private readonly BattleTurnOrder<BattleUnit> turns = new BattleTurnOrder<BattleUnit>();
     // Вибрана дія. null - ще нічого не вибрано
     private BattleAction? pendingAction;
     // Вибране заклинання (якщо дія - магія)
     private BattleSpell pendingSpell;
     // Джерело випадкових чисел (у тестах підміняється)
-    private IBattleRandom random = UnityBattleRandom.Instance;
+    private BattleRandom random = BattleRandom.Unity;
 
     // Підмінити рандом (використовується в тестах)
-    public void SetRandomSource(IBattleRandom source)
+    public void SetRandomSource(BattleRandom source)
     {
         if (source == null)
         {
@@ -99,11 +95,16 @@ public sealed class BattleManager : MonoBehaviour
         {
             Round = Round + 1;
             // Гравець завжди ходить першим, ворог - другим
-            turns.BeginRound(new BattleUnit[] { Player, Enemy });
+            BattleUnit[] order = new BattleUnit[] { Player, Enemy };
 
-            BattleUnit actor;
-            while (turns.TryNext(out actor))
+            foreach (BattleUnit actor in order)
             {
+                // Мертві не ходять
+                if (!actor.IsAlive)
+                {
+                    continue;
+                }
+
                 CurrentActor = actor;
                 // Захист тримається рівно до початку свого наступного ходу
                 actor.BeginTurn();
@@ -116,7 +117,6 @@ public sealed class BattleManager : MonoBehaviour
                     pendingAction = null;
                     pendingSpell = null;
                     ui.ShowMessage("Your turn.");
-                    gate.Open();
                     ShowMainMenu();
 
                     while (!pendingAction.HasValue && Player.IsAlive && Enemy.IsAlive)
@@ -135,7 +135,7 @@ public sealed class BattleManager : MonoBehaviour
                     {
                         break;
                     }
-                    pendingAction = EnemyBattleAI.Choose(rules, random);
+                    pendingAction = BattleCalculator.ChooseEnemyAction(rules, random);
                 }
 
                 if (!Player.IsAlive || !Enemy.IsAlive)
@@ -145,7 +145,6 @@ public sealed class BattleManager : MonoBehaviour
 
                 // --- Виконуємо вибрану дію ---
                 State = BattleState.Resolving;
-                gate.Close();
                 ui.SetCommandsEnabled(false);
 
                 // Ціль - той, хто НЕ ходить
@@ -213,7 +212,7 @@ public sealed class BattleManager : MonoBehaviour
                 {
                     // МАГІЯ
                     int amount;
-                    if (BattleAbilities.TryCast(actor, target, pendingSpell, rules, out amount))
+                    if (BattleCalculator.TryCast(actor, target, pendingSpell, rules, out amount))
                     {
                         if (audioController != null)
                         {
@@ -315,7 +314,6 @@ public sealed class BattleManager : MonoBehaviour
 
         // ===== Бій закінчився =====
         CurrentActor = null;
-        gate.Close();
         ui.SetCommandsEnabled(false);
 
         if (Player.IsAlive)
@@ -412,14 +410,9 @@ public sealed class BattleManager : MonoBehaviour
         {
             return false;
         }
-        // Важливо: перевіряємо ворота ОСТАННІМИ, бо TryConsume їх закриває
-        if (!gate.TryConsume())
-        {
-            return false;
-        }
 
         pendingAction = action;
-        // Закриваємо меню одразу, а не в наступному кадрі корутини
+        // Одразу міняємо стан: друга команда в цьому ж кадрі (клік + Enter) вже не пройде CanChoose
         State = BattleState.Resolving;
         ui.SetCommandsEnabled(false);
         return true;
@@ -430,7 +423,7 @@ public sealed class BattleManager : MonoBehaviour
     {
         get
         {
-            return State == BattleState.AwaitingPlayer && CurrentActor == Player && Player.IsAlive && Enemy.IsAlive && gate.IsOpen;
+            return State == BattleState.AwaitingPlayer && CurrentActor == Player && Player.IsAlive && Enemy.IsAlive;
         }
     }
 
@@ -485,18 +478,7 @@ public sealed class BattleManager : MonoBehaviour
             BattleSpell entry = spell;
             names.Add(entry.displayName + "   " + entry.mpCost + " MP");
             actions.Add(() => TryPlayerSpell(entry));
-
-            // На кого діє заклинання
-            BattleUnit spellTarget;
-            if (entry.target == BattleTarget.Self)
-            {
-                spellTarget = Player;
-            }
-            else
-            {
-                spellTarget = Enemy;
-            }
-            enabled.Add(BattleAbilities.CanCast(Player, spellTarget, entry));
+            enabled.Add(BattleCalculator.CanCast(Player, Enemy, entry));
         }
 
         if (names.Count == 0)
@@ -534,22 +516,7 @@ public sealed class BattleManager : MonoBehaviour
             return false;
         }
 
-        BattleUnit spellTarget;
-        if (spell.target == BattleTarget.Self)
-        {
-            spellTarget = Player;
-        }
-        else
-        {
-            spellTarget = Enemy;
-        }
-        if (!BattleAbilities.CanCast(Player, spellTarget, spell))
-        {
-            return false;
-        }
-
-        // Ворота - останніми (TryConsume їх закриває)
-        if (!gate.TryConsume())
+        if (!BattleCalculator.CanCast(Player, Enemy, spell))
         {
             return false;
         }

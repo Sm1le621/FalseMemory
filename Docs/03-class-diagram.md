@@ -32,7 +32,7 @@ class BattleManager
 class BattleUnit
 class Health
 class BattleInventory
-class EquipmentController
+class InventoryActions
 class InventoryWindow
 class SceneTransition
 class SceneTransitionManager
@@ -44,9 +44,9 @@ BattleManager ..> BattleTransition : берёт участников
 BattleManager ..> BattleUnit : урон, MP
 BattleUnit --> Health
 BattleUnit --> BattleInventory
-BattleUnit --> EquipmentController
+BattleUnit --> InventoryActions
 InventoryWindow --> BattleInventory
-EquipmentController --> InventoryWindow : подписка на события
+InventoryActions --> InventoryWindow : подписка на события
 PlayerController --> WorldInputGate
 InventoryWindow --> WorldInputGate
 SceneTransition ..> SceneTransitionManager : ChangeScene()
@@ -63,18 +63,11 @@ BattleTransition ..> EnemyAI : пауза
 classDiagram
 direction TB
 
-class IBattleParticipant {
-  <<interface>>
-  +bool IsAlive
-}
-class IBattleRandom {
-  <<interface>>
+class BattleRandom {
+  +BattleRandom Unity$
+  +BattleRandom(int seed)
   +Next01() float
 }
-class UnityBattleRandom
-class SeededBattleRandom
-IBattleRandom <|.. UnityBattleRandom
-IBattleRandom <|.. SeededBattleRandom
 
 class Health {
   <<MonoBehaviour>>
@@ -99,7 +92,6 @@ class BattleUnit {
   +BeginTurn()
   +Defend()
 }
-IBattleParticipant <|.. BattleUnit
 BattleUnit --> Health : RequireComponent
 BattleUnit o-- BattleSpell
 
@@ -131,9 +123,7 @@ class BattleManager {
   +BattleAudioController audioController
   +BattleState State
   +int Round
-  -BattleTurnOrder~BattleUnit~ turns
-  -BattleCommandGate gate
-  -IBattleRandom random
+  -BattleRandom random
   -Start() IEnumerator
   +TryPlayerAction(BattleAction) bool
   +OpenMagicMenu() bool
@@ -143,41 +133,21 @@ BattleManager --> BattleUI
 BattleManager --> BattlePresentation
 BattleManager --> BattleVFXController
 BattleManager --> BattleAudioController
-BattleManager *-- BattleTurnOrder~T~
-BattleManager *-- BattleCommandGate
-BattleManager --> IBattleRandom
+BattleManager --> BattleRandom
 BattleManager ..> BattleTransition
 BattleManager ..> BattleCalculator
-BattleManager ..> BattleAbilities
-BattleManager ..> EnemyBattleAI
 
-class BattleTurnOrder~T~ {
-  +BeginRound(IEnumerable~T~)
-  +TryNext(out T) bool
-}
-class BattleCommandGate {
-  +Open()
-  +Close()
-  +TryConsume() bool
-}
 class BattleCalculator {
   <<static>>
   +ResolvePhysical(...) PhysicalAttackResult
   +MagicalDamage(...) int
-}
-class BattleAbilities {
-  <<static>>
+  +ChooseEnemyAction(BattleRules, BattleRandom) BattleAction
   +CanCast(...) bool
   +TryCast(...) bool
-  +CanUseItem(...) bool
+  +CanUseItem(BattleUnit, BattleConsumable) bool
   +TryUseItem(...) bool
 }
-class EnemyBattleAI {
-  <<static>>
-  +Choose(BattleRules, IBattleRandom) BattleAction
-}
-BattleAbilities ..> BattleCalculator
-EnemyBattleAI ..> IBattleRandom
+BattleCalculator ..> BattleRandom
 
 class BattleUI {
   <<MonoBehaviour>>
@@ -292,14 +262,17 @@ class BattleInventory {
 }
 BattleInventory *-- InventoryState
 
-class EquipmentController {
+class InventoryActions {
   <<MonoBehaviour>>
   +EquipmentState State
   +TryEquip(int, EquipmentSlot?) bool
   +TryUnequip(EquipmentSlot) bool
+  +CanUse(int) bool
+  +TryUse(int) bool
 }
-EquipmentController *-- EquipmentState
-EquipmentController --> BattleInventory
+InventoryActions *-- EquipmentState
+InventoryActions --> BattleInventory
+InventoryActions ..> BattleCalculator : TryUseItem
 
 class InventoryWindow {
   <<MonoBehaviour>>
@@ -316,15 +289,7 @@ InventoryWindow --> BattleInventory
 InventoryWindow --> WorldInputGate
 InventoryWindow *-- "30" InventorySlotView
 InventoryWindow --> InventoryTooltip
-EquipmentController --> InventoryWindow : подписка
-
-class WorldItemUseController {
-  <<MonoBehaviour>>
-  +CanUse(int) bool
-  +TryUse(int) bool
-}
-WorldItemUseController --> InventoryWindow : подписка
-WorldItemUseController ..> BattleAbilities
+InventoryActions --> InventoryWindow : подписка
 
 class LootDrop {
   <<MonoBehaviour>>
@@ -393,14 +358,11 @@ class ManaHUD {
 }
 class MainMenuController {
   <<MonoBehaviour>>
+  -GameObject settingsRoot
   +OnStart()
   +OnSettings()
   +OnExit()
-}
-class SettingsMenu {
-  <<MonoBehaviour>>
-  +Show()
-  +Hide()
+  +HideSettings()
   +OnVolumeChanged(float)
   +ToggleFullscreen()
 }
@@ -421,8 +383,7 @@ PlayerController --> WorldInputGate
 SceneTransition ..> SceneTransitionManager
 SceneTransitionManager ..> CameraFollow
 SceneTransitionManager ..> PlayerController
-MainMenuController --> SettingsMenu
 ManaHUD --> BattleUnit
 ```
 
-Перечисления (`enum`): `BattleAction` {Attack, Defend, Magic, Flee}, `BattleState` {Starting, Resolving, AwaitingPlayer, Victory, Defeat, Escaped}, `ItemCategory` {Consumable, Weapon, Armor}, `EquipmentSlot` {Weapon, Chest}, `BattleSound`, `SpritePose`, `BattleVFXShape`, `BattleTarget`, `BattleEffect`, `ItemUseLocation`.
+Перечисления (`enum`): `BattleAction` {Attack, Defend, Magic, Flee}, `BattleState` {Starting, Resolving, AwaitingPlayer, Victory, Defeat, Escaped}, `ItemCategory` {Consumable, Weapon, Armor}, `EquipmentSlot` {Weapon, Chest}, `BattleSound`.

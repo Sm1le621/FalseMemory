@@ -6,7 +6,7 @@
 |---|---|---|
 | **Переход** | `BattleTransition`, `BattleScreenFade` | открыть/закрыть бой, спрятать/вернуть мир |
 | **Режиссёр** | `BattleManager` | ведёт ходы, меняет HP/MP, решает исход. **Единственный, кто меняет состояние боя** |
-| **Правила** (чистый C#) | `BattleCalculator`, `BattleAbilities`, `EnemyBattleAI`, `BattleTurnOrder`, `BattleCommandGate` | формулы, проверки, очередь ходов |
+| **Правила** (чистый C#) | `BattleCalculator`, `BattleRandom` | формулы, проверки, выбор действия врага, случайность |
 | **Данные** | `BattleUnit`, `Health`, `BattleRules`, `BattleSpell` | характеристики и настройки |
 | **Показ** | `BattleUI`, `BattleHUD`, `BattlePresentation`, `BattleVFXController`, `BattleAudioController` | текст, меню, полоски, анимации, эффекты, звук. **Ничего не решают** |
 
@@ -39,9 +39,10 @@ private IEnumerator Start()
 
     while (Player.IsAlive && Enemy.IsAlive)              // раунды
     {
-        turns.BeginRound(new[] { Player, Enemy });       // игрок всегда первый
-        while (turns.TryNext(out actor))                 // ходы внутри раунда
+        BattleUnit[] order = { Player, Enemy };          // игрок всегда первый
+        foreach (BattleUnit actor in order)              // ходы внутри раунда
         {
+            if (!actor.IsAlive) continue;                // мёртвые не ходят
             if (actor == Player)
             {
                 ShowMainMenu();                          // показать Attack/Magic/Defend/Flee
@@ -49,7 +50,7 @@ private IEnumerator Start()
                     yield return null;
             }
             else
-                pendingAction = EnemyBattleAI.Choose(rules, random);
+                pendingAction = BattleCalculator.ChooseEnemyAction(rules, random);
 
             yield return presentation.Windup(...);       // анимация замаха
             // ... применить действие: урон / магия / защита / побег
@@ -82,11 +83,12 @@ ui.ShowMenu(names, actions);
 ```
 Игрок нажал Enter → BattleUI.Update() → Invoke(selected) → actions[i]()
   → BattleManager.TryPlayerAction(Attack)
-       → gate.TryConsume()       // BattleCommandGate: принять только ОДНУ команду за ход
+       → CanChoose?              // State == AwaitingPlayer и сейчас ход игрока
        → pendingAction = Attack  // цикл в Start() перестаёт ждать и продолжает
+       → State = Resolving       // сразу: вторая команда в этом же кадре уже не пройдёт
 ```
 
-`BattleCommandGate` защищает от двойного нажатия: открывается в начале хода игрока, `TryConsume()` срабатывает один раз и закрывает «ворота».
+Защита от двойного нажатия (клик мышью + Enter в одном кадре) — это просто смена `State`: первая команда переводит бой в `Resolving`, и `CanChoose` для второй возвращает `false`.
 
 ## 5.4 Действия и формулы
 
@@ -96,22 +98,22 @@ ui.ShowMenu(names, actions);
 3. `урон = max(1, ATK − DEF) × крит × (0.5 если цель в защите)`, округление вверх.
 4. `BattleManager` вызывает `target.Health.TakeDamage(урон)`.
 
-**Magic** → `BattleAbilities.TryCast(...)`: проверить MP → `TrySpendMP(8)` → `урон = max(1, power + MATK − MDEF)` → `TakeDamage`.
+**Magic** → `BattleCalculator.TryCast(...)`: проверить MP → `TrySpendMP(8)` → `урон = max(1, power + MATK − MDEF)` → `TakeDamage`.
 
 **Defend** → `actor.Defend()` — флаг `IsDefending` до начала следующего хода (`BeginTurn()` его снимает).
 
 **Flee** → всегда успешно → `transition.ReturnAfterEscape()`.
 
-**Враг** → `EnemyBattleAI.Choose`: 20% (`enemyDefendChance`) — Defend, иначе Attack.
+**Враг** → `BattleCalculator.ChooseEnemyAction`: 20% (`enemyDefendChance`) — Defend, иначе Attack.
 
 Пример с реальными значениями:
 - Игрок бьёт скелета: ATK 15 + меч 5 = **20** − DEF 5 = **15** урона (крит — 23).
 - Fire: 10 + MATK 12 − MDEF 3 = **19** урона.
 - Скелет бьёт игрока в броне: ATK 12 − (DEF 8 + броня 4) = 0 → минимум **1**.
 
-**Эффективная атака** считается «на лету»: `BattleUnit.EffectiveAttack = attack + EquipmentController.State.Bonuses.attack`. Экипировка влияет на бой без единого лишнего вызова.
+**Эффективная атака** считается «на лету»: `BattleUnit.EffectiveAttack = attack + InventoryActions.State.Bonuses.attack`. Экипировка влияет на бой без единого лишнего вызова.
 
-**Случайность через интерфейс** `IBattleRandom`: в игре — `UnityBattleRandom` (обёртка над `UnityEngine.Random`), в тестах — `SeededBattleRandom` с фиксированным seed, чтобы результат был предсказуемым. Это пример **внедрения зависимости** (`SetRandomSource`).
+**Случайность — класс `BattleRandom`**: в игре используется `BattleRandom.Unity` (обёртка над `UnityEngine.Random`), в тестах — `new BattleRandom(seed)`: с одним seed всегда одни и те же числа, поэтому результат предсказуем. Тест подставляет его через `SetRandomSource` — это пример **внедрения зависимости**.
 
 ## 5.5 Кто что показывает
 
@@ -133,8 +135,10 @@ ui.ShowMenu(names, actions);
 | Defend | `Defend` | `10_Battle_SFX/39_Block_03` |
 | Flee | `Flee` | `10_Battle_SFX/51_Flee_02` |
 | Magic Fire | `Fire` | `8_Atk_Magic_SFX/04_Fire_explosion_04_medium` |
+| Промах | `Miss` | `10_Battle_SFX/08_Bite_04` |
+| Критический удар | `Critical` | `10_Battle_SFX/08_Bite_04` |
 
-Остальные события (`Hit`, `Miss`, `Victory`...) вызываются, но клипы им не назначены — `Play` просто ничего не делает. Чтобы добавить звук, не нужен код: перетащить файл в поле ассета в Inspector.
+При атаке сначала звучит `Attack` (замах), потом — результат: `Miss`, `Critical` или `Hit`. Остальные события (`Hit`, `Victory`...) вызываются, но клипы им не назначены — `Play` просто ничего не делает. Чтобы добавить звук, не нужен код: перетащить файл в поле ассета в Inspector.
 
 ## 5.6 Выход из боя
 

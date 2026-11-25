@@ -1,6 +1,6 @@
 # 7. Сцены и меню
 
-Скрипты: `SceneTransition`, `SceneTransitionManager`, `PauseMenu`, `MainMenuController`, `SettingsMenu`.
+Скрипты: `SceneTransition`, `SceneTransitionManager`, `PauseMenu`, `MainMenuController`.
 
 ## 7.1 Проблема
 
@@ -98,19 +98,21 @@ PauseCanvas            Canvas (sortingOrder 500 — поверх HUD и инве
 
 `PauseCanvas` — корневой объект с `Canvas`, поэтому `SceneTransitionManager` переносит его в `Dungeon` вместе с игроком, и пауза работает и там.
 
-## 7.6 Главное меню — `MainMenuController` и `SettingsMenu`
+## 7.6 Главное меню — `MainMenuController`
 
 Кнопки связаны с методами **в Inspector** (раздел `OnClick()` у компонента `Button`), а не кодом:
 
 | Кнопка | Метод | Действие |
 |---|---|---|
 | New Game | `MainMenuController.OnStart()` | `SceneManager.LoadScene("SampleScene")` |
-| Settings | `MainMenuController.OnSettings()` | `settingsMenu.Show()` |
+| Settings | `MainMenuController.OnSettings()` | показать панель `settingsRoot` |
 | Exit | `MainMenuController.OnExit()` | `Application.Quit()` (в редакторе — остановить Play Mode) |
-| Слайдер громкости | `SettingsMenu.OnVolumeChanged(float)` | `AudioListener.volume = value` |
-| Fullscreen | `SettingsMenu.ToggleFullscreen()` | `Screen.fullScreen = !...` |
-| Back | `SettingsMenu.Hide()` | спрятать панель |
+| Слайдер громкости | `MainMenuController.OnVolumeChanged(float)` | `AudioListener.volume = value` |
+| Fullscreen | `MainMenuController.ToggleFullscreen()` | `Screen.fullScreen = !...` |
+| Back | `MainMenuController.HideSettings()` | спрятать панель |
 
-**`PlayerPrefs`** — встроенное в Unity маленькое хранилище «ключ → значение» на диске. `SettingsMenu` сохраняет туда громкость и полноэкранный режим и загружает их в `Start`. Это единственное, что игра сохраняет между запусками.
+Все кнопки ведут в **один** компонент `MainMenuController` на объекте `Menu`. Поля панели настроек (`settingsRoot`, `volumeSlider`, `fullscreenLabel`) заданы в Inspector.
+
+**`PlayerPrefs`** — встроенное в Unity маленькое хранилище «ключ → значение» на диске. `MainMenuController` сохраняет туда громкость и полноэкранный режим и загружает их в `Start`. Это единственное, что игра сохраняет между запусками.
 
 `OnExit` использует **директиву препроцессора**: `#if UNITY_EDITOR` — код только для редактора (остановить игру), `#else` — для собранной игры (закрыть приложение).

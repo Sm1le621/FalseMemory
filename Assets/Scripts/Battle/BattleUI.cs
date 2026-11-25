@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -55,11 +54,6 @@ public sealed class BattleUI : MonoBehaviour
     private int firstVisible;
     private Coroutine feedbackRoutine;
 
-    public bool CommandsEnabled
-    {
-        get { return commandsEnabled; }
-    }
-
     // Скільки пунктів у меню
     public int MenuCount
     {
@@ -70,9 +64,6 @@ public sealed class BattleUI : MonoBehaviour
     {
         get { return selected; }
     }
-
-    // Кеш копій спрайтів з піксельною фільтрацією (оригінал -> копія)
-    private readonly Dictionary<Sprite, Sprite> pointSprites = new Dictionary<Sprite, Sprite>();
 
     private void Awake()
     {
@@ -442,7 +433,7 @@ public sealed class BattleUI : MonoBehaviour
     // Поставити картинку, колір і віддзеркалення портрета
     private void ApplyPortrait(Image image, BattleUnit unit)
     {
-        image.sprite = PointSprite(unit.battleSprite);
+        image.sprite = unit.battleSprite;
         image.color = unit.spriteColor;
 
         float scaleX = 1f;
@@ -451,63 +442,6 @@ public sealed class BattleUI : MonoBehaviour
             scaleX = -1f;
         }
         image.rectTransform.localScale = new Vector3(scaleX, 1f, 1f);
-    }
-
-    // Повертає копію спрайта з піксельною фільтрацією (Point), щоб піксель-арт не "милився".
-    // Оригінальну текстуру і її налаштування імпорту НЕ чіпаємо.
-    private Sprite PointSprite(Sprite source)
-    {
-        // Якщо вже Point - копія не потрібна
-        if (source == null || source.texture.filterMode == FilterMode.Point)
-        {
-            return source;
-        }
-
-        // Якщо копію вже робили - беремо з кешу
-        Sprite copy;
-        if (pointSprites.TryGetValue(source, out copy))
-        {
-            return copy;
-        }
-
-        // Імпортовані текстури можуть бути "нечитабельними" з коду.
-        // Тому копіюємо через відеокарту (RenderTexture), а не через Instantiate(Texture2D),
-        // який Unity для таких текстур не дозволяє.
-        Texture2D original = source.texture;
-        RenderTexture temporary = RenderTexture.GetTemporary(original.width, original.height, 0);
-        RenderTexture previous = RenderTexture.active;
-        Texture2D texture = new Texture2D(original.width, original.height, TextureFormat.RGBA32, false);
-        try
-        {
-            Graphics.Blit(original, temporary);
-            RenderTexture.active = temporary;
-            texture.ReadPixels(new Rect(0, 0, original.width, original.height), 0, 0);
-            texture.Apply(false, true);
-        }
-        finally
-        {
-            // Обов'язково повертаємо все як було
-            RenderTexture.active = previous;
-            RenderTexture.ReleaseTemporary(temporary);
-        }
-
-        texture.filterMode = FilterMode.Point;
-
-        Vector2 pivot = new Vector2(source.pivot.x / source.rect.width, source.pivot.y / source.rect.height);
-        copy = Sprite.Create(texture, source.rect, pivot, source.pixelsPerUnit);
-        pointSprites.Add(source, copy);
-        return copy;
-    }
-
-    private void OnDestroy()
-    {
-        // Видаляємо всі створені копії (інакше буде витік пам'яті)
-        foreach (Sprite sprite in pointSprites.Values)
-        {
-            Destroy(sprite.texture);
-            Destroy(sprite);
-        }
-        pointSprites.Clear();
     }
 
     // Оновити тексти статистики

@@ -8,12 +8,12 @@ using UnityEngine.TestTools;
 // Тести втечі, магії, критів і меню заклинань (частина класу BattleFlowTests)
 public sealed partial class BattleFlowTests
 {
-    // Перше заклинання гравця з магічною шкодою
+    // Перше заклинання гравця (всі заклинання наносять магічну шкоду)
     private static BattleSpell Fire(BattleUnit player)
     {
         foreach (BattleSpell spell in player.spells)
         {
-            if (spell.effect == BattleEffect.MagicDamage)
+            if (spell != null)
             {
                 return spell;
             }
@@ -24,8 +24,9 @@ public sealed partial class BattleFlowTests
     // Перше зілля в інвентарі гравця
     private static BattleConsumable Potion(BattleUnit player)
     {
-        foreach (BattleConsumable consumable in player.Inventory.Definitions)
+        foreach (ItemData item in player.Inventory.State.Definitions)
         {
+            BattleConsumable consumable = item as BattleConsumable;
             if (consumable != null)
             {
                 return consumable;
@@ -60,21 +61,9 @@ public sealed partial class BattleFlowTests
         throw new System.InvalidOperationException("Player has no armor.");
     }
 
-    // "Рандом", який завжди повертає одне число
-    private sealed class ConstantBattleRandom : IBattleRandom
-    {
-        private readonly float value;
-
-        public ConstantBattleRandom(float value)
-        {
-            this.value = value;
-        }
-
-        public float Next01()
-        {
-            return value;
-        }
-    }
+    // Seed, у якого перші 16 чисел не менші за 0.2: ворог не захищається,
+    // а промахи і крити бувають тільки там, де тест ставить шанс 1
+    private const int CalmSeed = 10;
 
     // Почати бій і дочекатись ходу гравця
     private static IEnumerator BeginBattle(BattleUnit player, BattleUnit enemy)
@@ -96,8 +85,8 @@ public sealed partial class BattleFlowTests
         yield return BeginBattle(player, enemy);
 
         BattleManager manager = Manager();
-        // 1 - раніше з таким числом втеча ніколи не вдавалась
-        manager.SetRandomSource(new ConstantBattleRandom(1f));
+        // Втеча взагалі не бере випадкове число
+        manager.SetRandomSource(new BattleRandom(CalmSeed));
 
         Assert.That(manager.TryPlayerAction(BattleAction.Flee), Is.True);
         Assert.That(manager.TryPlayerAction(BattleAction.Flee), Is.False);
@@ -378,7 +367,7 @@ public sealed partial class BattleFlowTests
         yield return BeginBattle(player, enemy);
 
         BattleManager manager = Manager();
-        manager.SetRandomSource(new ConstantBattleRandom(0.5f));
+        manager.SetRandomSource(new BattleRandom(CalmSeed));
 
         // Крит
         player.criticalChance = 1f;

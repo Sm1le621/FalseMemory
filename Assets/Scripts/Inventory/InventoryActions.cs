@@ -1,9 +1,10 @@
 using UnityEngine;
 
-// Екіпіровка гравця: зв'язує вікно інвентаря з EquipmentState.
-// Висить на гравці разом з BattleUnit і BattleInventory.
+// Дії з вікна інвентаря: одягнути / зняти екіпіровку і використати зілля у світі.
+// Висить на гравці разом з BattleUnit, BattleInventory і InventoryWindow.
+// Сам нічого не малює - тільки слухає події вікна і виконує дію.
 [RequireComponent(typeof(BattleUnit), typeof(BattleInventory))]
-public sealed class EquipmentController : MonoBehaviour
+public sealed class InventoryActions : MonoBehaviour
 {
     // Що зараз одягнено (зброя і броня)
     public EquipmentState State { get; } = new EquipmentState();
@@ -11,6 +12,8 @@ public sealed class EquipmentController : MonoBehaviour
     private BattleUnit unit;
     private BattleInventory inventory;
     private InventoryWindow window;
+    // В якому кадрі останній раз використали предмет (щоб не використати двічі за кадр)
+    private int lastUseFrame = -1;
 
     private void Awake()
     {
@@ -29,6 +32,9 @@ public sealed class EquipmentController : MonoBehaviour
 
         window.EquipRequested += HandleEquip;
         window.UnequipRequested += HandleUnequip;
+        window.UseRequested += HandleUse;
+        // Вікно буде питати в нас, чи можна натиснути "Use"
+        window.CanUseSelection = CanUse;
         // Коли змінюється екіпіровка - перемальовуємо вікно
         State.Changed += window.Refresh;
     }
@@ -43,11 +49,17 @@ public sealed class EquipmentController : MonoBehaviour
 
         window.EquipRequested -= HandleEquip;
         window.UnequipRequested -= HandleUnequip;
+        window.UseRequested -= HandleUse;
+        // Прибираємо перевірку, тільки якщо це досі наша
+        if (window.CanUseSelection == CanUse)
+        {
+            window.CanUseSelection = null;
+        }
         State.Changed -= window.Refresh;
     }
 
-    // Чи можна зараз міняти екіпіровку (не в бою і гравець живий)
-    private bool CanChange
+    // Чи можна зараз щось робити з інвентарем (не в бою і гравець живий)
+    private bool CanAct
     {
         get
         {
@@ -63,11 +75,13 @@ public sealed class EquipmentController : MonoBehaviour
         }
     }
 
+    // ===== Екіпіровка =====
+
     // Одягнути предмет зі слота інвентаря index.
     // target - в який слот (якщо null - вибираємо автоматично)
     public bool TryEquip(int index, EquipmentSlot? target = null)
     {
-        if (!CanChange || index < 0 || index >= InventoryState.Capacity)
+        if (!CanAct || index < 0 || index >= InventoryState.Capacity)
         {
             return false;
         }
@@ -100,7 +114,7 @@ public sealed class EquipmentController : MonoBehaviour
     // Зняти предмет зі слота
     public bool TryUnequip(EquipmentSlot slot)
     {
-        if (!CanChange)
+        if (!CanAct)
         {
             return false;
         }
@@ -135,5 +149,65 @@ public sealed class EquipmentController : MonoBehaviour
             window.ShowMessage("Cannot unequip: inventory is full or the slot is empty.");
         }
         window.Refresh();
+    }
+
+    // ===== Зілля у світі =====
+
+    // Чи можна використати предмет зі слота index
+    public bool CanUse(int index)
+    {
+        if (!CanAct || window == null || !window.IsOpen)
+        {
+            return false;
+        }
+        if (index < 0 || index >= InventoryState.Capacity)
+        {
+            return false;
+        }
+
+        BattleConsumable item = inventory.State.GetSlot(index).Item as BattleConsumable;
+        return BattleCalculator.CanUseItem(unit, item);
+    }
+
+    // Використати предмет зі слота index
+    public bool TryUse(int index)
+    {
+        if (lastUseFrame == Time.frameCount || !CanUse(index))
+        {
+            return false;
+        }
+
+        BattleConsumable item = (BattleConsumable)inventory.State.GetSlot(index).Item;
+        lastUseFrame = Time.frameCount;
+
+        int amount;
+        bool ok = BattleCalculator.TryUseItem(unit, item, out amount);
+
+        if (ok)
+        {
+            string resource;
+            if (item.manaRestoration > 0)
+            {
+                resource = "MP";
+            }
+            else
+            {
+                resource = "HP";
+            }
+            window.ShowMessage(item.displayName + ": +" + amount + " " + resource);
+        }
+        else
+        {
+            window.ShowMessage("This item cannot be used now.");
+        }
+
+        window.Refresh();
+        return ok;
+    }
+
+    // Натиснули "Use" у вікні
+    private void HandleUse(int index)
+    {
+        TryUse(index);
     }
 }

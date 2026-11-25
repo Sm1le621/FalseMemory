@@ -14,41 +14,17 @@ public sealed partial class BattleAbilityTests
         player.TrySpendMP(25);
 
         int amount;
-        Assert.That(BattleAbilities.TryUseItem(player, player, potion, out amount), Is.True);
+        Assert.That(BattleCalculator.TryUseItem(player, potion, out amount), Is.True);
         Assert.That(amount, Is.EqualTo(20));
         Assert.That(player.CurrentMP, Is.EqualTo(25));
         Assert.That(player.Health.currentHealth, Is.EqualTo(100));
         Assert.That(player.Inventory.Count(potion), Is.EqualTo(2));
 
         // Друге зілля відновить тільки 5 (до максимуму 30)
-        Assert.That(BattleAbilities.TryUseItem(player, player, potion, out amount), Is.True);
+        Assert.That(BattleCalculator.TryUseItem(player, potion, out amount), Is.True);
         Assert.That(amount, Is.EqualTo(5));
         Assert.That(player.CurrentMP, Is.EqualTo(30));
         Assert.That(player.Inventory.Count(potion), Is.EqualTo(1));
-    }
-
-    // Предмет, дозволений тільки в певному місці, не працює в іншому
-    [Test]
-    public void ItemLocationsRejectWithoutResourceChanges()
-    {
-        int amount;
-
-        potion.useLocations = ItemUseLocation.Exploration;
-        player.Health.currentHealth = 50;
-
-        // В бою - не можна
-        Assert.That(BattleAbilities.TryUseItem(player, player, potion, out amount), Is.False);
-        Assert.That(player.Inventory.Count(potion), Is.EqualTo(3));
-
-        // У світі - можна
-        Assert.That(BattleAbilities.TryUseItem(player, player, potion, out amount, ItemUseLocation.Exploration), Is.True);
-        Assert.That(player.Health.currentHealth, Is.EqualTo(80));
-        Assert.That(player.Inventory.Count(potion), Is.EqualTo(2));
-
-        // Тепер навпаки: тільки в бою
-        potion.useLocations = ItemUseLocation.Battle;
-        Assert.That(BattleAbilities.TryUseItem(player, player, potion, out amount, ItemUseLocation.Exploration), Is.False);
-        Assert.That(player.Inventory.Count(potion), Is.EqualTo(2));
     }
 
     // "Гібридні" та від'ємні предмети ніколи не витрачаються
@@ -59,16 +35,16 @@ public sealed partial class BattleAbilityTests
 
         // І HP, і MP одночасно - не можна
         potion.manaRestoration = 20;
-        Assert.That(BattleAbilities.TryUseItem(player, player, potion, out amount), Is.False);
+        Assert.That(BattleCalculator.TryUseItem(player, potion, out amount), Is.False);
 
         // Від'ємне лікування
         potion.healing = -1;
-        Assert.That(BattleAbilities.TryUseItem(player, player, potion, out amount), Is.False);
+        Assert.That(BattleCalculator.TryUseItem(player, potion, out amount), Is.False);
 
         // Предмет, що нічого не робить
         potion.healing = 0;
         potion.manaRestoration = 0;
-        Assert.That(BattleAbilities.TryUseItem(player, player, potion, out amount), Is.False);
+        Assert.That(BattleCalculator.TryUseItem(player, potion, out amount), Is.False);
 
         Assert.That(player.Inventory.Count(potion), Is.EqualTo(3));
         Assert.That(player.CurrentMP, Is.EqualTo(30));
@@ -89,7 +65,7 @@ public sealed partial class BattleAbilityTests
         try
         {
             player.Inventory.TryAdd(sword, 1);
-            EquipmentController equipment = player.gameObject.AddComponent<EquipmentController>();
+            InventoryActions equipment = player.gameObject.AddComponent<InventoryActions>();
 
             // Шукаємо, в який слот потрапив меч
             int swordIndex = -1;
@@ -108,7 +84,7 @@ public sealed partial class BattleAbilityTests
 
             // Шкода Fire та сама, що й без меча
             int amount;
-            Assert.That(BattleAbilities.TryCast(player, enemy, fire, rules, out amount), Is.True);
+            Assert.That(BattleCalculator.TryCast(player, enemy, fire, rules, out amount), Is.True);
             Assert.That(amount, Is.EqualTo(19));
             Assert.That(player.CurrentMP, Is.EqualTo(22));
             Assert.That(enemy.Health.currentHealth, Is.EqualTo(41));
@@ -131,7 +107,7 @@ public sealed partial class BattleAbilityTests
         player.Health.currentHealth = initial;
 
         int amount;
-        Assert.That(BattleAbilities.TryUseItem(player, player, potion, out amount), Is.True);
+        Assert.That(BattleCalculator.TryUseItem(player, potion, out amount), Is.True);
         Assert.That(amount, Is.EqualTo(restored));
         Assert.That(player.Health.currentHealth, Is.EqualTo(expected));
         Assert.That(player.Inventory.Count(potion), Is.EqualTo(2));
@@ -142,11 +118,11 @@ public sealed partial class BattleAbilityTests
     [Test]
     public void EmptyPotionStackCannotHealOrBecomeNegative()
     {
-        player.Inventory.items[0].count = 0;
+        player.Inventory.startingItems[0].count = 0;
         player.Health.currentHealth = 50;
 
         int amount;
-        Assert.That(BattleAbilities.TryUseItem(player, player, potion, out amount), Is.False);
+        Assert.That(BattleCalculator.TryUseItem(player, potion, out amount), Is.False);
         Assert.That(player.Health.currentHealth, Is.EqualTo(50));
         Assert.That(player.Inventory.Count(potion), Is.Zero);
     }
@@ -158,7 +134,7 @@ public sealed partial class BattleAbilityTests
         player.Health.currentHealth = 0;
 
         int amount;
-        Assert.That(BattleAbilities.TryUseItem(player, player, potion, out amount), Is.False);
+        Assert.That(BattleCalculator.TryUseItem(player, potion, out amount), Is.False);
         Assert.That(player.Inventory.Count(potion), Is.EqualTo(3));
     }
 
@@ -166,12 +142,12 @@ public sealed partial class BattleAbilityTests
     [Test]
     public void DuplicateStacksConsumeOnlyOneAndNegativeStacksAreUnavailable()
     {
-        player.Inventory.items[0].count = -1;
+        player.Inventory.startingItems[0].count = -1;
 
-        BattleItemStack extra = new BattleItemStack();
+        StartingItem extra = new StartingItem();
         extra.definition = potion;
         extra.count = 2;
-        player.Inventory.items.Add(extra);
+        player.Inventory.startingItems.Add(extra);
 
         Assert.That(player.Inventory.Count(potion), Is.EqualTo(2));
         Assert.That(player.Inventory.TryConsume(potion), Is.True);

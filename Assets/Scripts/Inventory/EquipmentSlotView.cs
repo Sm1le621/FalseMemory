@@ -26,9 +26,9 @@ public sealed class EquipmentSlotView : MonoBehaviour, IPointerEnterHandler, IPo
     {
         get
         {
-            if (owner != null && owner.GetComponent<EquipmentController>() != null)
+            if (owner != null && owner.GetComponent<InventoryActions>() != null)
             {
-                return owner.GetComponent<EquipmentController>().State.GetSlot(slot);
+                return owner.GetComponent<InventoryActions>().State.GetSlot(slot);
             }
             return null;
         }

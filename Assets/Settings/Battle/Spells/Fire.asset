@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: FalseMemory.Runtime::BattleSpell
   displayName: Fire
   mpCost: 8
-  effect: 0
-  target: 0
   power: 10
   effectColor: {r: 1, g: 0.3, b: 0.05, a: 1}
   visualEffect: {fileID: 11400000, guid: 50bbdb9fdb40ef34cb2b130b1d0e7a76, type: 2}

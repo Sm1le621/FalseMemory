@@ -97,7 +97,6 @@ public sealed class BattleVFXController : MonoBehaviour
         float radius = 42f;
         float size = 8f;
         Color color = fallback;
-        BattleVFXShape shape = BattleVFXShape.Rising;
 
         if (profile != null)
         {
@@ -106,7 +105,6 @@ public sealed class BattleVFXController : MonoBehaviour
             radius = Mathf.Clamp(profile.radius, 0, 100);
             size = Mathf.Clamp(profile.particleSize, 1, 24);
             color = profile.color;
-            shape = profile.shape;
         }
 
         // Не більше, ніж є частинок у сцені
@@ -160,40 +158,15 @@ public sealed class BattleVFXController : MonoBehaviour
             // Рух частинок
             for (int i = 0; i < count; i++)
             {
-                // Кут частинки на колі (при Orbit ще й крутиться)
-                float spin = 0;
-                if (shape == BattleVFXShape.Orbit)
-                {
-                    spin = 2.5f;
-                }
-                float angle = i * Mathf.PI * 2 / count + progress * spin;
-
-                // При Burst частинки розлітаються від центру
-                float spread = 1f;
-                if (shape == BattleVFXShape.Burst)
-                {
-                    spread = progress;
-                }
-                Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius * spread;
-
-                // При Rising частинки стоять рядами і піднімаються вгору
-                if (shape == BattleVFXShape.Rising)
-                {
-                    offset = new Vector2((i % 5 - 2) * radius / 2.5f, -30f + progress * (75f + i % 3 * 12f));
-                }
+                // Частинки стоять рядами (по 5) і піднімаються вгору
+                Vector2 offset = new Vector2((i % 5 - 2) * radius / 2.5f, -30f + progress * (75f + i % 3 * 12f));
 
                 Image p = particles[i];
                 p.rectTransform.anchoredPosition = center + offset;
                 // Частинка росте і зменшується
                 p.rectTransform.sizeDelta = Vector2.one * size * (0.5f + 0.5f * Mathf.Sin(progress * Mathf.PI));
 
-                // При Orbit частинки повернуті на 45 градусів (ромбики)
-                float rotation = 0f;
-                if (shape == BattleVFXShape.Orbit)
-                {
-                    rotation = 45f;
-                }
-                p.rectTransform.localRotation = Quaternion.Euler(0, 0, rotation);
+                p.rectTransform.localRotation = Quaternion.identity;
 
                 // Плавна поява і зникнення
                 Color current = color;

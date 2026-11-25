@@ -4,19 +4,6 @@ using UnityEngine;
 // Тести випадковості: крит, промах, межі шансів, seed
 public sealed class BattleRandomTests
 {
-    // "Рандом", який завжди повертає одне й те саме число і рахує виклики
-    private sealed class FixedRandom : IBattleRandom
-    {
-        public float sample;
-        public int calls;
-
-        public float Next01()
-        {
-            calls = calls + 1;
-            return sample;
-        }
-    }
-
     // Крит множить шкоду, а захист діє вже після криту
     [Test]
     public void CriticalMultipliesDamageAndDefendAppliesAfterIt()
@@ -24,7 +11,8 @@ public sealed class BattleRandomTests
         BattleRules rules = ScriptableObject.CreateInstance<BattleRules>();
         try
         {
-            FixedRandom source = new FixedRandom { sample = 0.5f };
+            // Шанси 0 і 1 не залежать від випадкового числа, тому seed може бути будь-яким
+            BattleRandom source = new BattleRandom(7);
 
             PhysicalAttackResult normal = BattleCalculator.ResolvePhysical(15, 5, false, rules, 0f, 0f, source);
             PhysicalAttackResult critical = BattleCalculator.ResolvePhysical(15, 5, false, rules, 1f, 0f, source);
@@ -49,14 +37,18 @@ public sealed class BattleRandomTests
         BattleRules rules = ScriptableObject.CreateInstance<BattleRules>();
         try
         {
-            FixedRandom source = new FixedRandom { sample = 0.1f };
-            PhysicalAttackResult result = BattleCalculator.ResolvePhysical(15, 5, false, rules, 1f, 0.5f, source);
+            // Два однакові рандоми: source використовує атака, reference - для порівняння
+            BattleRandom source = new BattleRandom(7);
+            BattleRandom reference = new BattleRandom(7);
+            PhysicalAttackResult result = BattleCalculator.ResolvePhysical(15, 5, false, rules, 1f, 1f, source);
 
             Assert.That(result.Damage, Is.Zero);
             Assert.That(result.Missed, Is.True);
             Assert.That(result.Critical, Is.False);
-            // Рандом викликали тільки 1 раз (для промаху)
-            Assert.That(source.calls, Is.EqualTo(1));
+            // Рандом викликали тільки 1 раз (для промаху):
+            // наступне число source дорівнює другому числу reference
+            reference.Next01();
+            Assert.That(source.Next01(), Is.EqualTo(reference.Next01()));
         }
         finally
         {
@@ -78,8 +70,8 @@ public sealed class BattleRandomTests
     [Test]
     public void SameSeedProducesSameStream()
     {
-        SeededBattleRandom a = new SeededBattleRandom(42);
-        SeededBattleRandom b = new SeededBattleRandom(42);
+        BattleRandom a = new BattleRandom(42);
+        BattleRandom b = new BattleRandom(42);
 
         for (int i = 0; i < 20; i++)
         {

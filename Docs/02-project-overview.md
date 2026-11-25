@@ -14,7 +14,7 @@ MainMenu ──New Game──► SampleScene (мир) ──касание ск�
 
 | Сцена | Что в ней | Главные скрипты |
 |---|---|---|
-| `MainMenu` | Фон, кнопки New Game / Settings / Exit, панель настроек | `MainMenuController`, `SettingsMenu` |
+| `MainMenu` | Фон, кнопки New Game / Settings / Exit, панель настроек | `MainMenuController` |
 | `SampleScene` | Мир: карта, игрок, скелет, HUD, окно инвентаря, меню паузы, вход в пещеру | `PlayerController`, `EnemyAI`, `BattleEncounter`, `BattleTransition`, `InventoryWindow`, `PauseMenu` |
 | `BattleScene` | Экран боя: портреты, полосы HP/MP, меню команд, эффекты | `BattleManager`, `BattleUI`, `BattleHUD`, `BattlePresentation`, `BattleVFXController` |
 | `Dungeon` | Подземелье: камни, скелеты, босс `BossSkeleton`, выход обратно | `SceneTransition` (на выходе), `LootDrop` (на боссе) |
@@ -32,14 +32,13 @@ MainMenu ──New Game──► SampleScene (мир) ──касание ск�
 | `Health` | HP (единственное место, где хранится HP) |
 | `BattleUnit` | характеристики боя: атака, защита, MP, заклинания |
 | `BattleInventory` | инвентарь (30 слотов) |
-| `EquipmentController` | надетые оружие и броня |
 | `InventoryWindow` | окно инвентаря (клавиша **I**) |
-| `WorldItemUseController` | использование зелий из инвентаря |
+| `InventoryActions` | действия из окна: надеть/снять оружие и броню, выпить зелье |
 | `WorldInputGate` | «замок» на движение, пока открыто окно |
 
 ### Enemy — скелет (SampleScene)
 
-`Rigidbody2D`, 2 × `Collider2D` (триггер-зона видимости + тело), `Health`, `BattleUnit`, `EnemyAI` (погоня), `BattleEncounter` (касание → бой), `EnemySpriteAnimation` (анимация спрайта).
+`Rigidbody2D`, 2 × `Collider2D` (триггер-зона видимости + тело), `Health`, `BattleUnit`, `EnemyAI` (погоня), `BattleEncounter` (касание → бой). Спрайт статичный (один кадр Idle).
 
 ### Остальное в SampleScene
 
@@ -70,7 +69,7 @@ MainMenu ──New Game──► SampleScene (мир) ──касание ск�
 | `Settings/Inventory/IronSword` | `ItemData` | оружие, ATK +5 |
 | `Settings/Inventory/LeatherArmor` | `ItemData` | броня, DEF +4 |
 | `Settings/Inventory/Excalibur` | `ItemData` | оружие, ATK +10, выпадает из босса. Иконка пока как у Iron Sword |
-| `Settings/Battle/Audio/DefaultBattleAudio` | `BattleAudioProfile` | звуки боя: Attack, Defend, Flee, Fire |
+| `Settings/Battle/Audio/DefaultBattleAudio` | `BattleAudioProfile` | звуки боя: Attack, Defend, Flee, Fire, Miss, Critical |
 
 Характеристики в сцене: **Player** — HP 100, ATK 15, DEF 8, MP 30, MATK 12, MDEF 8. **Skeleton** — HP 60, ATK 12, DEF 5, MDEF 3.
 
@@ -79,12 +78,11 @@ MainMenu ──New Game──► SampleScene (мир) ──касание ск�
 ```
 Assets/
   Scripts/              ← игровые скрипты
-    Battle/             ← бой (24 файла)
-    Inventory/          ← инвентарь, экипировка, лут (12)
+    Battle/             ← бой (19 файлов)
+    Inventory/          ← инвентарь, экипировка, лут (11)
     Dangeon/            ← переходы между сценами (2)
-    UI/                 ← меню, пауза, настройки, полоса маны (4)
+    UI/                 ← главное меню, пауза, полоса маны (3)
     PlayerController.cs, EnemyAI.cs, Health.cs, CameraFollow.cs
-  Editor/               ← инструменты редактора (генерация спрайтов и анимаций)
   Tests/                ← автотесты (EditMode и PlayMode)
   Scenes/               ← 4 сцены
   Settings/             ← ScriptableObject-ассеты (правила, предметы, заклинания)

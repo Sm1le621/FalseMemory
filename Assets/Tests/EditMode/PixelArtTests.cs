@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
-// Тести піксель-арту: розміри, налаштування імпорту, повнота анімацій
+// Тести піксель-арту: розміри, налаштування імпорту, повнота анімації вогню
 public sealed class PixelArtTests
 {
     // Усі 25 кадрів - рівно 64x64, Point-фільтр, без стиснення і без міпмапів
@@ -38,24 +38,10 @@ public sealed class PixelArtTests
         }
     }
 
-    // У скелета немає анімації "стоїть", а у вогню є всі 8 кадрів
+    // У вогню є всі 8 кадрів і контролер зі станом Effect
     [Test]
-    public void SkeletonHasNoIdlePoseAndFireHasCompleteFrames()
+    public void FireHasCompleteFrames()
     {
-        SpriteAnimationSet set = AssetDatabase.LoadAssetAtPath<SpriteAnimationSet>("Assets/Settings/Battle/Visuals/Skeleton64.asset");
-        Assert.That(set, Is.Not.Null);
-        Assert.That(System.Enum.GetNames(typeof(SpritePose)), Does.Not.Contain("Idle"));
-
-        // Контролери зібрані з кадрів: світ і бойовий портрет
-        Assert.That(set.worldController, Is.Not.Null);
-        Assert.That(set.portraitController, Is.Not.Null);
-        AssertStateExists(set.worldController, "Move");
-        AssertStateExists(set.worldController, "Hurt");
-        AssertStateExists(set.worldController, "Death");
-        AssertStateExists(set.portraitController, "Attack");
-        AssertStateExists(set.portraitController, "Hurt");
-        AssertStateExists(set.portraitController, "Death");
-
         BattleVFXProfile fire = AssetDatabase.LoadAssetAtPath<BattleVFXProfile>("Assets/Settings/Battle/VFX/FireVisual.asset");
         Assert.That(fire, Is.Not.Null);
         Assert.That(fire.frameCount, Is.EqualTo(8));

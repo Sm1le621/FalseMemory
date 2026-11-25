@@ -4314,7 +4314,6 @@ GameObject:
   - component: {fileID: 497416146}
   - component: {fileID: 497416145}
   - component: {fileID: 497416144}
-  - component: {fileID: 497416147}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -4544,7 +4543,6 @@ MonoBehaviour:
   criticalChance: 0.1
   missChance: 0.05
   battleSprite: {fileID: 21300000, guid: e8b3f7969ac3a974c889b3b2a7984741, type: 3}
-  visualAnimations: {fileID: 0}
   spriteColor: {r: 1, g: 1, b: 1, a: 1}
   flipInBattle: 0
 --- !u!114 &497416146
@@ -4563,22 +4561,6 @@ MonoBehaviour:
   currentHealth: 0
   hpSlider: {fileID: 0}
   hpText: {fileID: 0}
---- !u!114 &497416147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 497416136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf7de4f32cda88449a0f24ad013b759b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FalseMemory.Runtime::EnemySpriteAnimation
-  movementThreshold: 0.001
-  hurtDuration: 0.16
-  deathDuration: 0.4
-  faceMovement: 1
 --- !u!1 &497420708
 GameObject:
   m_ObjectHideFlags: 0
@@ -4690,7 +4672,6 @@ GameObject:
   - component: {fileID: 504028424}
   - component: {fileID: 504028423}
   - component: {fileID: 504028426}
-  - component: {fileID: 504028427}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -4914,7 +4895,6 @@ MonoBehaviour:
   criticalChance: 0.1
   missChance: 0.05
   battleSprite: {fileID: 2941999975309645056, guid: c36f7b58fc766374da5802aea4164127, type: 3}
-  visualAnimations: {fileID: 0}
   spriteColor: {r: 0.6862745, g: 0.6862745, b: 0.6862745, a: 1}
   flipInBattle: 1
 --- !u!114 &504028422
@@ -4929,7 +4909,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa565e4808691f9408ad5301873722cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FalseMemory.Runtime::BattleInventory
-  items: []
   startingItems:
   - definition: {fileID: 11400000, guid: fdd6acbd116319f4cb71630f140f5d51, type: 2}
     count: 1
@@ -5018,19 +4997,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65fa859eb2740db478dfe6ea0267ef17, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: FalseMemory.Runtime::EquipmentController
---- !u!114 &504028427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504028413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d5138d2c28e0f14a8ad682e952a992f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FalseMemory.Runtime::WorldItemUseController
+  m_EditorClassIdentifier: FalseMemory.Runtime::InventoryActions
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

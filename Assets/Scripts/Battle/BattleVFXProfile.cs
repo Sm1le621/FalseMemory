@@ -1,13 +1,9 @@
 using UnityEngine;
 
-// Як рухаються частинки: піднімаються вгору, крутяться по колу або розлітаються
-public enum BattleVFXShape { Rising, Orbit, Burst }
-
 // Налаштування одного візуального ефекту (вогонь...)
 [CreateAssetMenu(menuName = "FalseMemory/Battle VFX Profile")]
 public sealed class BattleVFXProfile : ScriptableObject
 {
-    public BattleVFXShape shape;
     public Color color = Color.white;
 
     // Картинка однієї частинки

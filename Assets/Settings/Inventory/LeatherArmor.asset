@@ -19,7 +19,6 @@ MonoBehaviour:
   category: 2
   stackable: 0
   maxStack: 99
-  useLocations: 3
   equipmentSlot: 1
   bonuses:
     attack: 0

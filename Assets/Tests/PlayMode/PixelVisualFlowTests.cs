@@ -15,8 +15,6 @@ public sealed partial class BattleFlowTests
         BattleUnit enemy = Enemy();
         SpriteRenderer visual = enemy.GetComponent<SpriteRenderer>();
 
-        // Як у BossSkeleton - набору анімацій немає
-        Assert.That(enemy.visualAnimations, Is.Null);
         Assert.That(enemy.battleSprite.name, Does.Contain("Idle"));
         Assert.That(enemy.transform.localScale, Is.EqualTo(new Vector3(2, 2, 1)));
         Assert.That(enemy.GetComponents<Collider2D>().Length, Is.EqualTo(2));

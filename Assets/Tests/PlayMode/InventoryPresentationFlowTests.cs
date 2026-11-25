@@ -69,7 +69,7 @@ public sealed partial class BattleFlowTests
     {
         BattleUnit player = Player();
         InventoryWindow window = player.GetComponent<InventoryWindow>();
-        EquipmentController equipment = player.GetComponent<EquipmentController>();
+        InventoryActions equipment = player.GetComponent<InventoryActions>();
         ItemData sword = Sword(player);
 
         window.Open();

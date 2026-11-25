@@ -1,39 +1,37 @@
 using System;
 
-// Інтерфейс "джерело випадкових чисел".
-// Потрібен, щоб у тестах можна було підставити передбачувані числа.
-public interface IBattleRandom
+// Джерело випадкових чисел для бою.
+// У грі використовується звичайний рандом Unity (BattleRandom.Unity).
+// У тестах створюється new BattleRandom(seed): з однаковим seed завжди однакові числа,
+// і стан UnityEngine.Random при цьому не змінюється.
+public sealed class BattleRandom
 {
+    // Спільний екземпляр зі звичайним рандомом Unity
+    public static readonly BattleRandom Unity = new BattleRandom();
+
+    // Рандом із seed. null - значить беремо UnityEngine.Random
+    private readonly Random seeded;
+
+    // Звичайний рандом Unity
+    private BattleRandom()
+    {
+        seeded = null;
+    }
+
+    // Передбачуваний рандом із seed (для тестів)
+    public BattleRandom(int seed)
+    {
+        seeded = new Random(seed);
+    }
+
     // Повертає випадкове число від 0 до 1
-    float Next01();
-}
-
-// Звичайний рандом Unity (використовується в грі)
-public sealed class UnityBattleRandom : IBattleRandom
-{
-    // Один спільний екземпляр на всю гру
-    public static readonly UnityBattleRandom Instance = new UnityBattleRandom();
-
     public float Next01()
     {
-        return UnityEngine.Random.value;
-    }
-}
-
-// Рандом із "зерном" (seed): з однаковим seed завжди дає однакові числа.
-// Він окремий і НЕ змінює стан UnityEngine.Random.
-public sealed class SeededBattleRandom : IBattleRandom
-{
-    private readonly Random random;
-
-    public SeededBattleRandom(int seed)
-    {
-        random = new Random(seed);
-    }
-
-    public float Next01()
-    {
-        return (float)random.NextDouble();
+        if (seeded == null)
+        {
+            return UnityEngine.Random.value;
+        }
+        return (float)seeded.NextDouble();
     }
 }
 

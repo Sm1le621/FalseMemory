@@ -1,12 +1,7 @@
 using UnityEngine;
 
-// Що робить заклинання (поки є тільки магічна шкода)
-public enum BattleEffect { MagicDamage }
-
-// На кого діє: на суперника або на себе
-public enum BattleTarget { Opponent, Self }
-
-// Файл з даними одного заклинання (створюється через меню Create)
+// Файл з даними одного заклинання (створюється через меню Create).
+// Заклинання завжди наносить магічну шкоду противнику.
 [CreateAssetMenu(menuName = "FalseMemory/Battle Spell")]
 public sealed class BattleSpell : ScriptableObject
 {
@@ -16,9 +11,6 @@ public sealed class BattleSpell : ScriptableObject
     // Скільки мани коштує
     [Min(0)]
     public int mpCost = 8;
-
-    public BattleEffect effect = BattleEffect.MagicDamage;
-    public BattleTarget target = BattleTarget.Opponent;
 
     // Сила заклинання (додається до шкоди)
     [Min(0)]
