@@ -76,7 +76,6 @@ public sealed class EquipmentSlotView : MonoBehaviour, IPointerEnterHandler, IPo
     {
         hovered = false;
         RefreshColors();
-        HideTooltip();
     }
 
     // Мишка навелась на клітинку
@@ -84,10 +83,6 @@ public sealed class EquipmentSlotView : MonoBehaviour, IPointerEnterHandler, IPo
     {
         hovered = true;
         RefreshColors();
-        if (owner != null && owner.tooltip != null)
-        {
-            owner.tooltip.Show(this, e.position);
-        }
     }
 
     // Мишка пішла з клітинки
@@ -95,14 +90,5 @@ public sealed class EquipmentSlotView : MonoBehaviour, IPointerEnterHandler, IPo
     {
         hovered = false;
         RefreshColors();
-        HideTooltip();
-    }
-
-    private void HideTooltip()
-    {
-        if (owner != null && owner.tooltip != null)
-        {
-            owner.tooltip.Hide(this);
-        }
     }
 }

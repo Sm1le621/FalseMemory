@@ -277,7 +277,6 @@ InventoryActions ..> BattleCalculator : TryUseItem
 class InventoryWindow {
   <<MonoBehaviour>>
   +InventorySlotView[] slots
-  +InventoryTooltip tooltip
   +event UseRequested
   +event EquipRequested
   +event UnequipRequested
@@ -288,7 +287,6 @@ class InventoryWindow {
 InventoryWindow --> BattleInventory
 InventoryWindow --> WorldInputGate
 InventoryWindow *-- "30" InventorySlotView
-InventoryWindow --> InventoryTooltip
 InventoryActions --> InventoryWindow : подписка
 
 class LootDrop {
@@ -304,8 +302,6 @@ class InventorySlotView
 <<MonoBehaviour>> InventorySlotView
 class EquipmentSlotView
 <<MonoBehaviour>> EquipmentSlotView
-class InventoryTooltip
-<<MonoBehaviour>> InventoryTooltip
 class ItemPresentation
 <<static>> ItemPresentation
 class WorldInputGate {
@@ -316,7 +312,7 @@ class WorldInputGate {
 }
 InventorySlotView --> InventoryWindow
 EquipmentSlotView --> InventoryWindow
-InventoryTooltip ..> ItemPresentation
+InventorySlotView ..> ItemPresentation : цвет ячейки
 ```
 
 ## 3.4 Мир, сцены, меню

@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: FalseMemory.Runtime::ItemData
   id: item.iron_sword
   displayName: Iron Sword
-  description: A plain iron sword, worn but reliable.
   icon: {fileID: 3287038575609840786, guid: f54cfadc8819b4a6ab28ebe47d242d41, type: 3}
   category: 1
   stackable: 0

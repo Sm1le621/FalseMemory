@@ -20,8 +20,8 @@ MonoBehaviour:
   cancel: {fileID: 0}
   attack: {fileID: 8300000, guid: 88b1cbe3caa3fee4b8b103b5edd7aba9, type: 3}
   hit: {fileID: 0}
-  critical: {fileID: 8300000, guid: fd25a15f9797641458336cccfb445343, type: 3}
-  miss: {fileID: 8300000, guid: f11db4559b3ffff45b62e9327fc5535d, type: 3}
+  critical: {fileID: 0}
+  miss: {fileID: 0}
   fire: {fileID: 8300000, guid: a652877b012108e41871f867ada9f176, type: 3}
   victory: {fileID: 0}
   defeat: {fileID: 0}

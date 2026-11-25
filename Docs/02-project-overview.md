@@ -47,7 +47,7 @@ MainMenu ──New Game──► SampleScene (мир) ──касание ск�
 | `Main Camera` | `Camera`, `CameraFollow` |
 | `Health` (HUD) | полосы HP/MP, `ManaHUD` |
 | `BattleTransition` | `BattleTransition` + дочерний Canvas с `BattleScreenFade` (чёрный экран) |
-| `InventoryCanvas` | панель инвентаря: 30 ячеек `InventorySlotView`, 2 ячейки `EquipmentSlotView`, `InventoryTooltip` |
+| `InventoryCanvas` | панель инвентаря: 30 ячеек `InventorySlotView`, 2 ячейки `EquipmentSlotView` |
 | `PauseCanvas` | `Canvas` + `PauseMenu`; внутри `PausePanel` (полупрозрачный чёрный фон) → `PauseWindow` → `Title`, `ResumeButton`, `MainMenuButton` |
 | вход в пещеру | `BoxCollider2D` (Is Trigger) + `SceneTransition` |
 
@@ -69,7 +69,7 @@ MainMenu ──New Game──► SampleScene (мир) ──касание ск�
 | `Settings/Inventory/IronSword` | `ItemData` | оружие, ATK +5 |
 | `Settings/Inventory/LeatherArmor` | `ItemData` | броня, DEF +4 |
 | `Settings/Inventory/Excalibur` | `ItemData` | оружие, ATK +10, выпадает из босса. Иконка пока как у Iron Sword |
-| `Settings/Battle/Audio/DefaultBattleAudio` | `BattleAudioProfile` | звуки боя: Attack, Defend, Flee, Fire, Miss, Critical |
+| `Settings/Battle/Audio/DefaultBattleAudio` | `BattleAudioProfile` | звуки боя: Attack, Defend, Flee, Fire |
 
 Характеристики в сцене: **Player** — HP 100, ATK 15, DEF 8, MP 30, MATK 12, MDEF 8. **Skeleton** — HP 60, ATK 12, DEF 5, MDEF 3.
 
@@ -79,7 +79,7 @@ MainMenu ──New Game──► SampleScene (мир) ──касание ск�
 Assets/
   Scripts/              ← игровые скрипты
     Battle/             ← бой (19 файлов)
-    Inventory/          ← инвентарь, экипировка, лут (11)
+    Inventory/          ← инвентарь, экипировка, лут (10)
     Dangeon/            ← переходы между сценами (2)
     UI/                 ← главное меню, пауза, полоса маны (3)
     PlayerController.cs, EnemyAI.cs, Health.cs, CameraFollow.cs

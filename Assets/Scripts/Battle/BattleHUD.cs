@@ -13,8 +13,7 @@ public sealed class BattleHUD : MonoBehaviour
     public Slider mpBar;
     public Slider enemyHPBar;
 
-    // Текст стану ("DEFENDING"), напис "LOW HP", заголовок меню
-    public TextMeshProUGUI resourceText;
+    // Напис "LOW HP" і заголовок меню
     public TextMeshProUGUI lowHealthText;
     public TextMeshProUGUI menuTitle;
 
@@ -83,18 +82,6 @@ public sealed class BattleHUD : MonoBehaviour
         SetBar(hpBar, player.Health.currentHealth, player.Health.maxHealth);
         SetBar(mpBar, player.CurrentMP, player.MaxMP);
         SetBar(enemyHPBar, enemy.Health.currentHealth, enemy.Health.maxHealth);
-
-        if (resourceText != null)
-        {
-            if (player.IsDefending)
-            {
-                resourceText.text = "DEFENDING";
-            }
-            else
-            {
-                resourceText.text = "";
-            }
-        }
 
         // Мало здоров'я?
         bool low = player.IsAlive && player.Health.currentHealth <= player.Health.maxHealth * lowHealthThreshold;

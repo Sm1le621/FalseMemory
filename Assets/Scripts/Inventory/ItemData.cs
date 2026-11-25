@@ -45,8 +45,6 @@ public class ItemData : ScriptableObject
     // Унікальний id (два різні предмети з однаковим id не можуть бути в інвентарі)
     public string id;
     public string displayName = "Item";
-    [TextArea]
-    public string description;
     public Sprite icon;
     public ItemCategory category = ItemCategory.Consumable;
     // Чи можна складати в стопку

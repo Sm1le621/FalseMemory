@@ -448,13 +448,7 @@ public sealed class BattleUI : MonoBehaviour
     public void RefreshStats(BattleUnit player, BattleUnit enemy, int round)
     {
         playerStats.text = Stats(player);
-
-        string enemyText = Stats(enemy);
-        if (enemy.IsDefending)
-        {
-            enemyText = enemyText + "\nDEFENDING";
-        }
-        enemyStats.text = enemyText;
+        enemyStats.text = Stats(enemy);
 
         roundText.text = "ROUND " + round;
 
@@ -476,10 +470,6 @@ public sealed class BattleUI : MonoBehaviour
         text = text + "\nHP " + unit.Health.currentHealth + " / " + unit.Health.maxHealth;
         text = text + "   MP " + unit.CurrentMP + " / " + unit.MaxMP;
         text = text + "\nATK " + unit.EffectiveAttack + "   DEF " + unit.EffectiveDefense;
-        if (unit.IsDefending)
-        {
-            text = text + "\nDEFENDING";
-        }
         return text;
     }
 }

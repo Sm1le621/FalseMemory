@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: FalseMemory.Runtime::ItemData
   id: item.leather_armor
   displayName: Leather Armor
-  description: Light armor made from treated leather.
   icon: {fileID: -8655424120415996774, guid: 3b64fa6ca5d3d8308a037be676aaeb70, type: 3}
   category: 2
   stackable: 0

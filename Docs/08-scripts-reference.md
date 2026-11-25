@@ -39,7 +39,7 @@
 
 | Скрипт | Тип | Назначение |
 |---|---|---|
-| `ItemData` | SO | Описание предмета: имя, иконка, категория, стопка, слот, бонусы. Тот же файл: `enum ItemCategory`, `EquipmentSlot`, struct `ItemStatBonus` |
+| `ItemData` | SO | Данные предмета: имя, иконка, категория, стопка, слот, бонусы. Тот же файл: `enum ItemCategory`, `EquipmentSlot`, struct `ItemStatBonus` |
 | `InventoryState` | C# | Модель: 30 слотов, добавить/убрать/переместить, событие `Changed`. Тот же файл: `InventorySlot` |
 | `EquipmentState` | C# | Модель: 2 слота экипировки, обмен с инвентарём, сумма бонусов, событие `Changed` |
 | `InventoryActions` | MB | Слушает события окна и выполняет действия: надеть/снять (`EquipmentState`), выпить зелье. В бою ничего не разрешает |
@@ -47,8 +47,7 @@
 | `InventoryWindow` | MB | Окно инвентаря: открытие по **I**, выбор, drag & drop, кнопки, события `UseRequested`/`EquipRequested`/`UnequipRequested` |
 | `InventorySlotView` | MB | Одна ячейка: рисует предмет, обрабатывает клик/наведение/перетаскивание |
 | `EquipmentSlotView` | MB | Ячейка экипировки (оружие / броня) |
-| `InventoryTooltip` | MB | Всплывающее описание предмета у курсора |
-| `ItemPresentation` | static | Тексты и цвета для UI: название типа, строка бонусов, описание |
+| `ItemPresentation` | static | Цвет фона ячейки и название слота экипировки |
 | `LootDrop` | MB | Висит на враге (сейчас на боссе): какой предмет выпадает. После победы `BattleManager` вызывает `GiveTo(player)` — предмет кладётся в инвентарь |
 
 ## `Dangeon/` — переходы между сценами

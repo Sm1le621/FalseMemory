@@ -82,10 +82,6 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPo
     {
         hovered = false;
         RefreshColors();
-        if (Owner != null && Owner.tooltip != null)
-        {
-            Owner.tooltip.Hide(this);
-        }
     }
 
     // Мишка навелась
@@ -93,10 +89,6 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPo
     {
         hovered = true;
         RefreshColors();
-        if (Owner != null && Owner.tooltip != null)
-        {
-            Owner.tooltip.Show(this, e.position);
-        }
     }
 
     // Мишка пішла
@@ -104,10 +96,6 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPo
     {
         hovered = false;
         RefreshColors();
-        if (Owner != null && Owner.tooltip != null)
-        {
-            Owner.tooltip.Hide(this);
-        }
     }
 
     // Клік лівою кнопкою - вибрати клітинку

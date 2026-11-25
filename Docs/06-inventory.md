@@ -7,11 +7,11 @@
 | **Данные предметов** | `ItemData`, `BattleConsumable` (ScriptableObject), `ItemStatBonus` (struct) | только как файлы-ассеты |
 | **Модель** | `InventoryState`, `InventorySlot`, `EquipmentState` | **нет** — обычные C#-классы |
 | **Компоненты-владельцы** | `BattleInventory`, `InventoryActions` | да, висят на Player |
-| **Представление (UI)** | `InventoryWindow`, `InventorySlotView`, `EquipmentSlotView`, `InventoryTooltip`, `ItemPresentation` | да |
+| **Представление (UI)** | `InventoryWindow`, `InventorySlotView`, `EquipmentSlotView`, `ItemPresentation` | да |
 
 ## 6.1 Предметы — `ItemData` и `BattleConsumable`
 
-`ItemData` — описание предмета: имя, иконка, категория (`Consumable` / `Weapon` / `Armor`), размер стопки, слот экипировки, бонусы `attack` / `defense`.
+`ItemData` — данные предмета: имя, иконка, категория (`Consumable` / `Weapon` / `Armor`), размер стопки, слот экипировки, бонусы `attack` / `defense`.
 
 `BattleConsumable : ItemData` — **наследник** для расходников: добавляет `healing` и `manaRestoration`. Зелье `Potion` — это `BattleConsumable` с `healing = 30`.
 
@@ -78,12 +78,12 @@ private void OnDisable()
 
 Зачем так: окно можно переиспользовать (например, в будущем для сундука), а правила использования и экипировки меняются, не трогая UI.
 
-## 6.6 Ячейки, перетаскивание, подсказка
+## 6.6 Ячейки и перетаскивание
 
 - `InventorySlotView` — одна ячейка (их 30). При старте окно вызывает `slots[i].Bind(this, i)` — ячейка запоминает окно и свой номер.
 - Ячейка реализует интерфейсы Unity UI: `IPointerClickHandler`, `IPointerEnterHandler`, `IBeginDragHandler`, `IDragHandler`, `IDropHandler`... **Unity сама вызывает** их методы (`OnPointerClick`, `OnDrop` и т.д.), когда мышь делает соответствующее действие над ячейкой.
 - Перетаскивание: `OnBeginDrag` → `window.BeginDrag(index)`, `OnDrop` на другой ячейке → `window.DropOn(index)` → `InventoryState.TryMoveOrMerge(from, to)` → `Changed` → `Refresh`.
-- `InventoryTooltip` показывает описание при наведении. Текст формирует статический `ItemPresentation` (цвета ячеек, названия типов, строки бонусов).
+- Описаний предметов в окне нет: ни всплывающей подсказки, ни текста внизу. При наведении ячейка только подсвечивается; цвет берётся из статического `ItemPresentation.CellColor`.
 
 ## 6.7 Полный путь: «выпить зелье»
 

@@ -13,8 +13,6 @@ public sealed class InventoryWindow : MonoBehaviour
     public RectTransform panel;
     // 30 клітинок
     public InventorySlotView[] slots;
-    // Опис вибраного предмета
-    public TextMeshProUGUI details;
     // Повідомлення ("Item equipped." і т.д.)
     public TextMeshProUGUI message;
     public Button useButton;
@@ -30,7 +28,6 @@ public sealed class InventoryWindow : MonoBehaviour
     public TextMeshProUGUI resourcesLabel;
     // Темний фон за вікном
     public Image modalBackdrop;
-    public InventoryTooltip tooltip;
     // Текст "BAG 3 / 30"
     public TextMeshProUGUI bagLabel;
 
@@ -257,10 +254,6 @@ public sealed class InventoryWindow : MonoBehaviour
     // Закрити вікно
     public void Close()
     {
-        if (tooltip != null)
-        {
-            tooltip.Hide();
-        }
         EndDrag();
 
         if (panel != null)
@@ -314,19 +307,6 @@ public sealed class InventoryWindow : MonoBehaviour
 
         // 2) HP / MP
         RefreshResources();
-
-        // 3) Опис вибраного предмета
-        if (details != null)
-        {
-            if (selected.IsEmpty)
-            {
-                details.text = "Select an item.";
-            }
-            else
-            {
-                details.text = ItemPresentation.Description(item, selected.Count);
-            }
-        }
 
         // 4) Скільки клітинок зайнято
         if (bagLabel != null)
@@ -419,12 +399,6 @@ public sealed class InventoryWindow : MonoBehaviour
         {
             equipmentStats.text = "ATK " + unit.EffectiveAttack + "     DEF " + unit.EffectiveDefense;
         }
-
-        // 9) Оновлюємо підказку
-        if (tooltip != null)
-        {
-            tooltip.RefreshContent();
-        }
     }
 
     // Оновити текст HP / MP (тільки якщо щось змінилось)
@@ -515,10 +489,6 @@ public sealed class InventoryWindow : MonoBehaviour
             return;
         }
 
-        if (tooltip != null)
-        {
-            tooltip.Hide();
-        }
 
         Select(index);
         dragging = index;

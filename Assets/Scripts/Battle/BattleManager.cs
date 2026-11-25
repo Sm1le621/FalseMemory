@@ -203,10 +203,7 @@ public sealed class BattleManager : MonoBehaviour
                     {
                         audioController.Play(BattleSound.Defend);
                     }
-
-                    // Наприклад, множник 0.5 -> "зменшено на 50%"
-                    int reduction = Mathf.RoundToInt((1f - Mathf.Clamp01(rules.defendMultiplier)) * 100f);
-                    ui.ShowMessage(actor.displayName + " defends. Physical damage reduced by " + reduction + "%.");
+                    ui.ShowMessage(actor.displayName + " defends.");
                 }
                 else if (pendingAction == BattleAction.Magic)
                 {
