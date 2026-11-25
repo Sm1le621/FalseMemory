@@ -4,8 +4,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 // Одна клітинка інвентаря у вікні.
-// Реагує на мишку: клік (вибір), наведення (підказка), перетягування (drag & drop).
-public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+// Реагує на мишку: клік (вибір) і перетягування (drag & drop). Наведення нічого не підсвічує.
+public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public Image background;
     public Image icon;
@@ -13,7 +13,6 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPo
     public TextMeshProUGUI quantity;
     public Outline border;
 
-    private bool hovered;
     private bool selected;
     private ItemData item;
 
@@ -60,7 +59,7 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPo
     // Кольори фону і рамки
     private void RefreshColors()
     {
-        background.color = ItemPresentation.CellColor(item, selected || hovered);
+        background.color = ItemPresentation.CellColor(item, selected);
 
         if (border != null)
         {
@@ -76,26 +75,6 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPo
                 border.effectDistance = new Vector2(1, -1);
             }
         }
-    }
-
-    private void OnDisable()
-    {
-        hovered = false;
-        RefreshColors();
-    }
-
-    // Мишка навелась
-    public void OnPointerEnter(PointerEventData e)
-    {
-        hovered = true;
-        RefreshColors();
-    }
-
-    // Мишка пішла
-    public void OnPointerExit(PointerEventData e)
-    {
-        hovered = false;
-        RefreshColors();
     }
 
     // Клік лівою кнопкою - вибрати клітинку

@@ -1,11 +1,10 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 // Клітинка екіпіровки у вікні (зброя або броня).
-// Реагує на наведення мишки (показує підказку).
-public sealed class EquipmentSlotView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+// Тільки малює предмет; клік обробляє Button на цьому ж об'єкті.
+public sealed class EquipmentSlotView : MonoBehaviour
 {
     public InventoryWindow owner;
     // Який це слот
@@ -18,8 +17,6 @@ public sealed class EquipmentSlotView : MonoBehaviour, IPointerEnterHandler, IPo
 
     // Що зараз намальовано в клітинці
     private ItemData item;
-    // Чи наведена мишка
-    private bool hovered;
 
     // Предмет, який зараз реально одягнено в цьому слоті
     public ItemData Item
@@ -57,7 +54,7 @@ public sealed class EquipmentSlotView : MonoBehaviour, IPointerEnterHandler, IPo
     // Кольори фону і рамки
     private void RefreshColors()
     {
-        background.color = ItemPresentation.CellColor(item, hovered);
+        background.color = ItemPresentation.CellColor(item, false);
 
         if (border != null)
         {
@@ -70,25 +67,5 @@ public sealed class EquipmentSlotView : MonoBehaviour, IPointerEnterHandler, IPo
                 border.effectColor = new Color32(109, 95, 74, 255);
             }
         }
-    }
-
-    private void OnDisable()
-    {
-        hovered = false;
-        RefreshColors();
-    }
-
-    // Мишка навелась на клітинку
-    public void OnPointerEnter(PointerEventData e)
-    {
-        hovered = true;
-        RefreshColors();
-    }
-
-    // Мишка пішла з клітинки
-    public void OnPointerExit(PointerEventData e)
-    {
-        hovered = false;
-        RefreshColors();
     }
 }
