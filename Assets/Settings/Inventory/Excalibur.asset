@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: FalseMemory.Runtime::ItemData
   id: item.excalibur
   displayName: Excalibur
-  icon: {fileID: 3287038575609840786, guid: f54cfadc8819b4a6ab28ebe47d242d41, type: 3}
+  icon: {fileID: -4005522477769299774, guid: f1c038ed850b30c66bc51bf0f2f1e453, type: 3}
   category: 1
   stackable: 0
   maxStack: 99
   equipmentSlot: 0
   bonuses:
-    attack: 10
+    attack: 50
     defense: 0
