@@ -135,10 +135,10 @@ ui.ShowMenu(names, actions);
 | Defend | `Defend` | `10_Battle_SFX/39_Block_03` |
 | Flee | `Flee` | `10_Battle_SFX/51_Flee_02` |
 | Magic Fire | `Fire` | `8_Atk_Magic_SFX/04_Fire_explosion_04_medium` |
-| Промах | `Miss` | `10_Battle_SFX/08_Bite_04` |
+| Промах | `Miss` | `10_Battle_SFX/35_Miss_Evade_02` |
 | Критический удар | `Critical` | `10_Battle_SFX/08_Bite_04` |
 
-При атаке сначала звучит `Attack` (замах), потом — результат: `Miss`, `Critical` или `Hit`. Остальные события (`Hit`, `Victory`...) вызываются, но клипы им не назначены — `Play` просто ничего не делает. Чтобы добавить звук, не нужен код: перетащить файл в поле ассета в Inspector.
+При атаке сначала звучит `Attack` (замах), потом — результат: `Miss` (уклонение), `Critical` (укус) или `Hit`. Остальные события (`Hit`, `Victory`...) вызываются, но клипы им не назначены — `Play` просто ничего не делает. Чтобы добавить звук, не нужен код: перетащить файл в поле ассета в Inspector.
 
 ## 5.6 Выход из боя
 
